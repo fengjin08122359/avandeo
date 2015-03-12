@@ -1,0 +1,31 @@
+<div class="gallery-grid">
+  <input type="hidden" class="action-pagedata" value="{total:<{$total}>, pagecurrent:<{$page|default:1}>, pagetotal:<{$pagetotal}>}">
+  <ul class="clearfix">
+    <{foreach from=$goodsData key=key item=goods}>
+    <li class="goods-item">
+      <{assign var='imageset' value=$env.conf.image.image.set}>
+      <div class="goods-pic" style="<{if $imageset.S.width}>width:<{$imageset.S.width}>px;<{/if}><{if $imageset.S.height}>height:<{$imageset.S.height}>px;line-height:<{$imageset.S.height-2}>px;*font-size:<{$imageset.S.height * 0.9}>px;<{/if}>">
+        <a href="<{link app=b2c ctl=site_space act=plist arg0=$goods.space_id}>"><img class="action-goods-img" data-src="<{$goods.image_default_id|default:$imageDefault.S.default_image|storager:'s'}>" alt="<{$goods.name}>" style="<{if $imageset.S.width}>max-width:<{$imageset.S.width}>px;<{/if}><{if $imageset.S.height}>max-height:<{$imageset.S.height}>px;<{/if}>"></a>
+      </div>
+      <div class="goods-info">
+        <h3 class="goods-name"><a href="<{link app=b2c ctl=site_space act=plist arg0=$goods.space_id}>"><{$goods.name}></a></h3>
+        <div class="goods-price">
+                    <ins class="price f-icon"><span>热销价：</span><{$goods.products.price|cur_odr}></ins>
+         <!--  <{if $env.conf.b2c.site.show_mark_price == 'true'}>
+          <del class="price"><{$goods.products.mktprice|cur_odr}></del>
+          <{/if}> -->
+          <a href="<{link app=b2c ctl=site_space act=plist arg0=$goods.space_id}>" class="look">点击查看</a>
+        </div>
+      </div>
+
+      <div class="goods-action" style="display:none;">
+        <div class="goods-buy">
+          <a class="btn btn-caution" target="_blank" href="<{link app=b2c ctl=site_space act=plist arg0=$goods.space_id}>"><span><span>查看详情</span></span></a>
+
+        </div>
+      </div>
+    </li>
+    <{/foreach}>
+  </ul>
+</div>
+<{pagers data=$pager}>

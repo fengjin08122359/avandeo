@@ -1,0 +1,26 @@
+<div class="banner" style="margin:10px 0;"><img  src="<{$store_data.image_banner_id|storager:''}>" height="450" width="1200"  /></div>
+<div class="store_img"><img  src="<{$store_data.image_default_id|storager:''}>" height="220" width="220"  /></div>
+<div class="store_contents">
+	<table class="offline-storeadr">
+		<tr>
+			<td width="100">地址：</td>
+			<td width="*"><{$store_data.province}> <{$store_data.city}> <{$store_data.district}> <{$store_data.address}></td>
+		</tr>
+		<tr>
+			<td>电话号码：</td>
+			<td><{$store_data.phone}></td>
+		</tr>
+		<tr>
+			<td>营业时间：</td>
+			<td><{$store_data.btime}></td>
+		</tr>
+		<tr>
+			<td>交通： </td>
+			<td><{$store_data.traffic}> <!-- <a href="javascript:void(0);" onclick="showMap(<{$s_d_key}>)">百度地图</a> --></td>
+		</tr>
+	</table>
+	<div  style="display:none; height:300px; width:100%;">
+		<iframe name="map-iframe" height="300" frameborder="0" scrolling="no" width="100%" src="<{link app=b2c ctl=site_store act=map arg0=$store_data.city arg1=$store_data.district arg2=$store_data.address}>"></iframe>	
+	</div>
+</div>
+<div class="contents" style="width:100%;clear:both;"><{$store_data.content}></div>

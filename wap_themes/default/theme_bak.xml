@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?><theme>
+    <name>ECstore触屏版测试模板</name>
+    <id>default</id>
+    <version>0.1</version>
+    <info>ECstore触屏版测试模板</info>
+    <author>shopex</author>
+    <site>http://www.shopex.cn</site>
+    <update_url></update_url>
+
+    <borders>
+            </borders>
+    <views>
+            </views>
+    <config>      
+            </config>
+
+    <widgets>
+                <widget app="" theme="default" file="default.html" slot="3" type="brand_list" order="12" title="" domid="1346304537697" border="__none__" classname="" tpl="default.html" coreid="hot_brand">
+        a:0:{}        </widget>
+                <widget app="" theme="default" file="index.html" slot="1" type="main_slide" order="1" title="" domid="1372139582395" border="__none__" classname="" tpl="default.html" coreid="main_slide">
+        a:1:{s:3:&quot;pic&quot;;a:4:{i:1372139539532;a:4:{s:2:&quot;id&quot;;s:13:&quot;1372139539532&quot;;s:4:&quot;link&quot;;s:22:&quot;%THEME%/images/ad0.jpg&quot;;s:10:&quot;linktarget&quot;;s:0:&quot;&quot;;s:8:&quot;linkinfo&quot;;s:0:&quot;&quot;;}i:1372139549412;a:4:{s:2:&quot;id&quot;;s:13:&quot;1372139549412&quot;;s:4:&quot;link&quot;;s:22:&quot;%THEME%/images/ad1.jpg&quot;;s:10:&quot;linktarget&quot;;s:0:&quot;&quot;;s:8:&quot;linkinfo&quot;;s:0:&quot;&quot;;}i:1372139557076;a:4:{s:2:&quot;id&quot;;s:13:&quot;1372139557076&quot;;s:4:&quot;link&quot;;s:22:&quot;%THEME%/images/ad2.jpg&quot;;s:10:&quot;linktarget&quot;;s:0:&quot;&quot;;s:8:&quot;linkinfo&quot;;s:0:&quot;&quot;;}i:1375081226815;a:4:{s:2:&quot;id&quot;;s:13:&quot;1375081226815&quot;;s:4:&quot;link&quot;;s:22:&quot;%THEME%/images/ad3.jpg&quot;;s:10:&quot;linktarget&quot;;s:0:&quot;&quot;;s:8:&quot;linkinfo&quot;;s:0:&quot;&quot;;}}}        </widget>
+                <widget app="" theme="default" file="index.html" slot="4" type="goodscat" order="2" title="" domid="1372145942359" border="__none__" classname="" tpl="default.html" coreid="goodscat">
+        a:0:{}        </widget>
+                <widget app="" theme="default" file="block/header.html" slot="0" type="logo" order="0" title="" domid="1372156634214" border="__none__" classname="" tpl="default.html" coreid="waplogos">
+        a:1:{s:7:&quot;logotxt&quot;;s:25:&quot;请填写logo文字描述&quot;;}        </widget>
+                <widget app="" theme="default" file="index.html" slot="3" type="index_goods" order="3" title="" domid="1418715392541" border="__none__" classname="" tpl="default.html" coreid="new_goods_1">
+        a:15:{s:5:&quot;limit&quot;;s:1:&quot;8&quot;;s:10:&quot;block_name&quot;;s:0:&quot;&quot;;s:7:&quot;bgcolor&quot;;s:7:&quot;#cccccc&quot;;s:8:&quot;selector&quot;;s:6:&quot;select&quot;;s:9:&quot;pricefrom&quot;;s:0:&quot;&quot;;s:7:&quot;priceto&quot;;s:0:&quot;&quot;;s:10:&quot;searchname&quot;;s:0:&quot;&quot;;s:7:&quot;type_id&quot;;s:5:&quot;_ANY_&quot;;s:6:&quot;cat_id&quot;;a:1:{i:0;s:5:&quot;_ANY_&quot;;}s:8:&quot;brand_id&quot;;a:1:{i:0;s:5:&quot;_ANY_&quot;;}s:3:&quot;tag&quot;;a:1:{i:0;s:5:&quot;_ANY_&quot;;}s:12:&quot;goods_filter&quot;;s:89:&quot;pricefrom=&amp;priceto=&amp;searchname=&amp;type_id=_ANY_&amp;cat_id[]=_ANY_&amp;brand_id[]=_ANY_&amp;tag[]=_ANY_&quot;;s:14:&quot;goods_order_by&quot;;s:1:&quot;1&quot;;s:12:&quot;goods_select&quot;;s:11:&quot;72,71,70,69&quot;;s:20:&quot;goods_select_linkobj&quot;;s:125:&quot;[{&quot;id&quot;:&quot;72&quot;,&quot;pic&quot;:&quot;&quot;,&quot;nice&quot;:&quot;&quot;},{&quot;id&quot;:&quot;71&quot;,&quot;pic&quot;:&quot;&quot;,&quot;nice&quot;:&quot;&quot;},{&quot;id&quot;:&quot;70&quot;,&quot;pic&quot;:&quot;&quot;,&quot;nice&quot;:&quot;&quot;},{&quot;id&quot;:&quot;69&quot;,&quot;pic&quot;:&quot;&quot;,&quot;nice&quot;:&quot;&quot;}]&quot;;}        </widget>
+                <widget app="" theme="default" file="index.html" slot="4" type="index_goods" order="4" title="" domid="1418722199431" border="__none__" classname="" tpl="default.html" coreid="new_goods">
+        a:15:{s:5:&quot;limit&quot;;s:1:&quot;8&quot;;s:10:&quot;block_name&quot;;s:0:&quot;&quot;;s:7:&quot;bgcolor&quot;;s:7:&quot;#cccccc&quot;;s:8:&quot;selector&quot;;s:6:&quot;select&quot;;s:9:&quot;pricefrom&quot;;s:0:&quot;&quot;;s:7:&quot;priceto&quot;;s:0:&quot;&quot;;s:10:&quot;searchname&quot;;s:0:&quot;&quot;;s:7:&quot;type_id&quot;;s:5:&quot;_ANY_&quot;;s:6:&quot;cat_id&quot;;a:1:{i:0;s:5:&quot;_ANY_&quot;;}s:8:&quot;brand_id&quot;;a:1:{i:0;s:5:&quot;_ANY_&quot;;}s:3:&quot;tag&quot;;a:1:{i:0;s:5:&quot;_ANY_&quot;;}s:12:&quot;goods_filter&quot;;s:89:&quot;pricefrom=&amp;priceto=&amp;searchname=&amp;type_id=_ANY_&amp;cat_id[]=_ANY_&amp;brand_id[]=_ANY_&amp;tag[]=_ANY_&quot;;s:14:&quot;goods_order_by&quot;;s:1:&quot;1&quot;;s:12:&quot;goods_select&quot;;s:11:&quot;66,65,64,63&quot;;s:20:&quot;goods_select_linkobj&quot;;s:125:&quot;[{&quot;id&quot;:&quot;66&quot;,&quot;pic&quot;:&quot;&quot;,&quot;nice&quot;:&quot;&quot;},{&quot;id&quot;:&quot;65&quot;,&quot;pic&quot;:&quot;&quot;,&quot;nice&quot;:&quot;&quot;},{&quot;id&quot;:&quot;64&quot;,&quot;pic&quot;:&quot;&quot;,&quot;nice&quot;:&quot;&quot;},{&quot;id&quot;:&quot;63&quot;,&quot;pic&quot;:&quot;&quot;,&quot;nice&quot;:&quot;&quot;}]&quot;;}        </widget>
+                <widget app="" theme="default" file="index.html" slot="5" type="index_goods" order="5" title="" domid="1418722217027" border="__none__" classname="" tpl="default.html" coreid="new_goods_2">
+        a:15:{s:5:&quot;limit&quot;;s:1:&quot;8&quot;;s:10:&quot;block_name&quot;;s:0:&quot;&quot;;s:7:&quot;bgcolor&quot;;s:7:&quot;#cccccc&quot;;s:8:&quot;selector&quot;;s:6:&quot;select&quot;;s:9:&quot;pricefrom&quot;;s:0:&quot;&quot;;s:7:&quot;priceto&quot;;s:0:&quot;&quot;;s:10:&quot;searchname&quot;;s:0:&quot;&quot;;s:7:&quot;type_id&quot;;s:5:&quot;_ANY_&quot;;s:6:&quot;cat_id&quot;;a:1:{i:0;s:5:&quot;_ANY_&quot;;}s:8:&quot;brand_id&quot;;a:1:{i:0;s:5:&quot;_ANY_&quot;;}s:3:&quot;tag&quot;;a:1:{i:0;s:5:&quot;_ANY_&quot;;}s:12:&quot;goods_filter&quot;;s:89:&quot;pricefrom=&amp;priceto=&amp;searchname=&amp;type_id=_ANY_&amp;cat_id[]=_ANY_&amp;brand_id[]=_ANY_&amp;tag[]=_ANY_&quot;;s:14:&quot;goods_order_by&quot;;s:1:&quot;1&quot;;s:12:&quot;goods_select&quot;;s:11:&quot;66,65,64,67&quot;;s:20:&quot;goods_select_linkobj&quot;;s:125:&quot;[{&quot;id&quot;:&quot;66&quot;,&quot;pic&quot;:&quot;&quot;,&quot;nice&quot;:&quot;&quot;},{&quot;id&quot;:&quot;65&quot;,&quot;pic&quot;:&quot;&quot;,&quot;nice&quot;:&quot;&quot;},{&quot;id&quot;:&quot;64&quot;,&quot;pic&quot;:&quot;&quot;,&quot;nice&quot;:&quot;&quot;},{&quot;id&quot;:&quot;67&quot;,&quot;pic&quot;:&quot;&quot;,&quot;nice&quot;:&quot;&quot;}]&quot;;}        </widget>
+            </widgets>
+
+</theme>

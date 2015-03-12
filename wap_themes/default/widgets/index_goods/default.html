@@ -1,0 +1,25 @@
+<div class="flex">
+<{foreach from=$data.goodsRows item=row key=gid name=goodsrow}>
+<div class="pt-item">
+    <{assign var=pickey value=$setting.gpic_size|default:'goodsPicS' }>
+    <a href="<{$row.goodsLink}>">
+        <div class="pt-img">
+            <img src="<{$row[$pickey]}>" alt="<{$row.goodsName}>" />
+        </div>
+        <div class="pt-name">
+            <{$row.goodsName}>
+        </div>
+        <div class="price">
+            <{$row.goodsSalePrice|cur}>
+        </div>
+    </a>
+</div>
+<{if $gid%2=='1' && !$smarty.foreach.goodsrow.last}>
+</div>
+<div class="flex">
+<{/if}>
+<{/foreach}>
+</div>
+
+
+

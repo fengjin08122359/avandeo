@@ -1,0 +1,34 @@
+<div class="product-concerns ">
+    <ul>
+      <li class="item cross">
+        <span class="label">市场价:</span>
+        <span class="detail">
+          <!--<b class="price"><ins class="action-mk-price"></ins></b>-->
+          <i class="price minor"><del class="action-mk-price action-mktprice"></del></i>
+          <span class="discount">7折</span>
+        </span>
+      </li>
+      <li class="item">
+      <span class="label"><{t}>销售价<{/t}>：</span>
+        <span class="detail">
+            <b class="price"><ins class="action-price"></ins></b>
+            <{if $setting.mktprice == 'true'}><i class="minor"><span class="action-saveprice"></span></i><{/if}>
+        </span>
+      </li>
+      <{if $setting.mktprice == 'true'}>
+      <{/if}>
+      <{if $setting.member_price == '1'}>
+      <li class="item hide">
+      <span class="label"><{t}>会员价<{/t}>：</span>
+        <span class="detail">
+          <i class="minor"><{t}>最低<{/t}><span class="action-minprice"></span><{t}>起<{/t}></i>
+          <span class="more pop-wrapper">
+            <a href="javascript:void(0);" class="action-handle"><span><{t}>更多会员价<{/t}></span><i class="icon">&#x36;</i></a>
+            <div class="pop-body action-memberprice" style="display:none;">
+            </div>
+          </span>
+        </span>
+      </li>
+      <{/if}>
+    </ul>
+</div>

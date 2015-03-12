@@ -1,0 +1,17 @@
+<app>
+    <name>移动商城2.0</name>
+    <description>移动商城2.0</description>
+
+    <author>
+        <name>shopex开发团队</name>
+        <email>dev@shopex.cn</email>
+        <url>http://www.shopex.cn</url>
+    </author>
+
+    <version>2.0</version>
+    <license>shopex license</license>
+
+    <depends>
+        <app>b2c</app>
+    </depends>
+</app>

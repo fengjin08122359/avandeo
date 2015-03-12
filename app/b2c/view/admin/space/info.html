@@ -1,0 +1,233 @@
+<form action="<{link app=b2c ctl=admin_space act=save}>" method="post"  name="spaces_form" id="space_form">
+    <input type="hidden" name="space[space_id]" value="<{$info.space_id}>">
+    <div class="tableform">
+        <table cellspacing="0" cellpadding="0">
+            <tr>
+                <th><{t}>名称<{/t}></th>
+                <td><{input type="text" name="space[name]" value=$info.name vtype="required"}></td>
+            </tr>
+            <tr>
+                <th><{t}>空间类型<{/t}></th>
+                <td><{input type="select" name="space[type][type_id]" value=$info.type.type_id options=$space_types class="space-type"}></td>
+            </tr>
+            <tr>
+                <th><{t}>折扣<{/t}></th>
+                <td><{input type="number" name="space[discount]" value=$info.discount|default:1 vtype="required&&positive"}><span class="notice-inline">请填写0-1之间的数字</span></td>
+            </tr>
+            <tr>
+                <th><{t}>图片<{/t}></th>
+                <td>
+                    <div class="division pic-main" style="margin:0;position:relative">
+                        <div class="clearfix">
+                          <span class="pic-uploader">
+                            <{button app="desktop" class="btn-upload" label=$___b2c="添加商品图片"|t:'b2c' icon="image_new.gif"}>
+                          </span>
+                        </div>
+
+                        <div class="pic-area">
+                            <input type="hidden" name="space[image_default]" value="<{$info.image_default_id}>" />
+                            <{include file="admin/space/img/gimage_goods.html"}>
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th><{t}>选择组合商品<{/t}></th>
+                <td><{input type="object" object="products" name="space[space_item]" value=$space_product_id multiple="true" filter="marketable=true" view="b2c:admin/space/item.html"}></td>
+            </tr>
+            <tr>
+                <th><{t}>是否上架<{/t}></th>
+                <td><{input type="radio" name="space[marketable]" options=array('true'=>'是','false'=>'否') value=$info.marketable|default:'false' separator='&nbsp;'}></td>
+            </tr>
+            <tr>
+                <th><{t}>组合简介<{/t}></th>
+                <td><{input type="textarea" name="space[brief]" cols="50" rows="5" value=$info.brief}></td>
+            </tr>
+            <tr>
+                <th><{t}>详情<{/t}></th>
+                <td><{input type="html" name="space[description]" value=$info.description}></td>
+            </tr>
+            <tr>
+                <th><{t}>线下门店<{/t}></th>
+                <td><{input type="html" name="space[retail_store]" value=$info.retail_store}></td>
+            </tr>
+        </table>
+            <table border="0" cellpadding="0" cellspacing="0" class="space-props">
+                <{foreach from=$info.type.props key=key item=aProp}>
+                <tr class="prop">
+                    <th><{$aProp.name}>：</th>
+                    <td><{assign var="p_col" value="p_{$key}"}>
+                        <{input name="space[props][p_{$key}][value]" type="select" nulloption="1" options=$aProp.options value="{$info.props[$p_col].value}" }>
+                    </td>
+                </tr>
+                <{/foreach}>
+            </table>
+        <table cellspacing="0" cellpadding="0" class="table-action">
+            <tbody>
+            <tr valign="middle">
+                <td>
+                    <{button label=$___b2c="保存并关闭窗口"|t:'b2c' class="btn-primary" onclick="subPackagesForm(event)"}>
+                    <{assign var=bcclose value=$___b2c='确定退出?'|t:'b2c'}>
+                    <{assign var=bclose value="关  闭"}>
+                    <{button label=$___b2c=$bclose|t:'b2c' class="btn-secondary" onclick="if(confirm('{$bcclose}'))window.close()"}>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+
+<{lang_script src="lang.js" app='b2c'}>
+<script>
+    var spacesFrame = (function(){
+        var _form=$('space_form');
+        subPackagesForm = function (event){
+            _form.store('target',{
+                onComplete:function(rs){
+                    if(rs&&!!JSON.decode(rs).success){
+                        window.opener.finderGroup['<{$env.get.finder_id}>'].refresh();
+                        window.close();
+                    }
+                }
+            });
+            _form.set('action',_form.get('action')).fireEvent('submit',new Event(event));
+        };
+    });
+    spacesFrame();
+
+    Ex_Loader('uploader',function(){
+        $$('.pic-uploader').each(function(el,j){
+            if (document.getElements('.swiff-uploader-box')) {
+                document.getElements('.swiff-uploader-box').destroy();
+            }
+            var pic_main = el.getParent('.pic-main');
+            var area = pic_main.getElement('.pic-area');
+            var pics = pic_main.getElement('.all-pics');
+            new Swiff.Uploader( {
+                allowDuplicates: true,
+                verbose: true,
+                url:'index.php?app=image&ctl=admin_manage&act=gimage_swf_remote&view=admin/space/img/gimage.html&app_id=b2c&sess_id='+sess_id,
+                path: '<{$image_dir}>/uploader.swf',
+                typeFilter: {
+                    'Images (*.jpg, *.jpeg, *.gif, *.png)': '*.jpg; *.jpeg; *.gif; *.png'
+                },
+                fileSizeMax:'<{$IMAGE_MAX_SIZE}>',
+                target:el,
+                onSelect:function(rs){
+                    if(rs)
+                        rs.each(function(v){
+                            if(v.size>this.fileSizeMax){
+                                alert(v.name+'<{t}>\n\n文件超出大小<{/t}>');
+                            };
+                        },this);
+                },
+                onSelectFail:function(rs){
+                    rs.each(function(v){
+                        if(v.validationError=='sizeLimitMax'){
+                            alert(v.name+'<{t}>\n\n文件超出大小<{/t}>');
+                        };
+                    });
+                },
+                onSelectSuccess:function(rs){
+                    var PID='up_';
+                    var _this=this;
+                    rs.each(function(v,i){
+                        new Element('div',{'class':'gpic-box','id':PID+j+v.id}).inject(pics);
+                    });
+                    this.start();
+                },
+                onFileOpen:function(e){
+                    $('up_'+j+e.id).setHTML('<em style="font-size:13px;font-family:Georgia;">0%</em>');
+                },
+                onFileProgress:function(e){
+                    $('up_'+j+e.id).getElement('em').set('text',e.progress.percentLoaded+'%');
+                },
+                onFileComplete: function(res){
+                    if(res.response.error){
+                        return  new MessageBox.error('<{t}>文件<{/t}>'+res.name+'<{t}>上传失败<{/t}>');
+                    }
+                    $('up_'+j+res.id).setHTML(res.response.text);
+                    if(!$E('.current',area)&&$E('.gpic',area)){
+                        $E('.gpic',area).onclick();
+                    }
+                }
+            });
+
+        });
+
+    });
+
+    var del = (function(obj){
+        if(confirm(LANG_goodseditor['comfirmDelPic'])){
+            obj = $(obj);
+            var pic_box=obj.getParent('.gpic-box'),picNext=pic_box.getNext('.gpic-box');
+            try{
+                if(obj.get('ident')){
+                    if($$('#all-pics input[name=space[image_default]]')[0])
+                        $$('#all-pics input[name=space[image_default]]')[0].value=obj.get('ident');
+                    $('all-pics').eliminate('cururl');
+                    pic_box.destroy();
+                    /*    if($$('#all-pics .gpic-box .current')[0])return;
+                     if($$('#all-pics .gpic-box').length&&$$('#all-pics .gpic-box').length>0){
+                     $('all-pics').empty().set('html','<div class="notice" style="margin:0 auto">请重新选择默认商品图片.</div>');
+                     }else{
+                     $('all-pics').empty().set('html','<div class="notice" style="margin:0 auto">您还未上传商品图片.</div>');
+                     }   */
+                }}catch(e){
+                pic_box.destroy();
+            }
+            if(picNext)picNext.getElement('.gpic').onclick();
+        }
+    });
+
+    var setDefault = (function(id,obj){
+        var pic_main = $(obj).getParent('.pic-main');
+        var area = pic_main.getElement('.pic-area');
+        var target=$E('.gpic[image_id='+id+']',area);
+        //var target=$$('#pic-area .gpic[image_id='+id+']')[0];
+        if(target.hasClass('current')){return;}
+        var cur,imgdefinput;
+        if(cur = $E('.current',area)){
+            cur.removeClass('current');
+        }
+        if(imgdefinput = $E('input[name=space[image_default]]',area)){
+            imgdefinput.set('value',id);
+        }
+        target.addClass('current');
+    });
+
+    var getDefault = (function(){
+        var pic_main = obj.getParent('.pic-main');
+        var area = pic_main.getElement('.pic-area');
+        var o = $E('input[name=image_default]',area);
+        //var o = $$('#pic-area input[name=image_default]')[0];
+
+        if(o){
+            return o.value;
+        }else{
+            return false;
+        }
+    });
+
+    $$('.space-type') && $$('.space-type').addEvent('change',function(){
+        var type_id = this.value;
+        getProps(type_id);
+    });
+
+    var getProps = (function(type_id,goods_id){
+        new Request.HTML({
+            url:'<{link app=b2c ctl=admin_space act=get_props}>',
+            method:'post',
+            update:$$('.space-props')[0],
+            data:$('space_form').toQueryString()
+        }).send();
+    });
+
+    var initProps = (function(){
+        var type_id = $$('.space-type')[0].value;
+        getProps(type_id);
+    });
+
+    //initProps();
+</script>

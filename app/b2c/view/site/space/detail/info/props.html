@@ -1,0 +1,18 @@
+<div class="product-params">
+  <table width="80%">
+    <tbody>
+      <{foreach from=$page_product_basic.props key=key item=props name=nums}>
+	  <{if $smarty.foreach.nums.iteration > 4}><{continue;}><{/if}>
+      <{if $smarty.foreach.nums.iteration%2 == 1}>
+      <tr>
+      <{/if}>
+        <td class="label" style="width:15%"><div class="text-nowrap"><{$props.name}>：</div></td>
+        <td class="v" width="45%"><{$props.value}></td>
+      <{if $smarty.foreach.nums.iteration%2 == 0}>
+      </tr>
+      <{/if}>
+      <{/foreach}>
+
+    </tbody>
+  </table>
+</div>

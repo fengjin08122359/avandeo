@@ -1,0 +1,97 @@
+<div class="area area-filter" >
+	区域选择：<{input id="store-area" app="ectools" class="inputstyle" name="area" type="region" callback="selectArea"}>
+	<a href="<{link app=b2c ctl=site_store}>">显示全部</a>
+	<span class="store-num" style="display:none;">总计:4家</span>
+</div>
+<ul class="store_list">
+<{foreach from=$store_data key=s_d_key item=s_d_item}>
+	<li style="clear:both; width:100%;margin-bottom:10px; overflow:hidden;" class="store_list_li area_num_<{$s_d_item.area_num}>"  data-region-id=":<{$s_d_item.province_num}>:<{$s_d_item.city_num}>:<{$s_d_item.district_num}>:">
+		<div class="store_img" ><a href="<{link app=b2c ctl=site_store act=glist arg0=$s_d_item.store_id}>"><img  src="<{$s_d_item.image_default_id|storager:''}>" height="220" width="220" /></a></div>
+		<div class="store_contents">
+			<table class="offline-storeadr">
+				<tr>
+					<td width="100">地址：</td>
+					<td width="*"><{$s_d_item.province}> <{$s_d_item.city}> <{$s_d_item.district}> <{$s_d_item.address}></td>
+				</tr>
+				<tr>
+					<td>电话号码：</td>
+					<td><{$s_d_item.phone}></td>
+				</tr>
+				<tr>
+					<td>营业时间：</td>
+					<td><{$s_d_item.btime}></td>
+				</tr>
+				<tr>
+					<td>交通： </td>
+					<td><{$s_d_item.traffic}> <a target="_blank" href="http://map.baidu.com">百度地图</a></td>
+				</tr>
+			</table>
+			<div class="map-<{$s_d_key}>"  style="display:none; height:300px; width:100%;">
+				<iframe name="map-iframe-<{$s_d_key}>" height="300" frameborder="0" scrolling="no" width="100%" src="<{link app=b2c ctl=site_store act=map arg0=$s_d_item.city arg1=$s_d_item.district arg2=$s_d_item.address}>"></iframe>	
+			</div>
+		</div>
+	</li>
+<{/foreach}>
+</ul>
+<script>
+function selectArea(sels){
+
+	var address = $$('input[name=area]').get('value');
+	var addstr = address.toString();
+//	console.info(addstr);
+}
+function hideAll(){
+	$$('.store_list_li').each(function(els){
+		els.hide();
+	});
+}
+function showAll(){
+	$$('.store_list_li').each(function(els){
+		els.show();
+	});
+}
+$$('#store-area select').addEvent('change',function(){
+  var v = this.value, regExp = new RegExp(":"+v+":"),  index = this.get('data-level-index');
+  var prev;
+  if(v=='_NULL_'){
+	 prev =  this.getPrevious('select') ;
+	 if(prev)
+	 regExp = new RegExp(":"+prev.value+":");
+  }
+  
+   $$('.store_list_li').each(function(el){
+		var rid =  el.get('data-region-id');
+		if(v =='_NULL_' && index=='0'){	
+			return el.show();//取所有
+		}
+	
+		el[regExp.test(rid)?'show':'hide']();
+		
+	});
+   
+	return;
+	var address = $$('input[name=area]').get('value');
+	var addstr = address.toString();
+	var addarr = addstr.split(':');
+	  this.fireEvent('blur');
+		hideAll();
+	try{
+		var currentLi = $$('.area_num_'+addarr[2]);
+		currentLi.show();
+	}catch(e)
+	{}
+});
+
+function showMap(t)
+{
+	$$('.map').each(function(els){
+		els.hide();
+	});
+	if($$('.map-'+t)[0].getStyle('display') == 'none'){
+		$$('.map-'+t)[0].show();
+		document.frames('map-iframe-'+t).location.reload();
+	}else{
+		$$('.map-'+t)[0].hide();
+	}
+}
+</script>

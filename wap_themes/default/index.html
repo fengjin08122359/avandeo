@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="images/styles.css" />
+    <{wapheader}>
+</head>
+<body>
+    <{wap_require file="block/header.html"}>
+    <div class="w">
+    <div class="page">
+        <!-- 搜索 -->
+        <!--<{wap_widgets id="search"}>-->
+        <!-- 活动图 -->
+
+        <{wap_widgets id="main_slide"}>
+        </div>
+
+        <{wap_widgets id="goodscat"}>
+
+        <div class="home-cate">
+            <div class="title">
+                促销商品
+            </div>
+            <div class="content">
+                <{wap_widgets id="new_goods_1"}>
+            </div>
+        </div>
+
+        <div class="home-cate">
+            <div class="title"> 最新商品 </div>
+            <div class="content"> 
+                <{wap_widgets id="new_goods_3"}>
+            </div>
+        </div>
+        <div class="home-cate">
+            <div class="title">最热商品</div>
+            <div class="content"> 
+                <{wap_widgets id="new_goods_2"}>
+            </div>
+        </div>
+        <!-- 各分类/虚拟分类中的排行 -->
+        <!-- 服饰鞋帽销售榜 -->
+        <!-- 品牌汇 -->
+    </div>
+    <div style="height:30px;background:#f1f1f1;">
+    </div>
+    <{wap_require file="block/footer.html"}>
+</body>
+</html>

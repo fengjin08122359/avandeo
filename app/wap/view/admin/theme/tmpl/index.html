@@ -1,0 +1,95 @@
+<div class="action-bar clearfix">
+
+<div class="span-auto"><{button type="button" label="添加新页面" icon="btn_add.gif" app="desktop" id="add_newpage"}></div>
+<div class="span-auto">
+        <{button type="button" label=$___site="清除模板缓存"|t:'site' onclick="if(confirm('CLEAN_CACHE ?')){  W.page('index.php?app=wap&ctl=admin_theme_manage&act=cache_version&theme={$theme}')};" }>&nbsp;
+</div>
+</div>
+<table class="gridlist" width="100%" cellpadding="0" cellspacing="0">
+<thead>
+    <tr>
+    <th width="30%" class="t-r"><{t}>页面<{/t}></th>
+    <th width="40%" class="t-l"><{t}>文件名<{/t}></td>
+    <th width="30%" class="t-l"><{t}>操作<{/t}></td>
+    </tr>
+</thead>
+<tbody>
+<{if $list }>
+<{foreach from=$types item=titem key=basename name="tmpl_type"}>
+<{if $list.$basename}>
+<{foreach from=$list.$basename item=item key=key name=_list}>
+<tr>
+    <{if $env.foreach._list.first}>
+    <td rowspan=<{$env.foreach._list.total}> class="t-r" style="vertical-align: top;">
+        <{$titem}>
+    </td>
+    <{/if}>
+    <td class="t-l" style="border-right:none;border-bottom:<{if $env.foreach._list.last}>1px #ccc solid<{else}>none<{/if}>">
+    <label><input type="radio" name="tpl_<{$basename}>" value="1" onclick="javascript:return changeDef(<{$item.id}>);" <{if $item.default > 0}>checked<{/if}> />
+    <{$item.tmpl_path}> &nbsp;&nbsp;&nbsp;&nbsp;<i class="font-gray f-9">(&nbsp;<{$item.tmpl_name}>&nbsp;)</i>
+    </label>
+    </td>
+    <td class="t-l" style="border-bottom:<{if $env.foreach._list.last}>1px #ccc solid<{else}>none<{/if}>">
+        <div class="clearfix">
+            <div class="span-auto"></div>
+            <div class="span-auto"> 
+                <{img app='desktop' src="bundle/page_edit.gif"}>
+                <a href="index.php?app=wap&ctl=admin_theme_widget&act=editor&theme=<{$item.theme}>&file=<{$item.tmpl_path}>" target="_blank"><{t}>可视化编辑<{/t}></a>
+            </div>
+            <div class="span-auto">
+                <{if $item.tmpl_name != 'default.html'}>
+                <{img app='desktop' src='bundle/delete.gif'}>  
+                <a class='deltheme' href="javascript:void(0)"  url="index.php?app=wap&ctl=admin_theme_tmpl&act=delete_tmpl&theme=<{$item.theme}>&tmpl=<{$item.tmpl_path}>"  ><{t}>删除<{/t}></a>
+                <{/if}>
+            </div>
+        </div>
+    </td>
+</tr>              
+
+<{/foreach}>
+<{/if}>
+<{/foreach}>
+<{/if}>
+</tbody>
+</table>
+<script>
+
+$$('.deltheme').addEvent('click',function(e){
+    if(confirm('<{t}>确定要删除吗?<{/t}>')){
+        var path=this.get('url'),obj=this; 
+        new Request({url:path,onSuccess:function(){
+              finderGroup['<{$env.get.finder_id}>'].refresh();
+        }}).send();
+    }
+});
+
+function addLike(event, path){
+    if(confirm('<{t}>确定要添加吗?<{/t}>')){
+        
+        new Request({url:path,onSuccess:function(){
+            
+              finderGroup['<{$env.get.finder_id}>'].refresh();
+            
+        }}).send();
+    }
+}
+function addTmpl(obj){
+    var type = obj.options[obj.selectedIndex].value;
+    if(type != ''){
+        new Dialog('index.php?app=wap&ctl=admin_theme_tmpl&act=add&theme=<{$theme}>&type='+type,{'title':'<{t}>添加模版<{/t}>',width:0.7,height:0.8}); 
+        obj.selectedIndex=0;
+    }
+}
+function changeDef(id){
+    if(id>0 && confirm('<{t}>确定要将此页面设为默认？<{/t}>')){
+        return new Request({
+            method:'get',
+            url:'index.php?app=wap&ctl=admin_theme_tmpl&act=set_default&id='+id
+        }).send();
+    }
+    return false;
+}
+  $('add_newpage').addEvent('click',function(){
+      new Dialog('?app=wap&ctl=admin_theme_tmpl&act=add&theme=<{$theme}>',{'title':'<{t}>添加新页面<{/t}>',width:0.7,height:0.8});
+  });
+</script>
