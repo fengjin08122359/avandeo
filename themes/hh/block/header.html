@@ -1,0 +1,107 @@
+<!-- header start-->
+<div id="header">
+	<div class="center">
+		<div class="hd-lf">
+			<!--<h1>其点</h1>-->
+			<{widgets id="logo"}>
+		</div>
+		<div class="hd-rg">
+			<select name="" id="">
+				<option>中文</option>
+				<!--<option>英文</option>-->
+			</select>
+
+			<{widgets id="top_member"}>
+
+			<{widgets id="search"}>
+        </div>
+	</div>
+</div>
+<!-- header end -->
+<!-- nav start -->
+<div id="nav">
+	<div class="center">
+		<ul>
+			<li> <a class="nav-t" href="index.html">首页</a> </li>
+
+            <li class="nav catalog-menu">
+                <a class="nav-t" href="#">产品分类 <i class="arrow"></i></a>
+                <div class="menu-cont">
+                    <div class="menu-cont-1">
+                        <a class="cur" href="gallery-1.html">产品</a>
+                        <a href="space-glist.html">生活空间</a>
+                        <a href="match-glist.html">风格系列</a>
+                    </div>
+                    <div class="menu-cont-2">
+                        <div class="menu-sub-cont">
+                            <{widgets id="catalog_menu"}>
+                        </div>
+                        <div class="menu-sub-cont" style="display:none">
+                            <{widgets id="space_menu"}>
+                        </div>
+                        <div class="menu-sub-cont" style="display:none">
+                            <{widgets id="match_menu"}>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <!--<li class="nav catalog-menu">-->
+                <!--<{widgets id="catalog_menu"}>-->
+            <!--</li>-->
+
+			<li class="space-menu nav">
+                <a href="article--i-24.html" class="nav-t">线上预售 <i class="arrow"></i></a>
+				<!-- <div class="smnav">
+                   <div class="sm">
+						<a href="#">椅子</a>
+					</div>
+                    <div class="sm">
+						<a href="#">椅子</a>
+					</div>
+                </div> -->
+			</li>
+				<!--<a href="match-glist.html">风格搭配</a>-->
+			<li> <a href="article-shejishishequ-i-27.html" class="nav-t">设计师社区 <i class="arrow"></i></a> </li>
+			<li> <a class="nav-t" href="dingzhi-1425870307.html" style="color:#0d5ba1">专属定制</a> </li>
+			<li> <a class="active" href="article-baiseouluoba-i-29.html">HH活动专场</a> </li>
+            <li class="menu-r pos">
+				<a class="nav-t" href="article-cominfo_about-62.html">HH特色服务</a>
+                <span class="tip">174个城市免费配送安装</span>
+			</li>
+            <li class="menu-r"> <a class="nav-t" href="store.html">线下体验馆</a> </li>
+		</ul>
+	</div>
+</div>
+<script>
+
+        window.addEvent('domready',function(){
+
+            $$('#nav .catalog-menu').addEvent('mouseover',function(e){
+                var el = this.addClass('cur');
+                var cont = el.getElement('.menu-cont');
+            }).addEvent('mouseleave',function(e){
+                $(this).removeClass("cur");
+            });
+
+            $$('.menu-cont-1 a').each(function(el,i){
+                el.addEvent('mouseover',function(e){
+                    $$('.menu-cont-1 .cur').removeClass('cur');
+                    this.addClass('cur');
+                    $$('.menu-cont-2 .menu-sub-cont').hide();
+                    $$('.menu-cont-2 .menu-sub-cont')[i].show();
+                });
+            });            
+
+            $$('.menu-cont-2 .cli').each(function(el,i){
+                el.addEvent('mouseover',function(e){
+                    $$('.menu-cont-2 .cur').removeClass('cur');
+                    this.addClass('cur');
+                    $$('.menu-cont-2 .sslist').hide();
+                    $$('.menu-cont-2 .sslist')[i].show();
+                });
+            });
+
+        });
+
+</script>

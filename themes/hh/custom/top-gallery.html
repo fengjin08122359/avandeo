@@ -1,0 +1,296 @@
+<div id="main" class="clearfix">
+  <!-- 商品列表开始 -->
+  <div class="page-maincontent">
+    <{if $screen.search_cat && count($screen.search_cat)>1}>
+    <div class="related-search clearfix">
+      <label class="related-search-label">搜索结果分类：</label>
+      <span class="related-search-content">
+        <{foreach from=$screen.search_cat item=row}>
+        <{if $smarty.foreach.name.iteration > 10}> <{break}> <{/if}>
+        <a href="<{link app=b2c ctl=site_gallery act=index arg0=$row.cat_id}>?<{if $filter.virtual_cat_id}>virtual_cat_id=<{$filter.virtual_cat_id}><{/if}><{if $filter.search_keywords.0}>scontent=n,<{$filter.search_keywords.0}><{/if}>"<{if $row.cat_id == $show_cat_id}> class="active"<{/if}>><{$row.cat_name}></a>
+        <{/foreach}>
+      </span>
+    </div>
+    <{/if}>
+    <!-- 筛选区 -->
+    <div id="filter_container" class="filter-container">
+      <div class="filter-title clearfix">
+        <h3>商品筛选</h3>
+        <div class="gallery-total-info">
+          共<b class="op-search-result"><{$total}></b>件商品
+        </div>
+      </div>
+      <!-- 筛选条件 -->
+      <div id="gallery_filter" class="gallery-filter">
+        <div id="filter_lists" class="filter-lists-container">
+          <!-- 分类 -->
+          <{if $screen.cat}>
+          <{assign var='filter_num' value=1}>
+          <dl class="filter-entries clearfix filter-class">
+            <!-- <dt class="filter-entries-label"><{t}>分类<{/t}>：</dt> -->
+            <dd class="filter-entries-values">
+              <{foreach from=$screen.cat item=cat_row}>
+              <span class="filter-item"><a href="<{link app=b2c ctl=site_gallery act=index arg0=$cat_row.cat_id}>?<{if $filter.virtual_cat_id}>virtual_cat_id=<{$filter.virtual_cat_id}><{/if}><{if $filter.search_keywords.0}>scontent=n,<{$filter.search_keywords.0}><{/if}>" class="handle action-cat-filter"><{$cat_row.cat_name}></a></span>
+              <{/foreach}>
+            </dd>
+          </dl>
+          <{/if}>
+
+          <!-- 品牌 -->
+          <{if $screen.brand}>
+          <{assign var='filter_num' value=$filter_num+1}>
+          <dl class="filter-entries clearfix" data-label="brand_id">
+            <dt class="filter-entries-label"><{t}>品牌<{/t}>：</dt>
+            <{if count($screen.brand)>10}>
+            <dd class="filter-entries-more action-unfold-entries"><a href="javascript:void(0);"><span class="text" data-toggle="收起">更多</span><i class="icon" data-toggle="&#x37;">&#x36;</i></a></dd>
+            <{/if}>
+            <dd class="filter-entries-values">
+              <span class="filter-item <{if !$active_arr.brand}>active<{/if}>"><a href="javascript:void(0);" class="handle action-select-unlimit">不限</a></span>
+              <{foreach from=$screen.brand item=brand_row name=name}>
+                <{if $smarty.foreach.name.iteration == 11}>
+                <span class="filter-item-hide">
+                <{/if}>
+                  <span class="filter-item <{$brand_row.active}>" data-fid="brand_id-<{$brand_row.brand_id}>" > <a href="javascript:void(0);" class="handle action-select-filter"><{$brand_row.brand_name}></a><a href="javascript:void(0);" class="icon action-delete-filter">&#xd7;</a></span>
+                <{if $smarty.foreach.name.iteration >10 && $smarty.foreach.name.last }>
+                </span>
+                <{/if}>
+              <{/foreach}>
+            </dd>
+          </dl>
+          <{/if}>
+
+          <!-- 线下体验店 -->
+          <{if $screen.store}>
+          <{assign var='filter_num' value=$filter_num+1}>
+          <dl class="filter-entries clearfix" data-label="store_id">
+            <dt class="filter-entries-label"><{t}>线下体验店<{/t}>：</dt>
+            <{if count($screen.store)>10}>
+            <dd class="filter-entries-more action-unfold-entries"><a href="javascript:void(0);"><span class="text" data-toggle="收起">更多</span><i class="icon" data-toggle="&#x37;">&#x36;</i></a></dd>
+            <{/if}>
+            <dd class="filter-entries-values">
+              <span class="filter-item <{if !$active_arr.store}>active<{/if}>"><a href="javascript:void(0);" class="handle action-select-unlimit">不限</a></span>
+              <{foreach from=$screen.store item=store_row name=name}>
+                <{if $smarty.foreach.name.iteration == 11}>
+                <span class="filter-item-hide">
+                <{/if}>
+                  <span class="filter-item <{$store_row.active}>" data-fid="store_id-<{$store_row.store_id}>" > <a href="javascript:void(0);" class="handle action-select-filter"><{$store_row.name}></a><a href="javascript:void(0);" class="icon action-delete-filter">&#xd7;</a></span>
+                <{if $smarty.foreach.name.iteration >10 && $smarty.foreach.name.last }>
+                </span>
+                <{/if}>
+              <{/foreach}>
+            </dd>
+          </dl>
+          <{/if}>
+
+          <!-- 价格-->
+          <{if $screen.price && $env.conf.b2c.gallery.display.price == 'true'}>
+          <{assign var='filter_num' value=$filter_num+1}>
+          <dl class="filter-entries clearfix" data-label="price" data-single="true">
+            <dt class="filter-entries-label">价格：</dt>
+            <dd class="filter-entries-values filter-non-fold">
+              <span class="filter-item <{if !$active_arr.price}>active<{/if}>"><a href="javascript:void(0);" class="handle action-select-unlimit">不限</a></span>
+              <{foreach from=$screen.price item=price_row}>
+              <span class="filter-item <{$price_row.active}>" data-fid="price-<{$price_row.min}>~<{$price_row.max}>"><a href="javascript:void(0);" class="handle action-select-filter"><{$price_row.min}>-<{$price_row.max}>元</a></span>
+              <{/foreach}>
+              <span class="filter-item" data-fid="price-custom">
+                <span class="filter-item-input">
+                  <input type="text" name="" size="4" class="action-filter-input"><span class="input-seq">-</span><input type="text" name="" size="4" class="action-filter-input">
+                </span>
+                <span class="filter-item-pop">
+                  <a href="javascript:void(0);" class="action-reset-price">清空</a><button type="button" class="btn btn-simple action-confirm-price"><span><span>确定</span></span></button>
+                </span>
+              </span>
+            </dd>
+          </dl>
+          <{/if}>
+
+          <!-- 扩展属性 -->
+          <{if $screen.props}>
+          <{assign var='props_select' value=array()}>
+          <{foreach from=$screen.props item=props_row key=key}>
+            <{if $props_row.search == 'select'}>
+              <{assign var='props_select' value=array_merge($props_select,array($props_row))}>
+              <{continue}>
+            <{/if}>
+          <{assign var='filter_num' value=$filter_num+1}>
+          <dl class="filter-entries clearfix<{if $filter_num > 5 }> hide<{/if}>" data-label="p_<{$key}>">
+            <dt class="filter-entries-label"><{$props_row.name}>：</dt>
+            <{if count($props_row.options)>10}>
+            <dd class="filter-entries-more action-unfold-entries"><a href="javascript:void(0);"><span class="text" data-toggle="收起">更多</span><i class="icon" data-toggle="&#x37;">&#x36;</i></a></dd>
+            <{/if}>
+            <dd class="filter-entries-values">
+              <{if $props_row.active}>
+              <span class="filter-item"><a href="javascript:void(0);" class="handle action-select-unlimit">不限</a></span>
+              <{else}>
+              <span class="filter-item active"><a href="javascript:void(0);" class="handle action-select-unlimit">不限</a></span>
+              <{/if}>
+              <{foreach from=$props_row.options item=options_v key=options_k name=name}>
+                <{if $smarty.foreach.name.iteration == 11}>
+                <span class="filter-item-hide">
+                <{/if}>
+                <span class="filter-item <{$props_row.active.[$options_k]}>" data-fid="p_<{$props_row.goods_p}>-<{$options_k}>"><a href="javascript:void(0);" class="handle action-select-filter"><{$options_v}></a><a href="javascript:void(0);" class="icon action-delete-filter">&#xd7;</a></span>
+                <{if $smarty.foreach.name.iteration >10 && $smarty.foreach.name.last}>
+                </span>
+                <{/if}>
+              <{/foreach}>
+            </dd>
+          </dl>
+          <{/foreach}>
+          <{/if}>
+
+          <!-- 规格 -->
+          <{if $screen.spec}>
+          <{assign var='spec_select' value=array()}>
+          <{foreach from=$screen.spec item=spec_row key=spec_id}>
+          <{if $spec_row.spec_style == 'select'}>
+          <{assign var='spec_select' value=array_merge($spec_select,array($spec_row))}>
+          <{continue}>
+          <{/if}>
+          <{assign var='filter_num' value=$filter_num+1}>
+          <dl class="filter-entries clearfix<{if $filter_num > 5}> hide<{/if}>" data-label="s_<{$spec_id}>">
+            <dt class="filter-entries-label"><{$spec_row.name}>：</dt>
+            <{if count($spec_row.spec_value)>10}>
+            <dd class="filter-entries-more action-unfold-entries"><a href="javascript:void(0);"><span class="text" toggle="收起">更多</span><i class="icon" toggle="&#x37;">&#x36;</i></a></dd>
+            <{/if}>
+            <dd class="filter-entries-values">
+              <{if $spec_row.active}>
+              <span class="filter-item"><a href="javascript:void(0);" class="handle action-select-unlimit">不限</a></span>
+              <{else}>
+              <span class="filter-item active"><a href="javascript:void(0);" class="handle action-select-unlimit">不限</a></span>
+              <{/if}>
+              <{foreach from=$spec_row.spec_value item=spec_value key=spec_value_id name=name}>
+                <{if $smarty.foreach.name.iteration == 11}>
+                <span class="filter-item-hide">
+                <{/if}>
+                <span class="filter-item <{$spec_row.active.[$spec_value_id]}>" data-fid="s_<{$spec_id}>-<{$spec_value_id}>"><a href="javascript:void(0);" class="handle action-select-filter"><{$spec_value.spec_value}></a><a href="javascript:void(0);" class="icon action-delete-filter">&#xd7;</a></span>
+                <{if $smarty.foreach.name.iteration >10 && $smarty.foreach.name.last }>
+                </span>
+                <{/if}>
+              <{/foreach}>
+            </dd>
+          </dl>
+          <{/foreach}>
+          <{/if}>
+        </div>
+
+        <{if $spec_select || $props_select}>
+        <{assign var='filter_num' value=$filter_num+1}>
+        <div id="filter_dropdown" class="filter-dropdown-container<{if $filter_num >5}> hide<{/if}>">
+          <div class="filter-dropdown-inner clearfix">
+            <!-- 扩展属性下拉 -->
+            <{if $props_select}>
+            <{foreach from=$props_select item=props_row key=key}>
+            <dl class="filter-dropdown-item " data-label="p_<{$key}>">
+              <dt class="filter-dropdown-label"><{$props_row.name}><i class="icon">&#x36;</i></dt>
+              <dd class="filter-dropdown-values">
+              <{if $props_row.active}>
+              <span class="filter-item "><a href="javascript:void(0);" class="handle action-select-unlimit">不限</a></span>
+              <{else}>
+              <span class="filter-item active"><a href="javascript:void(0);" class="handle action-select-unlimit">不限</a></span>
+              <{/if}>
+                <{foreach from=$props_row.options item=options_v key=options_k}>
+                <span class="filter-item <{$props_row.active.[$options_k]}>" data-fid="p_<{$props_row.goods_p}>-<{$options_k}>"><a href="javascript:void(0);" class="handle action-select-filter"><{$options_v}></a><a href="javascript:void(0);" class="icon action-delete-filter">&#xd7;</a></span>
+                <{/foreach}>
+              </dd>
+            </dl>
+            <{/foreach}>
+            <{/if}>
+
+            <!-- 规格下拉 -->
+            <{if $spec_select}>
+            <{foreach from=$spec_select item=spec_row key=spec_id}>
+            <dl class="filter-dropdown-item" data-label="s_<{$spec_id}>">
+              <dt class="filter-dropdown-label"><{$spec_row.name}><i class="icon">&#x36;</i></dt>
+              <dd class="filter-dropdown-values">
+              <span class="filter-item<{if not $spec_row.active}> active<{/if}>"><a href="javascript:void(0);" class="handle action-select-unlimit">不限</a></span>
+              <{foreach from=$spec_row.spec_value item=spec_value key=spec_value_id}>
+              <span class="filter-item <{$spec_row.active.[$spec_value_id]}>" data-fid="s_<{$spec_id}>-<{$spec_value_id}>"><a href="javascript:void(0);" class="handle action-select-filter"><{$spec_value.spec_value}></a><a href="javascript:void(0);" class="icon action-delete-filter">&#xd7;</a></span>
+              <{/foreach}>
+              </dd>
+            </dl>
+            <{/foreach}>
+            <{/if}>
+          </div>
+        </div>
+        <{/if}>
+
+        <{if $filter_num > 5}>
+        <div class="filter-more"><a href="javascript:void(0);" class="handle action-filter-more"><span class="text" data-toggle="<{t}>收起筛选项<{/t}>"><{t}>显示更多筛选项<{/t}></span><i class="icon" data-toggle="&#x37;">&#x36;</i></a></div>
+        <{/if}>
+
+        <!-- 促销标签 -->
+        <{if $screen.tags.promotion && $env.conf.b2c.gallery.display.tag.promotion == 'true'}>
+        <div id="filter_promotion" class="filter-promotion">
+          <dl data-label="pTag">
+            <dt class="filter-promotion-label"><{t}>促销商品<{/t}>：</dt>
+            <dd class="filter-promotion-values">
+              <span class="filter-item <{if !$active_arr.pTags}>active<{/if}>"><a href="javascript:void(0);" class="handle action-select-unlimit">不限</a></span>
+              <{foreach from=$screen.tags.promotion item=tag_p_row}>
+              <span class="filter-item <{$tag_p_row.active}>" data-fid="pTag-<{$tag_p_row.tag_id}>"><a href="javascript:void(0);" class="handle action-select-filter"><{$tag_p_row.tag_name}></a><a href="javascript:void(0);" class="icon action-delete-filter">&#xd7;</a></span>
+              <{/foreach}>
+            </dd>
+          </dl>
+        </div>
+        <{/if}>
+        <div id="filter_selected" class="filter-selected clearfix">
+          <dl class="filter-selected-list clearfix">
+            <dt class="filter-selected-title">您已选择：</dt>
+            <dd class="filter-selected-values">
+            <{foreach from=$active_filter item=item}>
+            <span class="filter-selected-entries" data-label="<{$item.label}>" data-single="true">
+              <label for="" class="filter-selected-label"><{$item.title}>：</label>
+              <{foreach from=$item.options item=row}>
+              <span class="filter-selected-item" data-fid="<{$item.label}>-<{$row.data}>"><{$row.name}><a href="javascript:void(0);" class="action-delete-filter icon">&#xd7;</a></span>
+              <{/foreach}>
+            </span>
+            <{/foreach}>
+            </dd>
+          </dl>
+
+          <div class="filter-clean"><a href="javascript:location.reload();Memory.clean('gallery.filter');">重置筛选项<i class="icon">&#x27;</i></a></div>
+        </div>
+      </div>
+    </div>
+    <!-- 排序状态条 -->
+    <div id="gallery_sortbar" class="gallery-sortbar clearfix">
+      <div class="gallery-sort">
+        <a href="javascript:void(0);" class="action-sort <{if !$orderby_sql}>active<{/if}>" data-sort=""><em>默认</em></a>
+        <span class="line"></span>
+        <a href="javascript:void(0);" <{if $orderby_sql == 'price desc' || $orderby_sql == 'price asc'}>class="action-sort <{$orderby_sql|replace:' ':'-'}> active" data-sort="<{$orderby_sql}>"<{else}> class="action-sort price-desc" data-sort="price desc"<{/if}>><em>价格<span class="icon desc">&#x2a;</span><span class="icon asc">&#x2b;</span></em></a>
+        <span class="line"></span>
+        <a href="javascript:void(0);" class="action-sort <{if $orderby_sql == 'buy_w_count desc'}> active<{/if}>" data-sort="buy_w_count desc"><em>销量<span class="icon">&#x2a;</span></em></a>
+        <span class="line"></span>
+        <label  class="hide" for="">排序：</label>
+        <select name="orderby" id="" class="action-orderby hide">
+          <{foreach from=$screen.orderBy item=orderBy}>
+          <option value="<{$orderBy.sql}>" <{if $orderBy.sql == $orderby_sql}>selected<{/if}>><{$orderBy.label}></option>
+          <{/foreach}>
+        </select>
+        <span class="ml15 mr15">上架时间</span>
+      </div>
+      <div class="gallery-showmode">
+        <input type="hidden" name="showtype" value="<{$showtype}>">
+        <a href="javascript:void(0);" class="hide grid-show action-showmode <{if $showtype == 'grid'}>active<{/if}>" data-show-type="grid"><i class="icon">&#x59;</i>大图</a>
+        <a href="javascript:void(0);" class="hide list-show action-showmode <{if $showtype == 'list'}>active<{/if}>" data-show-type="list"><i class="icon">&#x5a;</i>列表</a>
+        <{if $env.conf.b2c.gallery.display.stock_goods == 'true'}>
+        <input type="checkbox" name="is_store" id="" class="action-available" <{if $is_store}>checked<{/if}>>
+        <label for=""><{t}>仅显示有货<{/t}></label>
+        <{/if}>
+      </div>
+      <div class="mini-pageview">
+        <span class="page-action">
+          <a href="javascript:void(0);" class="flip prev<{if $page==1}> over<{/if}>"><i class="icon">&#x34;</i></a>
+        <span class="page-count"><span class="page-current"><{$page}></span>/<span class="page-total"><{$pagetotal}></span></span>
+          <a href="javascript:void(0);" class="flip next<{if $pagetotal==1}> over<{/if}>"><i class="icon">&#x35;</i></a>
+        </span>
+      </div>
+      <{if $screen.tags.goods}>
+      <div class="sortbar-filter-tags hide">
+        <label for=""><{t}>筛选<{/t}>：</label>
+        <{foreach from=$screen.tags.goods item=tag_g_row}>
+        <input type="checkbox" name="gTag[]" id="" class="action-gtags" value="<{$tag_g_row.tag_id}>" <{$tag_g_row.active}>>
+        <label for=""><{$tag_g_row.tag_name}></label>
+        <{/foreach}>
+      </div>
+      <{/if}>
+    </div>

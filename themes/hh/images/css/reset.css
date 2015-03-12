@@ -1,0 +1,129 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{
+	margin:0;
+	padding:0;
+}
+.fl{
+	float:left;
+}
+html{
+	color:#1e1e1e;
+}
+body{
+	font-size: 12px;
+	font-family:"Microsoft Yahei","SimSun";
+}
+table{
+	border-collapse:collapse;
+	border-spacing:0;
+}
+fieldset,img{
+	border:0;
+}
+address,caption,cite,code,dfn,em,strong,th,var{
+	font-style:normal;
+	font-weight:normal;
+}
+ol,ul{
+	list-style:none;
+}
+caption,th{
+	text-align:left;
+}
+h1,h2,h3,h4,h5,h6{
+	font-size:100%;
+}
+q:before,q:after{
+	content:'';
+}
+abbr,acronym{
+	border:0;
+	font-variant:normal;
+}
+a{
+	color:#666;
+	text-decoration: none;
+}
+a:active{
+	color:#f9972f;
+}
+sup{
+	vertical-align:text-top;
+}
+
+sub{
+	vertical-align:text-bottom;
+}
+/*input{
+	border:none;
+	outline:none;
+}*/
+button{
+	cursor: pointer;
+}
+select,button{
+	outline:none;
+	font-family: "Microsoft Yahei";
+}
+ input[type=text]{
+ 	padding-left:10px;
+ }
+input,textarea,select{
+	font-family:inherit;
+	font-size:inherit;
+	font-weight:inherit;
+	*font-size:100%;
+}
+legend{
+	color:#000;
+}
+
+
+.speci .spec-item{
+    overflow: hidden;
+  padding-bottom: 5px;
+}
+.speci .spec-item a{
+  float: left;
+  width: 38px;
+  height: 38px;
+  line-height:38px;
+  cursor: pointer;
+  background: #fff;
+  margin-right: 15px;
+  margin-bottom:10px;
+  padding:6px;
+  text-align:center;
+  border: 1px solid #DBDBDB;
+  position:relative;
+}
+.speci .spec-item span{
+  font-size: 12px;
+  font-weight: bold;
+  line-height:2;
+}
+.speci .spec-item img{
+  width:100%;
+  height:100%;
+}
+
+.speci .spec-item .selected{
+  border: 2px solid #f99020;
+  padding:5px;
+}
+.speci .spec-item .lock{
+  opacity:.6;
+  cursor:not-allowed;
+}
+.speci .spec-item  i{display:none;}
+.speci .spec-item .selected i{
+  content: "";
+  top: -15px;
+  left: 35px;
+  width: 26px;
+  height: 26px;
+  display: block;
+  position: absolute;
+  background: url(../img/icons.png) no-repeat -334px 0;
+}
+
+

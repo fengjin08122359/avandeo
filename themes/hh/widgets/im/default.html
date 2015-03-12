@@ -1,0 +1,31 @@
+<div class="rg_fixed" id="im_<{$widgets_id}>">
+    <ul>
+        <li>
+            <a href="cart.html"> <i></i>
+                <!--<span class="num">10</span> -->
+ <script>
+            var _prefix_number = '<span class="num op-cart-number">';
+            var _subfix_number = "</span>";
+            <{if $setting.cart_show_type==1}>
+            document.write(typeof(Cookie)=='undefined' ? (_prefix_number + '0' + _subfix_number) : _prefix_number + (Cookie.read('S[CART_NUMBER]')?Cookie.read('S[CART_NUMBER]'):'0') + _subfix_number);
+            <{else}>
+            document.write(typeof(Cookie)=='undefined' ? (_prefix_number + '0' + _subfix_number):  _prefix_number + (Cookie.read('S[CART_COUNT]')?Cookie.read('S[CART_COUNT]'):'0') + _subfix_number);
+            <{/if}>
+        </script>
+
+                <span>购物车</span>
+            </a>
+        </li>
+        <li>
+            <a href="member-favorite.html"> <i></i> <span>收藏夹</span> </a>
+        </li>
+        <li>
+            <i></i>
+            <a href="http://wpa.qq.com/msgrd?v=3&uin=<{$data.link}>&site=qq&menu=yes">
+                <i></i>
+                <span>联系客服</span>
+            </a>
+        </li>
+    </ul>
+</div>
+  

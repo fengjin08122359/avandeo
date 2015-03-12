@@ -1,0 +1,96 @@
+<!--<ul class="nav-list clearfix">
+-->
+<!-- footer start -->
+<div id="footer">
+	<a href="#top" class="back_to_top" id="back_to_top">
+	</a>
+	<!-- icons start -->
+	<div class="center">
+		<div class="icons">
+			<ul>
+				<li class="o2o"> <i></i>
+					<span>O2O双平台</span>
+					<span class="sm">中国家居电商领导品牌</span>
+				</li>
+				<li class="global"> <i></i>
+					<span>全球化采购</span>
+					<span class="sm">高质评价经验</span>
+				</li>
+				<li class="quality">
+					<i></i>
+					<span>100%</span>
+					<span class="sm">正品保证</span>
+				</li>
+				<li class="check">
+					<i></i>
+					<span>双重质检</span>
+					<span class="sm">品质保证</span>
+				</li>
+				<li class="time">
+					<i></i>
+					<span>限时达</span>
+					<span class="sm">最快7天到家</span>
+				</li>
+				<li class="return">
+					<i></i>
+					<span>45天</span>
+					<span class="sm">无理由退换货</span>
+				</li>
+				<li class="change">
+					<i></i>
+					<span>贵就赔</span>
+					<span class="sm">价格保护</span>
+				</li>
+				<li class="evaluate">
+					<i></i>
+					<span>万千口碑</span>
+					<span class="sm">万千家庭的选择</span>
+				</li>
+			</ul>
+		</div>
+		<!-- icons end -->
+		<!-- footer-nav start -->
+		<div class="footer-nav">
+			<div class="about ft-nav">
+				<{widgets id="footer_info1"}>
+			</div>
+			<div class="brand ft-nav">
+				<{widgets id="footer_info2"}>
+			</div>
+			<div class="help ft-nav">
+				<{widgets id="footer_info3"}>
+			</div>
+			<div class="ft-logo">
+				<span>24小时客服热线</span>
+				<span> <{widgets id="tel"}> </span>
+				<div class="sm-logo">
+
+                    <{widgets id="code"}>
+
+					<span>扫一扫，有惊喜</span>
+				</div>
+			</div>
+		</div>
+	</div>		
+</div>
+<!-- float-link -->
+<ul class="side-link">
+    <li><{widgets id="deng"}></li>
+    <li><{widgets id="gou"}></li>
+    <li><{widgets id="zhi"}></li>
+</ul>
+ <script>
+    var lk = $$(".side-link");
+    window.addEvent('domready',function(){
+        var sw = $(window).getWidth();
+        var offwidth = (sw - 1200)/2;
+        var pst = (1200 + offwidth + 5)+"px";
+        lk.setStyles({'left':pst,'top':163})
+    })
+    window.addEvent('scroll',function(){
+    	var offtop = $(document).getScrollTop();
+    	(offtop>157)?lk.tween('top',2):lk.tween('top',163);
+    })
+</script>	
+ <{footer}>
+<!-- footer end -->
