@@ -123,7 +123,7 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
             //$goods_id = $_POST['goods_id'];
             //$sql = "SELECT product_id FROM (SELECT product_id,count(product_id) AS d FROM sdb_b2c_dingzhi_index WHERE dingzhi_id =".$series_id." AND spec_value_id in(".$dz.") GROUP BY product_id )  AS c WHERE d>10";
 
-            $sql = "SELECT product_id,goods_id FROM(select count(product_id) as c,product_id,goods_id from sdb_b2c_dingzhi_index where spec_value_id IN(".$dz.") group by product_id) as d where c>10";
+            $sql = "SELECT product_id,goods_id FROM(select count(product_id) as c,product_id,goods_id from sdb_b2c_dingzhi_index where spec_value_id IN(".$dz.") AND dingzhi_id = ".$series_id." group by product_id) as d where c>10";
             $data = $db->selectrow($sql);
             $product_data = $db->selectrow("SELECT * FROM sdb_b2c_products WHERE product_id=".$data['product_id']);
 

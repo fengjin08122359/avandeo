@@ -127,6 +127,7 @@ window.addEvent('domready',function(e){
         updateText(el);
     });
 
+    //$$(".spec-main[data-spec-id=5] .cur").fireEvent('click');
     var updateData = function(el){
         updateText(el);
         var data = [];
@@ -182,6 +183,7 @@ window.addEvent('domready',function(e){
             }
         }
     }
+    clickEvent($$(".spec-main[data-spec-id=5] .cur")[0]);
     var updateItem = function(el,json){
         var tpl = '<li class="s-item {cur}" data-title="{spec_value_name}" data-s-id="{spec_value_id}"><img src="{spec_image}"></li>';
         var html = '';
