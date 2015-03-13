@@ -81,6 +81,29 @@
             </dd>
           </dl>
           <{/if}>
+          
+           <!-- 风格 -->
+          <{if $screen.style}>
+          <{assign var='filter_num' value=$filter_num+1}>
+          <dl class="filter-entries clearfix" data-label="style_id">
+            <dt class="filter-entries-label"><{t}>风格<{/t}>：</dt>
+            <{if count($screen.style)>10}>
+            <dd class="filter-entries-more action-unfold-entries"><a href="javascript:void(0);"><span class="text" data-toggle="收起">更多</span><i class="icon" data-toggle="&#x37;">&#x36;</i></a></dd>
+            <{/if}>
+            <dd class="filter-entries-values">
+              <span class="filter-item <{if !$active_arr.style}>active<{/if}>"><a href="javascript:void(0);" class="handle action-select-unlimit">不限</a></span>
+              <{foreach from=$screen.style item=style_row name=name}>
+                <{if $smarty.foreach.name.iteration == 11}>
+                <span class="filter-item-hide">
+                <{/if}>
+                  <span class="filter-item <{$style_row.active}>" data-fid="style_id-<{$style_row.style_id}>" > <a href="javascript:void(0);" class="handle action-select-filter"><{$style_row.name}></a><a href="javascript:void(0);" class="icon action-delete-filter">&#xd7;</a></span>
+                <{if $smarty.foreach.name.iteration >10 && $smarty.foreach.name.last }>
+                </span>
+                <{/if}>
+              <{/foreach}>
+            </dd>
+          </dl>
+          <{/if}>
 
           <!-- 价格-->
           <{if $screen.price && $env.conf.b2c.gallery.display.price == 'true'}>

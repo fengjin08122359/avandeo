@@ -97,7 +97,8 @@ class b2c_ctl_site_gallery extends b2c_frontpage{
     private function _add_screen(&$screen,$cat_id,$filter)
     {
         $screen['screen']['store'] = &app::get('b2c')->model('store')->getList('*');
-        //return true;
+        $screen['screen']['style'] = &app::get('b2c')->model('style')->getList('*');
+        
         if($filter['store_id']){
             $store_options = array();
             while (list($k,$v) = each($filter['store_id'])) {
@@ -113,6 +114,23 @@ class b2c_ctl_site_gallery extends b2c_frontpage{
                 'options'=>$store_options,
             );
         }
+        
+	    if($filter['style_id']){
+            $style_options = array();
+            while (list($k,$v) = each($filter['style_id'])) {
+                $style_data = &app::get('b2c')->model('style')->dump($v);
+                $style_options[$v] = array(
+                    'data'=>$v,
+                    'name'=>$style_data['name'],
+                );
+            }
+            $screen['active_filter']['style'] = array(
+                'title'=>$this->app->_('风格'),
+                'label'=>'style_id',
+                'options'=>$style_options,
+            );
+	    }
+        
     }
     /*
      * 面包屑数据设置

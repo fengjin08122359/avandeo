@@ -221,7 +221,7 @@ class b2c_mdl_goods extends dbeav_model{
         }
         if(!empty($filter['style_id']))
         {
-            $extend_where .= " AND `sdb_b2c_goods`.`goods_id` in (SELECT `goods_id` FROM `sdb_b2c_styleproduct` WHERE `style_id` = {$filter['style_id']} ) ";
+            $extend_where .= " AND `sdb_b2c_goods`.`goods_id` in (SELECT `goods_id` FROM `sdb_b2c_styleproduct` WHERE `style_id` in  (".implode(",", $filter['style_id']).") ) ";
         }
         return parent::_filter($filter) . $extend_where;
     }
