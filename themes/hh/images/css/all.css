@@ -210,7 +210,7 @@ body{font-family:microsoft Yahei,"黑体",arial!important;overflow-x: hidden;}
 #customized .main-else .main-choice .item-match .bd .match-a,#customized .main-else .main-choice .item-match .bd .match-b{height:243px;padding:0 15px;overflow: hidden;}
 #customized .main-else .main-choice .item-match .bd .match-a{border-bottom:1px solid #f1f1f1;margin-bottom:15px;}
 #customized .main-else .main-choice .item-match .bd .match-b{/*padding-top:15px;*/}
-#customized .main-else .main-choice .item-match .bd .match-pic{float:left;width:286px;height:206px;line-height:206px;margin-right:15px;border: 1px solid #eeeeee;*font-size:185.4px;}
+#customized .main-else .main-choice .item-match .bd .match-pic{float:left;width:286px;height:206px;line-height:206px;margin-right:15px;border: 1px solid #eeeeee;*font-size:185.4px;position: relative;overflow: hidden;}
 #customized .main-else .main-choice .item-match .bd .match-pic img{width:286px;vertical-align: middle;}
 #customized .main-else .main-choice .item-match .bd .match-info{float:left;width:480px;color:#c4c4c4;font-size:14px;line-height: 1.5;}
 #customized .main-else .main-choice .item-match .bd .match-info span.tit{color:#323232;font-size:16px;font-weight: bold;}
@@ -219,7 +219,7 @@ body{font-family:microsoft Yahei,"黑体",arial!important;overflow-x: hidden;}
 #customized .main-else .main-choice .item-match .bd .match-btn button{color:#fff;width:128px;height:35px;border:none;font-size:14px;border-radius: 3px;background:#cccccc;}
 #customized .main-else .main-choice .item-match .bd .match-btn.active button{background:#FF4014;}
 #customized .s-price::before{content:"￥"}
-#customized .gl-price{height:32px; line-height:32px; color:#ffffff; font-size:14px; padding-left:20px; font-weight:bold; background-color:#000000; opacity:.5;position: relative;margin-top: -43px;}
+#customized .gl-price{height:32px; line-height:32px; color:#ffffff; font-size:14px; padding-left:20px; font-weight:bold; background-color:#000000; opacity:.5;position: absolute;left: 0;right: 0;bottom: 0;}
 #customized .main-else .main-info .info-detail{height:406px;}
 /*main-final*/
 #customized .main-final .style-list{height:600px; clear:both;}
