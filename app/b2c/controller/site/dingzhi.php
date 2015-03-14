@@ -152,8 +152,8 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
             //("SELECT * FROM sdb_b2c_dingzhi_index WHERE dingzhi_id=".$dingzhi_id." AND spec_value_id = 4 ");
             $spec_id = $_POST['spec_id'];
             $spec_value_id = $_POST['spec_value_id'];
-            $key = md5($dingzhi_id.$spec_id.$spec_value_id);
-            base_kvstore::instance('b2c.dingzhi')->fetch($key, $list);
+            $key1 = md5($dingzhi_id.$spec_id.$spec_value_id);
+            base_kvstore::instance('b2c.dingzhi')->fetch($key1, $list);
             if(!$list){
                 $sql = "SELECT spec_value_id FROM sdb_b2c_dingzhi_index WHERE product_id IN(SELECT product_id FROM sdb_b2c_dingzhi_index WHERE spec_value_id =".$spec_value_id." AND dingzhi_id=".$dingzhi_id.") AND spec_id=".$spec_id." GROUP BY spec_value_id";
                 $db = kernel::database();
@@ -172,7 +172,7 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                     $goods['spec'][] = $tmp;
                     $i=false;
                 }
-                base_kvstore::instance('b2c.dingzhi')->store($key, $goods);
+                base_kvstore::instance('b2c.dingzhi')->store($key1, $goods);
                 echo json_encode($goods);
             }else{
                 echo json_encode($list);
