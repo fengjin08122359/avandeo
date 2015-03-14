@@ -117,50 +117,70 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
             $db = kernel::database();
             $lib = kernel::single("base_storager");
 
-            $dz = $_GET['dz'];
+            $dz = $_POST['dz'];
 
-            $series_id = $_GET['dingzhi_id'];
-            //$goods_id = $_GET['goods_id'];
+            $series_id = $_POST['dingzhi_id'];
+            //$goods_id = $_POST['goods_id'];
             //$sql = "SELECT product_id FROM (SELECT product_id,count(product_id) AS d FROM sdb_b2c_dingzhi_index WHERE dingzhi_id =".$series_id." AND spec_value_id in(".$dz.") GROUP BY product_id )  AS c WHERE d>10";
 
-            $sql = "SELECT product_id,goods_id FROM(select count(product_id) as c,product_id,goods_id from sdb_b2c_dingzhi_index where spec_value_id IN(".$dz.") AND dingzhi_id = ".$series_id." group by product_id) as d where c>10";
-            $data = $db->selectrow($sql);
-            $product_data = $db->selectrow("SELECT * FROM sdb_b2c_products WHERE product_id=".$data['product_id']);
+            $key = md5($dz.$series_id);
+            base_kvstore::instance('b2c.dingzhi_s')->fetch($key, $list);
 
-            $goods_data  =$db->selectrow("SELECT image_default_id FROM sdb_b2c_goods WHERE goods_id=".$data['goods_id']);
-            if($data){
-                $ouput_data['goods_id'] = $data['goods_id'];
-                $ouput_data['price'] = $product_data['price'];
-                $ouput_data['product_id'] = $data['product_id'];
-                $ouput_data['image_url'] = $lib->image_path($goods_data['image_default_id'],"b");;
+            if($list){
+                echo json_encode($list);
+            }else{
+                $sql = "SELECT product_id,goods_id FROM(select count(product_id) as c,product_id,goods_id from sdb_b2c_dingzhi_index where spec_value_id IN(".$dz.") group by product_id) as d where c>10";
+                $data = $db->selectrow($sql);
+                $product_data = $db->selectrow("SELECT * FROM sdb_b2c_products WHERE product_id=".$data['product_id']);
+
+                $goods_data  =$db->selectrow("SELECT image_default_id FROM sdb_b2c_goods WHERE goods_id=".$data['goods_id']);
+                if($data){
+                    $ouput_data['goods_id'] = $data['goods_id'];
+                    $ouput_data['price'] = $product_data['price'];
+                    $ouput_data['product_id'] = $data['product_id'];
+                    $ouput_data['image_url'] = $lib->image_path($goods_data['image_default_id'],"b");;
+                }
+                base_kvstore::instance('b2c.dingzhi')->store($key, $ouput_data);
+                echo json_encode($ouput_data);
             }
-            echo json_encode($ouput_data);
 
         }
 
 
         public function liandong(){
-            $dingzhi_id = $_GET['dingzhi_id'];
+            $dingzhi_id = $_POST['dingzhi_id'];
             //("SELECT * FROM sdb_b2c_dingzhi_index WHERE dingzhi_id=".$dingzhi_id." AND spec_value_id = 4 ");
-            $spec_id = $_GET['spec_id'];
-                $spec_value_id = $_GET['spec_value_id'];
-            $sql = "SELECT spec_value_id FROM sdb_b2c_dingzhi_index WHERE spec_value_id =".$spec_value_id." AND dingzhi_id=".$dingzhi_id." AND spec_id=".$spec_id." GROUP BY spec_value_id";
-            $db = kernel::database();
-            $lib = kernel::single("base_storager");
-            $data = $db->select($sql);
-            $i = true;
-            foreach($data as $key=>$value){
-                $b = $db->selectrow("SELECT spec_value_id,spec_id,spec_value,spec_image,alias FROM sdb_b2c_spec_values WHERE spec_value_id=".$value['spec_value_id']);
-                $tmp = array();
-                $tmp['spec_value_id'] = $b['spec_value_id'];
-                $tmp['spec_value_name'] = $b['spec_value'];
-                $tmp['spec_memo'] = $b['alias'];
-                $tmp['spec_image'] =$lib->image_path($b['spec_image'],"b");
-                if($i)$tmp['defalut'] = "ture";
-                $goods['spec'][] = $tmp;
-                $i=false;
+            $spec_id = $_POST['spec_id'];
+            $spec_value_id = $_POST['spec_value_id'];
+            $key = md5($dingzhi_id.$spec_id.$spec_value_id);
+            base_kvstore::instance('b2c.dingzhi')->fetch($key, $list);
+            if(!$list){
+                $sql = "SELECT spec_value_id FROM sdb_b2c_dingzhi_index WHERE product_id IN(SELECT product_id FROM sdb_b2c_dingzhi_index WHERE spec_value_id =".$spec_value_id." AND dingzhi_id=".$dingzhi_id.") AND spec_id=".$spec_id." GROUP BY spec_value_id";
+                $db = kernel::database();
+                $lib = kernel::single("base_storager");
+                $data = $db->select($sql);
+                $i = true;
+
+                foreach($data as $key=>$value){
+                    $b = $db->selectrow("SELECT spec_value_id,spec_id,spec_value,spec_image,alias FROM sdb_b2c_spec_values WHERE spec_value_id=".$value['spec_value_id']);
+                    $tmp = array();
+                    $tmp['spec_value_id'] = $b['spec_value_id'];
+                    $tmp['spec_value_name'] = $b['spec_value'];
+                    $tmp['spec_memo'] = $b['alias'];
+                    $tmp['spec_image'] =$lib->image_path($b['spec_image'],"b");
+                    if($i)$tmp['defalut'] = "ture";
+                    $goods['spec'][] = $tmp;
+                    $i=false;
+                }
+                base_kvstore::instance('b2c.dingzhi')->store($key, $goods);
+                echo json_encode($goods);
+            }else{
+                echo json_encode($list);
             }
-            echo json_encode($goods);
+
+
+
+
         }
 
 
