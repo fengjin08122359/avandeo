@@ -140,7 +140,7 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                     $ouput_data['product_id'] = $data['product_id'];
                     $ouput_data['image_url'] = $lib->image_path($goods_data['image_default_id'],"b");;
                 }
-                base_kvstore::instance('b2c.dingzhi')->store($key, $ouput_data);
+                base_kvstore::instance('b2c.dingzhi_s')->store($key, $ouput_data);
                 echo json_encode($ouput_data);
             }
 
