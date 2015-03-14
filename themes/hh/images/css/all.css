@@ -1,4 +1,5 @@
-a,:hover{-webkit-transition:all ease 0.2s;-moz-transition:all ease 0.2s;transition:all ease 0.2s;color: #666666;}
+a{color: #666666;}
+a,:hover{-webkit-transition:all ease 0.2s;-moz-transition:all ease 0.2s;transition:all ease 0.2s;}
 body{font-family:microsoft Yahei,"黑体",arial!important;overflow-x: hidden;}
 /*header */
 #gallery .f-icon{font-family:microsoft Yahei,"黑体",arial;}
@@ -107,6 +108,7 @@ body{font-family:microsoft Yahei,"黑体",arial!important;overflow-x: hidden;}
 #customized .main-choice .choice-item .hd h2{color: #fff;text-align: center;font: 16px/36px "Microsoft Yahei";}
 #customized .main-choice .choice-item .bd{min-height: 230px;padding: 15px;border-top: none;overflow: hidden;position: relative;background: #F5F5F5;border: 1px solid #EFEFEF;border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;}
 #customized .main-choice .choice-item .bd .inner div{padding-bottom: 5px;overflow: hidden;float: left;_display:inline;}
+#customized .main-choice .choice-item .bd .inner div.base-b{clear: left;}
 #customized .main-choice.step2 .choice-item .bd .inner div{overflow: inherit;}
 #customized .main-choice .choice-item .bd span{display: block;line-height: 3;}
 #customized .main-choice .choice-item .bd ul li{float: left;min-width: 48px;height: 48px;line-height:48px;*font-size:43.2px;cursor: pointer;margin-right: 15px;border: 2px solid #dbdbdb;background: #ffffff;}
@@ -640,6 +642,7 @@ a.btn-addfav i,a.btn-faved i{display:none;}
 #passport .passport-hd{height:140px;}
 #passport .passport-hd .hd-logo{float:left;padding-top:80px;}
 #passport .passport-hd .hd-logo h1{text-indent: -9999px;width:363px;height:45px;background: url(../img/passport-logo.png) no-repeat;}
+#passport .passport-hd .hd-logo h1 a{display:block;width:363px;height:45px;}
 #passport .passport-hd .hd-link{float:right;padding-top:110px;}
 #passport .passport-hd .hd-link a{padding:0 10px;color:#333;}
 #passport .passport-hd .hd-link .home{border-right:1px solid #333;}
@@ -656,6 +659,7 @@ input:-webkit-autofill{-webkit-box-shadow: 0 0 0px 1000px #F5FAFF inset}
 #passport .passport-bd .bd-form .form-act button{width:316px;margin:20px 0;}
 #passport .passport-bd .bd-form .form-act button span{width:100%;padding:0;font-size:16px;background:#0d5ba1;}
 #passport .passport-bd .bd-form .form-act button span span{padding:0;}
+#passport .passport-bd .bd-form .form-act button span:hover{color: #ffffff;}
 #passport .passport-bd .bd-form .form-act a{float:right;}
 #passport .passport-bd .bd-form .form-act{margin:0;}
 #passport .passport-bd .bd-form .form-coagent span{display: inline-block;padding:0 10px;line-height: 1;border-right:1px solid #ccc;}
@@ -849,3 +853,10 @@ to {left:-300px;}
 .oluoba-wrap{position: relative;}
 .oluoba{position:absolute;left:50%;margin-left:-882px;height:3005px;}
 .oluoba img{vertical-align:top;}
+.message-body .message-content{font-size: 18px;margin-left: 0;}
+.white-list{position: relative;}
+.white-list a{position:absolute;width: 330px;height: 307px;display:block;text-indent: -9999px;top:10px;}
+.white-list a.a1{left:30px;}
+.white-list a.a2{left:410px;}
+.white-list a.a3{left:806px;}
+.white-list a.a4{right:0;top:316px;height: 30px;}
