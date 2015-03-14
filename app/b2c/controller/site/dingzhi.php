@@ -113,14 +113,14 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
 
         public function  getProduct(){
 
-            $this->_response->set_header('Cache-Control', 'no-store');
+            //$this->_response->set_header('Cache-Control', 'no-store');
             $db = kernel::database();
             $lib = kernel::single("base_storager");
 
-            $dz = $_POST['dz'];
+            $dz = $_GET['dz'];
 
-            $series_id = $_POST['dingzhi_id'];
-            //$goods_id = $_POST['goods_id'];
+            $series_id = $_GET['dingzhi_id'];
+            //$goods_id = $_GET['goods_id'];
             //$sql = "SELECT product_id FROM (SELECT product_id,count(product_id) AS d FROM sdb_b2c_dingzhi_index WHERE dingzhi_id =".$series_id." AND spec_value_id in(".$dz.") GROUP BY product_id )  AS c WHERE d>10";
 
             $sql = "SELECT product_id,goods_id FROM(select count(product_id) as c,product_id,goods_id from sdb_b2c_dingzhi_index where spec_value_id IN(".$dz.") AND dingzhi_id = ".$series_id." group by product_id) as d where c>10";
@@ -140,11 +140,11 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
 
 
         public function liandong(){
-            $dingzhi_id = $_POST['dingzhi_id'];
+            $dingzhi_id = $_GET['dingzhi_id'];
             //("SELECT * FROM sdb_b2c_dingzhi_index WHERE dingzhi_id=".$dingzhi_id." AND spec_value_id = 4 ");
-            $spec_id = $_POST['spec_id'];
-                $spec_value_id = $_POST['spec_value_id'];
-            $sql = "SELECT spec_value_id FROM sdb_b2c_dingzhi_index WHERE product_id IN(SELECT product_id FROM sdb_b2c_dingzhi_index WHERE spec_value_id =".$spec_value_id." AND dingzhi_id=".$dingzhi_id.") AND spec_id=".$spec_id." GROUP BY spec_value_id";
+            $spec_id = $_GET['spec_id'];
+                $spec_value_id = $_GET['spec_value_id'];
+            $sql = "SELECT spec_value_id FROM sdb_b2c_dingzhi_index WHERE spec_value_id =".$spec_value_id." AND dingzhi_id=".$dingzhi_id." AND spec_id=".$spec_id." GROUP BY spec_value_id";
             $db = kernel::database();
             $lib = kernel::single("base_storager");
             $data = $db->select($sql);

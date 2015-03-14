@@ -138,6 +138,7 @@ window.addEvent('domready',function(e){
         new Request.JSON({
             url:'<{link app=b2c ctl=site_dingzhi act=getProduct}>',
             data:'dingzhi_id=<{$data.dingzhi_id}>&goods_id='+$('gz').value+'&dz='+data.join(','),
+            method:'get',
             onComplete:function(json){
                 if(!json)return;
                 $('gz').set('value',json.goods_id);
@@ -162,6 +163,7 @@ window.addEvent('domready',function(e){
         new Request.JSON({
             url:'<{link app=b2c ctl=site_dingzhi act=liandong}>',
             data:'dingzhi_id=<{$data.dingzhi_id}>&spec_id='+s_v_id+'&spec_value_id='+s_id,
+            method:'get',
             onComplete:function(json){
                 if(json){
                     updateItem(sm.getElement('ul'),json.spec);
