@@ -27,6 +27,9 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
 
 
             foreach($dz_ds_data as $ke_dz=>$ve_dz){
+                if($ve_dz['dingzhi_id']==1426233680){
+                    continue;
+                }
                 $egz_data = array();
                 $ei_tmp_data = $db->selectrow("SELECT image_default_id FROM sdb_b2c_goods WHERE goods_id=".$ve_dz['goods_id']);
                 $egz_data['image_url'] = $lib->image_path($ei_tmp_data['image_default_id'],'b');
@@ -123,13 +126,21 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
             //$goods_id = $_POST['goods_id'];
             //$sql = "SELECT product_id FROM (SELECT product_id,count(product_id) AS d FROM sdb_b2c_dingzhi_index WHERE dingzhi_id =".$series_id." AND spec_value_id in(".$dz.") GROUP BY product_id )  AS c WHERE d>10";
 
-            $key = md5($dz.$series_id);
+
+            if($series_id==1426234706){
+                $key = md5(md5($dz.$series_id));
+               // base_kvstore::instance('b2c.dingzhi_s')->fetch($key, $list);
+            }else{
+                $key = md5($dz.$series_id);
+                //base_kvstore::instance('b2c.dingzhi_s')->fetch($key, $list);
+            }
+
             base_kvstore::instance('b2c.dingzhi_s')->fetch($key, $list);
 
             if($list){
                 echo json_encode($list);
             }else{
-                $sql = "SELECT product_id,goods_id FROM(select count(product_id) as c,product_id,goods_id from sdb_b2c_dingzhi_index where spec_value_id IN(".$dz.") group by product_id) as d where c>10";
+                $sql = "SELECT product_id,goods_id FROM(select count(product_id) as c,product_id,goods_id from sdb_b2c_dingzhi_index where dingzhi_id =".$series_id." AND spec_value_id IN(".$dz.") group by product_id) as d where c>10";
                 $data = $db->selectrow($sql);
                 $product_data = $db->selectrow("SELECT * FROM sdb_b2c_products WHERE product_id=".$data['product_id']);
 
