@@ -45,6 +45,9 @@ class b2c_ctl_site_store extends b2c_frontpage{
 			$v['area_num'] = $area[2];
 			$area = explode('/',$area[1]);
 			$v['province'] = $area[0];
+            if(in_array($v['province'], array('上海','北京','天津','重庆'))){
+                $v['province'] = '';
+            }
 			$province = app::get('ectools')->model('regions')->dump(array('local_name'=>$v['province']));
 			$v['province_num'] = $province['region_id'];
 			$v['city'] = $area[1];

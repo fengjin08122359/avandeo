@@ -16,11 +16,8 @@
 		</tr>
 		<tr>
 			<td>交通： </td>
-			<td><{$store_data.traffic}> <!-- <a href="javascript:void(0);" onclick="showMap(<{$s_d_key}>)">百度地图</a> --></td>
+			<td><{$store_data.traffic}> <a href="http://api.map.baidu.com/marker?location=39.916979519873,116.41004950566&title=<{$store_data.city}><{$store_data.district}><{$store_data.address}>&content=<{$store_data.name}>&output=html " target="_blank">地图显示</a></td>
 		</tr>
 	</table>
-	<div  style="display:none; height:300px; width:100%;">
-		<iframe name="map-iframe" height="300" frameborder="0" scrolling="no" width="100%" src="<{link app=b2c ctl=site_store act=map arg0=$store_data.city arg1=$store_data.district arg2=$store_data.address}>"></iframe>	
-	</div>
 </div>
 <div class="contents" style="width:100%;clear:both;"><{$store_data.content}></div>

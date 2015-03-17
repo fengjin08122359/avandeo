@@ -27,15 +27,15 @@
                         <span>材料&颜色</span>
                         <ul>
                             <{foreach from=$data.spec.5.spec_value item=item key=key}>
-                            <li class="c-item cur" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <li class="c-item " data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>" style="display:none;">
                             <img src="<{$item.spec_image}>" alt="" > </li>
                             <{/foreach}>
                         <{foreach from=$data.spec.6.spec_value item=item key=key}>
-                                <li class="c-item cur" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                <li class="c-item " data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
                                 <img src="<{$item.spec_image}>" alt=""> </li>
                             <{/foreach}>
- <{foreach from=$data.spec.1.spec_value item=item key=key}>
-                            <li class="cur c-item" data-title="<{$item.spec_memo}>" data-s-id="<{$item.spec_value_id}>">
+                             <{foreach from=$data.spec.1.spec_value item=item key=key}>
+                            <li class="c-item" data-title="<{$item.spec_memo}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
                                 <img src="<{$item.spec_image}>" alt="" >
                             </li>
                             <{/foreach}>
@@ -47,7 +47,7 @@
                         <span>扶手样式</span>
                         <ul>
                         <{foreach from=$data.spec.8.spec_value item=item key=key}>
-                            <li class="cur c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
                             <img src="<{$item.spec_image}>" alt=""> </li>
                         <{/foreach}>
                         </ul>
@@ -57,7 +57,7 @@
                         <span>沙发腿样式</span>
                         <ul>
                          <{foreach from=$data.spec.9.spec_value item=item key=key}>
-                            <li class="cur c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
                             <img src="<{$item.spec_image}>" alt=""> </li>
                         <{/foreach}>
                         </ul>
@@ -84,7 +84,7 @@
                         <span>靠背高</span>
                         <ul>
                         <{foreach from=$data.spec.11.spec_value item=item key=key}>
-                            <li class="cur c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
                             <img src="<{$item.spec_image}>" alt=""> </li>
                         <{/foreach}>
                         </ul>
@@ -93,7 +93,7 @@
                         <span>座深</span>
                         <ul>
                         <{foreach from=$data.spec.13.spec_value item=item key=key}>
-                            <li class="cur c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
                             <img src="<{$item.spec_image}>" alt=""> </li>
                         <{/foreach}>
                         </ul>
@@ -102,7 +102,7 @@
                         <span>座高</span>
                         <ul>
                         <{foreach from=$data.spec.12.spec_value item=item key=key}>
-                            <li class="cur c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
                             <img src="<{$item.spec_image}>" alt=""> </li>
                         <{/foreach}>
                         </ul>
@@ -131,7 +131,7 @@
                         <span>总宽</span>
                         <ul>
                          <{foreach from=$data.spec.14.spec_value item=item key=key}>
-                            <li class="cur c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
                                 <span> <{$item.spec_memo}> </span>
                          </li>
 
@@ -142,7 +142,7 @@
                         <span>总深</span>
                         <ul>
                          <{foreach from=$data.spec.13.spec_value item=item key=key}>
-                            <li class="cur c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
                                 <span> <{$item.spec_memo}> </span>
                             </li>
                         <{/foreach}>
@@ -152,7 +152,7 @@
                         <span>总高</span>
                         <ul>
                          <{foreach from=$data.spec.12.spec_value item=item key=key}>
-                            <li class="cur c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
                                 <span> <{$item.spec_memo}> </span>
                             </li>
                         <{/foreach}>
@@ -184,7 +184,7 @@
 											<span>配件</span>
 											<ul>
                                             <{foreach from=$data.gl_goods item=item key=key name=spec}>
-												<li class="cur c-item" data-p-id="<{$item.product_id}>">
+												<li class="c-item" data-p-id="<{$item.product_id}>"  style="display:none;">
                                                 <form action="<{link app=b2c ctl=site_cart act=add argo=goods}>" method="post">
                                                     <img src="<{$item.image_url}>" alt="<{$item.name}>">
                                                   <input type="hidden" name="goods[goods_id]" value="<{$item.goods_id}>"/>

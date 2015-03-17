@@ -138,7 +138,6 @@ window.addEvent('domready',function(e){
         new Request.JSON({
             url:'<{link app=b2c ctl=site_dingzhi act=getProduct}>',
             data:'dingzhi_id=<{$data.dingzhi_id}>&goods_id='+$('gz').value+'&dz='+data.join(','),
-           
             onComplete:function(json){
                 if(!json)return;
                 $('gz').set('value',json.goods_id);
@@ -163,7 +162,6 @@ window.addEvent('domready',function(e){
         new Request.JSON({
             url:'<{link app=b2c ctl=site_dingzhi act=liandong}>',
             data:'dingzhi_id=<{$data.dingzhi_id}>&spec_id='+s_v_id+'&spec_value_id='+s_id,
-           
             onComplete:function(json){
                 if(json){
                     updateItem(sm.getElement('ul'),json.spec);
@@ -304,21 +302,25 @@ window.addEvent('domready',function(e){
         onSwitch:function(obj){
             var i = obj.currentIndex;
             if(i==this.triggers.length-1){
+                $$('.dz-complete .c-item.cur').each(function(el){
+                    el.setStyle('display','none').removeClass('cur');
+                });
+
                 $$('.s-item.cur').each(function(elem){
-                    s = elem.get('data-s-id');
+                    var s = elem.get('data-s-id');
                     $$('.dz-complete .c-item').each(function(el){
                         var sid = el.get('data-s-id');
                         if(s==sid){
-                            el.setStyle('display','block');
+                            el.setStyle('display','block').addClass('cur');
                         }
                     });
                 });
                 $$('.match-btn.active').each(function(elem){
-                    s = elem.get('data-p-id');
+                   var s = elem.get('data-p-id');
                     $$('.pj-main .c-item').each(function(el){
                         var sid = el.get('data-p-id');
                         if(s==sid){
-                            el.setStyle('display','block');
+                            el.setStyle('display','block').addClass('cur');
                         }
                     });
                 });
