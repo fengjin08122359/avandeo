@@ -650,6 +650,7 @@ class b2c_ctl_site_product extends b2c_frontpage{
         $productBasic['product_id'] = $aGoods['product']['product_id'];
         $productBasic['product_bn'] = $aGoods['product']['bn'];
         $productBasic['price'] = $aGoods['price'];
+        $productBasic['mktprice'] = $aGoods['mktprice'];
         $productBasic['intro'] = $aGoods['intro'];
         $productBasic['unit'] = $aGoods['unit'];
         $productBasic['title'] = $aGoods['name'];//主标题

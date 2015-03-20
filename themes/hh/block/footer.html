@@ -19,7 +19,7 @@
 				<li class="quality">
 					<i></i>
 					<span>100%</span>
-					<span class="sm">正品保证</span>
+					<span class="sm">德国品质</span>
 				</li>
 				<li class="check">
 					<i></i>
@@ -28,24 +28,24 @@
 				</li>
 				<li class="time">
 					<i></i>
-					<span>限时达</span>
-					<span class="sm">最快7天到家</span>
+					<span>日日顺物流</span>
+					<span class="sm">最快5天到家</span>
 				</li>
 				<li class="return">
 					<i></i>
-					<span>45天</span>
+					<span>7天</span>
 					<span class="sm">无理由退换货</span>
 				</li>
 				<li class="change">
 					<i></i>
-					<span>贵就赔</span>
-					<span class="sm">价格保护</span>
+					<span>个性DIY</span>
+					<span class="sm">全品类定制</span>
 				</li>
-				<li class="evaluate">
+				<!-- <li class="evaluate">
 					<i></i>
 					<span>万千口碑</span>
 					<span class="sm">万千家庭的选择</span>
-				</li>
+				</li> -->
 			</ul>
 		</div>
 		<!-- icons end -->
@@ -81,15 +81,16 @@
 </ul>
  <script>
     var lk = $$(".side-link");
+    var toph = ($("header").getHeight())+($("nav").getHeight())+5+"px";
     window.addEvent('domready',function(){
         var sw = $(window).getWidth();
         var offwidth = (sw - 1200)/2;
         var pst = (1200 + offwidth + 5)+"px";
-        lk.setStyles({'left':pst,'top':163})
+        lk.setStyles({'left':pst,'top':toph})
     })
     window.addEvent('scroll',function(){
     	var offtop = $(document).getScrollTop();
-    	(offtop>157)?lk.tween('top',2):lk.tween('top',163);
+    	(offtop>157)?lk.tween('top',2):lk.tween('top',toph);
     })
 </script>	
  <{footer}>

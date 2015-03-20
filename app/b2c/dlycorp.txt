@@ -25,3 +25,4 @@ DTW	DTW	大田
 YUD	YUD	长发
 ANTO	ANTO	安得
 HOAU	HOAU	华宇物流
+RRS	RRS	日日顺	

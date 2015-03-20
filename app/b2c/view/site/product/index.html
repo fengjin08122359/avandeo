@@ -778,6 +778,7 @@ withBrowserStore(function(browserStore){
             'goodsName':'<{$page_product_basic.title|replace:"'":"\'"}>',
             'goodsImg':'<{$page_product_basic.image_default_id ? $page_product_basic.image_default_id : $defaultImage|storager:"s"}>',
             'price':'<{$page_product_basic.price|cur_odr}>',
+            'mktprice':'<{$page_product_basic.mktprice|cur_odr}>',
             'viewTime':+new Date()
         };
         if(history.length) {

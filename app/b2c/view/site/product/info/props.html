@@ -1,5 +1,5 @@
 <div class="product-params">
-  <table width="100%">
+  <table>
     <tbody>
       <tr>
         <{if $setting.goodsbn == 'true'}>
@@ -30,7 +30,7 @@
       <{/foreach}>
       <{/if}>
 <{if $setting.acomment.switch.discuss == 'on' && $setting.acomment.point_status == 'on'}>
-      <tr>
+      <tr style="display:none;">
       <td class="label"><{t}>商品评分<{/t}>：</td>
       <td class="v"  width="55%">
         <span class="detail">
@@ -45,8 +45,4 @@
 
     </tbody>
   </table>
-  <div class="product-booktel">
-    <span>订购电话:</span>
-    <span>400-400-400</span>
-  </div>
 </div>

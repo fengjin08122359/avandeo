@@ -43,11 +43,23 @@
 
                         </ul>
                     </div>
+                      <{if $data.spec.8}>
                     <div class="base-b">
                         <span>扶手样式</span>
+
                         <ul>
                         <{foreach from=$data.spec.8.spec_value item=item key=key}>
                             <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
+                            <img src="<{$item.spec_image}>" alt=""> </li>
+                        <{/foreach}>
+                        </ul>
+                    </div>
+                    <{/if}>
+                    <div class="base-c">
+                        <span>转角方向</span>
+                        <ul >
+                        <{foreach from=$data.spec.17.spec_value item=item key=key}>
+                        <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>" style="display:none;">
                             <img src="<{$item.spec_image}>" alt=""> </li>
                         <{/foreach}>
                         </ul>
@@ -128,7 +140,7 @@
             <div class="bd spec-text-main">
                 <div class="inner">
                     <div class="part1-a">
-                        <span>总宽</span>
+                        <span>总尺寸</span>
                         <ul>
                          <{foreach from=$data.spec.14.spec_value item=item key=key}>
                             <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">

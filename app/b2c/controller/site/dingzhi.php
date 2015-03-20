@@ -138,6 +138,7 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
             base_kvstore::instance('b2c.dingzhi_s')->fetch($key, $list);
 
             if($list){
+                $list['price'] = number_format($list['price'],2);
                 echo json_encode($list);
             }else{
                 $sql = "SELECT product_id,goods_id FROM(select count(product_id) as c,product_id,goods_id from sdb_b2c_dingzhi_index where dingzhi_id =".$series_id." AND spec_value_id IN(".$dz.") group by product_id) as d where c>10";
@@ -147,7 +148,7 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                 $goods_data  =$db->selectrow("SELECT image_default_id FROM sdb_b2c_goods WHERE goods_id=".$data['goods_id']);
                 if($data){
                     $ouput_data['goods_id'] = $data['goods_id'];
-                    $ouput_data['price'] = $product_data['price'];
+                    $ouput_data['price'] = number_format($product_data['price'],2);
                     $ouput_data['product_id'] = $data['product_id'];
                     $ouput_data['image_url'] = $lib->image_path($goods_data['image_default_id'],"b");;
                 }

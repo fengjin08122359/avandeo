@@ -36,6 +36,7 @@ class logisticstrack_puller {
         'CCES' => 'cces',
         'DTW' => 'datianwuliu',
         'ANTO' => 'andewuliu',
+        'RRS'=>'ririshun',
     );
 
     public static function pull_logi($delivery_id, &$hock) {

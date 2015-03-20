@@ -55,7 +55,7 @@ class b2c_ctl_site_matchplist extends b2c_frontpage
         //面包屑
         $GLOBALS['runtime']['path'] = array(
              array('type'=>'match_glist','title'=>app::get('site')->_('首页'),'link'=>kernel::base_url(1)),
-             array('type'=>'match_glist','title'=>app::get('site')->_('风格搭配'),'link'=>app::get('site')->router()->gen_url(array('app'=>'b2c','ctl'=>'site_match','act'=>'glist'))),
+             array('type'=>'match_glist','title'=>app::get('site')->_('风格系列'),'link'=>app::get('site')->router()->gen_url(array('app'=>'b2c','ctl'=>'site_match','act'=>'glist'))),
              array('type'=>'match_glist','title'=>$styleData['name'],'link'=>app::get('site')->router()->gen_url(array('app'=>'b2c','ctl'=>'site_match','act'=>'plist','arg0'=>$style_id))),             
         );
         if($this->_cat_id)

@@ -6,15 +6,15 @@
         <{foreach from=$data.goodsRows item=row key=gid name=goodsrow}>
         <{assign var=pickey  value=$setting.gpic_size|default:'goodsPicS' }>
         <li>
-            <div class="img">
                 <a href="<{$row.goodsLink}>" class="">
-                    <img src="<{$row[$pickey]}>" alt="<{$row.goodsName}>" class=""/>
+                    <img src="<{$row[$pickey]}>" alt="<{$row.goodsName}>" class="product-img"/>
                 </a>
-            </div>
-                <a href="<{$row.goodsLink}>" class="pro-name"><{$row.goodsName}></a>
-                <div class="price-wrap clearfix">   
-                    <span class="markprice"><em>原价:</em><{$row.goodsMarketPrice|cur}></span>
-                    <span class="price"><em>销售价:</em><{$row.goodsSalePrice|cur}></span>
+                <div class="product-info">
+                    <a href="<{$row.goodsLink}>" class="pro-name"><{$row.goodsName}></a>   
+                    <div class="price-wrap clearfix">
+                        <span class="markprice"><em>原价:</em><{$row.goodsMarketPrice|cur}></span>
+                        <span class="price"><em>销售价:</em><{$row.goodsSalePrice|cur}></span>
+                     </div>
                  </div>
         </li>
         <{/foreach}>

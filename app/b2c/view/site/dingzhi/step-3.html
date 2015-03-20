@@ -57,7 +57,13 @@
                         <div class="info-size">
                             <div class="size-tit tit"><h3>总尺寸</h3> </div>
                             <div class="size-dat">
-                                <span>总宽度：<i class="ct-t"> 1500</i>mm</span>
+                             <{foreach from=$data.spec.14.spec_value item=item key=key name=spec}>
+                        <{if $item.defalut==true}>
+                      
+                          <span>总宽度：<i class="ct-t"> <{$item.spec_value_name}></i>mm</span>
+                        <{/if}>
+                    <{/foreach}>
+                              
                                 <span>总深度: <i class="ct-s spec-13">1500</i>mm</span>
                                 <span>总高度：<i class="spec-12">2400</i>mm</span>
                             </div>

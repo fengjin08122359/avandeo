@@ -718,8 +718,8 @@ Module.gallery.show.addEvents({
             try{
                 new Fx.Scroll(document.body, {link:'cancel', duration: 0}).toElementEdge(Module.gallery.sortbar);
             }catch(e){}
+            row_last();
         });
-        row_last();
     }
 });
 
