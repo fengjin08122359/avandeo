@@ -9,10 +9,10 @@
 function theme_widget_search(&$setting,&$smarty){
     $data['search_key'] = $GLOBALS['runtime']['search_key'];
 
-    foreach($setting['top_link_title'] as $tk=>$tv){
+    /*foreach($setting['top_link_title'] as $tk=>$tv){
     $res['search'][$tk]['top_link_title'] = $tv;
     $res['search'][$tk]['top_link_url'] = $setting['top_link_url'][$tk];
-    }
+    }*/
     $res['search_key'] = $data['search_key'];
     //  print_r($res);exit;
     return $res;

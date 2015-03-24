@@ -3,18 +3,16 @@
     <li class="product-item<{if $env.foreach.goodsrow.iteration%4 == 0}> last<{/if}>">
     <{assign var=pickey  value=$setting.gpic_size|default:'goodsPicS' }>
     <a href="<{$row.goodsLink}>" class="product-img">
-        <img src="<{$row[$pickey]}>" alt="<{$row.goodsName}>" />
+        <img src="<{$row[$pickey]|storager:'l'}>" alt="<{$row.goodsName}>" />
     </a>
-    <a href="<{$row.goodsLink}>" class="product-name" title="<{$row.goodsName}>">
-        <{$row.goodsName}>
-    </a>
+    <h3><a href="<{$row.goodsLink}>" class="product-name" title="<{$row.goodsName}>"><{$row.goodsName}></a></h3>
     <div class="product-price">
-        <div class="selling-price">
-            抢购价：<span class="price"><{$row.goodsSalePrice|cur}></span>
-        </div>
-        <div class="market-price">
-            市场价：<span class="price"><{$row.goodsMarketPrice|cur}></span>
-        </div>
+        <!-- <div class="market-price"> -->
+            <del><{$row.goodsMarketPrice|cur}></del>
+        <!-- </div> -->
+        <!-- <div class="selling-price"> -->
+            <span class="price"><{$row.goodsSalePrice|cur}></span>
+        <!-- </div> -->
     </div>
     <{if false}>
     <div class="product-star">

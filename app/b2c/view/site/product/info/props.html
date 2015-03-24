@@ -3,16 +3,16 @@
     <tbody>
       <tr>
         <{if $setting.goodsbn == 'true'}>
-        <td class="label" style="width:15%"><div class="text-nowrap"><{t}>货品编号<{/t}>：</div></td>
-        <td class="v" width="45%"><{$page_product_basic.product_bn}></td>
+        <td class="label" ><div class="text-nowrap"><{t}>货品编号<{/t}>：</div></td>
+        <td class="v"><{$page_product_basic.product_bn}></td>
         <{/if}>
         <{*if $page_product_basic.brand.brand_name}>
         <td class="label"><{t}>品牌<{/t}>：</td>
-        <td class="v" width="45%"><a href="<{link app=b2c ctl=site_brand arg0=$page_product_basic.brand.brand_id}>"><{$page_product_basic.brand.brand_name}></a></td>
+        <td class="v"><a href="<{link app=b2c ctl=site_brand arg0=$page_product_basic.brand.brand_id}>"><{$page_product_basic.brand.brand_name}></a></td>
         <{/if*}>
 		<!-- 添加分类信息 -->
-		<td class="label" style="width:5%"><div class="text-nowrap">所属分类：</div></td>
-        <td class="v" width="45%"><{$page_product_basic.cat_name}></td>
+		<td class="label" ><div class="text-nowrap">所属分类：</div></td>
+        <td class="v"><{$page_product_basic.cat_name}></td>
 		<!-- end -->
       </tr>
 
@@ -22,8 +22,8 @@
       <{if $smarty.foreach.nums.iteration%2 == 1}>
       <tr>
       <{/if}>
-        <td class="label" style="width:15%"><div class="text-nowrap"><{$props.name}>：</div></td>
-        <td class="v" width="45%"><{$props.value}></td>
+        <td class="label"><div class="text-nowrap"><{$props.name}>：</div></td>
+        <td class="v" ><{$props.value}></td>
       <{if $smarty.foreach.nums.iteration%2 == 0}>
       </tr>
       <{/if}>
@@ -32,7 +32,7 @@
 <{if $setting.acomment.switch.discuss == 'on' && $setting.acomment.point_status == 'on'}>
       <tr style="display:none;">
       <td class="label"><{t}>商品评分<{/t}>：</td>
-      <td class="v"  width="55%">
+      <td class="v" >
         <span class="detail">
           <em class="stars stars-<{$goods_point.avg_num*10}>">
             <span class="below"><i class="icon star">&#x2f;</i><i class="icon star">&#x2f;</i><i class="icon star">&#x2f;</i><i class="icon star">&#x2f;</i><i class="icon star">&#x2f;</i></span><span class="above"><i class="icon star">&#x2e;</i><i class="icon star">&#x2e;</i><i class="icon star">&#x2e;</i><i class="icon star">&#x2e;</i><i class="icon star">&#x2e;</i></span>

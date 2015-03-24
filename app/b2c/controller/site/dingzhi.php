@@ -53,7 +53,7 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                 $pj_goods[$ed] = $goods_mdl->dump($ed,'*',$subsdf);
                 $pj_goods[$ed]['image_url'] =$lib->image_path($pj_goods[$ed]['image_default_id'],"m");
                 $tmp_pj_data = $db->selectrow("SELECT * FROM sdb_b2c_products WHERE goods_id=".$ed);
-                $pj_goods[$ed]['price'] = $tmp_pj_data['price'];
+                $pj_goods[$ed]['price'] = intval($tmp_pj_data['price']);
                 $pj_goods[$ed]['product_id'] = $tmp_pj_data['product_id'];
             }
 
@@ -73,7 +73,7 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                 $spec_info_data[$dd_ve['spec_value_id']] = 1;
             }
 
-            $goods['price'] = $e['price'];
+            $goods['price'] = intval($e['price']);
 
             $spec_data = $db->select("SELECT a.spec_id,spec_name FROM sdb_b2c_goods_type_spec a RIGHT JOIN sdb_b2c_specification b  ON a.spec_id = b.spec_id WHERE type_id = 7");
 
@@ -108,12 +108,44 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                 //}
             }
 
-
+			$this->rankSpec($goods);
+            
             $this->pagedata['data'] = $goods;
             $this->page("site/dingzhi/index.html");
         }
 
-
+        /**
+         * 重新排序
+         * @param array $goods
+         */
+		public function rankSpec(array &$goods)
+		{
+			
+			$index_arr10 = array(70,98,71);
+			$tmp_arr = array();
+			
+			foreach($index_arr10 as $index)
+			{
+				foreach ($goods['spec'][10]['spec_value'] as $key => $val)
+				{
+					if($val['spec_value_id'] == $index)
+					{
+						$tmp_arr[] = $val;
+						unset($goods['spec'][10]['spec_value'][$key]);
+						break 1;
+					}
+				}
+				unset($key);
+				unset($val);
+			}
+			
+			foreach($tmp_arr as $val)
+			{
+				array_unshift($goods['spec'][10]['spec_value'],$val);
+			}
+			
+		}
+        
         public function  getProduct(){
 
             //$this->_response->set_header('Cache-Control', 'no-store');
@@ -138,7 +170,7 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
             base_kvstore::instance('b2c.dingzhi_s')->fetch($key, $list);
 
             if($list){
-                $list['price'] = number_format($list['price'],2);
+                $list['price'] = intval($list['price']);
                 echo json_encode($list);
             }else{
                 $sql = "SELECT product_id,goods_id FROM(select count(product_id) as c,product_id,goods_id from sdb_b2c_dingzhi_index where dingzhi_id =".$series_id." AND spec_value_id IN(".$dz.") group by product_id) as d where c>10";
@@ -148,7 +180,7 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                 $goods_data  =$db->selectrow("SELECT image_default_id FROM sdb_b2c_goods WHERE goods_id=".$data['goods_id']);
                 if($data){
                     $ouput_data['goods_id'] = $data['goods_id'];
-                    $ouput_data['price'] = number_format($product_data['price'],2);
+                    $ouput_data['price'] =intval($product_data['price']);
                     $ouput_data['product_id'] = $data['product_id'];
                     $ouput_data['image_url'] = $lib->image_path($goods_data['image_default_id'],"b");;
                 }

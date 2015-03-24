@@ -38,11 +38,8 @@
                     <{widgets id="area_title1"}>
                 </div>
                 <div class="area-content mt20">
-                    <div class="goods-ad-main mb20">
-                        <div class="goods-ad first"> <{widgets id="goods-ad1"}> </div>
-                        <div class="goods-ad"> <{widgets id="goods-ad2"}> </div>
-                        <div class="goods-ad"> <{widgets id="goods-ad3"}> </div>
-                        <div class="goods-ad"> <{widgets id="goods-ad4"}> </div>
+                    <div class="goods-ad-main star-pro mb20">
+                        <{widgets id="star_pro"}>
                     </div>
 
                     <div class="ad-left ">
@@ -88,12 +85,8 @@
                 <div class="area-title">
                    <{widgets id="area_title4"}>
                 </div>
-                <div class="area-content h-auto mt20">
-                    <div class="clearfix">
-                        <div class="area-ad"> <{widgets id="goods-ad15"}> </div>
-                        <div class="area-ad mid"> <{widgets id="goods-ad16"}> </div>
-                        <div class="area-ad"> <{widgets id="goods-ad17"}> </div>
-                    </div>
+                <div class="area-content online goods-ad-main mt20">
+                    <{widgets id="online_pro"}>
                     <div class="h-390 mt20">
                         <{widgets id="goods-ad18"}> 
                     </div>
@@ -140,6 +133,10 @@
         </div>
     </div>
 	<{require file="block/footer.html"}>
-   
+   <script>
+     window.addEvent("domready",function(){
+        $$(".online .product-item:nth-child(3n),.star-pro .product-item:nth-child(4n)").addClass("row-last");
+     })
+   </script>
 </body>
 </html>
