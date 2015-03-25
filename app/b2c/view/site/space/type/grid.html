@@ -10,7 +10,7 @@
       <div class="goods-info">
         <h3 class="goods-name"><a href="<{link app=b2c ctl=site_space act=plist arg0=$goods.space_id}>"><{$goods.name}></a></h3>
         <div class="goods-price">
-                    <ins class="price f-icon"><span>热销价：</span><{$goods.products.price|cur_odr}></ins>
+                    <ins class="price f-icon"><span>热销价：</span><{$goods.sales_price|cur_odr}></ins>
          <!--  <{if $env.conf.b2c.site.show_mark_price == 'true'}>
           <del class="price"><{$goods.products.mktprice|cur_odr}></del>
           <{/if}> -->

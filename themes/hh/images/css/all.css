@@ -3,12 +3,12 @@ a,:hover{-webkit-transition:all ease 0.2s;-moz-transition:all ease 0.2s;transiti
 body{font-family:microsoft Yahei,"黑体",arial!important;overflow-x: hidden;}
 /*header */
 #gallery .f-icon{font-family:microsoft Yahei,"黑体",arial;}
-#header{overflow: hidden;padding-bottom: 8px;}
+#header{overflow: hidden;height: 142px;}
 .price{color:#ff4014;}
 .center{width: 1200px;margin: 0 auto;}
 #header .hd-lf{float: left;}
 #header .hd-lf h1{margin: 0;width: 363px;height: 45px;text-indent: -9999px;background: url(../img/logo.png) no-repeat;}
-#header .hd-rg{float: right;width: 300px;margin-top: 5px;}
+#header .hd-rg{float: right;width: 300px;}
 #header .hd-rg select{border: none; color: #0d5ba1;/*color: #848484;*/font-weight: bold;margin-right: 100px;}
 #header .hd-rg a{margin-right: 5px;}
 #header .hd-rg input{margin-top: 5px;outline:none;}
@@ -20,7 +20,7 @@ body{font-family:microsoft Yahei,"黑体",arial!important;overflow-x: hidden;}
 #header .hd-rg input[type=submit]{color: #fff;left: -10px;width: 60px;height: 30px;border: none;cursor: pointer;position: relative;background: #0D5BA1;}
 #header .signin{width:auto;background: none;border:none;margin:0;}
 #header .signup{border:none;}
-.Links{border-bottom: 1px solid #dddddd;margin:5px 0 10px 0;}
+.Links{border-bottom: 1px solid #dddddd;margin:5px 0 20px 0;}
 .Links li{float: left;_display:inline;width: 80px;height: 40px;overflow:hidden;margin-right: 10px;}
 /* nav */
 #nav{height: 34px;padding-top: 20px;background: #F5F5F5;margin-bottom: 6px;border-top: 1px solid #DBDBDB;border-bottom: 2px solid #0D5BA1;}
@@ -549,6 +549,7 @@ a.btn-addfav,a.btn-faved{display: inline;}
 a.btn-addfav i,a.btn-faved i{display:none;}
 #gallery .sidebar,#space .sidebar{width: 255px;float: left;_display:inline;}
 #gallery .gallery-show,#space .gallery-show{width: 945px;float: right;_display:inline;}
+.filter-pop-active .action-reset-price,.filter-pop-active .action-confirm-price{cursor: pointer;}
 /*history*/
 .product_recently,.product_hotsale,.sales-charts{margin-bottom: 10px;}
 .product_recently .tit,.product_hotsale .tit,.sales-charts .charts-title{height: 30px;line-height: 30px;background: #0d5ba1;padding:0 20px;font-size: 14px;color: #ffffff;}
@@ -572,7 +573,8 @@ a.btn-addfav i,a.btn-faved i{display:none;}
 .sales-charts .product-info,.product_hotsale .product-info{margin-left: 112px;}
 .product_hotsale .price-wrap,.charts-content .price-wrap{padding: 10px 5px 0 0;font-size: 14px;color: #666666;}
 .charts-content .price-wrap .saled{color: #ff4014;}
-.product_hotsale .markprice{margin-right: 5px;}
+.product_hotsale .markprice{margin-right: 5px;text-decoration:line-through;}
+.product-information .detail .minor{text-decoration: line-through;}
 .charts-content em,.charts-content a.pro-name:hover{color: #ff4014;}
 .charts-content a.pro-name{font-size: 14px;padding: 0 5px 0 0;line-height: 18px;overflow: hidden;display: block;max-height: 36px;}
 .charts-content .product-price,.product_hotsale .price-wrap span{display: block;}
@@ -699,6 +701,7 @@ input:-webkit-autofill{-webkit-box-shadow: 0 0 0px 1000px #F5FAFF inset}
 #passport .passport-bd .bd-form .form-act button span:hover{color: #ffffff;}
 #passport .passport-bd .bd-form .form-act a{float:right;}
 #passport .passport-bd .bd-form .form-act{margin:0;}
+#passport .form-coagent{display: none;}
 #passport .passport-bd .bd-form .form-coagent span{display: inline-block;padding:0 10px;line-height: 1;border-right:1px solid #ccc;}
 #passport .passport-bd .bd-form .form-coagent .coagent-tit{display: block;border:none;margin-bottom:8px;}#passport .passport-bd .bd-form .form-coagent .wechat{border:none;}
 #passport .passport-bd .bd-form .form-item-normal .form-signup{float:right;color:#0d5ba1;margin-top:30px;font-weight: bold}

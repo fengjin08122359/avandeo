@@ -25,6 +25,12 @@ class b2c_ctl_site_space extends b2c_frontpage{
         }
         $space_info['space_item'] = $temp_space_item;
         $this->pagedata['page_product_basic'] = $space_info;
+        //面包屑
+        $arr[] = array('link'=>$this->gen_url(array('app'=>'b2c','ctl'=>'site_default')),'title'=>'首页');
+        $arr[] = array('link'=>$this->gen_url(array('app'=>'b2c','ctl'=>'site_space','act'=>'glist','arg0'=>$space_type['type_id'])),'title'=>$space_type['name']);
+        $arr[] = array('link'=>$this->gen_url(array('app'=>'b2c','ctl'=>'site_space','act'=>'plist','arg0'=>$space_id)),'title'=>$space_info['name']);
+        $GLOBALS['runtime']['path'] = $arr;
+
         $this->set_tmpl('space_plist');
         $this->page('site/space/glist.html');
     }

@@ -13,7 +13,7 @@
     <!-- 商品基本信息 -->
     <div class="product-information">
       <div class="product-params">
-        <table width="100%">
+        <table width="60%">
           <tbody>
             <tr>
               <td class="label"><{t}>赠品编号<{/t}>：</td>
@@ -21,21 +21,21 @@
             </tr>
             <tr>
               <td class="label"><{t}>货号<{/t}>：</td>
-              <td width="40%"><{$gift.product.bn}></td>
+              <td><{$gift.product.bn}></td>
               <td class="label"><{t}>销售价<{/t}>：</td>
-              <td width="40%"><{$gift.product.price|cur_odr}></td>
+              <td><{$gift.product.price|cur_odr}></td>
             </tr>
             <tr>
               <td class="label"><{t}>兑换开始时间<{/t}>：</td>
-              <td width="40%"><{$gift.from_time|cdate:SDATE_STIME}></td>
+              <td><{$gift.from_time|cdate:SDATE_STIME}></td>
               <td class="label"><{t}>兑换结束时间<{/t}>：</td>
-              <td width="40%"><{$gift.to_time|cdate:SDATE_STIME}></td>
+              <td><{$gift.to_time|cdate:SDATE_STIME}></td>
             </tr>
             <tr>
               <td class="label"><{t}>兑换所需积分<{/t}>：</td>
               <td class="price" width="40%"><{$gift.consume_score}></td>
               <td class="label"><{t}>限兑数量<{/t}>：</td>
-              <td width="40%"><{$gift.max_buy_store}><{$gift.goods.unit}></td>
+              <td><{$gift.max_buy_store}><{$gift.goods.unit}></td>
             </tr>
             <tr>
               <td class="label"><{t}>可兑换的会员<{/t}>：</td>
