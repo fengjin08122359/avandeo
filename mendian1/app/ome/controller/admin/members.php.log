@@ -1,0 +1,11 @@
+array (
+  'member_id' => '11',
+  'goods_id' => '83',
+  'related_type' => 'left',
+)
+array (
+  'member_id' => '11',
+  'goods_id' => '81',
+  'related_type' => 'left',
+  'id' => '6',
+)

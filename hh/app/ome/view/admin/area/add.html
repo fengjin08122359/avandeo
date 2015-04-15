@@ -1,0 +1,64 @@
+<form method="POST" id='newcase-edit-form' action="index.php?app=designer&ctl=admin_area&act=save" class="tableform">
+    <div class="division">
+        <table width="100%" >
+            <tr><th><em class="red">*</em><{t}>面积区间：<{/t}></th><td><{input type="text" name="a_value"  size="20" vtype="required"}><span>例如：100-150</span></td></tr>
+        </table>
+        <hr style="margin:5px 0;">
+
+
+    </div>
+</form>
+<{area inject='.mainFoot'}>
+
+
+<div class="table-action"><{button type="submit"  label=$___b2c="保存"|t:'b2c' id='newcase-edit-form-submit'}></div>
+
+
+<{/area}>
+
+
+<script>
+    (function(){
+        var _form = $('newcase-edit-form');
+        var btn =$('newcase-edit-form-submit');
+        var finder = finderGroup['<{$env.get.finder_id}>'];
+
+        _form.store('target',{
+            onComplete:function(){            
+
+            },
+            onSuccess:function(response){
+                var hash_res_obj = JSON.decode(response);
+                if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+                {
+                    try{
+                        var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+                    }catch(e){}
+
+                    if(_dialogIns)
+                    {
+                        _dialogIns.close();
+                        window.finderGroup['<{$env.get._finder.finder_id}>'].refresh();
+                        finder.refresh.delay(400,finder);
+                    }
+                }
+                else
+                {
+                    //alert(hash_res_obj.error);
+                }            
+            }
+        });
+
+        btn.addEvent('click',function(){
+
+            _form.fireEvent('submit',{stop:$empty});
+
+
+
+        });
+
+    })();
+
+</script>
+
+

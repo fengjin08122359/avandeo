@@ -1,0 +1,562 @@
+<div class="workground" id="workground" style="width: 1067px; left: 147px;">
+	  <div class="toggler-left " id="leftToggler">
+	      <a href="javascript:void(0)" class="toggler-left-inner" title="点击收起或展开左侧">&nbsp;</a>
+	   </div>
+      <div class="content-head"><div class="finder-title">
+
+
+
+    <h2 class="head-title span-auto">总库存列表<span class="num">(共<em class="count2">1059</em>条)</span>
+    </h2>
+    <div class="span-auto sift " id="filter-tip-b8c7ef" style="visibility:hidden;margin-top:2px;">
+
+    	 当前<em class="count"></em>条筛选结果
+			 <a href="javascript:void(0);" onclick="window.finderGroup['b8c7ef'].filter2packet()" class="">保存筛选条件</a>
+		 <a href="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef" class="">返回全部列表</a>
+		     </div>
+	
+    <div class="frt finder-options">
+    	<div class="span-auto">
+    	     <a class="lnk-refresh" title="刷新当前列表" onclick="window.finderGroup['b8c7ef'].refresh();return false;" href="javascript:void(0)">
+				<span>刷新当前列表</span>
+    	     </a>
+    	</div>
+				<div class="span-auto">
+			<a class="lnk-operation" title="列表项配置" id="finder-col-option-b8c7ef" href="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=column&amp;finder_aliasname=default" target="dialog::{width:300,title:'配置列表项'}"><span>列表项配置</span></a>
+		</div>
+		
+    </div>
+
+
+</div>
+<div class="finder-packet hide" id="finder-packet-b8c7ef" style="width: 1065px;">
+  <!--<span class="font9px">loading...</span>-->
+  <div class="packet-items clearfix" style="width: 1067px;">
+	<ul class="clearfix" style="width: 2px;">
+			</ul>
+</div>
+<div class="scroll-handle l"><span>«</span></div>
+<div class="scroll-handle r"><span>»</span></div>
+
+
+</div>
+
+
+<div class="gridlist-action finder-action clearfix" id="finder-action-b8c7ef" style="padding-right:75px;">
+  <ul class="finder-action-items flt">
+        <li>
+    	<a label="批量设置安全库存" href="index.php?app=wms&amp;ctl=admin_stock&amp;act=batch_safe_store&amp;_finder[finder_id]=b8c7ef&amp;finder_id=b8c7ef" target="dialog::{width:700,height:400,title:'批量设置安全库存'}">
+    		<span>批量设置安全库存    		</span>
+    	</a>
+    	
+    </li>
+        <li>
+    	<a label="导出" icon="download.gif" submit="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=export&amp;finder_id=b8c7ef" target="dialog::{width:400,height:170,title:'导出'}" href="javascript:void(0);">
+    		<span><!--todo ICON-->导出    		</span>
+    	</a>
+    	
+    </li>
+        </ul>
+        	<div class="finder-filter-action-handle">
+      		<a lnk="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=filter" href="javascript:void(0);" id="finder-filter-action-b8c7ef">
+					高级筛选<span>»</span>
+  			</a>
+      	</div>
+  		
+      	  <div class="frt">
+    <form class="finder-search" style="_display:inline;zoom:1;" id="finder-search-b8c7ef" current_key="bn">
+      <table cellpadding="0" cellspacing="0" style="width:auto">
+        <tbody><tr>
+          <td>
+            <span class="finder-search-select" id="finder-keywords-handle-b8c7ef" dropmenu="finder-keywords-b8c7ef"><label>货号</label><img src="/app/desktop/statics/bundle/arrow-down.gif"></span>
+          </td>
+          <td><input class="finder-search-input f-12" type="text" search="true" autocomplete="off" size="15" value="" maxlength="40" placeholder="输入后直接回车确认" name="bn">
+          </td>
+          <td>
+				<a class="finder-search-btn lnk-search" href="javascript:void(0)">
+					<span>搜索</span>
+				</a>
+		 </td>
+        </tr>
+      </tbody></table>
+      <div id="finder-keywords-b8c7ef" class="x-drop-menu" style="width:auto;border:1px #898989 solid;">
+        <ul class="group">
+                    <li class="item" key="bn">货号</li>
+                    <li class="item" key="name">货品名称</li>
+                    <li class="item" key="barcode">条形码</li>
+                  </ul>
+      </div>
+    </form>
+        
+  </div>
+  </div>
+
+
+<form id="finder-form-b8c7ef" action="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef" method="post">
+    <input id="finder-filter-b8c7ef" type="hidden">
+    <input name="_finder[finder_id]" value="b8c7ef" type="hidden">
+    <input name="_finder[in_pager]" value="1" type="hidden">
+    </form>
+<div class="finder-header-wrapper" style="overflow: hidden; width: 1054px;" id="finder-header-b8c7ef">
+    <table width="100%" cellpadding="0" cellspacing="0" class="finder-header">
+	    		<colgroup><col class="col-select">
+		<col class="col-opt"><col style="width:100px" class="orderCell">
+<col style="width:60px">
+<col style="width:110px" class="orderCell">
+<col style="width:150px" class="orderCell">
+<col style="width:150px" class="orderCell">
+<col style="width:110px" class="orderCell">
+<col style="width:65px" class="orderCell">
+<col style="width:190px" class="orderCell">
+	    <col>
+	</colgroup><thead>
+	  <tr>
+				<td> 
+          		  <div class="col-select-opt">
+		  <div class="col-select-opt-inner">	
+          <input type="checkbox" class="sellist" onclick="this.blur()">
+		  <img src="/app/desktop/statics/bundle/arrow-down.gif">		  </div>
+		  <div class="col-select-opt-items x-drop-menu">
+		  	  <ul class="group">
+					<li class="item" onclick="finderGroup['b8c7ef'].selectAll()">选择全部</li>
+					<li class="item" onclick="finderGroup['b8c7ef'].selectFav()">选择当页已加星标</li>
+					<li class="item" onclick="finderGroup['b8c7ef'].selectunFav()">选择当页未加星标</li>
+					<li class="item" onclick="finderGroup['b8c7ef'].unselectAll()">无</li>
+			  </ul>
+		  </div>
+          </div>
+		  
+                  </td>
+		<td class="col-opt"><div class="cell">查看</div></td><td>
+  <div class="cell orderable" key="type" order="">
+    <table width="100%" cellpadding="0" cellspacing="0">
+    <tbody><tr><td>
+    <div class="finder-col-label">货品类型</div>    </td>
+    <td width="5px">
+    <div class="finder-col-resizer" title="拖动改变列宽" onclick="new Event(event).stopPropagation()">列宽</div>
+    </td>
+    </tr>
+    </tbody></table>
+  </div>
+</td><td>
+  <div class="cell " key="column_arrive_store" order="">
+    <table width="100%" cellpadding="0" cellspacing="0">
+    <tbody><tr><td>
+    <div class="finder-col-label">在途库存</div>    </td>
+    <td width="5px">
+    <div class="finder-col-resizer" title="拖动改变列宽" onclick="new Event(event).stopPropagation()">列宽</div>
+    </td>
+    </tr>
+    </tbody></table>
+  </div>
+</td><td>
+  <div class="cell orderable" key="spec_info" order="">
+    <table width="100%" cellpadding="0" cellspacing="0">
+    <tbody><tr><td>
+    <div class="finder-col-label">规格</div>    </td>
+    <td width="5px">
+    <div class="finder-col-resizer" title="拖动改变列宽" onclick="new Event(event).stopPropagation()">列宽</div>
+    </td>
+    </tr>
+    </tbody></table>
+  </div>
+</td><td>
+  <div class="cell orderable" key="visibility" order="">
+    <table width="100%" cellpadding="0" cellspacing="0">
+    <tbody><tr><td>
+    <div class="finder-col-label">可视状态</div>    </td>
+    <td width="5px">
+    <div class="finder-col-resizer" title="拖动改变列宽" onclick="new Event(event).stopPropagation()">列宽</div>
+    </td>
+    </tr>
+    </tbody></table>
+  </div>
+</td><td>
+  <div class="cell orderable" key="bn" order="">
+    <table width="100%" cellpadding="0" cellspacing="0">
+    <tbody><tr><td>
+    <div class="finder-col-label">货号</div>    </td>
+    <td width="5px">
+    <div class="finder-col-resizer" title="拖动改变列宽" onclick="new Event(event).stopPropagation()">列宽</div>
+    </td>
+    </tr>
+    </tbody></table>
+  </div>
+</td><td>
+  <div class="cell orderable" key="barcode" order="">
+    <table width="100%" cellpadding="0" cellspacing="0">
+    <tbody><tr><td>
+    <div class="finder-col-label">条形码</div>    </td>
+    <td width="5px">
+    <div class="finder-col-resizer" title="拖动改变列宽" onclick="new Event(event).stopPropagation()">列宽</div>
+    </td>
+    </tr>
+    </tbody></table>
+  </div>
+</td><td>
+  <div class="cell orderable" key="store" order="">
+    <table width="100%" cellpadding="0" cellspacing="0">
+    <tbody><tr><td>
+    <div class="finder-col-label">库存</div>    </td>
+    <td width="5px">
+    <div class="finder-col-resizer" title="拖动改变列宽" onclick="new Event(event).stopPropagation()">列宽</div>
+    </td>
+    </tr>
+    </tbody></table>
+  </div>
+</td><td>
+  <div class="cell orderable" key="name" order="">
+    <table width="100%" cellpadding="0" cellspacing="0">
+    <tbody><tr><td>
+    <div class="finder-col-label">货品名称</div>    </td>
+    <td width="5px">
+    <div class="finder-col-resizer" title="拖动改变列宽" onclick="new Event(event).stopPropagation()">列宽</div>
+    </td>
+    </tr>
+    </tbody></table>
+  </div>
+</td>		<td>&nbsp;</td>
+	  </tr>
+	  </thead>
+</table>
+
+
+
+  </div>
+</div>
+      <div class="content-main" id="main" style="height: 399px; width: 1067px;"><div class="finder-tip" id="finder-tip-b8c7ef" count="1059" style="visibility: hidden; left: 0px; top: 0px;">
+ <div class="selected">您当前选定了<em></em>条记录！	<span class="lnk" onclick="window.finderGroup['b8c7ef'].unselectAll()">取消选定</span>
+	<span class="lnk" onclick="window.finderGroup['b8c7ef'].selectAll()">选定全部</span>
+ </div>
+ <div class="selectedall">
+	您当前选定了全部记录！共计<span>1059</span>条。
+	<span class="lnk" onclick="window.finderGroup['b8c7ef'].unselectAll()">取消选定</span>
+ </div>
+</div>
+
+<div id="finder-list-b8c7ef" class="finder-list finder-normal">
+<table width="100%" cellpadding="0" cellspacing="0">
+    <colgroup><col class="col-select"><col class="col-opt"><col style="width:100px" class="orderCell">
+<col style="width:60px">
+<col style="width:110px" class="orderCell">
+<col style="width:150px" class="orderCell">
+<col style="width:150px" class="orderCell">
+<col style="width:110px" class="orderCell">
+<col style="width:65px" class="orderCell">
+<col style="width:190px" class="orderCell">
+ 
+    <col>
+</colgroup><tbody>
+<tr class="row odd first " item-id="506"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="0" value="506">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=506&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell">黑色、均码</div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB01E31AF7CC</div></td><td key="barcode"><div class="cell">11111112</div></td><td key="store"><div class="cell">100114</div></td><td key="name"><div class="cell">Chanel多色黑框太阳镜</div></td><td>&nbsp;</td></tr><tr class="row even " item-id="507"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="1" value="507">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=507&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell">酒红色、均码</div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB01E31AF7EA</div></td><td key="barcode"><div class="cell">11111113</div></td><td key="store"><div class="cell">100010</div></td><td key="name"><div class="cell">Chanel多色黑框太阳镜</div></td><td>&nbsp;</td></tr><tr class="row odd " item-id="508"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="2" value="508">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=508&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell">紫色、均码</div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB01E31AF802</div></td><td key="barcode"><div class="cell">11111111</div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">Chanel多色黑框太阳镜</div></td><td>&nbsp;</td></tr><tr class="row even " item-id="509"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="3" value="509">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=509&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB01F9B319A3</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">Dior花纹窄框太阳镜</div></td><td>&nbsp;</td></tr><tr class="row odd " item-id="510"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="4" value="510">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=510&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB02012D5A2E</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">ELLE天然石材裂纹淡雅手镯</div></td><td>&nbsp;</td></tr><tr class="row even " item-id="511"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="5" value="511">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=511&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB02012D5A4D</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">ELLE天然石材裂纹淡雅手镯</div></td><td>&nbsp;</td></tr><tr class="row odd " item-id="512"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="6" value="512">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=512&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB02135AF7DE</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">多色镂空玫瑰花装饰头箍</div></td><td>&nbsp;</td></tr><tr class="row even " item-id="513"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="7" value="513">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=513&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB02135AF7FF</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">多色镂空玫瑰花装饰头箍</div></td><td>&nbsp;</td></tr><tr class="row odd " item-id="514"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="8" value="514">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=514&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB02135AF817</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">多色镂空玫瑰花装饰头箍</div></td><td>&nbsp;</td></tr><tr class="row even " item-id="515"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="9" value="515">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=515&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB02135AF82D</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">多色镂空玫瑰花装饰头箍</div></td><td>&nbsp;</td></tr><tr class="row odd " item-id="516"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="10" value="516">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=516&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB02135AF843</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">多色镂空玫瑰花装饰头箍</div></td><td>&nbsp;</td></tr><tr class="row even " item-id="517"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="11" value="517">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=517&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB02135AF86F</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">多色镂空玫瑰花装饰头箍</div></td><td>&nbsp;</td></tr><tr class="row odd " item-id="518"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="12" value="518">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=518&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB024C98D275</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">复古铜五角星项链</div></td><td>&nbsp;</td></tr><tr class="row even " item-id="519"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="13" value="519">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=519&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB043648D28F</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">蓝色蝴蝶结精致草帽</div></td><td>&nbsp;</td></tr><tr class="row odd " item-id="520"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="14" value="520">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=520&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB273F60F45F</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">亮色优雅经典草帽</div></td><td>&nbsp;</td></tr><tr class="row even " item-id="521"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="15" value="521">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=521&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB273F60F480</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">亮色优雅经典草帽</div></td><td>&nbsp;</td></tr><tr class="row odd " item-id="522"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="16" value="522">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=522&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB273F60F498</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">亮色优雅经典草帽</div></td><td>&nbsp;</td></tr><tr class="row even " item-id="523"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="17" value="523">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=523&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB273F60F4AE</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">亮色优雅经典草帽</div></td><td>&nbsp;</td></tr><tr class="row odd " item-id="524"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="18" value="524">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=524&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB27EFA29F92</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">民族风格金属圆形大耳环</div></td><td>&nbsp;</td></tr><tr class="row even last " item-id="525"><td>
+                        <div class="clearfix">
+                            <div class="span-auto">
+                                <input type="checkbox" class="sel" name="items[]" rowindex="19" value="525">
+                            </div>
+                            <div class="flt">
+                                <i class="fav-star "><img src="/app/desktop/statics/bundle/fav_start.png"></i>
+                            </div>
+                        </div></td>    <td class="finder-list-command">
+    <span title="展开查看" class="btn-detail-open" detail="index.php?app=wms&amp;ctl=admin_stock&amp;act=index&amp;_finder%5Bfinder_id%5D=b8c7ef&amp;action=detail&amp;finder_id=b8c7ef&amp;id=525&amp;finderview=detail_basic">
+    <img src="/app/desktop/statics/bundle/finder_drop_arrow.gif" alt="展开" title="展开">
+    </span>
+    
+</td><td key="type"><div class="cell"></div></td><td key="column_arrive_store"><div class="cell">0</div></td><td key="spec_info"><div class="cell"></div></td><td key="visibility"><div class="cell">显示</div></td><td key="bn"><div class="cell">P4CB27F651E872</div></td><td key="barcode"><div class="cell"></div></td><td key="store"><div class="cell">100000</div></td><td key="name"><div class="cell">牛皮金属装饰朋克风腕带</div></td><td>&nbsp;</td></tr></tbody>
+</table>
+</div></div>
+      <div class="content-foot"><div class="gridlist-footer finder-footer" id="finder-footer-b8c7ef">
+	<div id="finder-pager-b8c7ef" class="clearfix">
+		<table>
+	<tfoot>
+		<tr>
+		 <td style="text-align:left;width:150px;border:none;padding:0;">
+		   	<div class="clearfix">
+	  			<div class="flt"><span> 每页最多显示：</span></div>
+	  			<div class="flt pointer finder-pageset" id="finder-pageset-b8c7ef">
+	  				<div class="finder-pageset-handle">20条</div>
+	  				<div id="finder-pagesel-b8c7ef" class="x-drop-menu" style="visibility:hidden;display:block">
+	  				               <div class="item" onclick="window.finderGroup['b8c7ef'].request({data:'plimit=100'})">
+            <input type="radio" name="finder_plimit" id="">
+            <label>100条</label>
+            </div>            <div class="item" onclick="window.finderGroup['b8c7ef'].request({data:'plimit=50'})">
+            <input type="radio" name="finder_plimit" id="">
+            <label>50条</label>
+            </div>            <div class="item" onclick="window.finderGroup['b8c7ef'].request({data:'plimit=20'})">
+            <input type="radio" name="finder_plimit" checked="checked" id="">
+            <label>20条</label>
+            </div>            <div class="item" onclick="window.finderGroup['b8c7ef'].request({data:'plimit=10'})">
+            <input type="radio" name="finder_plimit" id="">
+            <label>10条</label>
+            </div>	  				</div>
+	  			</div>
+	 		</div>
+		 </td>
+				  		 <td style="text-align:left;width:150px">
+			  <label for="finder-jumpinput-b8c7ef"> 跳转到第	             <input type="text" style="width:20px; padding:0;border:1px #ccc solid;margin:0;font-size:12px;" value="" id="finder-jumpinput-b8c7ef">
+	           页 			  </label>
+		 </td>
+
+	          <td style="text-align:center;">
+	                 <div class="pager">
+     <div class="pagernum">
+      <span class="prev disabled">«</span> <span class="current">1</span>   <span onclick="window.finderGroup['b8c7ef'].page(2);">2</span>   <span onclick="window.finderGroup['b8c7ef'].page(3);">3</span>   <span onclick="window.finderGroup['b8c7ef'].page(4);">4</span>   <span onclick="window.finderGroup['b8c7ef'].page(5);">5</span>   <span onclick="window.finderGroup['b8c7ef'].page(6);">6</span>   <span onclick="window.finderGroup['b8c7ef'].page(7);">7</span>   <span onclick="window.finderGroup['b8c7ef'].page(8);">8</span>   <span onclick="window.finderGroup['b8c7ef'].page(9);">9</span>   <span onclick="window.finderGroup['b8c7ef'].page(10);">10</span> … <span onclick="window.finderGroup['b8c7ef'].page(52);">52</span>   <span onclick="window.finderGroup['b8c7ef'].page(53);">53</span> <span onclick="window.finderGroup['b8c7ef'].page(2);" class="next">»</span>
+     </div>
+    </div>	          </td>
+		   	       <td style="text-align:right;">
+		     共1059条记录,当前页:1-20条		   </td>
+	    </tr>
+	</tfoot>
+</table>
+
+
+
+	</div>
+</div>
+</div>
+    </div>

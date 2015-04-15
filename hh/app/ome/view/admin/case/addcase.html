@@ -1,0 +1,91 @@
+<form method="POST" id='newcase-edit-form' action="index.php?app=designer&ctl=admin_case&act=save" class="tableform">
+    <div class="division">
+    <{if $case.case_id}><{input type="hidden" name="case[case_id]" value=$case.case_id}><{/if}>
+    <{input type="hidden" name="case[members][member_id]" value=$member_id}>
+        <table width="100%" >
+            <tr><th><em class="red">*</em><{t}>案例名：<{/t}></th><td><{input type="text" name="case[name]"  size="20" vtype="required" value=$case.name}><span></span></td></tr>
+            <tr><th><em class="red">*</em><{t}>背景图：<{/t}></th>        
+            <td>
+               <{input type="image" name="case[image_default_id]" width=160 height=90 vtype="required" value=$case.image_default_id }>
+            </td>
+            </tr>
+            <tr><th><em class="red">*</em><{t}>时间：<{/t}></th>        
+            <td>
+                <{input type="date"  name="case[createtime]" value=$case.createtime}>
+            </td>
+            </tr>
+            <tr><th><em class="red">*</em><{t}>案例说明：<{/t}></th><td><{input type="textarea" name="case[description]" size="20" vtype="required" value=$case.description}></td></tr>
+             <tr><th><em class="red">*</em><{t}>户型：<{/t}></th><td><{html_options name='case[huxing][hx_id]' options=$huxing selected=$case.huxing}></td></tr>
+              <tr><th><em class="red">*</em><{t}>面积：<{/t}></th><td><{html_options name='case[area][a_id]' options=$area selected=$case.area}></td></tr>
+            <!--
+            <tr><th><em class="red">*</em>E-mail：</th><td><{input type="email" name="pam_account[login_name][email]" size="20" vtype="required&&email" onchange="emailCheck(this)"}><span></span></td></tr>
+            <tr><th><em class="red">*</em>手机号码：</th><td><{input type="mobile" name="pam_account[login_name][mobile]" size="20" vtype="required&&mobile" onchange="emailCheck(this)"}><span></span></td></tr>
+            -->
+            <tr>
+                <th><em class="red">*</em><{t}>相关商品<{/t}>  </th>
+                <td>
+                <div class="tableform">
+                    <{input type="object" object="goods"  vtype="required" app="b2c" multiple="true" return_url="" rowselect="true"  textcol="name" name="linkid" value=$goodslink view="designer:admin/goods/rel_items.html"}>
+                </div>
+                </td>
+            </tr>
+        </table>
+        <hr style="margin:5px 0;">
+
+
+    </div>
+</form>
+<{area inject='.mainFoot'}>
+
+
+<div class="table-action"><{button type="submit"  label=$___b2c="保存"|t:'b2c' id='newcase-edit-form-submit'}></div>
+
+
+<{/area}>
+
+
+<script>
+    (function(){
+        var _form = $('newcase-edit-form');
+        var btn =$('newcase-edit-form-submit');
+        var finder = finderGroup['<{$env.get.finder_id}>'];
+
+        _form.store('target',{
+            onComplete:function(){            
+
+            },
+            onSuccess:function(response){
+                var hash_res_obj = JSON.decode(response);
+                if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+                {
+                    try{
+                        var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+                    }catch(e){}
+
+                    if(_dialogIns)
+                    {
+                        _dialogIns.close();
+                        window.finderGroup['<{$env.get._finder.finder_id}>'].refresh();
+                        finder.refresh.delay(400,finder);
+                    }
+                }
+                else
+                {
+                    //alert(hash_res_obj.error);
+                }            
+            }
+        });
+
+        btn.addEvent('click',function(){
+
+            _form.fireEvent('submit',{stop:$empty});
+
+
+
+        });
+
+    })();
+
+</script>
+
+

@@ -1,0 +1,80 @@
+
+<div id="product_data">
+    <div class="mod-title">
+        <h2>产品参数</h2>
+    </div>
+    <div class="goods-base area hide">
+        <div class="left">
+            <div class="txt-area">
+                <div class="goods-name">
+                    <span>商品名</span>
+                </div>
+                <div class="goods-price hide">
+                    <span>售价:</span>
+                    <span>$1235</span>
+                </div>
+                <div class="delivery-time hide">
+                    <span>预计收货日期：30天</span>
+                </div>
+            </div>
+        </div>
+        <div class="right"> <img src="" alt=""> </div>
+    </div>
+    <div class="goods-quality area">
+        <table>
+            <{foreach from=$extends_params key=group item=row}>
+            <tr>
+                <td class="n"><{$row.name}>:</td>
+                <td class="v"><{$row.value}></td>
+            </tr>
+            <{/foreach}>
+            
+
+        </table>
+    </div>
+    <div class="relative-info area hide">
+        <div class="tit">
+            <h2>相关提示</h2>
+        </div>
+        <div class="inn">
+            <p>- 椅子处于非使用状态时，脚轮会自动锁住。<br>- 可搭配卡伦地板护垫使用。<br>- 含脚轮。</p>
+        </div>
+    </div>
+    <div class="main-fet area hide">
+        <div class="tit">
+            <h2>重要特征</h2>
+        </div>
+        <div class="inn">
+            <p>- 高度可以调节，坐感舒适。<br>- 椅子靠背倾斜度的松紧可调节；可根据您的活动和重力增加或减少阻力。<br>- 脚轮覆以橡胶，可在各种地板上顺畅滑动。</p>
+        </div>
+    </div>
+    <div class="designer area hide">
+        <div class="tit">
+            <h2>设计师</h2>
+        </div>
+        <div class="inn">
+            <p>爱德华（德国）</p>
+        </div>
+    </div>
+    <div class="packing area">
+        <!--<div class="tit">-->
+            <!--<h2>包装尺寸和重量</h2>-->
+        <!--</div>-->
+        <table>
+            <{foreach from=$goods_params key=group item=row}>
+            <!--<tr>
+                <th colspan="2" class="section-hd"><{$group}></th>
+            </tr>-->
+            <{foreach from=$row key=key item=value}>
+            <{if $value != ''}>
+            <tr>
+                <td class="n"><{$key}></td>
+                <td class="v"><{$value|default:'-'}></td>
+            </tr>
+            <{/if}>
+            <{/foreach}>
+            <{/foreach}>
+        </table>
+    </div>
+</div>
+                    

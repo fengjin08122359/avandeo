@@ -1,0 +1,447 @@
+<div id="customized" class="center">
+    <!-- topbar -->
+    <div class="cus_topbar">
+        <ul class="triggersBox">
+            <li class=" cur" >
+                <a href="javascript:void(0)">01/设计风格</a>
+            </li>
+            <li>
+                <a href="javascript:void(0)">02/舒适度</a>
+            </li>
+            <li>
+                <a href="javascript:void(0)">03/尺寸规格</a>
+            </li>
+            <li>
+                <a href="javascript:void(0)">04/其他</a>
+            </li>
+            <li>
+                <a href="javascript:void(0)">05/完成</a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="main">
+        <div class="content">
+            <!-- main-style 01/设计风格 -->
+            <div class="main-style panel">
+                <{include file='site/dingzhi/chuang/step-1.html'}>
+                <div class="ec-spec-box">
+                </div> 
+            </div>
+
+            <!-- main-comfort 02/舒适度-->
+            <div class="main-comfort panel">
+                <{include file='site/dingzhi/chuang/step-2.html'}>
+            </div>
+            <!-- main-comfort 03/尺寸规格-->
+            <div class="main-scale panel">
+                <{include file='site/dingzhi/chuang/step-3.html'}>
+            </div>
+
+            <!-- main-comfort 04/其他-->
+            <div class="main-else panel">
+                <{include file='site/dingzhi/chuang/step-4.html'}>
+            </div>
+
+            <!-- main-style 05/完成 -->
+            <div class="main-style panel main-final">
+                <{include file='site/dingzhi/chuang/step-5.html'}>
+            </div>
+        </div>
+        <div class="main-info">
+            <{include file='site/dingzhi/chuang/info.html'}>
+        </div>
+    </div>
+</div>
+
+<div id="other" class="">
+    <div class="center">
+        <div class="other-prd">
+            <div class="dz-title"><h3>其他可以定制的产品</h3></div>
+            <ul>
+
+		 <{foreach from=$data.ot_dz_data item=ds}>
+                <li>
+                    <img src="<{$ds.image_url}>" alt="">
+                    <button onclick='window.location.href="<{link app=b2c ctl=site_dingzhi act=index arg0=$ds.dingzhi_id}>"'>立即定制</button>
+                </li>
+
+		<{/foreach}>
+                <!--li>
+                    <img src="" alt="">
+                    <button>立即定制</button>
+                </li>
+                <li>
+                    <img src="" alt="">
+                    <button>立即定制</button>
+                </li>
+                <li>
+                    <img src="" alt="">
+                    <button>立即定制</button>
+                </li>
+                <li>
+                    <img src="" alt="">
+                    <button>立即定制</button>
+                </li>
+                <li>
+                    <img src="" alt="">
+                    <button>立即定制</button>
+                </li>
+                <li>
+                    <img src="" alt="">
+                    <button>立即定制</button>
+                </li>
+                <li>
+                    <img src="" alt="">
+                    <button>立即定制</button>
+                </li>
+                <li>
+                    <img src="" alt="">
+                    <button>立即定制</button>
+                </li-->
+            </ul>
+        </div>
+
+
+        <input id="dz" type="hidden" name="dz" data-kbhd="<{$data.kbhd}>"/>
+        <input id="gz" type="hidden" value="<{$data.goods_id}>" />
+    </div>
+</div>
+
+<script>
+
+window.addEvent('domready',function(e){
+
+    var json = <{$data}>; 
+
+
+    var updateText = function(el){
+        var t= el.get('data-title');
+        var spec = el.getParent('.spec-main');
+        var sid = spec.get('data-spec-id');
+        var s =  $$('.spec-'+sid);
+        s.length && s.set('html',t);
+    };
+   
+    $$('.spec-main .s-item.cur').each(function(el){
+        updateText(el);
+    });
+
+    //$$(".spec-main[data-spec-id=5] .cur").fireEvent('click');
+    console.info(222);
+    var updateData = function(el){
+        updateText(el);
+        var data = [];
+        $$('.s-item.cur').each(function(elem){
+            data.push(elem.get('data-s-id'));
+        });
+
+        new Request.JSON({
+            url:'<{link app=b2c ctl=site_dingzhi act=getProduct}>',
+            data:'dingzhi_id=<{$data.dingzhi_id}>&goods_id='+$('gz').value+'&dz='+data.join(','),
+            onComplete:function(json){
+                if(!json)return;
+                $('gz').set('value',json.goods_id);
+                $('goods_id').set('value',json.goods_id);
+                $$('.s-price').each(function(el){
+                    el.set('html',json.price);
+                });
+                $$('.s-pic').each(function(el){
+                    el.set('src',json.image_url);
+                });
+                $('product_id').set('value',json.product_id);
+            }
+        }).send();
+    };
+
+    console.info(33);
+    var updateSpec = function(el){
+        var s_id = el.get('data-s-id');
+        var item = el.getParent('.spec-main');
+        var sm = item.getNext('.spec-main');
+        var s_v_id = sm.get('data-spec-id');
+        
+        new Request.JSON({
+            url:'<{link app=b2c ctl=site_dingzhi act=liandong}>',
+            data:'dingzhi_id=<{$data.dingzhi_id}>&spec_id='+s_v_id+'&spec_value_id='+s_id,
+            onComplete:function(json){
+                if(json){
+                    updateItem(sm.getElement('ul'),json.spec);
+                } 
+            }
+        }).send();
+    };
+
+    console.info(63);
+    var clickEvent = function(el){
+        if(el.hasClass('s-item') || el.getParent('.s-item')){
+            var target = el.hasClass('s-item') ? el : el.getParent('.s-item');
+            var spec = target.getParent('.spec-main');
+            var el=  spec.getElement('.cur');
+            el && el.removeClass('cur');
+            target.addClass('cur');
+            if(spec.hasClass('s-spec-item')){
+                //updateSpec(target);
+            }else{
+                updateData(target);
+            }
+        }
+    }
+    //clickEvent($$(".spec-main[data-spec-id=5] .cur")[0]);
+    var updateItem = function(el,json){
+        var tpl = '<li class="s-item {cur}" data-title="{spec_value_name}" data-s-id="{spec_value_id}"><img src="{spec_image}"></li>';
+        var html = '';
+        json.each(function(js){
+            js.cur = js.defalut ? 'cur' :'';
+            html  = html + tpl.substitute(js);
+        });
+        el.set('html',html);
+        clickEvent(el.getElement('.cur'));
+    };
+
+    
+
+    document.body.addEvent('click',function(e){
+    //$$('.spec-main .s-item').addEvent('click',function(e){
+        var el = $(e.target);
+        clickEvent(el);
+    });
+
+
+    console.info(44);
+
+    $$('.match-btn').addEvent('click',function(e){
+        var el = this, sel =  this.hasClass('active');
+        var price = el.get('data-price').toFloat();
+        var sp = $$('.s-price')[0].get('text').toFloat();
+        if(sel){
+            el.removeClass('active');
+            $$('.s-price').each(function(l){
+                l.set('html',sp-price);
+            })
+        }else{
+            el.addClass('active');
+            $$('.s-price').each(function(l){
+                l.set('html',sp+price);
+            })
+        }
+    });
+
+    $('addCart').addEvent('click',function(e){
+        $$('.pj-main .cur').each(function(el){
+            if(el.getStyle('display')!='none')
+                setTimeout(function(){
+                    new Request({
+                        url:'<{link app=b2c ctl=site_cart act=add argo=goods}>',
+                        data:el.getElement('form').toQueryString()+'&mini_cart=true',
+                        onComplete:function(rs){
+                  //          console.info(rs);
+                        }
+                    }).send();    
+                
+                },3000);
+            
+        });
+    });
+
+    var CustomEditor = new Class({
+        Extends:Tabs,
+        options:{
+            onInit:function(){},                        
+            activeIndex:0,                             
+            activeClass:'cur',                       
+            haslrbtn:true,                     
+            prev:'.prevBtn',
+            next:'.nextBtn',
+            eventType:'click',                  
+            triggersBox:'.triggersBox',
+            panels:'.panel'
+        },
+        switchTo:function(index,direction){
+            var options=this.options,triggers=this.triggers,panels=this.panels,
+            activeIndex=this.activeIndex,steps=options.steps,
+            fromIndex = activeIndex * steps, toIndex = index * steps;
+
+            if(!this.triggerIsValid(index))return this;
+
+            this.fireEvent('beforeSwitch',{toIndex:index});
+
+            if(options.hasTriggers)
+                this.switchTrigger(activeIndex > -1 ? triggers[activeIndex] : null, triggers[index],index);
+
+            if (direction === undefined)
+                direction = index > activeIndex ? 'FORWARD' : 'BACKWARD';
+
+            this.switchView(
+                panels.slice(fromIndex, fromIndex + steps),
+                panels.slice(toIndex, toIndex + steps),
+                index, direction);
+                this.activeIndex = index;
+                return this.fireEvent('switch',{currentIndex:index});
+        },
+        switchView:function(fromPanels,toPanels,index,direction){
+            var cls = this.options.showClass;
+            if(cls) {
+                fromPanels[0].removeClass(cls);
+                toPanels[0].addClass(cls);
+            }
+            fromPanels[0].setStyle('display','none');
+            toPanels[0].setStyle('display','block');
+        },
+        init:function(){
+            this.parent();
+            this.panels[this.activeIndex].setStyle('display','block');
+        }
+    });
+
+    var updateW = function(){
+        var x =$('dz').get('data-kbhd').toInt(), w =$$('.ct-t')[0].get('html').toInt();
+        var f= $$('.f-t')[0].get('html').toInt(), sw =$$('.ct-s')[0].get('html').toInt();
+
+        var t = sw-x; var s = w-f*2 ;
+
+        $$('.s-w').set('html',s);
+        $$('.s-t').set('html',t);
+    }
+    var tabs = new CustomEditor('customized',{
+        onSwitch:function(obj){
+            var i = obj.currentIndex;
+            if(i==this.triggers.length-1){
+                $$('.dz-complete .c-item.cur').each(function(el){
+                    el.setStyle('display','none').removeClass('cur');
+                });
+
+                $$('.s-item.cur').each(function(elem){
+                    var s = elem.get('data-s-id');
+                    $$('.dz-complete .c-item').each(function(el){
+                        var sid = el.get('data-s-id');
+                        if(s==sid){
+                            el.setStyle('display','block').addClass('cur');
+                        }
+                    });
+                });
+                $$('.match-btn.active').each(function(elem){
+                   var s = elem.get('data-p-id');
+                    $$('.pj-main .c-item').each(function(el){
+                        var sid = el.get('data-p-id');
+                        if(s==sid){
+                            el.setStyle('display','block').addClass('cur');
+                        }
+                    });
+                });
+                $$('.main-info')[0].addClass('m-complete');
+            }else{
+                if(i==2){ updateW(); }
+                $$('.main-info')[0].removeClass('m-complete');
+            }
+        }
+    });
+
+    
+    $$('.item-fill .fill').addEvent('click',function(e){
+        //     $$('.item-fill .cur').removeClass('cur');
+        //    $(this).addClass('cur');
+    });
+
+
+    var handle = $$('.view-btn')[0]; 
+
+    var wrapper = $$('.elementwrapper')[0];
+
+    var mx= 800, mi = 400;
+    var arr = [];
+    <{foreach from=$data.spec.69.spec_value item=item key=key}>
+        arr.push(<{$item.spec_value_name}>);
+    <{/foreach}>
+
+    arr.sort(function(a,b){return a.toInt()>b.toInt()?1:-1});
+    //var arr = [420,450,450,500,520,550,600,620];
+    var max = Math.max.apply(null, arr);
+    var min = Math.min.apply(null, arr);
+
+    var step = ((mx-mi)/arr.length).toInt();
+
+   
+
+    var bool = false;
+    handle.addEvent('mousedown',function(e){
+        var s = $$('.schlafsofa')[0];
+        var x = s.getStyle('width').toInt();
+        var lastCoord = e.event.pageX;
+        bool = true;
+        window.addEvent('mousemove',function(ev){
+           var delta = ev.event.pageX - lastCoord;
+           var w = x + delta;
+
+           var index = ((w-mi)/step).toInt();
+           if(index > arr.length) index = arr.length
+           if(index < 1) index = 1; 
+
+           var ss =  arr[index-1];
+           //w = mi+step*index;
+           if(w > mx) w = mx;
+           if(w < mi) w = mi;
+
+            $$('.ct-t').set('html',ss ? ss : min);
+
+            var cc = $$('.custom-select-menu .cur');
+            if(cc.length)
+            $$('.custom-select-menu .cur')[0].removeClass('cur');
+
+            wrapper.setStyle('width',w);
+            s.setStyle('width',w);
+
+            $$('.s-w-'+ss)[0].addClass('cur');
+
+            updateW();
+
+        });
+    }).addEvent('mouseup',function(){ });
+
+    window.addEvent("mouseup",function(e){
+        bool && updateData($$('.custom-select-menu .cur'));
+        $(this).removeEvents("mousemove");
+        bool = false;
+    });
+
+    /*
+       var k = '232';
+       var el = $$('li[data-spec-id='+k+']');
+       el[0].addClass('cur');
+       console.info(el);
+     */
+
+    /*
+       var thumbs = $$('.show-list')[0]
+       var li = thumbs.getElements('li');
+       if(!li.length) return;
+       var ul = thumbs.getElement('ul');
+       var prev = thumbs.getElement('.up');
+
+       var next = thumbs.getElement('.down');
+    // var liX = li[0].getSize().y + li[0].getPatch('margin').y;
+    var liX = 82 + li[0].getPatch('margin').y;
+    var ulX = liX * li.length;
+
+    ul.setStyle('height', ulX);
+    var thumbsX = thumbs.getSize().y;
+    if(ulX > thumbsX) next.removeClass('over');
+    $$(prev,next).addEvent('mousedown', function(e){
+    var ml = parseInt(ul.getStyle('margin-top')) || 0;
+    if(this.hasClass('over')) return;
+    new Fx.Tween(ul, {
+duration: 100,
+onComplete: function(){
+ml = parseInt(ul.getStyle('margin-top'));
+if(ml < 0) prev.removeClass('over');
+else if(ml >= 0) prev.addClass('over');
+if(ml <= thumbsX - ulX) next.addClass('over');
+else if(ml > thumbsX - ulX) next.removeClass('over');
+}
+}).start('margin-top', ml, ml + (this.hasClass('backward') ? 1 :-1) * liX);
+});
+     */
+
+    });
+</script>

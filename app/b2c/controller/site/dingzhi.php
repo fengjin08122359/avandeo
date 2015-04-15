@@ -10,7 +10,7 @@
 class b2c_ctl_site_dingzhi extends b2c_frontpage{
 
 
-        public function index($series_id) {
+        public function index($series_id,$type_id) {
             $db = kernel::database();
             $ds_data = $db->selectrow("SELECT * FROM sdb_b2c_dingzhi WHERE dingzhi_id='".$series_id."' AND is_defalut ='true'");
 
@@ -20,10 +20,23 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
             $goods = $goods_mdl->dump($gid,'*',$subsdf);
 
 
+            switch($type_id){
+                case false:
+                    $type_s_id = 7;
+                    break;
+
+                case "baozhen":
+                    $type_s_id = 18;
+                    break;
+
+                case "chuang":
+                    $type_s_id = 19;
+                    break;
+
+            }
 
 
             $dz_ds_data = $db->select("SELECT goods_id,dingzhi_id FROM sdb_b2c_dingzhi WHERE dingzhi_id!='".$series_id."' AND is_defalut ='true'");
-
 
 
             foreach($dz_ds_data as $ke_dz=>$ve_dz){
@@ -37,10 +50,8 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                 $ot_dz_data[] =$egz_data;
             }
 
+
             $goods['ot_dz_data'] = $ot_dz_data;
-
-
-
             $goods['dingzhi_id'] = $ds_data['dingzhi_id'];
             $g_data = $goods_mdl->getLinkList($gid);
             foreach($g_data as $k=>$v){
@@ -75,7 +86,7 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
 
             $goods['price'] = intval($e['price']);
 
-            $spec_data = $db->select("SELECT a.spec_id,spec_name FROM sdb_b2c_goods_type_spec a RIGHT JOIN sdb_b2c_specification b  ON a.spec_id = b.spec_id WHERE type_id = 7");
+            $spec_data = $db->select("SELECT a.spec_id,spec_name FROM sdb_b2c_goods_type_spec a RIGHT JOIN sdb_b2c_specification b  ON a.spec_id = b.spec_id WHERE type_id = ".$type_s_id);
 
 
             foreach($spec_data as $ke=>$ve){
@@ -111,7 +122,13 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
 			$this->rankSpec($goods);
             
             $this->pagedata['data'] = $goods;
-            $this->page("site/dingzhi/index.html");
+
+
+            if(!$type_id){
+                $this->page("site/dingzhi/index.html");
+            }else{
+                $this->page("site/dingzhi/".$type_id.".html");
+            }
         }
 
         /**
@@ -152,10 +169,10 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
             $db = kernel::database();
             $lib = kernel::single("base_storager");
 
-            $dz = $_POST['dz'];
+            $dz = $_GET['dz'];
 
-            $series_id = $_POST['dingzhi_id'];
-            //$goods_id = $_POST['goods_id'];
+            $series_id = $_GET['dingzhi_id'];
+            //$goods_id = $_GET['goods_id'];
             //$sql = "SELECT product_id FROM (SELECT product_id,count(product_id) AS d FROM sdb_b2c_dingzhi_index WHERE dingzhi_id =".$series_id." AND spec_value_id in(".$dz.") GROUP BY product_id )  AS c WHERE d>10";
 
 

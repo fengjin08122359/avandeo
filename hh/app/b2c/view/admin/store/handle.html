@@ -1,0 +1,74 @@
+<form method="post" action="<{link app=b2c ctl=admin_store act=add}>" class="tableform" id="store">
+<{input type='hidden' name='store_id' value=$store.store_id}>
+<table>
+    <tbody>
+      <tr>
+          <th><{t}>店铺名称<{/t}></th>
+        <td><{input type="text" name="name" id="" size="30" value=$store.name}></td>
+      </tr>
+      <tr>
+          <th><{t}>地址<{/t}></th>
+        <td><{input id="store-area" app="ectools" class="inputstyle" name="area" type="region" required="true" value=$store.area callback="selectArea"}><{input type="text" name="address" id="" size="30" value=$store.address}></td>
+      </tr>
+      <tr>
+          <th><{t}>电话号码<{/t}></th>
+        <td><{input type="text" name="phone" id="" size="30" value=$store.phone}></td>
+      </tr>
+      <tr>
+          <th><{t}>营业时间<{/t}></th>
+        <td><{input type="text" name="btime" id="" size="30" value=$store.btime}></td>
+      </tr>
+      <tr>
+          <th><{t}>交通<{/t}></th>
+        <td><{input type="text" name="traffic" id="" size="30" value=$store.traffic}></td>
+      </tr>
+      <tr>
+          <th><{t}>缩略图<{/t}></th>
+        <td><{input type="image" name="image_default_id" value=$store.image_default_id image_size='org'}>(220x220)</td>
+      </tr>
+      <tr>
+          <th><{t}>banner图<{/t}></th>
+        <td><{input type="image" name="image_banner_id" value=$store.image_banner_id image_size='org'}>(1200x450)</td>
+      </tr>
+      <tr>
+          <th><{t}>内容<{/t}></th>
+        <td><{input type="html" name="content" includeBase=true value=$store.content}></td>
+      </tr>
+      <tr>
+      	<th></th>
+      	<td><{button class="btn btn-primary" id="store-submit" type="submit" label="保存"}></td>
+      </tr>
+    </tbody>
+</table>
+</form>
+<script>
+    (function(){
+        var _form = $('store');
+        var btn =$('store-submit');
+        var finder = finderGroup['<{$finder}>'];
+
+        _form.store('target',{
+            onComplete:function(){           
+
+            },
+            onSuccess:function(response){
+                var hash_res_obj = JSON.decode(response);
+                if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+                {
+                    try{
+                        var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+                    }catch(e){}
+
+                    if(_dialogIns)
+                    {
+                        _dialogIns.close();
+                        finder.refresh.delay(400,finder);
+                    }
+                }            
+            }
+        });
+        btn.addEvent('click',function(){
+            _form.fireEvent('submit',{stop:$empty});
+        });
+    })();
+</script>

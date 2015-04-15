@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <{header}>
+  <link rel="stylesheet" href="images/css/reset.css"/>
+  <link rel="stylesheet" href="images/css/all.css"/>
+</head>
+<body>
+<{require file="block/header.html"}>
+<div id="space" class="space-list">
+  <div class="center">
+   <div class="slide-wrap"> <{widgets id="space_banner"}></div>
+   <div class="section">
+        <{main view="custom/spaceglist-top.html"}>
+        <div class="clearfix">
+          <div class="sidebar"><{widgets id="sidebar"}></div>
+          <{main view="custom/spaceglist-bottom.html"}>
+         </div>
+    </div>
+  </div>
+</div>
+<{require file="block/footer.html"}>
+</body>
+</html>

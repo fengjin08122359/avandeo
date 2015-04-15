@@ -1,0 +1,242 @@
+<form method="post" action="index.php?app=b2c&ctl=admin_goods_cat&act=save" id='add-category-form'>
+<div class="tableform">
+    <div class="division">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <th><{t}>分类名称：<{/t}>
+            <{if $cat.cat_id }><input type="hidden" value="<{$cat.cat_id}>" name="cat[cat_id]" /></th><{/if}>
+          <td><input type="text" value="<{$cat.cat_name|escape:'html'}>" name="cat[cat_name]" vtype='required' class='x-input'/>
+            <{$cat_name}></td>
+        </tr>
+        <tr>
+          <th><{t}>上级分类：<{/t}></th>
+          <td><{input type="select" name="cat[parent_id]" style="font-size:12px;" required='1' value=$cat.parent_id rows=$catList valueColumn="cat_id" labelColumn="cat_name"}>
+            <span class="notice-inline"><{t}>顶级分类请选择“无”<{/t}></span></td>
+        </tr>
+        <tr>
+          <th><{t}>商品类型：<{/t}></th>
+          <td><select name="cat[type_id]">
+              <{foreach from=$gtypes item=type}> <option value="<{$type.type_id}>" <{if $type.type_id == $cat.type_id}>selected="selected"<{/if}>><{$type.name}>
+              </option>
+              <{/foreach}>
+            </select></td>
+        </tr>
+<!--tag_foreign_cat_disable-->
+		<tr>
+          <th><{t}>商品分类显示小图：<{/t}></th>
+          <td><{input type="image" name="cat[cat_image_id]" value=$cat.cat_image_id image_size='org'}></td>
+        </tr>
+		<tr>
+		  <th><{t}>模板：<{/t}></th>
+		  <td>
+		  <{template_filter type="gallery" selected=$gallery_setting.gallery_template name="cat[gallery_setting][gallery_template]"}></td>
+		</tr>
+		<!-- 分类专题页面图片维护区域 -->
+		<tr>
+		  <th><{t}>专题页模板：<{/t}></th>
+		  <td>
+		  <{template_filter type="cat_index" selected=$cat.tmpl_path name="cat[tmpl_path]"}></td>
+		</tr>
+		<tr>
+			<th>其他设置:</th>
+			<td>					
+				<div class="span-auto division">
+					<label>
+						<p>链接在新窗口打开？</p>
+						<input type="checkbox" name="cat[gallery_setting][target_blank]" value="1" <{if $gallery_setting.target_blank}> checked <{/if}> />是
+					</label>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th rowspan="10" colspan="2"><img src="<{$theme_url}>/images/cat-index.png" width="600" height="1203" /></th>
+		</tr>
+		<tr>
+			<th rowspan="3"><{t}>区域-1：<{/t}></th>
+			<td><{assign var=area_1 value=$gallery_setting.cat_area_1}>区域是否显示：<input type="checkbox" name="cat[gallery_setting][cat_area_1][disabled]" value="false"<{if $area_1.disabled=='false'}> checked="checked"<{/if}> /></td>
+		</tr>
+		<tr>
+		  <td>
+			<span style="float:left;width:131px;padding:0px 1px;">
+				<{input type="image" value=$area_1.slot_1.img_src name="cat[gallery_setting][cat_area_1][slot_1][img_src]"}><input type="text" name="cat[gallery_setting][cat_area_1][slot_1][img_link]" value="<{$area_1.slot_1.img_link}>" /><em style="color:Red;">左708*436</em>
+			</span>
+			<span style="float:left;width:131px;padding:0px 1px;">
+				<{input type="image" value=$area_1.slot_2.img_src name="cat[gallery_setting][cat_area_1][slot_2][img_src]" _float="left"}><input type="text" name="cat[gallery_setting][cat_area_1][slot_2][img_link]" value="<{$area_1.slot_2.img_link}>" /><em style="color:Red;">右上468*212</em>
+			</span>
+			<span style="float:left;width:131px;padding:0px 1px;">
+				<{input type="image" value=$area_1.slot_3.img_src name="cat[gallery_setting][cat_area_1][slot_3][img_src]"}><input type="text" name="cat[gallery_setting][cat_area_1][slot_3][img_link]" value="<{$area_1.slot_3.img_link}>" /><em style="color:Red;">右下468*212</em>
+			</span>
+			<span style="float:left;width:131px;padding:0px 1px;">
+				<{input type="image" value=$area_1.slot_4.img_src name="cat[gallery_setting][cat_area_1][slot_4][img_src]"}><input type="text" name="cat[gallery_setting][cat_area_1][slot_4][img_link]" value="<{$area_1.slot_4.img_link}>" /><em style="color:Red;">下一228*118</em>
+			</span>
+		  </td>
+		</tr>
+		<tr>
+			<td>
+				<span style="float:left;width:131px;padding:0px 1px;">
+					<{input type="image" value=$area_1.slot_5.img_src name="cat[gallery_setting][cat_area_1][slot_5][img_src]"}><input type="text" name="cat[gallery_setting][cat_area_1][slot_5][img_link]" value="<{$area_1.slot_5.img_link}>" /><em style="color:Red;">下二228*118</em>
+				</span>
+				<span style="float:left;width:131px;padding:0px 1px;">
+					<{input type="image" value=$area_1.slot_6.img_src name="cat[gallery_setting][cat_area_1][slot_6][img_src]" _float="left"}><input type="text" name="cat[gallery_setting][cat_area_1][slot_6][img_link]" value="<{$area_1.slot_6.img_link}>" /><em style="color:Red;">下三228*118</em>
+				</span>
+				<span style="float:left;width:131px;padding:0px 1px;">
+					<{input type="image" value=$area_1.slot_7.img_src name="cat[gallery_setting][cat_area_1][slot_7][img_src]" _float="left"}><input type="text" name="cat[gallery_setting][cat_area_1][slot_7][img_link]" value="<{$area_1.slot_7.img_link}>" /><em style="color:Red;">下四228*118</em>
+				</span>
+				<span style="float:left;width:131px;padding:0px 1px;">
+					<{input type="image" value=$area_1.slot_8.img_src name="cat[gallery_setting][cat_area_1][slot_8][img_src]" _float="left"}><input type="text" name="cat[gallery_setting][cat_area_1][slot_8][img_link]" value="<{$area_1.slot_8.img_link}>" /><em style="color:Red;">下五228*118</em>
+				</span>
+			</td>
+		</tr>
+		<tr>
+			<th rowspan="2"><{t}>区域-2：<{/t}></th>
+			<td><{assign var=area_2 value=$gallery_setting.cat_area_2}>区域是否显示：<input type="checkbox" name="cat[gallery_setting][cat_area_2][disabled]" value="false"<{if $area_2.disabled=='false'}> checked="checked"<{/if}> /></td>
+		</tr>
+		<tr>
+		  <td>
+			<span style="float:left;width:131px;padding:0px 1px;">
+				<{input type="image" value=$area_2.slot_1.img_src name="cat[gallery_setting][cat_area_2][slot_1][img_src]"}><input type="text" name="cat[gallery_setting][cat_area_2][slot_1][img_link]" value="<{$area_2.slot_1.img_link}>" /><em style="color:Red;">左上468*436</em>
+			</span>
+			<span style="float:left;width:131px;padding:0px 1px;">
+				<{input type="image" value=$area_2.slot_2.img_src name="cat[gallery_setting][cat_area_2][slot_2][img_src]" _float="left"}><input type="text" name="cat[gallery_setting][cat_area_2][slot_2][img_link]" value="<{$area_2.slot_2.img_link}>" /><em style="color:Red;">右上708*436</em>
+			</span>
+			<span style="float:left;width:131px;padding:0px 1px;">
+				<{input type="image" value=$area_2.slot_3.img_src name="cat[gallery_setting][cat_area_2][slot_3][img_src]" _float="left"}><input type="text" name="cat[gallery_setting][cat_area_2][slot_3][img_link]" value="<{$area_2.slot_3.img_link}>" /><em style="color:Red;">下方1188*278</em>
+			</span>
+		  </td>
+		</tr>
+		<tr>
+			<th rowspan="2"><{t}>区域-3：<{/t}></th>
+			<td><{assign var=area_4 value=$gallery_setting.cat_area_4}>区域是否显示：<input type="checkbox" name="cat[gallery_setting][cat_area_4][disabled]" value="false"<{if $area_4.disabled=='false'}> checked="checked"<{/if}> /></td>
+		</tr>
+		<tr>
+		  <td>			
+			<span style="float:left;width:131px;padding:0px 1px;">
+				<{input type="image" value=$area_4.slot_1.img_src name="cat[gallery_setting][cat_area_4][slot_1][img_src]"}><input type="text" name="cat[gallery_setting][cat_area_4][slot_1][img_link]" value="<{$area_4.slot_1.img_link}>" /><em style="color:Red;">左上468*660</em>
+			</span>
+			<span style="float:left;width:131px;padding:0px 1px;">
+				<{input type="image" value=$area_4.slot_2.img_src name="cat[gallery_setting][cat_area_4][slot_2][img_src]"}><input type="text" name="cat[gallery_setting][cat_area_4][slot_2][img_link]" value="<{$area_4.slot_2.img_link}>" /><em style="color:Red;">左下468*212</em>
+			</span>
+			<span style="float:left;width:131px;padding:0px 1px;">
+				<{input type="image" value=$area_4.slot_3.img_src name="cat[gallery_setting][cat_area_4][slot_3][img_src]"}><input type="text" name="cat[gallery_setting][cat_area_4][slot_3][img_link]" value="<{$area_4.slot_3.img_link}>" /><em style="color:Red;">右上708*436</em>
+			</span>
+			<span style="float:left;width:131px;padding:0px 1px;">
+				<{input type="image" value=$area_4.slot_4.img_src name="cat[gallery_setting][cat_area_4][slot_4][img_src]"}><input type="text" name="cat[gallery_setting][cat_area_4][slot_4][img_link]" value="<{$area_4.slot_4.img_link}>" /><em style="color:Red;">右下大图468*436</em>
+			</span>
+			<span style="float:left;width:131px;padding:0px 1px;">
+				<{input type="image" value=$area_4.slot_5.img_src name="cat[gallery_setting][cat_area_4][slot_5][img_src]"}><input type="text" name="cat[gallery_setting][cat_area_4][slot_5][img_link]" value="<{$area_4.slot_5.img_link}>" /><em style="color:Red;">右下小图(1)228*212</em>
+			</span>
+			<span style="float:left;width:131px;padding:0px 1px;">
+				<{input type="image" value=$area_4.slot_6.img_src name="cat[gallery_setting][cat_area_4][slot_6][img_src]"}><input type="text" name="cat[gallery_setting][cat_area_4][slot_6][img_link]" value="<{$area_4.slot_6.img_link}>" /><em style="color:Red;">右下小图(2)228*212</em>
+			</span>
+		  </td>
+		</tr>
+		<tr>
+			<th rowspan="2"><{t}>区域-4：<{/t}></th>
+			<td><{assign var=area_5 value=$gallery_setting.cat_area_5}>区域是否显示：<input type="checkbox" name="cat[gallery_setting][cat_area_5][disabled]" value="false"<{if $area_5.disabled=='false'}> checked="checked"<{/if}> /></td>
+		</tr>
+		<tr>
+		  <td>
+			<span style="float:left;width:131px;padding:0px 1px;">
+				<{input type="image" value=$area_5.slot_1.img_src name="cat[gallery_setting][cat_area_5][slot_1][img_src]"}><input type="text" name="cat[gallery_setting][cat_area_5][slot_1][img_link]" value="<{$area_5.slot_1.img_link}>" /><em style="color:Red;">1188*278</em>
+			</span>
+		  </td>
+		</tr>
+		<!-- end -->
+        <tr>
+          <th><{t}>排序：<{/t}></th>
+          <td><input style="width:50px;" vtype="unsigned" class="inputstyle" value="<{if $cat.p_order}> <{$cat.p_order}> <{else}>0<{/if}>" name="cat[p_order]" class="_x_ipt"/>
+            <span class="notice-inline"><{t}>数字越小越靠前<{/t}></span></td>
+        </tr>
+
+        <tr>
+          <th><{t}>TITLE<br>
+            (页面标题)<{/t}></th>
+          <td><input type="text" name="cat[seo_info][seo_title]" style="width:90%" class="inputstyle" maxlength="100" value="<{$seo_info.seo_title}>"></td>
+        </tr>
+          <tr>
+          <th><{t}>META_KEYWORDS<br>
+            (页面关键词)<{/t}></th>
+          <td><input type="text" name="cat[seo_info][seo_keywords]" style="width:90%" class="inputstyle" maxlength="100" value="<{$seo_info.seo_keywords}>"></td>
+        </tr>
+        <tr>
+          <th><{t}>META_DESCRIPTION<br>
+            (页面描述)<{/t}></th>
+          <td><textarea name="cat[seo_info][seo_description]" rows=4 style="width:90%" class="inputstyle" cols=35 maxlength=255/><{$seo_info.seo_description}></textarea></td>
+        </tr>
+
+      </table>
+    </div>
+<!--tag_foreign_cat_seo-->
+
+<!--tag_foreign_goods_cat-->
+
+</div>
+
+
+
+
+<div class="table-action">
+	<{button label=$___b2c="保存"|t:'b2c'  type="submit" }>
+	<!--<{button label="保存并继续添加" type="button" id='easy-save-category'}>-->
+	<{button class="btn-secondary " label=$___b2c="取消"|t:'b2c' isclosedialogbtn="true" onclick="W.page('index.php?app=b2c&ctl=admin_goods_cat&act=index')" }>
+</div>
+
+<script>
+           $E('#add-category-form input[name^=cat[cat_name]').addEvent('keydown',function(e){
+
+               if(e.key=='enter'){
+
+
+                 e.stop();
+
+                   //return $('easy-save-category').fireEvent('click',{stop:$empty});
+               }
+
+           });
+
+           $('add-category-form').store('target',{onComplete:function(){
+
+                  if(gms=$('g_menu_sec_2')){
+                      gms.empty();
+                      gms.retrieve('update',$empty)();
+                  }
+
+
+           }});
+
+			if($('easy-save-category'))
+           $('easy-save-category').addEvent('click',function(e){
+                    e.stop();
+                    var _form=this.form;
+
+                    var cname=$E('#add-category-form input[name^=cat[cat_name]');
+                    var value=cname.get('value').clean().trim();
+
+                    var cid=$E('#add-category-form input[name^=cat[cat_id]');
+                    if(cid) cid.remove();
+
+                    if(!value)return MessageBox.error('<{t}>分类名称为不能为空.<{/t}>');
+                    if(this.retrieve('tempname',[]).contains(value)){
+                       if(!confirm('<{t}>您刚才已经添加了分类:<{/t}>"'+value+'"<{t}>\n要重复添加么?<{/t}>'))return;
+                    }
+
+                    this.retrieve('tempname',[]).include(value);
+
+                    if(!$(_form).get('target')){
+
+                      var _target={
+                         update:'messagebox'
+                      }
+                       _form.set('target',JSON.encode(_target));
+                    }
+                    _form.fireEvent('submit',e).erase('target');
+
+           });
+			$('add-category-form').store('target',{
+				onComplete:function(){
+					if($('add-category-form').getParent('.dialog'))
+					$('add-category-form').getParent('.dialog').retrieve('instance').close();
+				}
+			});
+        </script>
+</form>

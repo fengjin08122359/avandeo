@@ -1,0 +1,14 @@
+<desktop>
+    <permissions>
+        <permission id="ome" display='true'>收银模块</permission>
+    </permissions>
+
+    <workground name="收银" id="ome.workground.setting" controller="admin_receive" action="index" order='70'>
+        <menugroup name="收银管理">
+            <menu controller='admin_receive' action='index' permission='ome' display='true'>收银</menu>
+            <menu controller='admin_return' action='index' permission='ome' display='true'>退货</menu>
+            <menu controller='admin_receive_analysis' action='index' permission='ome' display='true'>收银报表</menu>
+        </menugroup>
+    </workground>
+
+</desktop>

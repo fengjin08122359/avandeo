@@ -39,6 +39,17 @@ $db['dingzhi']=array (
             'in_list' => true,
             'default_in_list' => true,
         ),
+        'dz_type' =>
+        array (
+            'type' => 'varchar(15)',
+            'required' => true,
+            'label' => app::get('b2c')->_('类型'),
+            'width' => 75,
+            'default' =>'shafa',
+            'editable' => false,
+            'in_list' => true,
+            'default_in_list' => true,
+        ),
         'is_defalut' =>
         array (
             'type' => 'bool',
@@ -56,6 +67,7 @@ $db['dingzhi']=array (
                 0 => 'dingzhi_id',
             ),
         ),
+
     ),
     'version' => '$Rev$',
     'comment' => app::get('b2c')->_('定制器表'),

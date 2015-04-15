@@ -1,0 +1,19 @@
+<div class="product-concerns ">
+    <ul>
+      <li class="item cross">
+        <span class="label">市场价:</span>
+        <span class="detail">
+          <!--<b class="price"><ins class="action-mk-price"></ins></b>-->
+          <i class="price minor"><{$page_product_basic.price|cur_odr}><del class="action-mk-price action-mktprice"></del></i>
+          <span class="discount"><{if $page_product_basic.discount < 1}><{$page_product_basic.discount*10}>折<{/if}></span>
+        </span>
+      </li>
+      <li class="item">
+      <span class="label"><{t}>销售价<{/t}>：</span>
+        <span class="detail">
+            <b class="price"><ins class="action-price"><{$page_product_basic.sales_price|cur_odr}></ins></b>
+            <{if $setting.mktprice == 'true'}><i class="minor"><span class="action-saveprice"></span></i><{/if}>
+        </span>
+      </li>
+    </ul>
+</div>

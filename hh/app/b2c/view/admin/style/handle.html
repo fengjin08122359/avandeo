@@ -1,0 +1,66 @@
+<form method="post" action="<{link app=b2c ctl=admin_style act=add}>" class="tableform" id="style">
+<{input type='hidden' name='style_id' value=$style.style_id}>
+<table>
+	<tbody>
+	  <tr>
+	      <th><{t}>风格名称<{/t}></th>
+	    <td><{input type="text" name="name" id="" size="30" value=$style.name}></td>
+	  </tr>
+      <tr>
+          <th><{t}>风格缩略图<{/t}></th>
+        <td><{input type="image" name="thumbnail_pic" value=$style.thumbnail_pic image_size='org'}>(300x300)</td>
+      </tr>
+      <tr>
+          <th><{t}>banner大图<{/t}></th>
+        <td><{input type="image" name="banner_pic" value=$style.banner_pic image_size='org'}></td>
+      </tr>
+      <tr>
+          <th><{t}>状态<{/t}></th>
+        <td>
+            <{foreach from=$status key=status_key item=status_item}>
+            <input type="checkbox" id="status_<{$status_key}>" name="status[]" value="<{$status_key}>" <{if $style.status & $status_key}>checked="checked"<{/if}>><label for="status_<{$status_key}>"><{$status_item}></label>
+            <{/foreach}>
+        </td>
+      </tr>
+      <tr>
+          <th><{t}>风格描述<{/t}></th>
+        <td><textarea name="description"><{$style.description}></textarea></td>
+      </tr>
+	  <tr>
+	  	<th></th>
+	  	<td><{button class="btn btn-primary" id="style-submit" type="submit" label="保存"}></td>
+	  </tr>
+	</tbody>
+</table>
+</form>
+<script>
+    (function(){
+        var _form = $('style');
+        var btn =$('style-submit');
+        var finder = finderGroup['<{$finder}>'];
+
+        _form.store('target',{
+            onComplete:function(){           
+
+            },
+            onSuccess:function(response){
+                var hash_res_obj = JSON.decode(response);
+                if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+                {
+                    try{
+                        var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+                    }catch(e){}
+
+                    if(_dialogIns)
+                    {
+                        _dialogIns.close();
+                        finder.refresh.delay(400,finder);
+                    }
+                }            
+            }
+        });
+        btn.addEvent('click',function(){
+            _form.fireEvent('submit',{stop:$empty});
+        });
+    })();
+</script>

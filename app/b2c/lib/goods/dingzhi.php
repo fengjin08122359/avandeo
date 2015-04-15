@@ -11,7 +11,7 @@ class b2c_goods_dingzhi{
 
 
 
-    function import_data($file){
+    function import_data($file,$type){
         $mdl_b2c = app::get('b2c')->model('goods');
         $mdl_image_attach = app::get('image')->model('image_attach');
         $md_dingzhi = app::get('b2c')->model('dingzhi');
@@ -29,21 +29,83 @@ class b2c_goods_dingzhi{
                 '2'=>15,
             );*/
 
+        switch($type){
+
+            case "shafa":
+                $gs =array(
+                    '2'=>5,//材料
+                    '3'=>6,//材料款式
+                    '4'=>1,//颜色
+                    '5'=>8,//扶手
+                    '6'=>9,//沙发腿
+                    '7'=>10,//填充物
+                    '8'=>11,//背高
+                    '9'=>14,//总长
+                    '10'=>12,//座高
+                    '11'=>17,//转角
+                    '12'=>13,//座深
+                );
 
 
-        $gs =array(
-            '2'=>5,//材料
-            '3'=>6,//材料款式
-            '4'=>1,//颜色
-            '5'=>8,//扶手
-            '6'=>9,//沙发腿
-            '7'=>10,//填充物
-            '8'=>11,//背高
-            '9'=>14,//总长
-            '10'=>12,//座高
-            '11'=>17,//转角
-            '12'=>13,//座深
-        );
+                $insert_type = 15;
+                $image_sheet = 13;
+                $cp_name_sheet = 16;
+                $name_bn_sheet = 0;
+                $sc_day_sheet = 17;
+                $price_sheet = 1;
+                $defalut_sheet = 14;
+                break;
+
+            case "baozheng":
+
+                $gs =array(
+                    '3'=>37,//材料
+                    '4'=>64,//材料款式
+                    '5'=>41,//形状
+                    '6'=>39,//图案
+                    '7'=>44,//舒适度
+                    '8'=>43,//规格尺寸
+                    '14'=>65,//枕套面料
+                    '15'=>66,//枕套颜色
+                );
+                $insert_type = 11;
+                $image_sheet = 9;
+                $cp_name_sheet = 12;
+                $name_bn_sheet = 1;
+                $sc_day_sheet = 13;
+                $price_sheet = 2;
+                $defalut_sheet =10;
+                break;
+
+            case "chuang":
+
+                $gs =array(
+                    '2'=>50,//材料
+                    '3'=>71 ,//材料款式
+                    '4'=>52,//形状
+                    '5'=>67,//图案
+                    '6'=>63,//舒适度
+                    '7'=>53,//规格尺寸
+                    '8'=>68,//枕套面料
+                    '9'=>55,//枕套颜色
+                    '10'=>54,//枕套颜色
+                    '11'=>56,//枕套颜色
+                    '12'=>70,//枕套颜色
+                    '13'=>69,//枕套颜色
+                );
+                $insert_type = 16;
+                $image_sheet = 14;
+                $cp_name_sheet = 17;
+                $name_bn_sheet = 0;
+                $sc_day_sheet = 18;
+                $price_sheet = 1;
+                $defalut_sheet =15;
+                break;
+        }
+
+
+
+
 
         $handle = fopen($file,"r");
         $db = kernel::database();
@@ -55,12 +117,12 @@ class b2c_goods_dingzhi{
         //foreach($e_data as $a =>$data){
         while ($data = fgetcsv($handle)){
 
-            switch($data[15]){
+            switch($data[$insert_type]){
 
                 case "1":
                     $goods_data = array();
                     $sdi_product = array();
-                    $ident = substr($data[13],strlen(kernel::base_url(1))+1);
+                    $ident = substr($data[$image_sheet],strlen(kernel::base_url(1))+1);
                     $image_data = $db->selectrow("SELECT image_id FROM sdb_image_image WHERE url='".$ident."'");
                     if(!$image_data){
                         echo $ident;
@@ -68,14 +130,14 @@ class b2c_goods_dingzhi{
                         exit;
                     }
                     $goods_data['image_default_id'] =$image_data['image_id'];
-                    $goods_data['name'] = "沙发".$data[0];
-                    $goods_data['bn'] = $data[0];
-                    $goods_data['cp_name'] = $data[16];
-                    $goods_data['sc_day'] = $data[17];
+                    $goods_data['name'] = "沙发".$data[$name_bn_sheet];
+                    $goods_data['bn'] = $data[$name_bn_sheet];
+                    $goods_data['cp_name'] = $data[$cp_name_sheet];
+                    $goods_data['sc_day'] = $data[$sc_day_sheet];
                     $goods_data['kbhd'] = $data[18];
-                    $sdi_product['price']['price']['price'] =$data[1];
-                    $sdi_product['price']['cost']['price'] =$data[1];
-                    $sdi_product['price']['mktprice']['price'] =$data[1];
+                    $sdi_product['price']['price']['price'] =$data[$price_sheet];
+                    $sdi_product['price']['cost']['price'] =$data[$price_sheet];
+                    $sdi_product['price']['mktprice']['price'] =$data[$price_sheet];
                     $sdi_product['is_default'] = true;
                     $sdi_product['default'] = 1;
                     $goods_data['product'][0] = $sdi_product;
@@ -86,10 +148,11 @@ class b2c_goods_dingzhi{
                         $image_attach_data['image_id'] = $image_data['image_id'];
                         $mdl_image_attach->save($image_attach_data);
                         $em_data = array();
+                        $em_data['dz_type'] =  $type;
                         $em_data['goods_id'] =  $goods_data['goods_id'];
                         $em_data['product_id'] =  $goods_data['product'][0]['product_id'];
                         $em_data['dingzhi_id'] = $dingzhi_id;
-                        if($data[14]) $em_data['is_defalut'] = true;
+                        if($data[$defalut_sheet]) $em_data['is_defalut'] = true;
                         if($md_dingzhi->save($em_data)){
                             foreach($gs as $key=>$value){
                                 $em_index_data = array();
@@ -112,26 +175,26 @@ class b2c_goods_dingzhi{
                     }
                     continue;
                 case "2":
-                    $ident = substr($data[13],strlen(kernel::base_url(1))+1);
+                    $ident = substr($data[$image_sheet],strlen(kernel::base_url(1))+1);
                     $image_data = $db->selectrow("SELECT image_id FROM sdb_image_image WHERE url='".$ident."'");
                     if(!$image_data){
                         echo $ident;
                         echo "image not exist";
                         exit;
                     }
-                    $gd_tmp_data =  $db->selectrow("SELECT * FROM sdb_b2c_products WHERE bn='".$data[0]."'");
+                    $gd_tmp_data =  $db->selectrow("SELECT * FROM sdb_b2c_products WHERE bn='".$data[$name_bn_sheet]."'");
                     if(!$gd_tmp_data){
-                        "modify not exist ".$data[0];
+                        "modify not exist ".$data[$name_bn_sheet];
                     }
                     $goods_data['image_default_id'] =$image_data['image_id'];
-                    $goods_data['name'] = "沙发".$data[0];
-                    $goods_data['bn'] = $data[0];
-                    $goods_data['cp_name'] = $data[16];
-                    $goods_data['sc_day'] = $data[17];
+                    $goods_data['name'] = "沙发".$data[$name_bn_sheet];
+                    $goods_data['bn'] = $data[$name_bn_sheet];
+                    $goods_data['cp_name'] = $data[$cp_name_sheet];
+                    $goods_data['sc_day'] = $data[$sc_day_sheet];
                     $goods_data['kbhd'] = $data[18];
-                    $sdi_product['price']['price']['price'] =$data[1];
-                    $sdi_product['price']['cost']['price'] =$data[1];
-                    $sdi_product['price']['mktprice']['price'] =$data[1];
+                    $sdi_product['price']['price']['price'] =$data[$price_sheet];
+                    $sdi_product['price']['cost']['price'] =$data[$price_sheet];
+                    $sdi_product['price']['mktprice']['price'] =$data[$price_sheet];
                     $sdi_product['is_default'] = true;
                     $sdi_product['default'] = 1;
                     $goods_data['product'][0] = $sdi_product;
@@ -145,6 +208,7 @@ class b2c_goods_dingzhi{
                         $db->exec("DELETE FROM sdb_b2c_dingzhi_index WHERE goods_id=".$gd_tmp_data['goods_id']);
                         foreach($gs as $key=>$value){
                             $em_index_data = array();
+                            $em_data['dz_type'] =  $type;
                             $em_data['goods_id'] =$gd_tmp_data['goods_id'];
                             $em_data['product_id'] =$gd_tmp_data['product_id'];
                             $em_data['dingzhi_id'] =$gd_tmp_data['product_id'];
@@ -163,7 +227,7 @@ class b2c_goods_dingzhi{
                     }
                     continue;
                 case "3";
-                    $gd_data = $db->selectrow("SELECT * FROM sdb_b2c_goods WHERE bn='".$data[0]."'");
+                    $gd_data = $db->selectrow("SELECT * FROM sdb_b2c_goods WHERE bn='".$data[$name_bn_sheet]."'");
                     $db->exec("DELETE FROM sdb_b2c_goods WHERE goods_id=".$gd_data['goods_id']);
                     $db->exec("DELETE FROM sdb_b2c_products WHERE goods_id=".$gd_data['goods_id']);
                     $db->exec("DELETE FROM sdb_b2c_dingzhi WHERE goods_id=".$gd_data['goods_id']);

@@ -1,0 +1,46 @@
+<div class="catalog">
+    <div class="tit">
+        <span>功能空间</span>
+    </div>
+    <div class="icon-up icon">
+<!--         <span></span> -->
+    </div>
+    <{foreach from=$data.cagetory_list item=cli key=clk}>
+    <div class="prd-list">
+        <div class="prd cur">
+            <div class="bg-list">
+                <a href="<{$cli.link}>"><{$cli.title}></a>
+                <i></i>
+            </div>
+            <div class="sm-list cur">
+                <ul>
+                    <{foreach from=$cli.items item=cli_item key=cli_key}>
+                    <li class=""><a href="<{$cli_item.link}>"><{$cli_item.title}></a></li>
+                    <{/foreach}>
+                </ul>
+            </div>				
+        </div>
+    </div>
+    <{/foreach}>
+    <div class="icon-down icon">
+<!--         <span></span> -->
+    </div>
+</div>
+	
+<script>
+(function(jq) {
+    jq(document).ready(function() {
+        jq(".prd-list .prd").mouseover(
+            function(){
+            jq(this).addClass("cur").siblings().removeClass("cur");
+            jq(this).children(".sm-list").stop().slideDown(500).parent().siblings().children(".sm-list").stop().slideUp(500);
+        });
+        jq(".prd-list .prd .sm-list li").mouseover(
+            function(){
+            jq(this).addClass("cur").siblings().removeClass("cur");
+        }).mouseout(function(){
+            jq(this).removeClass("cur");
+        });		
+    });
+})(jQuery);
+	</script>

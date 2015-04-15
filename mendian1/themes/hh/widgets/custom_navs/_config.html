@@ -1,0 +1,109 @@
+<style>
+<!--
+.widgetconfig table {margin-top:5px;}
+.widgetconfig th,.widgetconfig td{padding:5px;border:1px solid #ddd; vertical-align:middle;line-height:1.8}
+.widgetconfig th {background-color:#E2E8EB}
+.widgetconfig input {padding:2px;line-height:18px;}
+.widgetconfig i {color:#FF0000;}
+-->
+</style>
+
+<div class="tableform widgetconfig" style="display:none;">
+	<div class="division">
+		<table width="100%" cellpadding="0" cellspacing="0">
+		<tr><th colspan="4" style="text-align:center;background:#DDE5FC;color:#669;width:100%;">&nbsp;本挂件需要配合使用CSS样式表，如果您不了解CSS，请勿随意改动。</th>
+		</tr>
+		<tr>
+			<th width="20%">样式：</th>
+			<td width="30%"><input type="radio" name="bgimg" value="0" <{if $setting.bgimg!=1}>checked<{/if}>> 纯文字 &nbsp; <input type="radio" name="bgimg" value="1" <{if $setting.bgimg==1}>checked<{/if}>> 背景图片(CSS)</td>
+			<th width="20%">菜单分隔符：</th>
+			<td width="30%"><input type="text" name="comma" value="<{$setting.comma}>"></td>
+		</tr>
+		</table>
+	</div>
+</div>
+	<!--span style="margin-left:10px;" class="sysiconBtn addorder" onclick="addConfig('menus');">添加栏目菜单</span-->
+	<{button label=$___b2c="添加栏目菜单"|t:'b2c' app="desktop" icon="btn_add.gif" id="add_ad_pic" onclick="addConfig('menus');"}>
+
+<div class="tableform widgetconfig">
+	<div class="division" id="listArea_menus">
+		<div style="display:none;">
+			<table width="100%" cellpadding="0" cellspacing="0">
+			  <tr>
+			  <th style="width:75px">前导提示：</th>
+			  <td><input type="text" name="fronttips" style="width:100px" value="<{$setting.fronttips}>"> &nbsp; <input type="checkbox" name="bold" value="1"<{if $setting.bold}> checked<{/if}>>  粗体 &nbsp;&nbsp;&nbsp;&nbsp; 前导提示留空为不显示</td>
+			  </tr>
+			</table>
+		</div>
+		<{if $setting.menus}>
+		<{foreach from=$setting.menus item=data key=key}>
+		<div class="configs">
+			<table width="100%" cellpadding="0" cellspacing="0">
+			  <tr>
+			  <th style="width:75px">栏目标题：</th>
+			  <td style="width:105px"><input type="text" name="menus[<{$data.i}>][text]" style="width:100px" value="<{$data.text}>"></td>
+			  <th style="width:75px">className：</th>
+			  <td style="width:105px"><input type="text" name="menus[<{$data.i}>][classname]" style="width:80px" value="<{$data.classname}>"></td>
+			  <th style="width:75px">链接地址：</th>
+			  <td style="width:170px"><input type="text" name="menus[<{$data.i}>][url]" value="<{$data.url}>" style="width:170px"></td>
+			  <th style="width:65px">窗口目标：</th>
+			  <td><select name="menus[<{$data.i}>][target]">
+					<option value="_self" <{if $data.target=='_self'}>selected<{/if}>>本窗口</option>
+					<option value="_blank" <{if $data.target=='_blank'}>selected<{/if}>>新窗口</option>
+				</select>
+			  </td>
+              <td><span onclick="delLink(this)"><{img src="bundle/delecate.gif" style="cursor:pointer;" alt=$___b2c="删除"|t:'b2c' title=$___b2c="删除"|t:'b2c'}></span></td>
+			  </tr>
+			</table>
+			<input type=hidden name=menus[<{$data.i}>][i] value="<{$data.i}>">
+		</div>
+		<{/foreach}>
+		<{/if}>
+	</div>
+</div>
+
+<script>
+function addConfig(key){
+	var content;
+	d=new Date();
+	i=d.getTime();
+	if(key=='menus'){
+		content='\
+		<div class="configs">\
+			<table width="100%" cellpadding="0" cellspacing="0">\
+			  <tr>\
+			  <th style="width:75px">栏目标题：</th>\
+			  <td style="width:105px"><input type="text" name="menus['+i+'][text]" style="width:100px;"></td>\
+			  <th style="width:75px">className：</th>\
+			  <td style="width:105px"><input type="text" name="menus['+i+'][classname]" style="width:80px"></td>\
+			  <th style="width:75px">链接地址：</th>\
+			  <td style="width:170px;"><input type="text" name="menus['+i+'][url]" style="width:170px;" value="./"></td>\
+			  <th style="width:65px">窗口目标：</th>\
+			  <td><select name="menus['+i+'][target]"><option value="_self">本窗口</option><option value="_blank" selected>新窗口</option></select></td>\
+			  <td><span onclick="delLink(this)"><{img src="delecate.gif" style="cursor:pointer;" alt=$___b2c="删除"|t:'b2c' title=$___b2c="删除"|t:'b2c'}></span></td>\
+			  </tr>\
+			</table>\
+			<input type=hidden name=menus['+i+'][i] value="'+i+'">\
+		</div>\
+		';
+	}
+	$E('#listArea_'+key).adopt(new Element('div').set('html',content).getFirst());
+}
+
+function addPic(target){
+	return new Dialog('index.php?ctl=editor&act=image&p[0]=0',{
+		title:'插入<img>',
+		onShow:function(){
+			var dialog=this;
+			this.dialog.store('callback',function(src){
+				target.value=src;
+				dialog.close();
+			});
+		}
+	});
+}
+
+delLink=function(o){
+	$(o).getParent('.configs').remove();
+}
+</script>

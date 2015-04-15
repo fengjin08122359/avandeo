@@ -1,0 +1,168 @@
+                  <!-- 结构开始 -->
+                    <!-- desiner-info -->
+                    <div class="desiner-intr clearfix">
+                        <div class="per-inf clearfix">
+                            <div class="avatar"><img src="<{$detail.image_default_id|storager}>" alt=""></div>
+                            <ul class="inf-list clearfix">
+                                <li>姓名：<{$detail.name}></li>
+                                <li>认真资质：<{$detail.certification}></li>
+                                <li>职位：<{$detail.position}></li>
+                                <li>联系方式：<{$detail.contact}></li>
+                                <li class="birth">出生点：<{$detail.birth_of_place}></li>
+                                <li>擅长风格：<{$detail.adept_style}></li>
+                                <li>在线联系:</li>
+                            </ul>
+                        </div>
+                        <div class="info-des">
+                                 <p>
+                                    设计师简介:<{$detail.description}>
+                                </p>
+                                <a href="#" class="appo">立即预约</a>
+                        </div>
+                        <!-- 预约弹出框 -->
+                        <div id="appoint_pop">
+                           <div class="close">x</div>
+                             <form action="<{link app=b2c ctl=site_designer act=reserve arg0=$detail.member_id }>" method="post" target="_self">
+                                    <fieldset>
+                                    <legend>设计师预约</legend>
+                                    <ul>
+                                        <li><label for="name">预约人姓名 :</label><input type="text" name="name" class="x-inpt" vtype="required"></li>
+                                        <li><label for="tel">联系电话 :</label><input type="text" name="tel" class="x-inpt" vtype="required&&phone"></li>
+                                        <li><label for="email">常用邮箱 :</label><input type="text" name="email" class="x-inpt" vtype="required&&email"></li>
+                                        <li>
+                                            <label for="deigner">所选设计师 :</label>
+                                            <{html_options name='members[member_id]' options=$designers selected=$detail.member_id }>
+                                        </li>
+                                        <li>
+                                            <label for="housType">房屋类型 :</label>
+                                            <{assign var="options" value=array('0'=>'一室一厅','1'=>'两室一厅','2'=>'三室两厅')}><{html_options name='huxing' options=$options  }>
+                                        </li>
+                                        <li>
+                                            <label for="housType">房屋面积 :</label>
+                                            <{assign var="options" value=array('0'=>'50-100','1'=>'100-150','2'=>'150-300')}>
+                                            <{html_options name='area' options=$options }>
+                                            (平米)
+                                        </li>
+                                        <li>
+                                            <label for="other">其他需求 :</label>
+                                            <{input type="textarea" name="other_demand" cols=70 rows=8 class="x-inpt"}>
+                                        </li>
+                                        <li class="btn-li">
+                                            <input type="submit" value="确认提交" class="sub-btn">
+                                            <input type="reset" value="重置信息" class="res-btn">
+                                        </li>
+<!--                                         <li class="form-item form-item-last">
+                                        <label class="form-label"></label>
+                                                                                   <{button type="submit" class="btn-caution" label=$___b2c="提交"|t:'b2c' rel="_request"}>
+
+                                         <input type="reset" value="重置信息" class="res-btn">
+                                       </li> -->
+
+                                    </ul>
+                                </fieldset>
+                                  </form>
+                        </div>
+                                                 <!-- 预约弹出框 end-->
+                        </div>
+                    <!-- works tabs-->
+                    <div id="works">
+                        <ul class="works-trigger">
+                            <li class="active">作品案例</li>
+                            <li>设计师问答</li>
+                        </ul>
+                        <!-- 作品案例 -->
+                        <div class="works-panel">
+                            <ul class="works-case">
+                                <{foreach from=$detail.case item=case}>
+                                <li>
+                                    <a href="<{link app=b2c ctl=site_designer act=detail arg0=$case.case_id arg1=$detail.member_id}>"><img src="<{$case.image_default_id|storager}>" alt=""></a>
+                                    <div class="works-inf">
+                                        <h3><{$case.name}></h3>
+                                        <{assign var="date" value=explode('-',$case.createtime)}>
+                                           <span><{$date[0]}>年<{$date[1]}>月</span>
+                                        <a href="#" class="fav">收藏</a>
+                                    </div>
+                                </li>
+                                <{/foreach}>
+
+                            </ul>
+                        </div>
+                        <!-- 作品案例 end-->
+                        <!-- 设计师问答 -->
+                        <div class="works-panel ask" style="display:none;">
+                            <dl>
+                                <dt><img src="http://localhost/www/wodihh/themes/hh/images/img/com-pic.png" alt=""></dt>
+                                <dd>
+                                    <div class="com-title">
+                                        <strong>王大治</strong>
+                                        <span>广东省深圳市</span>
+                                        <em>2015年4月1日</em>
+                                    </div>
+                                    <p>Andy是一个想象力十分丰富而且极具用户体验意识的设计。</p>
+                                </dd>
+                            </dl>
+                            <!-- 回复区域结构-->
+                            <dl class="reply-list">
+                                <dt><img src="http://localhost/www/wodihh/themes/hh/images/img/com-pic2.png" alt=""></dt>
+                                <dd>
+                                    <div class="com-title">
+                                        <strong>张晓雅</strong>
+                                        <span>广东省深圳市</span>
+                                        <em>2015年4月1日</em>
+                                    </div>
+                                    <p>设计处在了一种极为复杂的社会语境中。它被纳入到一个远比艺术设计本身或产品系统更复杂的关联域中。在这个复杂的关联语境中，设计除了其本身的材料上</p>
+                                    <div class="reply-wrap">
+                                        <div class="reply-cont">
+                                            <span class="rep-btn">回复</span>
+                                            <p><strong>ANDY:</strong>设计的宗旨在于为人位整个社会服务，最直观最简洁的表达方式往往也是最实用的。</p>
+                                            <em>2015年4月2日</em>
+                                        </div>
+                                        <a href="#" class="replay-btn">回复</a>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <!-- 回复区域结构 -->
+                        </div>
+                        <!-- 设计师问答 end-->
+                        <!-- 猜你喜欢 -->
+                        <div class="like-title"><span>猜你喜欢</span></div>
+                        <!-- 猜你喜欢 end-->
+                    </div>
+                <!-- 结构结束 -->
+            <script>
+             (function(){
+                   new Switchable('works',{
+                     'eventType':'mouse',
+                     'autoplay':false,
+                     'triggersBox':'.works-trigger',
+                     'panels':'.works-panel'
+                   });
+                   $$(".like-list li:last-child").addClass("last");
+                   $$('.appo').addEvent('click',function(){
+                        $("appoint_pop").addClass("show");
+                         return false;
+                   })
+                   $$("#appoint_pop .close,document").addEvent('click',function(){
+                         this.getParent().removeClass("show");
+                   })
+
+                   
+
+
+             })()
+           // $$('.btn-caution').addEvent('click',function(e){
+           //      alert(11);
+           //   // e.stop();
+
+           //   //        new Request({url:"<{link app=b2c ctl=site_designer act=reserve}>",method:'post',data:'id=1',onSuccess:function(json){
+                        
+           //   //        }}).send();
+           //  })           
+           // $('appoint').store('target',{
+           //      onComplete:function(){
+           //          alert(111);
+           //          // window.close();
+           //      }
+           //  });
+        </script>
+       

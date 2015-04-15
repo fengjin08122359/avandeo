@@ -1,0 +1,9 @@
+                  
+<ul class="like-list clearfix">
+    <{foreach from=$data item=item}>
+    <li>
+        <a href="<{link app=b2c ctl=site_designer act=personal arg0=$item.member_id}>"><img src="<{$item.image_default_id|storager:'s'}>" alt=""></a>
+        <h3>ANDY 设计总监</h3>
+    </li>
+    <{/foreach}>
+</ul>

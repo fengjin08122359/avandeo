@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?><theme>
+	<name><br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>3</b><br />
+</name>
+	<id><br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>4</b><br />
+hh</id>
+	<version><br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>5</b><br />
+</version>
+	<info><br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>6</b><br />
+</info>
+	<author><br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>7</b><br />
+</author>
+	<site><br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>8</b><br />
+</site>
+	<update_url><br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>9</b><br />
+</update_url>
+
+	<borders>
+		<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>12</b><br />
+	</borders>
+	<views>
+		<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>17</b><br />
+	</views>
+	<config>	  
+		<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>22</b><br />
+	</config>
+
+	<widgets>
+		<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>28</b><br />
+<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>28</b><br />
+<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>28</b><br />
+		<widget app="<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>29</b><br />
+" theme="<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>29</b><br />
+hh" file="<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>29</b><br />
+block/footer.html" slot="<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>29</b><br />
+3" type="<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>29</b><br />
+ad_pic" order="<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>29</b><br />
+8" title="<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>29</b><br />
+" domid="<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>29</b><br />
+1423546949768" border="<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>29</b><br />
+__none__" classname="<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>29</b><br />
+" tpl="<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>29</b><br />
+default.html" coreid="<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>29</b><br />
+code">
+		<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>30</b><br />
+a:5:{s:12:&quot;ad_pic_width&quot;;s:0:&quot;&quot;;s:13:&quot;ad_pic_height&quot;;s:0:&quot;&quot;;s:6:&quot;ad_pic&quot;;s:92:&quot;http://baguo.com/hh/public/images/e2/74/c9/efc5d124757fae8f5a0706f57041e5a5.png?1423546948#h&quot;;s:10:&quot;ad_pic_txt&quot;;s:0:&quot;&quot;;s:11:&quot;ad_pic_link&quot;;s:0:&quot;&quot;;}		</widget>
+				<widget app="" theme="hh" file="block/footer.html" slot="0" type="footer_information" order="5" title="" domid="1423546879739" border="__none__" classname="" tpl="default.html" coreid="footer_info1">
+		a:1:{s:7:&quot;node_id&quot;;s:1:&quot;1&quot;;}		</widget>
+				<widget app="" theme="hh" file="block/footer.html" slot="1" type="footer_information" order="6" title="" domid="1423546888060" border="__none__" classname="" tpl="default.html" coreid="footer_info2">
+		a:1:{s:7:&quot;node_id&quot;;s:1:&quot;6&quot;;}		</widget>
+				<widget app="" theme="hh" file="block/footer.html" slot="2" type="footer_information" order="7" title="" domid="1423546894748" border="__none__" classname="" tpl="default.html" coreid="footer_info3">
+		a:1:{s:7:&quot;node_id&quot;;s:1:&quot;1&quot;;}		</widget>
+				<widget app="" theme="hh" file="block/header.html" slot="3" type="catalog_menu" order="3" title="" domid="1423546806805" border="__none__" classname="" tpl="default.html" coreid="catalog_menu">
+		a:0:{}		</widget>
+				<widget app="" theme="hh" file="block/header.html" slot="0" type="logo" order="0" title="" domid="1423546728504" border="__none__" classname="" tpl="default.html" coreid="logo">
+		a:1:{s:7:&quot;logotxt&quot;;s:25:&quot;请填写logo文字描述&quot;;}		</widget>
+				<widget app="" theme="hh" file="block/header.html" slot="2" type="search" order="2" title="" domid="1423546796058" border="__none__" classname="" tpl="default.html" coreid="search">
+		a:1:{s:6:&quot;hotkey&quot;;s:15:&quot;热门关键词&quot;;}		</widget>
+				<widget app="" theme="hh" file="block/header.html" slot="1" type="topbar_member" order="1" title="" domid="1423546773518" border="__none__" classname="" tpl="default.html" coreid="top_member">
+		a:1:{s:7:&quot;welcome&quot;;s:24:&quot;欢迎光临网上商城&quot;;}		</widget>
+				<widget app="" theme="hh" file="index.html" slot="0" type="main_slide" order="4" title="" domid="1423546865599" border="__none__" classname="" tpl="default.html" coreid="main_slide">
+		a:3:{s:9:&quot;effectWay&quot;;s:7:&quot;scrollx&quot;;s:8:&quot;autoplay&quot;;s:5:&quot;false&quot;;s:3:&quot;pic&quot;;a:1:{i:1423546823674;a:4:{s:2:&quot;id&quot;;s:13:&quot;1423546823674&quot;;s:4:&quot;link&quot;;s:92:&quot;http://baguo.com/hh/public/images/0f/04/81/13de3213a1e2e4269ff62084a008cdea.png?1423546863#w&quot;;s:10:&quot;linktarget&quot;;s:0:&quot;&quot;;s:8:&quot;linkinfo&quot;;s:0:&quot;&quot;;}}}		</widget>
+			</widgets>
+
+	<proinstances>
+		<br />
+<b>Strict Standards</b>:  Accessing static property base_render::$_vars as non static in <b>/Users/baguo/Sites/hh/app/base/lib/render.php(71) : eval()'d code</b> on line <b>36</b><br />
+	</proinstances>
+
+</theme>

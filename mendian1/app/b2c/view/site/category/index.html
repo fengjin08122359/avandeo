@@ -1,0 +1,122 @@
+<div class="category-page-title">
+	<h1><{$category.cat_name}></h1>
+</div>
+
+<{assign var=target_blank value=$category.gallery_setting.target_blank}>
+<!-- area1 -->
+<{if $category.gallery_setting.cat_area_1.disabled=='false'}>
+<{assign var=area_1 value=$category.gallery_setting.cat_area_1}>
+<div class="category-page-box ">
+	<div class="category-panel">
+		<div class="w71-h43 l"> 
+			<{if $area_1.slot_1}><{if $area_1.slot_1.img_link}><a href="<{$area_1.slot_1.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><{/if}><img src="<{$area_1.slot_1.img_src|storager}>" alt="cat_area_1_slot1" width="708" height="436" /><{if $area_1.slot_1.img_link}></a><{/if}><{/if}>
+		</div>
+		<div class="w47-h21 mb10 l last"> 
+			<{if $area_1.slot_2}>
+			<a href="<{$area_1.slot_2.img_link}>"<{if $target_blank}> target="_blank"<{/if}>>
+			<{/if}>
+			<img src="<{$area_1.slot_2.img_src|storager}>" alt="cat_area_1_slot2" width="468" height="212" />
+			<{if $area_1.slot_2.img_link}></a>
+			<{/if}>
+		</div>
+		<div class="w47-h21 l last"> 
+			<{if $area_1.slot_3}>
+				<{if $area_1.slot_3.img_link}>
+				<a href="<{$area_1.slot_3.img_link}>"<{if $target_blank}> target="_blank"<{/if}>>
+				<{/if}>
+				<img src="<{$area_1.slot_3.img_src|storager}>" alt="cat_area_1_slot3" width="468" height="212" />
+				<{if $area_1.slot_3.img_link}>
+				</a>
+				<{/if}>
+			<{/if}>
+		</div>
+	</div>
+
+	<div class="category-panel clearfix">
+		<div class="w23-h12 l"> 
+			<{if $area_1.slot_4}><a href="<{$area_1.slot_4.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_1.slot_4.img_src|storager}>" alt="cat_area_1_slot4" width="228" height="118" /></a><{/if}>
+		</div>
+		<div class="w23-h12 l"> 
+			<{if $area_1.slot_5}><a href="<{$area_1.slot_5.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_1.slot_5.img_src|storager}>" alt="cat_area_1_slot5" width="228" height="118" /></a><{/if}>
+		</div>
+		<div class="w23-h12 l"> 
+			<{if $area_1.slot_6}><a href="<{$area_1.slot_6.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_1.slot_6.img_src|storager}>" alt="cat_area_1_slot6" width="228" height="118" /></a><{/if}>
+		</div>
+		<div class="w23-h12 l"> 
+			<{if $area_1.slot_7}><a href="<{$area_1.slot_7.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_1.slot_7.img_src|storager}>" alt="cat_area_1_slot7" width="228" height="118" /></a><{/if}>
+		</div>
+		<div class="w23-h12 last l"> 
+			<{if $area_1.slot_8}><a href="<{$area_1.slot_8.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_1.slot_8.img_src|storager}>" alt="cat_area_1_slot8" width="228" height="118" /></a><{/if}>
+		</div>
+	</div>
+</div>
+<{/if}>
+<!-- end -->
+
+<!-- area2+_area3 -->
+<{if $category.gallery_setting.cat_area_2.disabled=='false'}>
+<{assign var=area_2 value=$category.gallery_setting.cat_area_2}>
+<div class="category-page-box ">
+	<div class="category-panel">
+		<div class="w47-h43 l"> 
+			<{if $area_2.slot_1}><a href="<{$area_2.slot_1.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_2.slot_1.img_src|storager}>" alt="cat_area_2_slot1" width="468" height="436" /></a><{/if}>
+		</div>
+		<div class="w71-h43 last l"> 
+			<{if $area_2.slot_2}><a href="<{$area_2.slot_2.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_2.slot_2.img_src|storager}>" alt="cat_area_2_slot2" width="708" height="436" /></a><{/if}>
+		</div>
+	</div>
+	<div class="category-panel clearfix">
+		<div class="h27 last "> 
+			<{if $area_2.slot_3}><a href="<{$area_2.slot_3.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_2.slot_3.img_src|storager}>" alt="cat_area_2_slot3" width="1188" height="278" /></a><{/if}>
+		</div>
+	</div>
+</div>
+<{/if}>
+<!-- end -->
+
+<!-- area4 -->
+<{if $category.gallery_setting.cat_area_4.disabled=='false'}>
+<{assign var=area_4 value=$category.gallery_setting.cat_area_4}>
+<div class="category-page-box ">
+	<div class="category-panel l mr10">
+		<div class="w47-h66 mb10 last"> 
+			<{if $area_4.slot_1}><a href="<{$area_4.slot_1.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_4.slot_1.img_src|storager}>" alt="cat_area_4_slot1" width="468" height="660" /></a><{/if}>
+		</div>
+		<div class="w47-h21 last"> 
+			<{if $area_4.slot_2}><a href="<{$area_4.slot_2.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_4.slot_2.img_src|storager}>" alt="cat_area_4_slot2" width="468" height="212" /></a><{/if}>
+		</div>
+	</div>
+	<div class="category-panel l">
+		<div class="w71-h43 mb10 last"> 
+			<{if $area_4.slot_3}><a href="<{$area_4.slot_3.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_4.slot_3.img_src|storager}>" alt="cat_area_4_slot3" width="708" height="436" /></a><{/if}>
+		</div>
+		<div class="w47-h43 l"> 
+			<{if $area_4.slot_4}><a href="<{$area_4.slot_4.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_4.slot_4.img_src|storager}>" alt="cat_area_4_slot4" width="468" height="436" /></a><{/if}>
+		</div>
+
+		<div class="l">
+			<div class="w23-h21 mb10 last"> 
+				<{if $area_4.slot_5}><a href="<{$area_4.slot_5.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_4.slot_5.img_src|storager}>" alt="cat_area_4_slot5" width="228" height="212" /></a><{/if}>
+			</div>
+			<div class="w23-h21 last"> 
+				<{if $area_4.slot_6}><a href="<{$area_4.slot_6.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_4.slot_6.img_src|storager}>" alt="cat_area_4_slot6" width="228" height="212" /></a><{/if}>
+			</div>
+		</div>
+	</div>
+</div>
+<{/if}>
+<!-- end -->
+
+
+<!-- area5 -->
+<{if $category.gallery_setting.cat_area_5.disabled=='false'}>
+<{assign var=area_5 value=$category.gallery_setting.cat_area_5}>
+<div class="category-page-box">
+	<div class="category-panel ">
+		<div class="h27 last ">
+			<{if $area_5.slot_1}><a href="<{$area_5.slot_1.img_link}>"<{if $target_blank}> target="_blank"<{/if}>><img src="<{$area_5.slot_1.img_src|storager}>" alt="cat_area_5_slot1" width="1188" height="278" /></a><{/if}>
+		</div>
+	</div>
+</div>
+<{/if}>
+<!-- end -->

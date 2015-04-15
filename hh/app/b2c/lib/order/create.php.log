@@ -1,0 +1,105 @@
+array (
+  'order_id' => '150414031530958',
+  'member_id' => '6',
+  'confirm' => 'N',
+  'status' => 'active',
+  'pay_status' => '0',
+  'ship_status' => '0',
+  'is_delivery' => 'Y',
+  'createtime' => '1428952535',
+  'last_modified' => '1428952535',
+  'memo' => '',
+  'ip' => '127.0.0.1',
+  'title' => '订单明细介绍',
+  'shipping' => 
+  array (
+    'shipping_id' => '1',
+    'is_protect' => 'false',
+    'shipping_name' => '快递',
+    'cost_shipping' => '10.00',
+    'cost_protect' => '0.00',
+  ),
+  'payinfo' => 
+  array (
+    'pay_app_id' => 'deposit',
+    'cost_payment' => '0.00',
+  ),
+  'cur_rate' => '1.0000',
+  'is_tax' => 'false',
+  'weight' => '0',
+  'itemnum' => '1',
+  'cost_item' => '238.00',
+  'cost_tax' => '0',
+  'total_amount' => '228.96',
+  'cur_amount' => '228.96',
+  'pmt_goods' => '0.00',
+  'pmt_order' => '19.04',
+  'discount' => '0.00',
+  'payed' => '0.00',
+  'score_u' => '0',
+  'score_g' => '0',
+  'consignee' => 
+  array (
+    'name' => '商派小子',
+    'addr' => '虹桥路333号',
+    'zip' => '',
+    'telephone' => '',
+    'mobile' => '13333333333',
+    'area' => 'mainland:上海/上海市/徐汇区:25',
+    'r_time' => '任意日期,任意时间段',
+  ),
+  'order_objects' => 
+  array (
+    0 => 
+    array (
+      'order_id' => '150414031530958',
+      'obj_type' => 'goods',
+      'obj_alias' => '商品区块',
+      'goods_id' => '11',
+      'bn' => 'P4C85AC15B71DC',
+      'name' => 'TATA玫红色羊皮坡跟热情凉鞋',
+      'price' => '238.000',
+      'quantity' => '1',
+      'amount' => '0.00',
+      'weight' => '0.00',
+      'score' => '0.00',
+      'order_items' => 
+      array (
+        0 => 
+        array (
+          'products' => 
+          array (
+            'product_id' => '168',
+          ),
+          'goods_id' => '11',
+          'order_id' => '150414031530958',
+          'item_type' => 'product',
+          'bn' => 'P4C85AC15B71DC',
+          'name' => 'TATA玫红色羊皮坡跟热情凉鞋',
+          'type_id' => '5',
+          'cost' => '138.000',
+          'quantity' => '1.00',
+          'sendnum' => '0',
+          'amount' => '238.00',
+          'score' => '0.00',
+          'price' => '238.00',
+          'g_price' => '238.00',
+          'addon' => 'a:1:{s:12:"product_attr";a:2:{i:1;a:2:{s:5:"label";s:6:"颜色";s:5:"value";s:9:"粉红色";}i:3;a:2:{s:5:"label";s:6:"尺码";s:5:"value";s:2:"35";}}}',
+        ),
+      ),
+    ),
+  ),
+  'order_pmt' => 
+  array (
+    0 => 
+    array (
+      'pmt_id' => '1',
+      'order_id' => '150414031530958',
+      'pmt_type' => 'order',
+      'pmt_amount' => '19.04',
+      'pmt_memo' => '全场购物满100打8折！',
+      'pmt_tag' => '打折',
+      'pmt_describe' => '全场购物满100打8折',
+    ),
+  ),
+)

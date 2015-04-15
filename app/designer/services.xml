@@ -1,0 +1,9 @@
+<services>
+    <service id="desktop_finder.designer_mdl_members">
+        <class>designer_finder_members</class>
+    </service>
+	<service id="desktop_finder.designer_mdl_case">
+        <class>designer_finder_case</class>
+    </service>
+
+</services>

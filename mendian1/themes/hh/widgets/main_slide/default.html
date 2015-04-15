@@ -1,0 +1,60 @@
+<div class="main-slide" id="main_slide">
+    <div class="ban-pic">
+        <ul class="slide-list">
+            <{foreach from=$data.pic item=parent key=parentId}>
+            <li class="slide-item">
+                <a href="<{$parent.linktarget}>"> <img src="<{$parent.link}>" title="<{$parent.linkinfo}>"/> </a>
+            </li>
+            <{/foreach}> 
+        </ul>
+    </div>
+    <div class="ban-prd" style="">
+        <ul class="slide-triggers">
+            <{foreach from=$data.pic item=parent key=parentId}>
+
+            <li class="trigger-item" style=""><span><{$parent.linkinfo}></span></li>
+
+            <{/foreach}> 
+        </ul>
+    </div>
+    <div class="ban-btn">
+        <div class="btn-left banb prev">&lt;</div>
+        <div class="btn-right next  banb">&gt;</div>
+    </div>
+</div>
+
+<script type="text/javascript">
+(function(){
+    addEvent('domready',function(){
+        var item = $$('.ban-prd .trigger-item');
+        if(item.length){
+            item.each(function(el){
+        //        el.setStyle('width',100/item.length+'%');
+            });
+        }
+        function newSwitchable (){
+            new Switchable('main_slide',{
+                haslrbtn:true,
+                effect:'<{$setting.effectWay}>',
+                panels:'.slide-item',
+                triggers:'.trigger-item',
+                interval:5000,
+                activeClass:'cur',                       //当前触点元素class
+                autoplay:<{$setting.autoplay}>
+            });
+        }
+        newSwitchable();
+        var sizeNow = ($(window).getWidth() < 1225);
+        addEvent('resize',function(){
+            if(sizeNow !== ($(window).getWidth() < 1225)){
+                $$('#main_slide .active').removeClass('active');
+                $('main_slide').set('style','');
+                $$('#main_slide .slide-list').set('style','');
+                $('main_slide').set('html',$('main_slide').get('html'));
+                newSwitchable();
+                sizeNow = !sizeNow;
+            }
+        });
+     });
+}());
+</script>

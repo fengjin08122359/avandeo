@@ -1,0 +1,10 @@
+<{foreach from=$data.cagetory_list item=cli key=clk name="sss"}>
+<div class="menu-sub-menu">
+    <a class="<{if $smarty.foreach.sss.first}>cur <{/if}> cli" href="<{$cli.link}>"><{$cli.title}></a>
+    <div class="sslist" <{if !$smarty.foreach.sss.first}> style="display:none" <{/if}>>
+        <{foreach from=$cli.items item=cli_item key=cli_key}>
+        <a href="<{$cli_item.link}>"><{$cli_item.title}></a>
+        <{/foreach}>
+    </div>
+</div>
+<{/foreach}>

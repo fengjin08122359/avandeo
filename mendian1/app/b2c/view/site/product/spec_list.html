@@ -1,0 +1,700 @@
+
+<div class="goods-spec <{$goodsspec_classname}>" data-product-hash='<{if $goods.product2spec}><{$goods.product2spec}><{else}>{}<{/if}>' data-spec-hash='<{if $goods.spec2product}><{$goods.spec2product}><{else}>{}<{/if}>'>
+    <{input type="hidden" class="def-spec-value" value=$goods.cur_spec}>
+    <div class="speci">
+        <{foreach from=$goods.spec key=key item=goodsFlatSpecDesc}>
+        <{if $goodsFlatSpecDesc.spec_show_type != 'flat'}><{assign var=hasSelSpec value='true'}><{continue}><{/if}>
+        <div class='spec-item specItem'>
+            <label><span><em><{$goodsFlatSpecDesc.spec_name}></em>：</span></label>
+            <div class="rightdiv">
+                <ul>
+                    <{foreach from=$goodsFlatSpecDesc.option key=skey item="subDesc"}>
+                    <{if $goods.used_spec.$skey}>
+                    <{if $goodsFlatSpecDesc.display!="block"}>
+                    <li> <a href="<{link app=b2c ctl=site_product act=index arg0=$goods.goods_id arg1=$subDesc.spec_goods_images}>" specvid="<{$skey}>" specid="<{$key}>" > <{if $goodsFlatSpecDesc.spec_type=='text'}> <span><nobr><{$subDesc.spec_value}></nobr></span> <{else}> <img src="<{if $subDesc.spec_image}><{$subDesc.spec_image|storager}><{else}><{$spec_default_pic|storager}><{/if}>"  alt="<{$subDesc.spec_value}>" title="<{$subDesc.spec_value}>" width="<{$specimagewidth}>" height="<{$specimageheight}>"> <{/if}> <i title='<{t}>点击取消选择<{/t}>'>&nbsp;</i> </a> </li>
+                    <{/if}>
+                    <{/if}>
+                    <{/foreach}>
+                </ul></div>
+        </div>
+        <{/foreach}>
+    </div>
+
+    <!-- 颜色-    ->
+    <{if $hasSelSpec}>
+    <div class='spec-item'>
+        <ul class='clearfix'>
+            <{foreach from=$goods.spec key=selKey item=goodsSelSpecDesc}>
+            <{if $goodsSelSpecDesc.spec_show_type != 'select'}><{continue}><{/if}>
+            <{foreach from=$goods.spec[$selKey].value key=sSelKey item="subDesc"}>
+            <{if $subDesc.selected}>
+            <{assign var='selectValue' value=$subDesc.spec_value}>
+            <{/if}>
+            <{/foreach}>
+            <{assign var='__cs' value=$___b2c='请选择'|t:'b2c'}>
+            <li class="handle"><em><{$goodsSelSpecDesc.spec_name}>：</em><span><{if $selectValue|trim == ''}><{$selectValue}><{else}><{$__cs}><{/if}></span> <{assign var="selectValue" value=' '}> </li>
+            <{/foreach}>
+            <{foreach from=$goods.spec key=selKey item=goodsSelSpecDesc}>
+            <{if $goodsSelSpecDesc.spec_show_type != 'select'}><{continue}><{/if}>
+            <li class="content specItem">
+                <ul>
+                    <{foreach from=$goodsSelSpecDesc.option key=sSelKey item="subDesc"}>
+                    <{if $goods.used_spec.$sSelKey}>
+                    <{if $goodsFlatSpecDesc.display!="block"}>
+                    <li> <a href="<{link app=b2c ctl=site_product act=index arg0=$goods.goods_id arg1=$subDesc.spec_goods_images}>" specvid="<{$sSelKey}>" specid="<{$selKey}>"> <{if $goodsSelSpecDesc.spec_type=='text'}> <span><{$subDesc.spec_value}></span> <{else}> <img src="<{if $subDesc.spec_image}><{$subDesc.spec_image|storager}><{else}><{$spec_default_pic|storager}><{/if}>" style='border:1px #ccc solid' alt="<{$subDesc.spec_value}>" title="<{$subDesc.spec_value}>" width="<{$specimagewidth}>" height="<{$specimageheight}>"> <{/if}> <i title='<{t}>点击取消选择<{/t}>'>&nbsp;</i> </a> </li>
+                    <{/foreach}>
+                    <{/if}>
+                    <{/if}>
+                </ul>
+            </li>
+            <{/foreach}>
+        </ul>
+    </div>
+    <{/if}>
+</div>
+
+<script>
+(function(){
+var Hash = this.Hash = new Type('Hash', function(object){
+    if (typeOf(object) == 'hash') object = Object.clone(object.getClean());
+    for (var key in object) this[key] = object[key];
+    return this;
+});
+
+Hash.implement({
+
+    forEach: function(fn, bind){
+        Object.forEach(this, fn, bind);
+    },
+
+    getClean: function(){
+        var clean = {};
+        for (var key in this){
+            if (this.hasOwnProperty(key)) clean[key] = this[key];
+        }
+        return clean;
+    },
+
+    getLength: function(){
+        var length = 0;
+        for (var key in this){
+            if (this.hasOwnProperty(key)) length++;
+        }
+        return length;
+    }
+
+});
+
+Hash.alias('each', 'forEach');
+
+
+    Hash.implement({
+
+    has: Object.prototype.hasOwnProperty,
+
+    keyOf: function(value){
+        return Object.keyOf(this, value);
+    },
+
+    hasValue: function(value){
+        return Object.contains(this, value);
+    },
+
+    extend: function(properties){
+        Hash.each(properties || {}, function(value, key){
+            Hash.set(this, key, value);
+        }, this);
+        return this;
+    },
+
+    combine: function(properties){
+        Hash.each(properties || {}, function(value, key){
+            Hash.include(this, key, value);
+        }, this);
+        return this;
+    },
+
+    erase: function(key){
+        if (this.hasOwnProperty(key)) delete this[key];
+        return this;
+    },
+
+    get: function(key){
+        return (this.hasOwnProperty(key)) ? this[key] : null;
+    },
+
+    set: function(key, value){
+        if (!this[key] || this.hasOwnProperty(key)) this[key] = value;
+        return this;
+    },
+
+    empty: function(){
+        Hash.each(this, function(value, key){
+            delete this[key];
+        }, this);
+        return this;
+    },
+
+    include: function(key, value){
+        if (this[key] == null) this[key] = value;
+        return this;
+    },
+
+    map: function(fn, bind){
+        return new Hash(Object.map(this, fn, bind));
+    },
+
+    filter: function(fn, bind){
+        return new Hash(Object.filter(this, fn, bind));
+    },
+
+    every: function(fn, bind){
+        return Object.every(this, fn, bind);
+    },
+
+    some: function(fn, bind){
+        return Object.some(this, fn, bind);
+    },
+
+    getKeys: function(){
+        return Object.keys(this);
+    },
+
+    getValues: function(){
+        return Object.values(this);
+    },
+
+    toQueryString: function(base){
+        return Object.toQueryString(this, base);
+    }
+
+});
+
+Hash.extend = Object.append;
+
+Hash.alias({indexOf: 'keyOf', contains: 'hasValue'});
+
+Hash.implement({
+
+    has: Object.prototype.hasOwnProperty,
+
+    keyOf: function(value){
+        return Object.keyOf(this, value);
+    },
+
+    hasValue: function(value){
+        return Object.contains(this, value);
+    },
+
+    extend: function(properties){
+        Hash.each(properties || {}, function(value, key){
+            Hash.set(this, key, value);
+        }, this);
+        return this;
+    },
+
+    combine: function(properties){
+        Hash.each(properties || {}, function(value, key){
+            Hash.include(this, key, value);
+        }, this);
+        return this;
+    },
+
+    erase: function(key){
+        if (this.hasOwnProperty(key)) delete this[key];
+        return this;
+    },
+
+    get: function(key){
+        return (this.hasOwnProperty(key)) ? this[key] : null;
+    },
+
+    set: function(key, value){
+        if (!this[key] || this.hasOwnProperty(key)) this[key] = value;
+        return this;
+    },
+
+    empty: function(){
+        Hash.each(this, function(value, key){
+            delete this[key];
+        }, this);
+        return this;
+    },
+
+    include: function(key, value){
+        if (this[key] == null) this[key] = value;
+        return this;
+    },
+
+    map: function(fn, bind){
+        return new Hash(Object.map(this, fn, bind));
+    },
+
+    filter: function(fn, bind){
+        return new Hash(Object.filter(this, fn, bind));
+    },
+
+    every: function(fn, bind){
+        return Object.every(this, fn, bind);
+    },
+
+    some: function(fn, bind){
+        return Object.some(this, fn, bind);
+    },
+
+    getKeys: function(){
+        return Object.keys(this);
+    },
+
+    getValues: function(){
+        return Object.values(this);
+    },
+
+    toQueryString: function(base){
+        return Object.toQueryString(this, base);
+    }
+
+});
+
+Hash.extend = Object.append;
+
+Hash.alias({indexOf: 'keyOf', contains: 'hasValue'});
+
+
+    var specExtend={
+        sortKeys:function(specHS){
+            var sortItem=Object.keys(specHS).sort(),sortHS={};
+            Object.each(sortItem,function(item){
+                sortHS[item]=specHS[item];
+            });
+            return sortHS;
+        },
+        filterSpec:function(regExp,state){
+            var filterArr=[],specSelected=Object.values(this.selectedHS);
+            this.pid=null;
+
+            Object.each(this.PRODUCT_HASH,function(v,key){
+                var spec=Object.values(v.spec_private_value_id).sort(),
+                        reg=":"+spec.join(':')+":";
+                if(regExp.test(reg))filterArr.include(spec);
+                if(specSelected.length==this.specNum&&specSelected.every(function(it){
+                    return spec.contains(it);
+                },this)){this.pid=key;}
+            },this);
+
+            filterArr.sort();
+            if(state)return this.merge(filterArr);
+            return filterArr;
+        },
+        merge:function(arr){
+            var spec_arr=[];
+            arr[0].each(function(e,i){
+                var sarr=[];
+                arr.each(function(el){sarr.include(el[i]);});
+                spec_arr.push(sarr);
+            });
+            return spec_arr;
+        },
+        collect:function(prearr,arr,hs,key,state){
+            var inarr=[],hskeys=Object.keys(hs);
+            prearr.each(function(el,index){
+                var barr=[];
+                if(key!=index&&hskeys.contains(index.toString())&&hskeys.length!=prearr.length&&!state){
+                    barr.combine(prearr[index].include(arr[index]));
+                }else{
+                    barr.combine(arr[index].filter(function(item){
+                        return el.contains(item);
+                    }));
+                }
+                inarr.include(barr);
+            });
+            inarr[key]=prearr[key];
+            return inarr;
+        },
+        to_find:function(selectedHS,specvid){
+            var hsvalue=Object.values(selectedHS),hskey=Object.keys(selectedHS),
+                    subReg=":"+hsvalue.join(":(\\d+:)*")+":",
+                    tpReg = new RegExp(""+subReg.split("(:\\d+:)*")+""),
+                    keys=Object.keyOf(selectedHS,specvid),sbCollect,
+                    filterArr=[],chs= new Hash(selectedHS);
+
+            if(hskey.length>2){
+                var sbReg="";
+                chs.erase(keys).each(function(item,key){
+                    var tmphs=new Hash(chs).erase(key).set(keys,specvid),
+                            v=Object.values(this.sortKeys(tmphs));
+                    sbReg+=":"+v.join(":(\\d+:)*")+":|";
+                },this);
+                sbReg=new RegExp(""+sbReg.substr(0,sbReg.length-1)+"");
+                if(chs) var preStore=arguments.callee.call(this,chs,chs.getValues()[0]);
+                var sbSpec=this.filterSpec(sbReg,true);
+                sbCollect=this.collect(preStore,sbSpec,selectedHS,keys,true);
+            }else{
+                sbCollect=this.filterSpec(new RegExp(""+hsvalue.join("|")+""),true);
+            }
+
+            if(hskey.length==this.specNum)return sbCollect;
+            var tpCollect=this.filterSpec(tpReg,true);
+            return this.collect(sbCollect,tpCollect,selectedHS,keys);
+        },
+        init:function(obj,specvid,specv_Arr){
+            selectedHS=this.selectedHS=this.sortKeys(obj.selectedHS);
+            var specItems;
+            this.PRODUCT_HASH=obj.productData;
+            this.specNum=obj.specItems.length;
+            if(Object.keys(selectedHS).length>1){
+                specItems=this.to_find(selectedHS,specvid).flatten();
+            }else{
+                var regExp = new RegExp(":"+specvid+":");
+                specItems=this.filterSpec(regExp).flatten();
+
+                specv_Arr.each(function(item){
+                    if(item.contains(specvid))specItems.combine(item);
+                });
+            }
+            return specItems;
+        }
+    };
+
+    var PRODUCT_HASH=<{if $goods.product2spec}><{$goods.product2spec}><{else}>{}<{/if}>,
+        SPEC_HASH=<{if $goods.spec2product}><{$goods.spec2product}><{else}>{}<{/if}>;
+
+            var hand=function(){
+                var specHandles=this.contains.getElements('.spec-item .handle'),
+                        specContents=this.contains.getElements('.spec-item .content'),
+                        tempSlipIndex=0, tempCurrentIndex=-1;
+                if(!!specHandles.length)
+                    specHandles.each(function(handle,index){
+                        var content=specContents[index];
+                        content.store('handle',handle);
+                        handle.addEvent('click',function(e){
+                            if(tempCurrentIndex>=0&&tempCurrentIndex!=index){
+                                specHandles[tempCurrentIndex].removeClass('curr');
+                                specContents[tempCurrentIndex].removeClass('content-curr');
+                            }
+                            tempCurrentIndex=index;
+                            this.toggleClass('curr');
+                            content.toggleClass('content-curr');
+                        });
+                    });
+            }
+            var specMenu=function(prt,el){
+                var handle=prt.retrieve('handle'),text;
+                if(el) text=el.getElement('img')?el.getElement('img').alt:el.getElement('span').get('text');
+                else text='<{t}>请选择<{/t}>';
+                handle.getElement('span').set('text',text).addClass('select');
+                handle.removeClass('curr');
+                prt.removeClass('content-curr');
+            };
+
+            var Goods_spec =this.Goods_spec=new Class({
+                Implements:[Events,Options],
+                options:{
+                    onLoad:hand,
+                    /*onSelected:function(){},
+                     onComplete:function(){},
+                     onUpdate:function(){},*/
+                    productData:null,
+                    spec_hash:null,
+                    selectItems:[],
+                    lockCls:'lock',
+                    selectedCls:'selected',
+                    specBtn:'a[specvid]',
+                    specItems:'.specItem'
+                },
+                initialize:function(contains,options){
+                    if(!$(contains))return;
+                    this.contains=$(contains);
+                    this.setOptions(options);
+                    var option=this.options;
+
+                    var box = this.contains.getElement('.goods-spec');
+                    if(!box){
+                        return;
+                    }
+                    this.productData=option.productData || JSON.decode(box.get('data-product-hash'));
+                    this.spec_hash=option.spec_hash || JSON.decode(box.get('data-spec-hash'));
+                    this.specData=option.specData;
+                    this.specItems=this.contains.getElements(option.specItems);
+                    this.specBtn=this.contains.getElements(option.specBtn);
+                    this.fireEvent('load').bindEvent();
+                    Goods_spec._selectUpdate['updateBtn'](this.contains);
+
+                    var def =document.getElement('.def-spec-value',this.contains);
+                    if(options.isDef && def){
+                        var arr = def.value.split(':');
+                        !!arr.length && this.defSel(arr);
+                    }
+                },
+                defSel:function(arr){
+                    arr.each(function(s){
+                        this.contains.getElement('a[specvid='+s+']').fireEvent('click',{stop:function(){}})
+                    },this);
+                },
+                bindEvent:function(){
+                    var self=this;
+                    this.specBtn.addEvent('click',function(e){
+                        e.stop();
+                        self.selectspec.call(self,this);
+                    });
+                },
+                selectspec:function(specEl){
+                    var options=this.options,lockCls=options.lockCls;
+
+                    if(specEl.hasClass(lockCls))return;
+                    var specid=specEl.get('specid'), specvid=specEl.get('specvid'),
+                            selectedCls=options.selectedCls,contains=this.contains,
+                            prt=specEl.getParent('li.content')||specEl.getParent('ul');
+
+                    if(specEl.hasClass(selectedCls)){
+                        specEl.removeClass(selectedCls);
+                        var selected=this.selected=contains.getElements('.'+selectedCls),
+                                selectednum=selected.length;
+
+                        if(prt.hasClass('content'))specMenu(prt);
+
+                        if(selectednum<=1){
+                            this.specSelectedCall(specvid,specid,specEl);
+                            this.specBtn.removeClass(lockCls);
+                        }
+                        if(selectednum){
+                            specvid=selected[0].get('specvid');
+                            specid=selected[0].get('specid');
+                            this.specSelectedCall(specvid,specid,specEl);
+                        }
+                        return this;
+                    }
+
+                    var tempsel=prt.retrieve('ts',specEl);
+                    if(tempsel!=specEl){tempsel.removeClass(selectedCls);}
+                    prt.store('ts',specEl.addClass(selectedCls));
+
+                    if(prt.hasClass('content'))specMenu(prt,specEl);
+
+                    this.selected=contains.getElements('.'+selectedCls);
+                    this.specSelectedCall(specvid,specid,specEl);
+                },
+                specSelectedCall:function(specvid,specid,spec){
+                    var selectedHS=this.selectedHS={},specItems=this.specItems,options=this.options,
+                            specEl=this.specEl,selectedCls=options.selectedCls,specBtn=options.specBtn,
+                            selected=this.selected,lockCls=options.lockCls,num=this.specItems.length,
+                            selectedBtn=this.selectedBtn=[];
+
+                    specItems.each(function(item,i){
+                        var el;
+                        if(el=item.getElement('.'+selectedCls)){
+                            selectedBtn.push(el);
+                            selectedHS[i] = el.get('specvid');
+                        }
+                    });
+
+                    if(!this.specArr){
+                        this.specArr=[];var v;
+                        this.specItems.each(function(item,index){
+                            if(v=item.getElements(specBtn))
+                                this.specArr.push(v.get('specvid'));
+                        },this);
+                    };
+
+                    var specAll=specExtend.init.call(specExtend,this,specvid,this.specArr);
+                    var pid=this.pid=specExtend.pid;
+
+                    this.specBtn.each(function(s){
+                        var bool=specAll.indexOf(s.get('specvid'))!=-1;
+                        s[bool?'removeClass':'addClass'](lockCls);
+                    });
+
+                    this.fireEvent('selected',spec).selectedcall(spec);
+                    if(!selectedBtn.length)return this.fireEvent('updatedefault').updatedefault();
+
+                    if(num==this.selected.length)
+                        this.update(pid,this.productData).complete(pid,this.productData);
+                },
+                selectedcall:function(target){
+                    var selectUpdate=this.options.selectItems.combine(['selectedItem','updateBtn','updatePic']);
+                    selectUpdate.each(function(n){
+                        var fn;
+                        if(fn=Goods_spec._selectUpdate[n]) fn.call(this,target);
+                    },this);
+                },
+                update:function(pid,pdata){
+                    //var specUpdate=this.specUpdate=this.contains.getElements('[updatespec]');
+                    var contains = this.options.updateBox ?$(this.options.updateBox) :this.contains;
+                    var specUpdate=this.specUpdate = contains.getElements('[updatespec]');
+                    if(!!specUpdate.length&&pid)
+                        specUpdate.each(function(el){
+                            var _k=el.get('updatespec').split('_'),up,_v=pdata[pid][_k[1]];
+                            if(up=Goods_spec._selectedUpdate[_k[0]]) up(el,_v,pid,pdata);
+                        });
+                    return this;
+                },
+                updatedefault:function(){
+                    //var specUpdate=this.contains.getElements('[updatespec]'),value;
+                    var contains = this.options.updateBox ?$(this.options.updateBox) :this.contains;
+                    var specUpdate=this.specUpdate = contains.getElements('[updatespec]');
+                    specUpdate.each(function(el){
+                        if(value=el.retrieve('default:html',false))el.set(el.tagName=='INPUT'?'value':'html',value);
+                        if(value=el.retrieve('default:callback',false))value();
+                    });
+                },
+                complete:function(pid,obj){
+                    this.fireEvent('complete',arguments);
+                }
+            });
+
+
+
+            Goods_spec._selectUpdate={
+                'selectedItem':function(spec){
+                    var em=(spec.getParent('li.content')&&spec.getParent('li.content').retrieve('handle')
+                            ||spec.getParent('.spec-item')).getElement('em');
+                    em[spec.hasClass('selected')?'addClass':'removeClass']('check');
+                },
+                'updateBtn':function(contains){
+
+                    contains=this.contains || contains;
+
+                    var updateBtn=contains.getElements('.updateBtn').store('tip:text','');
+                    if(!updateBtn)return;
+                    var spec_item_check=[],spec_item_selected=[];
+                    var check=function(){
+                        var spec_item_nocheck=[];
+
+                        contains.getElements('.spec-item em').each(function(em,i){
+                            if(!em.hasClass('check'))return spec_item_nocheck.include(em.get('text'));
+                            spec_item_check.include(em.get('text'));
+                            spec_item_selected.include(contains.getElements('.spec-item .selected')[i]);
+                        });
+                        return  spec_item_nocheck;
+                    }
+
+                    updateBtn.removeEvents('click').addEvent('click',function(e){
+                        e.stop(); this.blur();
+                        var spec_item_nocheck=check(),_form=this.getParent('form');//error=this.getParent().getElement('.error');
+                        if(!spec_item_nocheck.length){
+                            //if(!!error)error.destroy();
+                            if(!_form) return this.fireEvent('_update_spec',[spec_item_check,spec_item_selected]);
+                            if(_form.target==='_dialog_minicart') return _form.fireEvent('submit',[e,updateBtn]);
+                            return _form.submit();
+                        }
+
+                        //if(!error)error = new Element('span',{'class':'error'}).inject(this);
+                        //error.set('html','请选择规格:'+spec_item_nocheck.join(','));
+                        MessageBox.error('请选择规格:'+spec_item_nocheck.join(','));
+                    });
+                },
+                'updatePic':function(spec){
+                    var pic= this.contains.getElement('.spec-pic'),pic_type;
+                    if(!pic)return;
+                    pic_type= pic.get('data-pic-type');
+                    if(!pic_type) pic_type = "small";
+                    var picsId=[],spec2image=<{$goods.spec2image}>;
+                    this.selectedBtn.each(function(s){
+                        if(this.spec_hash[s.get('specvid')])
+                            picsId.combine(this.spec_hash[s.get('specvid')]['images']);
+                    },this);
+                    if(picsId[0]&&spec2image[picsId[0]][pic_type]) {
+                        this.contains.getElement('.spec-pic img').src=spec2image[picsId[0]][pic_type];
+                    }
+                    var detail_pic = this.contains.getElements('.goods-detail-pic-thumbnail li[img_id]');
+                    if(!detail_pic.length)return;
+                    if(!picsId.length || !picsId[0].trim().length)
+                        return detail_pic.each(function(el){el.show();});
+                    var pointer = false;
+                    detail_pic.each(function(i){
+                        if(picsId.contains(i.get('img_id'))){
+                            i.style.display = 'block';
+                            if(!pointer){
+                                i.getElement('a').fireEvent('click',{stop:function(){}});
+                                pointer = true;
+                            }
+                        }else{i.style.display = 'none';}
+                    });
+
+                }
+            };
+
+
+            var priceControl={
+                base:<{$goods.current_price}>,
+            // _format:<{$money_format|default:'false'}>,
+            _format:<{$money_format|default:'false'}>,/*decimals":2,"dec_point":".","thousands_sep":"","fonttend_decimal_type":0,"fonttend_decimal_remain":2,"sign":"\uffe5*/
+            format:function(num){
+                var part;
+                if(!num)return;
+                var num = num.toFloat();
+                if(this._format.cur_rate) {
+                    num = num * this._format.cur_rate;
+                }
+                num = num.round(this._format.decimals)+'';
+                var p =num.indexOf('.');
+                if(p<0){
+                    p = num.length;
+                    part = '';
+                }else{
+                    part = num.substr(p+1);
+                }
+                while(part.length<this._format.decimals){
+                    part+='0';
+                }
+                var c=[];
+                while(p>0){
+                    if(p>2){
+                        c.unshift(num.substr(p-=3,3));
+                    }else{
+                        c.unshift(num.substr(0,p));
+                        break;
+                    }
+                }
+                if(!part){
+                    this._format.dec_point='';
+                }
+                return (this._format.sign||"")+c.join(this._format.thousands_sep)+this._format.dec_point+part;
+            }
+        };
+
+
+        Goods_spec._selectedUpdate={
+            'text':function(el,v){
+                var key = el.tagName=='INPUT' ?'value':'html',
+                        dfv = el.retrieve('default:html',el.get(key));
+                return el.store('default:html',dfv).set(key,v);
+            },
+            'updateprice':function(el,v,pid,pdata){
+                el.store('default:html',el.get('value')).set('html',priceControl.format(pdata[pid]['price']));
+            },
+            'updatemediaprice':function(el,v,pid,pdata){
+                el.store('default:html',el.get('value')).set('html',priceControl.format(pdata[pid]['media_price']));
+            },
+            'updatepid':function(el,v,pid){
+                el.store('default:html',el.get('value')).set('value',pid);
+            }
+        };
+
+        var el = $('<{$spec_index}>');
+        var params = <{$other_params}>;
+        if(!params || !params.spec_node_new || params.spec_node_new == 'true') {
+
+            var elem =$$("."+"<{$goodsspec_classname}>")[0],goods_spec_box = elem.getParent('.ec-spec-box');
+            new Goods_spec(goods_spec_box,{
+                productData:PRODUCT_HASH,
+                spec_hash:SPEC_HASH,
+                updateBox:'customized',
+                //isDef:true,
+                onComplete:function(pid,obj){
+                    console.log(pid,obj)
+                    /*
+                     var pinfo = obj[pid];
+                     if(pinfo.goods_id){
+                     var gid = pinfo.goods_id;
+                     var redirect_url = '<{link app=b2c ctl=site_product arg0="'+gid+'"}>';
+                     location.href = redirect_url;
+                     }
+                     */
+                }
+            });
+        }
+    })();
+
+
+</script>

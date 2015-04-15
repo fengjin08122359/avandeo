@@ -1,0 +1,39 @@
+<!-- main choice -->
+<div class="main-choice">
+    <div class="choice-item">
+        <div class="item-angle">
+            <div class="hd">
+                <!--<h2>俯视角度的轮廓图</h2>-->
+            </div>
+            <div class="bd">
+                <div class="angle-view">
+                    <div class="paper">
+                        <div class="title"></div>
+                        <div class="elementwrapper" style="width: 600px; overflow:hidden;">
+                          <div class="fin-pic">
+                              <img class="s-pic" src="<{$data.image_url}>" alt="">
+                         </div>
+                        </div>
+                </div>
+                <div class="base-a spec-main s-spec-item" data-spec-id="43">
+                        <span style="float:left;margin-right:30px;">尺寸</span>
+                        <ul style="float:left;">
+                            <{foreach from=$data.spec.43.spec_value item=item key=key}>
+                            <{if $item.defalut==true}>
+                            <li class="cur s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                <{else}>
+                                <li class="s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                    <{/if}>
+                                    <img src="<{$item.spec_image}>" alt="" > </li>
+                            <{/foreach}>
+                        </ul>
+                    </div>
+
+
+                    <!--<div class="view-txt"></div>-->
+                    <!--<div class="angle-info"></div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

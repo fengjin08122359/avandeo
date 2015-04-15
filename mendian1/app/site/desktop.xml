@@ -1,0 +1,15 @@
+<desktop>
+
+    <permissions>
+        <permission id="site" display='true' workground='site.wrokground.theme'>站点管理</permission>
+        <permission id="theme" display='true' workground='site.wrokground.theme'>模板管理</permission>
+        <permission id="seo" display='true' workground='site.wrokground.theme'>搜索引擎优化</permission>
+        <permission id="secure" display='true' workground='site.wrokground.theme'>安全管理</permission>
+        <permission id="link" display='true' workground='site.wrokground.theme'>友情连接</permission>
+    </permissions>
+
+
+
+    
+
+</desktop>

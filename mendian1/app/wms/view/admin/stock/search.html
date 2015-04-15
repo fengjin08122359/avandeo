@@ -1,0 +1,62 @@
+<div class="content-main" id="main" style="height: 254px; width: 1067px;"><style>
+.tginput{
+    margin-top:10px;
+    margin-bottom:10px;
+    padding-left:19px;
+    background:none repeat scroll 0 0 #FAFAFA;
+    border:1px solid #cccccc;
+    color:#069CBC;
+    font-size:20px;
+    line-height:30px;
+    height:35px;
+    width: 400px;
+}
+.tgbutton{
+    margin-top: -10px;
+    margin-left: 25px;
+    font-size:1.5em;
+
+    height: 39px; 
+    width:100px;
+    cursor:pointer;
+    display:-moz-inline-stack;
+    line-height: 35px;
+    overflow: visible;
+    text-decoration: none;
+    vertical-align: middle;
+}
+</style>
+<div class="tableform">
+<form action="index.php?app=wms&amp;ctl=admin_stock&amp;act=search" id="formid" method="post">
+<h3>库存查询</h3>
+<div class="division">
+<table>
+    <tbody><tr>
+        <td>
+          <div style="position:relative">
+            <input type="text" id="stock_search" name="stock_search" class="tginput" value="" autocomplete="off"><ul class="autocompleter-choices" style="display: none; z-index: 65535;"></ul>
+            <button type="submit" id="btn_search" class="tgbutton"><span><span>查询</span></span></button>(请录入货号、条形码或者商品名称)
+        </div></td>
+    </tr>
+</tbody></table>
+</div>
+
+<div class="division">
+<table class="gridlist" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>货号</th>
+            <th style="text-align:left;">货品名称</th>
+            <th>条形码</th>
+            <th>规格</th>
+            <th>仓库名</th>
+            <th>货位</th>
+            <th style="display:none;">数量(最大/实际)</th>
+            <th>实际库存</th>
+        </tr>
+    </thead>
+    </table>
+</div>
+</form>
+</div>
+</div>
