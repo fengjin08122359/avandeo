@@ -8,7 +8,7 @@ body{font-family:microsoft Yahei,"黑体",arial!important;overflow-x: hidden;min
 #footer .back_to_top,
 #customized .main-comfort .main-choice .item-fill .bd .fill.cur i,
 .product-item .tag,
-.works-detail .inf-list li .online-qq,
+.inf-list li .online-qq,
 #footer .icons ul li i,
 #product_adjunct .adjunct-list .item i,
 .tags-hd.active:after,
@@ -117,8 +117,9 @@ body{font-family:microsoft Yahei,"黑体",arial!important;overflow-x: hidden;min
 #customized .main-style .style-list .down i{border-bottom: none;border-top: 6px solid #a9a9a9;}
 /*#customized .main-style .list-pic{height: 261px;overflow: hidden;}*/
 #customized .main-style .list-pic{overflow: hidden;}
-#customized .main-style .list-pic ul li{width: 80px;height: 80px;line-height:88px;*font-size:72px;margin-bottom: 8px;border: 1px solid #f0f0f0;overflow:hidden;}
-#customized .main-style .list-pic ul li img{width: 80px; margin: 20px 0px;vertical-align: middle;}
+#customized .main-style .list-pic ul li{width: 80px;height: 80px;margin-bottom: 8px;border: 1px solid #f0f0f0;overflow:hidden;}
+#customized .main-style .list-pic ul li a{display: block;height: 80px;line-height: 80px;*font-size:72px;}
+#customized .main-style .list-pic ul li img{width: 80px;vertical-align: middle;max-height: 80px;}
 #customized .main-style .list-pic ul li.cur{border-color: #f99020;}
 /*main-choice*/
 #customized .main-choice{float: left;width: 782px;margin-right: 15px;}
@@ -956,7 +957,7 @@ to{left:-300px;}}
 .works-detail .nav-name span{display: block;width: 194px;text-align: center;color: #ffffff;background-color: #FF3F13;}
 .works-detail .inf-list{width: 100%;margin:10px 0 0;}
 .works-detail .inf-list li{width: 100%;float:none;border:none;}
-.works-detail .inf-list li .online-qq{background-position:-137px -773px;padding:5px 12px;margin-left: 10px;}
+.inf-list li .online-qq{background-position:-137px -773px;padding:5px 12px;margin-left: 10px;}
 #works_slide{width: 912px;float: right;_display:inline;}
 #imageShow .imagebg{height:498px; overflow:hidden;width: 912px;margin: 0 auto 20px auto;}
 #imageShow .imagebg li { height: 498px;position: relative;}

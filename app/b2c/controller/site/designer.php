@@ -45,10 +45,12 @@ class b2c_ctl_site_designer extends site_controller {
 		foreach ($designerDetail['case'] as &$case) {
 
 			foreach ($case['goods'] as &$goods) {
-				$goodsInfo     = $this->app->model('goods')->getList('name,price,intro,image_default_id', array('goods_id' => $goods['goods_id']));
-				$goods['info'] = $goodsInfo[0];
+				$goodsInfo     = $this->app->model('goods')->dump(array('goods_id' => $goods['goods_id']));
+				$goods['info'] = $goodsInfo;
 			}
+			unset($goods);
 		}
+		unset($case);
 		$this->pagedata['detail']    = $designerDetail;
 		$this->pagedata['designers'] = $designerDetail;
 		$this->pagedata['case_id']   = $case_id;

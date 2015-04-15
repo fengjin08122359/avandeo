@@ -15,7 +15,7 @@
                                 <li>联系方式：<{$detail.contact}></li>
                                 <li class="birth">出生点：<{$detail.birth_of_place}></li>
                                 <li>擅长风格：<{$detail.adept_style}></li>
-                                <li>在线联系:<a href="#" class="online-qq" target="_blank"></a></li>
+                                <li>在线联系:<a href="<{$detail.contact}>" class="online-qq" target="_blank"></a></li>
                             </ul>
                         </div>
                         <div id="works_slide">
@@ -29,14 +29,14 @@
                                        <div class="pop-trigger" style="left:<{$goods.x}>px;top:<{$goods.y}>px">
                                            <dl class="pop-info">
                                                <dt>
-                                                   <a href="#" class="view-pic"><img src="<{$goods.info.image_default_id|storager:'s'}>" alt=""></a>
+                                                   <a href="#" class="view-pic" ><img src="<{$goods.info.image_default_id|storager:'s'}>" alt="" style="height:90px;width:110px"></a>
                                                    <div class="price-cont">
-                                                       <h4><{$goods.name}></h4>
+                                                       <h4><{$goods.info.name}></h4>
                                                        <span class="pro-price"><{$goods.info.price}></span>
                                                    </div>
-                                                   <a href="#" class="detail-btn">查看详情</a>
+                                                   <a href="<{link app=b2c ctl=site_product arg0=$goods.info.goods_id}>" class="detail-btn">查看详情</a>
                                                </dt>
-                                               <dd><{$goods.info.intro}></dd>
+                                               <dd><{$goods.info.brief}></dd>
                                            </dl>
                                        </div>
                                        <{/foreach}>

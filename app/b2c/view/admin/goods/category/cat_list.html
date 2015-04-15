@@ -63,6 +63,7 @@
 			this.items = items;
 			var el =$E('li[cat_id='+this.items.shift()+']',cat_body);
 			el && el.fireEvent('click');
+			alert(el);
 		},
 		request:function(cat_id,options){
 			var _cache=cat_body.retrieve('cache_'+cat_id);
