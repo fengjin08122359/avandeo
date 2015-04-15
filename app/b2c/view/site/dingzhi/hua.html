@@ -343,13 +343,13 @@ window.addEvent('domready',function(e){
     });
 
 
-    var handle = $$('.view-btn')[0]; 
 
+    var handle = $$('.view-left-btn')[0]; 
     var wrapper = $$('.elementwrapper')[0];
 
     var mx= 800, mi = 400;
     var arr = [];
-    <{foreach from=$data.spec.69.spec_value item=item key=key}>
+    <{foreach from=$data.spec.76.spec_value item=item key=key}>
         arr.push(<{$item.spec_value_name}>);
     <{/foreach}>
 
@@ -397,10 +397,69 @@ window.addEvent('domready',function(e){
         });
     }).addEvent('mouseup',function(){ });
 
+  var handles = $$('.view-top-btn')[0]; 
+
+    var wrappers = $$('.elementwrapper')[0];
+
+    var mxs= 350, mis = 200;
+    var arrs = [];
+    <{foreach from=$data.spec.14.spec_value item=item key=key}>
+        arrs.push('<{$item.spec_value_name}>'.replace('mm','').toInt());
+    <{/foreach}>
+
+    arrs.sort(function(a,b){return a.toInt()>b.toInt()?1:-1});
+    //var arr = [420,450,450,500,520,550,600,620];
+    var maxs = Math.max.apply(null, arrs);
+    var mins = Math.min.apply(null, arrs);
+
+    var steps = ((mxs-mis)/arr.length).toInt();
+
+   
+
+    var bools = false;
+    handles.addEvent('mousedown',function(e){
+        var s = $$('.schlafsofa')[0];
+        var y = s.getStyle('height').toInt();
+        var lastCoord = e.event.pageY;
+        bools = true;
+        window.addEvent('mousemove',function(ev){
+           var delta = ev.event.pageY - lastCoord;
+           var h = y + delta;
+
+           var index = ((h-mis)/steps).toInt();
+           if(index > arrs.length) index = arrs.length
+           if(index < 1) index = 1; 
+
+           var ss =  arrs[index-1];
+           //w = mi+step*index;
+           if(h > mxs) h = mxs;
+           if(h < mis) h = mis;
+
+            $$('.ct-ww').set('html',ss ? ss : min);
+
+            var cc = $$('.custom-select-menus .cur');
+            if(cc.length)
+            $$('.custom-select-menus .cur')[0].removeClass('cur');
+
+            wrapper.setStyle('height',h);
+            s.setStyle('height',h);
+
+            $$('.s-h-'+ss)[0].addClass('cur');
+
+            updateW();
+
+        });
+    }).addEvent('mouseup',function(){ });
+
+
+
+
     window.addEvent("mouseup",function(e){
         bool && updateData($$('.custom-select-menu .cur'));
+        bool && updateData($$('.custom-select-menus .cur'));
         $(this).removeEvents("mousemove");
         bool = false;
+        bools = false;
     });
 
     /*

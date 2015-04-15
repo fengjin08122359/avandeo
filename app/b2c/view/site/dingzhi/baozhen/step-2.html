@@ -15,16 +15,16 @@
                                         </div>
                                     <div class="size">
                                         <ul class="spec-main" data-spec-id="42">
-                                            <{foreach from=$data.spec.42.spec_value item=item key=key}>
-                                            <li class="s-item <{if $item.defalut==true}> cur <{/if}>" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
-                                                <div class="p">
-                                                    <img src="<{$item.spec_image}>" alt=""> 
-                                                </div>
-                                                <!--<span class="n">扶手尺寸</span>-->
-                                                <span class="s"> <{$item.spec_memo}></span>
-                                            </li>
-                                            <{/foreach}>
-                                        </ul>
+                                        <{foreach from=$data.spec.42.spec_value item=item key=key}>
+                                        <li class="s-item <{if $item.defalut==true}> cur <{/if}>" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                            <div class="p">
+                                                <img src="<{$item.spec_image}>" alt=""> 
+                                            </div>
+                                            <!--<span class="n">扶手尺寸</span>-->
+                                            <span class="s"> <{$item.spec_memo}></span>
+                                        </li>
+                                        <{/foreach}>
+                                    </ul>
                                     </div>
                                 </div>
                             </div>

@@ -41,10 +41,10 @@
             </div>
             <div class="bd">
                 <div class="inner">
-                    <div class="base-a spec-main" data-spec-id="65">
+                    <div class="base-a spec-main" data-spec-id="38">
                         <span>枕套面料</span>
                         <ul >
-                            <{foreach from=$data.spec.65.spec_value item=item key=key}>
+                            <{foreach from=$data.spec.38.spec_value item=item key=key}>
                             <{if $item.defalut==true}>
                             <li class="cur s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
                                 <{else}>
@@ -55,10 +55,10 @@
                         </ul>
                     </div>
 
-                    <div class="base-b spec-main" data-spec-id="66">
+                    <div class="base-b spec-main" data-spec-id="68">
                         <span>枕套颜色</span>
                         <ul>
-                        <{foreach from=$data.spec.66.spec_value item=item key=key}>
+                        <{foreach from=$data.spec.68.spec_value item=item key=key}>
                         <li class="<{if $item.defalut==true}> cur <{/if}> s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
                             <img src="<{$item.spec_image}>" alt=""> </li>
                         <{/foreach}>
@@ -85,8 +85,8 @@
                 <div class="inner">
                     <div class="part1-a">
                         <span>形状</span>
-                        <ul class="spec-main" data-spec-id="41">
-                        <{foreach from=$data.spec.41.spec_value item=item key=key}>
+                        <ul class="spec-main" data-spec-id="40">
+                        <{foreach from=$data.spec.40.spec_value item=item key=key}>
                             <li class="<{if $item.defalut==true}> cur <{/if}> s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
                             <img src="<{$item.spec_image}>" alt=""> </li>
                         <{/foreach}>
@@ -104,8 +104,8 @@
                     <div class="part1-a">
                         <span>图案</span>
 
-                        <ul class="spec-main" data-spec-id="39">
-                        <{foreach from=$data.spec.39.spec_value item=item key=key}>
+                        <ul class="spec-main" data-spec-id="41">
+                        <{foreach from=$data.spec.41.spec_value item=item key=key}>
                             <li class="<{if $item.defalut==true}> cur <{/if}> s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
                             <img src="<{$item.spec_image}>" alt=""> </li>
                         <{/foreach}>
