@@ -56,7 +56,7 @@ class b2c_goods_dingzhi{
                 $defalut_sheet = 14;
                 break;
 
-            case "baozheng":
+            case "baozhen":
 
                 $gs =array(
                     '2'=>42,//填充物选择

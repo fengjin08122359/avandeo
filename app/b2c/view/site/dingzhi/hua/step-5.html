@@ -4,7 +4,7 @@
         <ul>
             <{foreach from=$data.ot_dz_data item=ds}>
             <li>
-                <a href="<{link app=b2c ctl=site_dingzhi act=index arg0=$ds.dingzhi_id}>">
+                <a href="<{link app=b2c ctl=site_dingzhi act=index arg0=$ds.dingzhi_id arg1=$ds.dz_type}>">
                     <img src="<{$ds.image_url}>" alt=""></a>
             </li>
             <{/foreach}>
@@ -43,10 +43,7 @@
                             <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
                             <img src="<{$item.spec_image}>" alt=""> </li>
                         <{/foreach}>
-                        <{foreach from=$data.spec.82.spec_value item=item key=key}>
-                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
-                            <img src="<{$item.spec_image}>" alt=""> </li>
-                        <{/foreach}>
+                       
                         <{foreach from=$data.spec.81.spec_value item=item key=key}>
                             <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
                             <img src="<{$item.spec_image}>" alt=""> </li>

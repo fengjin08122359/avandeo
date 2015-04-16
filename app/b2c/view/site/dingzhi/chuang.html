@@ -64,7 +64,7 @@
 		 <{foreach from=$data.ot_dz_data item=ds}>
                 <li>
                     <img src="<{$ds.image_url}>" alt="">
-                    <button onclick='window.location.href="<{link app=b2c ctl=site_dingzhi act=index arg0=$ds.dingzhi_id}>"'>立即定制</button>
+                    <button onclick='window.location.href="<{link app=b2c ctl=site_dingzhi act=index arg0=$ds.dingzhi_id arg1=$ds.dz_type}>"'>立即定制</button>
                 </li>
 
 		<{/foreach}>

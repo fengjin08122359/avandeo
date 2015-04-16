@@ -26,6 +26,10 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                     $type_id = 'shafa';
                     break;
 
+                case "shafa":
+                    $type_s_id = 7;
+                    break;
+
                 case "baozhen":
                     $type_s_id = 20;
                     break;
@@ -229,6 +233,11 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                         break;
 
                     case false:
+                        $c_c = 10;
+                        break;
+
+
+                    case "shafa":
                         $c_c = 10;
                         break;
                 }
