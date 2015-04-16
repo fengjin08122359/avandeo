@@ -138,7 +138,7 @@ window.addEvent('domready',function(e){
 
         new Request.JSON({
             url:'<{link app=b2c ctl=site_dingzhi act=getProduct}>',
-            data:'dingzhi_id=<{$data.dingzhi_id}>&goods_id='+$('gz').value+'&dz='+data.join(','),
+            data:'dingzhi_id=<{$data.dingzhi_id}>&type=chuang&goods_id='+$('gz').value+'&dz='+data.join(','),
             onComplete:function(json){
                 if(!json)return;
                 $('gz').set('value',json.goods_id);
