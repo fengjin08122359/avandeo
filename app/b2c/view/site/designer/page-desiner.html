@@ -8,8 +8,8 @@
                     <div id="desiner_tab">
                         <ul class="desiner-trigger">
                             <li class="active">设计师微店</li>
-                            <li><a href="">设计投票</a></li>
-                            <li><a href="">设计预售</a></li>
+                            <li>设计投票</li>
+                            <li>设计预售</li>
                         </ul>
                         <div class="desiner-panel">
                             <ul class="clearfix">
@@ -28,6 +28,18 @@
                         <div class="desiner-panel" style="display:none;"><img src="http://www.homehorizon.com/public/images/4f/89/54/25f3ec14861bb34c84bd9895eeff8a19.jpg"></div>
                         <div class="desiner-panel" style="display:none;"><img src="http://www.homehorizon.com/public/images/99/00/19/0e18e8fa0f26d2b96de9ad36de5897e7.jpg"></div>
                     </div>
+                    <script>
+                        $$('.desiner-trigger li').each(function(el,i){
+                            el.addEvent('click',function(e){
+                                $$('.desiner-trigger .active')[0].removeClass('active');
+                                this.addClass('active');
+                                $$('.desiner-panel').each(function(el){
+                                    el.setStyle('display','none');
+                                });
+                                $$('.desiner-panel')[i].setStyle('display','block');
+                            });
+                        });
+                    </script>
                 <!-- 结构结束 -->
             </div>
         </div>

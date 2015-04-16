@@ -130,11 +130,13 @@ window.addEvent('domready',function(e){
 
     //$$(".spec-main[data-spec-id=5] .cur").fireEvent('click');
     var updateData = function(el){
+
         updateText(el);
         var data = [];
         $$('.s-item.cur').each(function(elem){
             data.push(elem.get('data-s-id'));
         });
+
 
         new Request.JSON({
             url:'<{link app=b2c ctl=site_dingzhi act=getProduct}>',
