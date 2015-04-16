@@ -148,7 +148,7 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
             $this->pagedata['data'] = $goods;
 
 
-            if(!$type_id){
+            if($type_id=='shafa'){
                 $this->page("site/dingzhi/index.html");
             }else{
                 $this->page("site/dingzhi/".$type_id.".html");
