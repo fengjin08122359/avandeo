@@ -127,21 +127,38 @@
         </div>
         <div class="item-detail-part2 item">
             <div class="hd">
-                <h2>床腿</h2>
+                <h2>床腿&床箱</h2>
             </div>
             <div class="bd">
                 <div class="inner">
-                    <div class="part1-a">
-                        <span>床腿样式</span>
 
-                        <ul class="spec-main" data-spec-id="54">
-                        <{foreach from=$data.spec.54.spec_value item=item key=key}>
-                            <li class="<{if $item.defalut==true}> cur <{/if}> s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
-                            <img src="<{$item.spec_image}>" alt=""> </li>
-                        <{/foreach}>
+                    <div class="base-a spec-main" data-spec-id="54">
+                        <span>床腿样式</span>
+                        <ul >
+                            <{foreach from=$data.spec.54.spec_value item=item key=key}>
+                            <{if $item.defalut==true}>
+                            <li class="cur s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                <{else}>
+                                <li class="s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                    <{/if}>
+                                    <img src="<{$item.spec_image}>" alt="" > </li>
+                            <{/foreach}>
                         </ul>
                     </div>
 
+                    <div class="base-b spec-main" data-spec-id="57">
+                        <span>床箱</span>
+                        <ul >
+                            <{foreach from=$data.spec.57.spec_value item=item key=key}>
+                            <{if $item.defalut==true}>
+                            <li class="cur s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                <{else}>
+                                <li class="s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                    <{/if}>
+                                    <img src="<{$item.spec_image}>" alt="" > </li>
+                            <{/foreach}>
+                        </ul>
+                    </div>
                 </div>
                 <!--<div class="scroll">-->
                     <!--<div class="up"></div>-->
