@@ -50,9 +50,9 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
 
 
 
-            $dz_ds_data = $db->select("SELECT goods_id,dingzhi_id FROM sdb_b2c_dingzhi WHERE dingzhi_id!='".$series_id."' AND is_defalut ='true' AND dz_type ='".$type_id."'");
+            $dz_ds_data = $db->select("SELECT goods_id,dingzhi_id,dz_type FROM sdb_b2c_dingzhi WHERE dingzhi_id!='".$series_id."' AND is_defalut ='true' AND dz_type ='".$type_id."'");
 
-            $ez_ds_data = $db->select("SELECT goods_id,dingzhi_id FROM sdb_b2c_dingzhi WHERE is_defalut ='true' AND dz_type !='".$type_id."'");
+            $ez_ds_data = $db->select("SELECT goods_id,dingzhi_id,dz_type FROM sdb_b2c_dingzhi WHERE is_defalut ='true' AND dz_type !='".$type_id."'");
 
 
             foreach($ez_ds_data as $kez_dz=>$ez_dz){
@@ -60,6 +60,7 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                 $ei_tmp_data = $db->selectrow("SELECT image_default_id FROM sdb_b2c_goods WHERE goods_id=".$ez_dz['goods_id']);
                 $egz_data['image_url'] = $lib->image_path($ei_tmp_data['image_default_id'],'b');
                 $egz_data['dingzhi_id'] = $ez_dz['dingzhi_id'];
+                $egz_data['dz_type'] = $ez_dz['dz_type'];
                 $et_dz_data[] =$egz_data;
             }
 
@@ -71,6 +72,7 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                 $ei_tmp_data = $db->selectrow("SELECT image_default_id FROM sdb_b2c_goods WHERE goods_id=".$ve_dz['goods_id']);
                 $egz_data['image_url'] = $lib->image_path($ei_tmp_data['image_default_id'],'b');
                 $egz_data['dingzhi_id'] = $ve_dz['dingzhi_id'];
+                $egz_data['dz_type'] = $ve_dz['dz_type'];
                 $ot_dz_data[] =$egz_data;
             }
 

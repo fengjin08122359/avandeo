@@ -914,7 +914,7 @@ to{left:-300px;}}
 .works-inf h3{width: 415px;overflow: hidden;font-weight: normal;font-size: 16px;}
 .works-inf span{float: right;margin-right: 30px;font-size: 14px;color: #666666;}
 .works-case .works-inf a{right: 0;top:11px;}
-.desiner-panel li{width: 282px;margin:0 10px 10px 0;border-bottom: 1px solid #dddddd;text-align: center;padding:10px 0 22px 0;}
+.desiner-panel li{width: 280px;margin:0 10px 10px 0;border-bottom: 1px solid #dddddd;text-align: center;padding:10px 0 22px 0;}
 .desiner-panel li .avatar-pic{display:block;width: 247px;height: 247px;line-height: 247px;*font-size: 222.3px;text-align: center;background-color: #ffffff;margin: 0 auto;}
 .desiner-panel li img{width: 247px;max-height: 238px;vertical-align: middle;}
 .desiner-panel li img:hover,.works-case li img:hover{box-shadow: 0 0 10px #666666;}
@@ -981,7 +981,7 @@ to{left:-300px;}}
 .pop-info dt .view-pic{display: block;height: 95px;height: 95px;overflow: hidden;background: #ffffff;line-height: 95px;*font-size:85.5px;text-align: center;}
 .pop-info dt .view-pic img{width: 95px!important;max-height: 95px;vertical-align: middle;}
 .pop-info dt .price-cont{padding: 10px 0;line-height: 23px;}
-.pop-info dt .price-cont h4{font-weight: normal;max-height: 36px;overflow: hidden;}
+.pop-info dt .price-cont h4{font-weight: normal;max-height: 36px;overflow: hidden;line-height:18px;}
 .pop-info dt .detail-btn{display: block;text-align: center;height: 25px;line-height:25px;color: #ffffff;background-color: #FF3F13;}
 .pop-info dd{margin-left: 116px;line-height: 22px;}
 /*like*/

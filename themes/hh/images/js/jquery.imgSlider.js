@@ -22,7 +22,7 @@ var img = {
 	 autoplay:null,
 	 
 	 init:function(){
-		 img.imagebg.innerHTML = img.imagebg.innerHTML+img.imagebg.innerHTML+img.imagebg.innerHTML;
+		 img.imagebg.innerHTML = img.imagebg.innerHTML;
 		for(var i=0;i<img.imagebg_li.length;i++){
 			//console.log(img.imagebg_li[i]+" is OK")
 			if(i!=0){
