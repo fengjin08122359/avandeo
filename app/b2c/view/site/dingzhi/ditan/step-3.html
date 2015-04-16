@@ -3,74 +3,75 @@
     <div class="choice-item">
         <div class="item-angle">
             <div class="hd">
-                <h2>俯视角度的轮廓图</h2>
+                <!--<h2>俯视角度的轮廓图</h2>-->
             </div>
             <div class="bd">
                 <div class="angle-view">
-                    <div class="paper">
+                    <div class="paper" style="background:none;">
                         <div class="title"></div>
-                        <div class="elementwrapper" style="width: 600px; ">
-                            <div class="element horizontal schlafsofa" data-resizex="true"   data-stepsize="0" style="width: 600px; height: 204px;">
-                                <input type="hidden" name="sitzbreite" value="1250">
-                                <div class="rueckenlehne" style="height: 88px; left: 54px; right: 54px;"></div>
-                                <div class="armlehne left" style="width: 52px;"></div>
-                                <div class="armlehne right" style="width: 52px;"></div>
-                                <div class="divider left" style="top: 88px; left: 200px;"></div>
-                                <div class="divider center" style="top: 88px; left: 50%;"></div>
-                                <div class="divider right" style="top: 88px; right: 200px;"></div>
-                                <div class="ruler horizontal full">
-                                    <div class="line">
-                                        <div class="triangle left"></div>
-                                        <div class="triangle right"></div>
-                                    </div>
-                                    <select name="select_width" class="select_width" style="display:none">
-                                        <{foreach from=$data.spec.14.spec_value item=item key=key}>
-                                        <option value="<{$item.spec_value_name}>" selected="selected"><{$item.spec_value_name}> mm</option>
-                                        <{/foreach}>
-                                    </select>
-                                    <div class="custom-select-menu button hide" tabindex="0">
-                                        <label class="selection-made">1770 mm</label>
-                                        <ul data-select-name="select_width" class="spec-main" data-spec-id="76">
-                                        <{foreach from=$data.spec.76.spec_value item=item key=key name=spec}>
-                                            <li data-option-value="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>" class="s-item s-w-<{$item.spec_value_name}>  <{if $item.defalut==true}> cur <{/if}>"><{$item.spec_value_name}> mm</li>
-                                        <{/foreach}>
-                                    </ul>
-                                </div>
-<div class="custom-select-menus button hide" tabindex="0">
-                                        <label class="selection-made">1770 mm</label>
-                                        <ul data-select-name="select_width" class="spec-main" data-spec-id="14">
-                                        <{foreach from=$data.spec.14.spec_value item=item key=key name=spec}>
-                                            <li data-option-value="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>" class="s-item s-w-<{$item.spec_value_name}>  <{if $item.defalut==true}> cur <{/if}>"><{$item.spec_value_name}> mm</li>
-                                        <{/foreach}>
-                                    </ul>
-                                </div>
+                        <div class="elementwrapper" style="width: 600px; overflow:hidden;">
+                          <div class="fin-pic">
+                              <img class="s-pic" src="<{$data.image_url}>" alt="" style="width: 600px; height: 300px;">
+                         </div>
+                        </div>
+                </div>
+                <div class="item-base item" style="width: 48%;margin-left:10px;">
+                    <div class="hd" style="width: auto;">
+                        <h2>总长</h2>
+                    </div>
+                    <div class="bd" style="padding:20px;">
+                        <div class="inner">
 
+                            <div class="base-a spec-main " data-spec-id="76">
+                                <!--<span style="float:left;margin-right:30px;margin-left:15px;">抱枕尺寸</span>-->
+                                <ul style="float:left;">
+                                    <{foreach from=$data.spec.76.spec_value item=item key=key}>
+                                    <{if $item.defalut==true}>
+                                    <li class="cur s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                        <{else}>
+                                        <li class="s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                            <{/if}>
+                                            <!--<img src="<{$item.spec_image}>" alt="" > -->
+                                            <span class="s"> <{$item.spec_memo}></span>
+                                        </li>
+                                        <{/foreach}>
+                                    </ul>
+                                </div>
                             </div>
-<div class="view-btn view-left-btn"> <div class="btn-lf tri"></div> <div class="btn-rt tri"></div> </div>
-                            <div class="view-btn view-top-btn" style="left:-35px;"> <div class="btn-lf tri" style="border-bottom:6px solid #fff;border-left: 6px solid transparent; border-right: 6px solid transparent;margin-top:10px;margin-left:18px;"> 
-                            </div> <div class="btn-rt tri" style="margin-top:30px;margin-left:-12px;border-top:6px solid #fff;border-left: 6px solid transparent; border-right: 6px solid transparent;"></div> </div>
-
                         </div>
                     </div>
-                </div>
-                    <div class="view-txt">
-                    <span class="txt-a" style="display:inline">总尺寸:
 
-                    <{foreach from=$data.spec.76.spec_value item=item key=key name=spec}>
-                        <{if $item.defalut==true}>
-                        <span class="ct-t" style="display:inline"> <{$item.spec_value_name}></span> mm
-                        <{/if}>
-                    <{/foreach}>
-                        
-                        </span>
-                    <span class="txt-b" style="display:inline"> 总宽度:
-                     <{foreach from=$data.spec.14.spec_value item=item key=key name=spec}>
-                        <{if $item.defalut==true}>
-                        <span class="ct-ww" style="display:inline"> <{$item.spec_value_name}></span> mm
-                        <{/if}>
-                    <{/foreach}>
-                    </span>
+                <div class="item-base item" style="width: 48%;margin-right: 0px;">
+                    <div class="hd" style="width: auto;">
+                        <h2>总宽</h2>
+
                     </div>
+                    <div class="bd" style="padding:20px;">
+                        <div class="inner">
+
+                            <div class="base-a spec-main" data-spec-id="14">
+                                <!--<span style="float:left;margin-right:30px;margin-left:15px;">抱枕尺寸</span>-->
+                                <ul style="float:left;">
+                                    <{foreach from=$data.spec.14.spec_value item=item key=key}>
+                                    <{if $item.defalut==true}>
+                                    <li class="cur s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                        <{else}>
+                                        <li class="s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                            <{/if}>
+                                            <!--<img src="<{$item.spec_image}>" alt="" > -->
+                                            <span class="s"> <{$item.spec_memo}></span>
+                                        </li>
+                                        <{/foreach}>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!--<div class="view-txt"></div>-->
+                    <!--<div class="angle-info"></div>-->
                 </div>
             </div>
         </div>

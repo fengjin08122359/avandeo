@@ -23,26 +23,46 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
             switch($type_id){
                 case false:
                     $type_s_id = 7;
+                    $type_id = 'shafa';
                     break;
 
                 case "baozhen":
-                    $type_s_id = 18;
+                    $type_s_id = 20;
                     break;
 
                 case "chuang":
-                    $type_s_id = 19;
+                    $type_s_id = 21;
+                    break;
+
+                case "hua":
+                    $type_s_id = 22;
+                    break;
+
+                case "ditan":
+                    $type_s_id = 23;
                     break;
 
             }
 
 
-            $dz_ds_data = $db->select("SELECT goods_id,dingzhi_id FROM sdb_b2c_dingzhi WHERE dingzhi_id!='".$series_id."' AND is_defalut ='true'");
+
+            $dz_ds_data = $db->select("SELECT goods_id,dingzhi_id FROM sdb_b2c_dingzhi WHERE dingzhi_id!='".$series_id."' AND is_defalut ='true' AND dz_type ='".$type_id."'");
+
+            $ez_ds_data = $db->select("SELECT goods_id,dingzhi_id FROM sdb_b2c_dingzhi WHERE is_defalut ='true' AND dz_type !='".$type_id."'");
+
+
+            foreach($ez_ds_data as $kez_dz=>$ez_dz){
+                $egz_data = array();
+                $ei_tmp_data = $db->selectrow("SELECT image_default_id FROM sdb_b2c_goods WHERE goods_id=".$ez_dz['goods_id']);
+                $egz_data['image_url'] = $lib->image_path($ei_tmp_data['image_default_id'],'b');
+                $egz_data['dingzhi_id'] = $ez_dz['dingzhi_id'];
+                $et_dz_data[] =$egz_data;
+            }
+
+
 
 
             foreach($dz_ds_data as $ke_dz=>$ve_dz){
-                if($ve_dz['dingzhi_id']==1426233680){
-                    continue;
-                }
                 $egz_data = array();
                 $ei_tmp_data = $db->selectrow("SELECT image_default_id FROM sdb_b2c_goods WHERE goods_id=".$ve_dz['goods_id']);
                 $egz_data['image_url'] = $lib->image_path($ei_tmp_data['image_default_id'],'b');
@@ -50,7 +70,7 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                 $ot_dz_data[] =$egz_data;
             }
 
-
+            $goods['et_dz_data'] = $et_dz_data;
             $goods['ot_dz_data'] = $ot_dz_data;
             $goods['dingzhi_id'] = $ds_data['dingzhi_id'];
             $g_data = $goods_mdl->getLinkList($gid);
@@ -169,9 +189,9 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
             $db = kernel::database();
             $lib = kernel::single("base_storager");
 
-            $dz = $_GET['dz'];
+            $dz = $_POST['dz'];
 
-            $series_id = $_GET['dingzhi_id'];
+            $series_id = $_POST['dingzhi_id'];
             //$goods_id = $_GET['goods_id'];
             //$sql = "SELECT product_id FROM (SELECT product_id,count(product_id) AS d FROM sdb_b2c_dingzhi_index WHERE dingzhi_id =".$series_id." AND spec_value_id in(".$dz.") GROUP BY product_id )  AS c WHERE d>10";
 
@@ -190,7 +210,32 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                 $list['price'] = intval($list['price']);
                 echo json_encode($list);
             }else{
-                $sql = "SELECT product_id,goods_id FROM(select count(product_id) as c,product_id,goods_id from sdb_b2c_dingzhi_index where dingzhi_id =".$series_id." AND spec_value_id IN(".$dz.") group by product_id) as d where c>10";
+
+                switch($_POST['type']){
+                    case "baozhen":
+                        $c_c = 6;
+                        break;
+
+                    case "hua":
+                        $c_c = 8;
+                        break;
+
+                    case "ditan":
+                        $c_c = 6;
+                        break;
+
+                    case "chuang":
+                        $c_c = 11;
+                        break;
+
+                    case false:
+                        $c_c = 10;
+                        break;
+                }
+
+
+
+                $sql = "SELECT product_id,goods_id FROM(select count(product_id) as c,product_id,goods_id from sdb_b2c_dingzhi_index where dingzhi_id =".$series_id." AND spec_value_id IN(".$dz.") group by product_id) as d where c>".$c_c;
                 $data = $db->selectrow($sql);
                 $product_data = $db->selectrow("SELECT * FROM sdb_b2c_products WHERE product_id=".$data['product_id']);
 

@@ -7,7 +7,7 @@
             </div>
             <div class="bd">
                 <div class="angle-view">
-                    <div class="paper">
+                    <div class="paper" style="background:none;">
                         <div class="title"></div>
                         <div class="elementwrapper" style="width: 600px; overflow:hidden;">
                           <div class="fin-pic">
@@ -15,20 +15,30 @@
                          </div>
                         </div>
                 </div>
-                <div class="base-a spec-main s-spec-item" data-spec-id="43">
-                        <span style="float:left;margin-right:30px;margin-left:15px;">抱枕尺寸</span>
-                        <ul style="float:left;">
-                            <{foreach from=$data.spec.43.spec_value item=item key=key}>
-                            <{if $item.defalut==true}>
-                            <li class="cur s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
-                                <{else}>
-                                <li class="s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
-                                    <{/if}>
-                                    <!--<img src="<{$item.spec_image}>" alt="" > -->
-                                    <span class="s"> <{$item.spec_memo}></span>
-                                </li>
-                            <{/foreach}>
-                        </ul>
+                <div class="item-base item" style="width: 100%;">
+                    <div class="hd">
+                        <h2>抱枕尺寸</h2>
+                    </div>
+                    <div class="bd" style="padding:20px;">
+                        <div class="inner">
+
+                            <div class="base-a spec-main " data-spec-id="43">
+                                <!--<span style="float:left;margin-right:30px;margin-left:15px;">抱枕尺寸</span>-->
+                                <ul style="float:left;">
+                                    <{foreach from=$data.spec.43.spec_value item=item key=key}>
+                                    <{if $item.defalut==true}>
+                                    <li class="cur s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                        <{else}>
+                                        <li class="s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                            <{/if}>
+                                            <!--<img src="<{$item.spec_image}>" alt="" > -->
+                                            <span class="s"> <{$item.spec_memo}></span>
+                                        </li>
+                                        <{/foreach}>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
 
