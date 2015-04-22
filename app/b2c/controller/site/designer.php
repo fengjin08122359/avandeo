@@ -47,7 +47,10 @@ class b2c_ctl_site_designer extends site_controller {
 			foreach ($case['goods'] as &$goods) {
 				$goodsInfo     = $this->app->model('goods')->dump(array('goods_id' => $goods['goods_id']));
 				$goods['info'] = $goodsInfo;
+<<<<<<< HEAD
 				$goods['info']['products'] = $this->app->model('products')->getList('*',array('goods_id' => $goods['goods_id']));
+=======
+>>>>>>> 5feb43f3d9f2d7db0d6b1989ac1eccf07b039c57
 			}
 			unset($goods);
 		}

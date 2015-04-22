@@ -138,8 +138,11 @@ class b2c_ctl_admin_dingzhi_goods extends desktop_controller{
     }
 
     function import(){
+<<<<<<< HEAD
 
         /*
+=======
+>>>>>>> 5feb43f3d9f2d7db0d6b1989ac1eccf07b039c57
         $this->pagedata['thisUrl'] = 'index.php?app=b2c&ctl=admin_goods&act=index';
         $oGtype = $this->app->model('goods_type');
         $this->pagedata['gtype'] = $oGtype->getList('type_id,name');
@@ -147,8 +150,13 @@ class b2c_ctl_admin_dingzhi_goods extends desktop_controller{
         $this->pagedata['check_policy'] = kernel::single('importexport_controller')->check_policy();
         //支持导出类型
         $this->pagedata['import_type'] = kernel::single('importexport_controller')->import_support_filetype();
+<<<<<<< HEAD
         */
         $this->page('admin/goods/dingzhi_import.html');
+=======
+
+        $this->page('admin/goods/goods_import.html');
+>>>>>>> 5feb43f3d9f2d7db0d6b1989ac1eccf07b039c57
     }
 
     function showfilter($type_id){

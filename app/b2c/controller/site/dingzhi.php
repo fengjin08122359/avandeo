@@ -223,7 +223,11 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                         break;
 
                     case "hua":
+<<<<<<< HEAD
                         $c_c = 6;
+=======
+                        $c_c = 8;
+>>>>>>> 5feb43f3d9f2d7db0d6b1989ac1eccf07b039c57
                         break;
 
                     case "ditan":
