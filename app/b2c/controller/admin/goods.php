@@ -161,7 +161,7 @@ class b2c_ctl_admin_goods extends desktop_controller{
 
     function importDingzhiExcel(){
         $d = kernel::single("b2c_goods_dingzhi");
-        $d->import_data($_FILES['s_file']['tmp_name']);
+        $d->import_data($_FILES['s_file']['tmp_name'],$_POST['method']);
     }
 
     function showfilter($type_id){

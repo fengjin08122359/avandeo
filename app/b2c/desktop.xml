@@ -115,16 +115,9 @@
             <menu permission='batcheditmarketable' display='false'>批量商品上下架</menu>
         </menugroup>
         <menugroup name="定制器商品管理">
-<<<<<<< HEAD
             <menu controller='admin_dingzhi_goods' action='import' permission='goods' display='true' order='20'>定制器商品导入</menu>
             <menu controller='admin_dingzhi_type' action='import' permission='importgoods' display='false' order='22'>类型列表</menu>
             <menu controller='admin_dingzhi_specification' action='index' permission='importgoods' display='false' order='22'>规格列表</menu>
-=======
-
-            <menu controller='admin_dingzhi_goods' action='index' permission='goods' display='true' order='20'>商品列表</menu>
-            <menu controller='admin_dingzhi_type' action='import' permission='importgoods' display='true' order='22'>类型列表</menu>
-            <menu controller='admin_dingzhi_specification' action='index' permission='importgoods' display='true' order='22'>规格列表</menu>
->>>>>>> 5feb43f3d9f2d7db0d6b1989ac1eccf07b039c57
         </menugroup>
 
 

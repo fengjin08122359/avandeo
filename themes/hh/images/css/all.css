@@ -414,13 +414,8 @@ body{font-family:microsoft Yahei,"黑体",arial!important;overflow-x: hidden;min
 .slide-wrap .ban-prd{position: absolute;height:25px; bottom:0; left:0;}
 .slide-wrap .ban-prd ul li{color:#fff;float:left;width:200px;font-size:14px;cursor: pointer;line-height: 50px;text-align: center;background: rgba(0,0,0,0.6);}
 .slide-wrap .ban-prd ul li:hover{font-weight: bold;/*background: rgba(13,91,161,0.8);*/ background-color:#ff4014;}
-<<<<<<< HEAD
 .slide-wrap .ban-btn .banb{position: absolute;top:200px;width:46px;height:46px;cursor: pointer;/*background: url(../img/icons.png) no-repeat -13px -464px;*/background:#0D5BA1;line-height:46px; text-align:center; font-size:30px; font-family: serif; color:#ffffff;border:1px solid #86ADD0;font-weight: bold;}
 .slide-wrap .ban-btn .banb:hover{background: #083B6B;}
-=======
-.slide-wrap .ban-btn .banb{position: absolute;top:200px;width:54px;height:54px;cursor: pointer;/*background: url(../img/icons.png) no-repeat -13px -464px;*/background:#215988; opacity:.8; line-height:54px; text-align:center; font-size:35px; font-family: serif; color:#ffffff;}
-.slide-wrap .ban-btn .banb:hover{opacity: 1;}
->>>>>>> 5feb43f3d9f2d7db0d6b1989ac1eccf07b039c57
 .slide-wrap .ban-btn .btn-left{left:0px;}
 .slide-wrap .ban-btn .btn-left:hover{/*background-position:-211px -464px;*/}
 .slide-wrap .ban-btn .btn-right{right:0px;/*background-position:-149px -464px;*/}
