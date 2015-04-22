@@ -1,0 +1,20 @@
+<desktop>
+    <permissions>
+        <permission id="designer" display='true'>设计师模块</permission>
+    </permissions>
+
+    <workground name="设计师" id="designer.workground.setting" controller="admin_members" action="index" order='70'>
+        <menugroup name="设计师管理">
+            <menu controller='admin_members' action='index' permission='designer' display='true'>设计师列表</menu>
+            <menu controller='admin_case' action='index' permission='designer' display='true'>案例列表</menu>
+        </menugroup>
+        <menugroup name="预约设计师">
+            <menu controller='admin_reserve' action='index' permission='designer' display='true'>预约列表</menu>
+        </menugroup>
+        <menugroup name="案例参数管理">
+            <menu controller='admin_huxing' action='index' permission='designer' display='true'>户型配置</menu>
+            <menu controller='admin_area' action='index' permission='designer' display='true'>面积</menu>
+        </menugroup>
+    </workground>
+
+</desktop>

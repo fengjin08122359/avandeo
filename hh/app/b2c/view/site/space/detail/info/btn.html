@@ -1,0 +1,7 @@
+<li class="product-buy-action">
+  <{if $page_product_basic.marketable=='true'}>
+    <{button type="submit" class="btn-major btn-huge action-addtocart" label="加入购物车" rel="_request"}>
+  <{else}>
+  <{t}>此商品已下架，看看其他商品吧<{/t}>
+  <{/if}>
+</li>

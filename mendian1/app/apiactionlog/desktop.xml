@@ -1,0 +1,6 @@
+<desktop>
+    <permissions>
+        <permission id="setting_api_log" display='true' workground='system'>同步日志管理</permission>
+    </permissions>
+
+</desktop>

@@ -1,0 +1,41 @@
+<{if $aCart.object.space}>
+<{foreach from=$aCart.object.space item=goods key=_obj_key}>
+<tbody class="cart-item">
+  <!-- 主商品 -->
+  <tr class="cart-product<{if !$goods.adjunct}> last<{/if}>">
+    <td class="p-info">
+      <div class="p-title"><a target="_blank" href="<{link app=b2c ctl=site_space act=plist arg0=$goods.space_id}>"><{$goods.space_name}></a></div>
+    </td>
+    <td class="p-price"><{$goods.price|cur_odr}></td>
+    <td><{$goods.quantity}></td>
+    <td class="p-discount"><{$goods.discount_amount_prefilter|cur_odr}></td>
+    <td class="p-integral">
+      <{if ($goods.subtotal_gain_score - $goods.subtotal_consume_score)}>
+      <{($goods.subtotal_gain_score - $goods.subtotal_consume_score)}>
+      <{else}>
+      -
+      <{/if}>
+    </td>
+    <td class="p-subtotal"><{$goods.subtotal_prefilter_after|cur_odr}></td>
+  </tr>
+  <!-- 空间组合商品 -->
+  <{foreach from=$goods.obj_items.products item=adjunct key=key name=adjunct}>
+  <tr class="p-adjunct<{if $smarty.foreach.adjunct.last}> last<{/if}>">
+    <td class="p-info">
+      <div class="p-title"><b>[<{t}>组合商品<{/t}>]</b><a target="_blank" href="<{link app=b2c ctl=site_product arg0=$adjunct.product_id}>"><{$adjunct.name}> , <{$adjunct.spec_info}></a></div>
+    </td>
+      <td class="p-price"><{$adjunct.price.buy_price|cur_odr}></td>
+      <td>
+          <div class="p-quantity"><{$adjunct.base_num}>（基数）</a>
+          </div>
+      </td>
+      <td class="p-discount"><{$adjunct.price.discount_price|cur_odr}></td>
+      <td class="p-integral">
+          -
+      </td>
+      <td class="p-subtotal"><{$adjunct.price.buy_price*$adjunct.base_num-$adjunct.price.discount_price|cur_odr}></td>
+  </tr>
+  <{/foreach}>
+</tbody>
+<{/foreach}>
+<{/if}>

@@ -1,0 +1,66 @@
+	<div class="rside_main">
+		<div class="bread-crumbs">
+			<{widgets id="bread_crumbs"}>
+		</div>
+		<div class="updown">
+			<{simple_pager total_page=$pager.total_page cur_page=$pager.cur_page prev_link=$link.prev next_link=$link.next}>
+		</div>
+		<{foreach from=$data.category_list item=cli key=clk}>
+		<div class="showarea">
+			<div class="tit">
+				<div class="left">
+					<h1><{$cli.title}></h1>
+				</div>
+				<div class="right">
+					<div class="viewmore">
+						<a href="<{$cli.link}>">查看更多</a>
+						<i></i>
+					</div>
+				</div>
+			</div>
+			<div class="show_prd">
+				<ul>
+					<{foreach from=$cli.product_list item=pli key=plk}>
+					<li>
+						<div class="img">
+							<a href="<{link app=b2c ctl=site_product arg0=$pli.product_id}>"><img src="<{$pli.image_default_id|default:$imageDefault.S.default_image|storager:'s'}>" alt="<{$pli.name|strip_tags}>"></a>
+						</div>
+						<div class="txt">
+							<div class="left">
+								<div class="goods">
+									<span>
+										<a href="<{link app=b2c ctl=site_product arg0=$pli.product_id}>"><{$pli.name}></a>
+									</span>
+								</div>
+								<div class="price"><span>
+									<{$pli.price|cur_odr}>
+								</span></div>
+							</div>
+							<div class="right">
+
+      
+
+                            <i></i>
+
+      <!--<{if $login=='nologin'}>-->
+          <!--<a href="<{link app=b2c ctl=site_passport act=login}>" class=""><span><span>收藏</span></span></a>-->
+      <!--<{else}>-->
+          <{if !$pli.is_fav}>
+              <span rel="_favbtn_"  style="cursor: pointer;" data-gid="<{$pli.goods_id}>"><span>收藏</span></span>
+              <span  rev="_favbtn_" style="display:none;cursor: pointer;" data-gid="<{$pli.goods_id}>"><span>已收藏</span></span>
+          <{else}>
+              <span rel="_favbtn_" style="cursor: pointer;" data-gid="<{$pli.goods_id}>"><span>收藏</span></span>
+              <span rev="_favbtn_" style="cursor: pointer;" data-gid="<{$pli.goods_id}>"><span>已收藏</span></span>
+          <{/if}>
+      <!--<{/if}>-->
+
+							</div>
+						</div>
+					</li>
+					<{/foreach}>
+				</ul>
+			</div>
+		</div>
+		<{/foreach}>
+	</div>
+

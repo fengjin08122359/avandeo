@@ -1,0 +1,8 @@
+<div class="span-auto row-h">
+    <{assign var=product_id value=$item.product_id}>
+
+
+    <{input type="number" name="space[base_num][{$product_id}]" value=$item_product.$product_id.base_num vtype="required&&digits"}>
+    <input type="hidden" name="space[goods_id][<{$product_id}>]" value="<{$item.goods_id}>">
+    <input type="hidden" name="space[item_id][<{$product_id}>]" value="<{$item_product.$product_id.item_id}>">
+</div>

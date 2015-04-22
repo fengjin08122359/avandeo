@@ -1,0 +1,122 @@
+
+
+<form method="POST" id='newmember-edit-form' action="index.php?app=designer&ctl=admin_members&act=save" class="tableform">
+    <div class="division">
+    <{if $member_info.member_id}><{input type="hidden" name="member[member_id]" value=$member_info.member_id}><{/if}>
+        <table width="100%" >
+            <tr><th><em class="red">*</em><{t}>姓名：<{/t}></th><td><{input type="text" name="member[name]"  size="20" vtype="required" value=$member_info.name}><span></span></td></tr>
+            <tr><th><em class="red">*</em><{t}>职位：<{/t}></th><td><{input type="text" name="member[position]" size="20" vtype="required" value=$member_info.position}></td></tr>
+            <tr><th><em class="red">*</em><{t}>出生地：<{/t}></th><td><{input type="text" name="member[birth_of_place]" size="20" vtype="required" value=$member_info.birth_of_place}></td></tr>
+            <!--
+            <tr><th><em class="red">*</em>E-mail：</th><td><{input type="email" name="pam_account[login_name][email]" size="20" vtype="required&&email" onchange="emailCheck(this)"}><span></span></td></tr>
+            <tr><th><em class="red">*</em>手机号码：</th><td><{input type="mobile" name="pam_account[login_name][mobile]" size="20" vtype="required&&mobile" onchange="emailCheck(this)"}><span></span></td></tr>
+            -->
+
+            <tr><th><em class="red">*</em><{t}>擅长风格：<{/t}></th><td><{input type='text' name='member[adept_style]' vtype="required" value=$member_info.adept_style}></td></tr>
+            <tr><th><em class="red">*</em><{t}>认证资格：<{/t}></th><td><{input type='text' name='member[certification]' vtype="required" value=$member_info.certification}></td></tr>
+            <tr><th><em class="red">*</em><{t}>联系方式：<{/t}></th><td><{input type='text' name='member[contact]' vtype="required" value=$member_info.contact}></td></tr>
+            <tr><th><em class="red">*</em><{t}>在线联系：<{/t}></th><td><{input type='text' name='member[online_contact]' vtype="required" value=$member_info.online_contact}></td></tr>
+            <tr><th><em class="red">*</em><{t}>照片：<{/t}></th>        
+            <td>
+               <{input type="image" name="member[image_default_id]" width=160 height=90 vtype="required" value=$member_info.image_default_id}>
+            </td>
+            </tr>
+            <tr>
+            <th><em class="red">*</em><{t}>简介：<{/t}></th>
+            <td>
+                <{input type="textarea" name="member[description]" value="test" value=$member_info.description}>
+            </td>
+            </tr>
+        </table>
+        <hr style="margin:5px 0;">
+
+
+    </div>
+</form>
+<{area inject='.mainFoot'}>
+
+
+<div class="table-action"><{button type="submit"  label=$___b2c="保存"|t:'b2c' id='newmember-edit-form-submit'}></div>
+
+
+<{/area}>
+
+
+<script>
+    (function(){
+        var _form = $('newmember-edit-form');
+        var btn =$('newmember-edit-form-submit');
+        var finder = finderGroup['<{$env.get.finder_id}>'];
+
+        _form.store('target',{
+            onComplete:function(){            
+
+            },
+            onSuccess:function(response){
+                var hash_res_obj = JSON.decode(response);
+                if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+                {
+                    try{
+                        var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+                    }catch(e){}
+
+                    if(_dialogIns)
+                    {
+                        _dialogIns.close();
+                        window.finderGroup['<{$env.get._finder.finder_id}>'].refresh();
+                        finder.refresh.delay(400,finder);
+                    }
+                }
+                else
+                {
+                    //alert(hash_res_obj.error);
+                }            
+            }
+        });
+
+        btn.addEvent('click',function(){
+
+            _form.fireEvent('submit',{stop:$empty});
+
+
+
+        });
+
+    })();
+
+    // function nameCheck(input){
+    //     new Request({
+    //         url:'<{link app=b2c ctl=admin_member act=namecheck}>',
+    //         method:'post',
+    //         data:input.name+'='+encodeURIComponent(input.value=input.value.trim()),
+    //         onSuccess: function(rs) {
+    //             rs = JSON.decode(rs);
+    //             if(rs.error) {
+    //                 input.getNext().innerHTML = '<span class="error caution notice-inline">' +rs.error + '</span>';
+    //             }
+    //             else if(rs.success) {
+    //                 input.getNext().innerHTML = '<span class="success notice-inline">' +rs.success + '</span>';
+    //             }
+    //         }
+    //     }).send();
+    // }
+
+    //function emailCheck(input){
+    //    new Request({
+    //        url:'<{link app=b2c ctl=member_passport act=emailcheck}>',
+    //        method:'post',
+    //        data:input.name+'='+encodeURIComponent(input.value=input.value.trim()),
+    //        onSuccess: function(rs) {
+    //            rs = JSON.decode(rs);
+    //            if(rs.error) {
+    //                input.getNext().innerHTML = '<span class="error caution notice-inline">' +rs.error + '</span>';
+    //            }
+    //            // else if(rs.success) {
+    //            //     input.getNext().innerHTML = '<span class="success notice-inline">' +rs.success + '</span>';
+    //            // }
+    //        }
+    //    }).send();
+    //}
+</script>
+
+

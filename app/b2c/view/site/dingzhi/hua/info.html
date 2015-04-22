@@ -1,0 +1,52 @@
+<div class="info-price com info">
+    <div class="tit">
+        <span class="nam">价格：</span>
+        <span class="pri"><span class="s-price" data-price="<{$data.price}>"><{$data.price}></span>.00</span>
+    </div>
+    <div class="line"></div>
+    <div class="cont">
+        <ul>
+            <li>包含运费和安装费</li>
+            <li>生产周期：<{$data.sc_day}></li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="info-detail info">
+    <div class="tit com">
+        <span class="nam">产品规格</span>
+    </div>
+
+    <div class="tit comc">
+        <span class="nam">价格：</span>
+        <span class="pri s-price" data-price="<{$data.price}>"><{$data.price}></span>
+    </div>
+
+    <div class="cont">
+        <ul>
+            <li>产品名：<{$data.cp_name}></li>
+            <li>幅数：<span class="spec-83">布艺</span></li>
+            <li>背景墙颜色：<span class="spec-79">灰蓝色</span></li>
+            <!--<li>扶手设计：<span class="spec-8">细瘦型</span></li>-->
+            <!--<li>脚设计： <span class="spec-9">长胡桃木</span></li>-->
+            <li>配框款式：<span class="spec-78">长胡桃木</span></li>
+            <li>配框颜色：<span class="spec-77">细瘦型</span>mm</li>
+
+        </ul>
+    </div>
+
+    <div class="next">
+        <button class="nextBtn com">去下一个步骤</button>
+        <form action="<{link app=b2c ctl=site_cart act=add argo=goods}>" method="post" target="_dialog_minicart">
+            <input type="hidden" name="goods[goods_id]" id="goods_id" value="<{$data.goods_id}>"/>
+            <input type="hidden" name="goods[product_id]" id="product_id" value="<{$data.product_id}>"/>
+            <input type="hidden" name="goods[num]" value="1" />
+
+        <button id="addCart" class="action-addtocart addCart comc">加入购物车</button>
+        </form>
+        <a href="javascript:void(0);" class="prevBtn">返回上一步</a>
+    </div>
+</div>
+					
+	

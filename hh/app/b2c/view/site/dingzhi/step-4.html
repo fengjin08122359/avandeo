@@ -1,0 +1,34 @@
+
+					<!-- main choice -->
+					<div class="main-choice">
+						<div class="choice-item">
+							<div class="item-match">
+								<div class="hd">
+									<h2>推荐配套产品购买</h2>
+								</div>
+								<div class="bd" >
+
+                        <{foreach from=$data.gl_goods item=item key=key name=spec}>
+									<div class="match-a" >
+										<div class="match-pic">
+                                            <img src="<{$item.image_url}>" alt="">
+                                            <div class="gl-price"> 
+                                                购买价格:&nbsp;&nbsp;&nbsp;<{$item.price|cur}>
+                                           </div> 
+                                        </div>
+										<div class="match-info">
+											<span class="tit"><{$item.name}></span>
+											<p>
+                                            <{$item.brief}>
+											</p>
+											<div class="match-btn" data-price="<{$item.price}>" data-p-id="<{$item.product_id}>">
+												<button>添加</button>
+											</div>
+										</div>
+									</div>
+                        <{/foreach}>
+								</div>
+							</div>
+						</div>
+					</div>
+				

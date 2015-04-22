@@ -1,0 +1,32 @@
+
+					<!-- main choice -->
+					<div class="main-choice step2">
+						<div class="choice-item">
+							<div class="item-fill">
+								<div class="hd">
+									<h2>舒适度</h2>
+								</div>
+                                <div class="bd spec-main" data-spec-id="49">
+
+                                    <{foreach from=$data.spec.49.spec_value item=item key=key name=spec}>
+
+                                    <div class="fill-hard <{if $item.defalut==true}> cur <{/if}> fill s-item" data-s-id="<{$item.spec_value_id}>" data-title="<{$item.spec_value_name}>">
+                                        <div class="hard-pic img">
+                                            <i></i>
+                                            <div class="pic">
+                                                <img src="<{$item.spec_image}>" alt="" style="display: block;margin: 40px auto;"></div>
+                                        </div>
+                                        <div class="hard-txt txt">
+                                            <span><{$item.spec_memo}></span>
+                                            <div class="line"></div>
+                                            <p><{$item.spec_memo}></p>
+                                        </div>
+                                    </div>
+                                    <{/foreach}>
+
+                                </div>
+							<!-- item-base -->
+							</div>
+						</div>
+					</div>
+				

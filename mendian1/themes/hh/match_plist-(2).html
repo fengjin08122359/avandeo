@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <{header}>
+        <link rel="stylesheet" href="images/css/all.css"/>
+
+    </head>
+    <body>
+        <{require file="block/header.html"}>
+        <div class="center match-plist">
+            <div class="page">
+                <div class="bread-crumbs">
+                    <{widgets id="bread_crumbs"}>
+                </div>
+                <div class="section">
+                        <{main}>
+                </div>
+            </div>
+        </div>
+        <{require file="block/footer.html"}>
+        <script>
+           window.addEvent('domready',function(){
+              $$(".match-plist .goods-item:nth-child(4n)").addClass("row-last");
+           })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,200 @@
+<div class="style-list show-list">
+    <div class="up backward over"> <i></i> </div>
+    <div class="list-pic ">
+        <ul>
+            <{foreach from=$data.ot_dz_data item=ds}>
+            <li>
+                <a href="<{link app=b2c ctl=site_dingzhi act=index arg0=$ds.dingzhi_id arg1=$ds.dz_type}>">
+                    <img src="<{$ds.image_url}>" alt=""></a>
+            </li>
+            <{/foreach}>
+        </ul>
+    </div>
+    <div class="down forward"> <i></i> </div>
+</div>
+<!-- main choice -->
+<div class="main-choice dz-complete">
+    <div class="fin-pic">
+        <img class="s-pic" src="<{$data.image_url}>" alt=""></div>
+    <div class="choice-item">
+        <div class="item-base item">
+            <div class="hd">
+                <h2>设计风格</h2>
+            </div>
+            <div class="bd">
+                <div class="inner">
+                    <div class="base-a">
+                        <span>主材料&颜色</span>
+                        <ul>
+                            <{foreach from=$data.spec.73.spec_value item=item key=key}>
+                            <li class="c-item " data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>" style="display:none;">
+                            <img src="<{$item.spec_image}>" alt="" > </li>
+                            <{/foreach}>
+                            <{foreach from=$data.spec.70.spec_value item=item key=key}>
+                                <li class="c-item " data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
+                                <img src="<{$item.spec_image}>" alt=""> </li>
+                            <{/foreach}>
+                        </ul>
+                    </div>
+                      <{if $data.spec.8}>
+                    <div class="base-b">
+                        <span>辅材&颜色</span>
+                        <ul>
+                        <{foreach from=$data.spec.72.spec_value item=item key=key}>
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
+                            <img src="<{$item.spec_image}>" alt=""> </li>
+                        <{/foreach}>
+                        <{foreach from=$data.spec.71.spec_value item=item key=key}>
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
+                            <img src="<{$item.spec_image}>" alt=""> </li>
+                        <{/foreach}>
+
+                        </ul>
+                    </div>
+                    <{/if}>
+                    <div class="base-c">
+                        <span>床腿</span>
+                        <ul >
+                        <{foreach from=$data.spec.54.spec_value item=item key=key}>
+                        <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>" style="display:none;">
+                            <img src="<{$item.spec_image}>" alt=""> </li>
+                        <{/foreach}>
+                        </ul>
+                    </div>
+
+                </div>
+                <!--<div class="scroll">-->
+                    <!--<div class="up"></div>-->
+                    <!--<div class="scroll_bar">-->
+                        <!--<div class="bar">-->
+                            <!--<i>&equiv;</i>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="down"></div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="item-detail-part1 item">
+            <div class="hd">
+                <h2>舒适度</h2>
+            </div>
+            <div class="bd">
+                <div class="inner">
+                    <div class="part1-a">
+                        <span>床头高</span>
+                        <ul>
+                        <{foreach from=$data.spec.56.spec_value item=item key=key}>
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
+                            <img src="<{$item.spec_image}>" alt=""> </li>
+                        <{/foreach}>
+                        </ul>
+                    </div>
+
+                     <div class="part1-a">
+                        <span>床高</span>
+                        <ul>
+                        <{foreach from=$data.spec.55.spec_value item=item key=key}>
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
+                            <{$item.spec_memo}> </li>
+                        <{/foreach}>
+                        </ul>
+                    </div>
+                    
+                    <div class="part1-a">
+                        <span>床箱</span>
+                        <ul>
+                        <{foreach from=$data.spec.57.spec_value item=item key=key}>
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
+                            <{$item.spec_memo}> </li>
+                        <{/foreach}>
+                        </ul>
+                    </div>
+                </div>
+                <!--<div class="scroll">-->
+                    <!--<div class="up"></div>-->
+                    <!--<div class="scroll_bar">-->
+                        <!--<div class="bar">-->
+                            <!--<i>&equiv;</i>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="down"></div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="item-detail-part2 item">
+            <div class="hd">
+                <h2>尺寸</h2>
+            </div>
+            <div class="bd spec-text-main">
+                <div class="inner">
+                    <div class="part1-a">
+                        <span>尺寸</span>
+                        <ul>
+                         <{foreach from=$data.spec.60.spec_value item=item key=key}>
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
+                                <span> <{$item.spec_memo}> </span>
+                         </li>
+
+                        <{/foreach}>
+                        <{foreach from=$data.spec.61.spec_value item=item key=key}>
+                            <li class="c-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>"  style="display:none;">
+                                <span> <{$item.spec_memo}> </span>
+                         </li>
+
+                        <{/foreach}>
+
+                        </ul>
+                    </div>
+                </div>
+                <!--<div class="scroll">-->
+                    <!--<div class="up"></div>-->
+                    <!--<div class="scroll_bar">-->
+                        <!--<div class="bar">-->
+                            <!--<i>&equiv;</i>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="down"></div>-->
+                <!--</div>-->
+            </div>
+        </div>
+
+        <div class="item-detail-part3 item">
+								<div class="hd">
+                                    <h2>其它</h2>
+								</div>
+								<div class="bd">
+									<div class="inner">
+										<div class="hide view-more">
+											<a href="">更多</a>
+										</div>
+										<div class="part1-a pj-main">
+											<span>配件</span>
+											<ul>
+                                            <{foreach from=$data.gl_goods item=item key=key name=spec}>
+												<li class="c-item" data-p-id="<{$item.product_id}>"  style="display:none;">
+                                                <form action="<{link app=b2c ctl=site_cart act=add argo=goods}>" method="post">
+                                                    <img src="<{$item.image_url}>" alt="<{$item.name}>">
+                                                  <input type="hidden" name="goods[goods_id]" value="<{$item.goods_id}>"/>
+                                                    <input type="hidden" name="goods[product_id]"  value="<{$item.product_id}>"/>
+                                                    <input type="hidden" name="goods[num]" value="1" />
+                                                </form>
+                                                </li>
+                                            <{/foreach}>
+											</ul>
+										</div>
+									</div>
+									<!--<div class="scroll">-->
+										<!--<div class="up"></div>-->
+										<!--<div class="scroll_bar">-->
+											<!--<div class="bar">-->
+												<!--<i>&equiv;</i>-->
+											<!--</div>-->
+										<!--</div>-->
+										<!--<div class="down"></div>-->
+									<!--</div>-->
+								</div>
+							
+    </div>
+    </div>
+</div>
+

@@ -1,0 +1,15 @@
+<desktop>
+    <permissions>
+        <permission id="sysmanage" display='true'>系统管理</permission>
+    </permissions>
+
+    <workground name="系统管理" id="sysmanage.workground.setting" controller="admin_member" action="index" order='70'>
+        <menugroup name="门店管理">
+            <menu controller='admin_member' action='index' permission='sysmanage' display='true'>门店员工</menu>
+            <menu controller='admin_member_lv' action='index' permission='sysmanage' display='true'>门店等级</menu>
+            <menu controller='admin_sale_analysis' action='index' permission='sysmanage' display='true'>门店销售报表</menu>
+            <menu controller='admin_member' action='addemailtpl' permission='sysmanage' display='true'>门店预警邮件模板添加</menu>
+        </menugroup>
+    </workground>
+
+</desktop>

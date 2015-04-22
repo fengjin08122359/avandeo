@@ -1,0 +1,57 @@
+<table width="100%" cellspacing="0" class="gridlist mc-gift">
+<col class="span-auto"/>
+<col class="span-2"/>
+<col class="span-2"/>
+<col class="span-3"/>
+<col class="span-auto"/>
+<tbody>
+<tr class="havechild">
+    <td style="padding:0" width="43%" >
+      <div class="clearfix horizontal-m">
+        <div class="goods-main"style="width:65%">
+        <div class="goodinfo">
+            <h6>
+            <span class="fontbold gift-title">[优惠特卖]</span>
+            <{$discount_order.name}></h6>
+          </div>
+        <div class="price-wrap" style=" padding:0 1px;font-weight:bold ">
+        </div>
+        </div>
+      </div>
+    </td>
+    <td align="center" class="font-red point" >
+     <{$discount_order.total_amount|cur_odr:$orderdata.currency}>
+    </td>
+    <td align="right" width="20%"><{$discount_order.quantity}>
+
+    </td>
+    <td align="right" class="font-red point"> <{$discount_order.price|cur_odr:$orderdata.currency}></td>
+    <td  align="center" width="14%"><{$discount_order.score}></td>
+</tr>
+</tbody>
+<!-- 礼包信息 End -->
+
+
+<!-- 礼包商品信息 -->
+
+<tr>
+    <td style="padding-left:65px" colspan="5">
+      <{if $discount_order.order_items}>
+      <{foreach from=$discount_order.order_items item=goods}>
+       <div  class="horizontal-m giftpackage-wrap">
+           <{*
+        <div class='product-list-img goodpic' isrc="<{$goods.small_pic|default:$default_image|storager:'s'}>" ghref='<{link app=b2c ctl=site_product act="index" arg0=$goods.goods_id}>' style='width:50px;height:50px;'>
+           <img src='<{$res_url}>/loading.gif'/>
+        </div>
+           *}>
+        <div class="goods-main">
+          <div class="goodinfo">
+          <h6><a target="_blank" href="<{link app=b2c ctl=site_product arg0=$goods.goods_id }>"><{$goods.name}>(每套团购包含单品数量：<{$goods.nums}>)</a></h6>
+          </div>
+        </div>
+       </div>
+      <{/foreach}>
+      <{/if}>
+    </td>
+</tr>
+</table>

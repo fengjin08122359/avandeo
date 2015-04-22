@@ -1,0 +1,9 @@
+Product-Name = ecstore-2.0
+Registered-To = developer
+Max-Concurrent = 2
+Lease-Expiration = 60
+Wait-For-Lease = no
+Expires = Never
+Hardware-Locked = No
+Produced-By = 180410
+Verification-Code = wDVsGS/BZ4IRj4Li9hxmCM8zyzGkAhRO6S/M4aNHOqgIIGExAELEr5tDeA==

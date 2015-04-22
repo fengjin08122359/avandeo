@@ -1,0 +1,50 @@
+<div class="home-cate" id="home_cate_<{$widgets_id}>">
+    <div class="content">
+        <div class="flex">
+        <{foreach from=$data item=cat0 key=key name=goodsrow}>
+        <{if $key<8}>
+        <{if $cat0.title=='微波烘焙厨具'}>
+        <a href="<{$cat0.link}>" class="item" style="background:url(<{$cat0.cat_image_id|storager}>) no-repeat center 12px;">
+        <{else}>
+        <a href="<{$cat0.link}>" class="item" style="background:url(<{$cat0.cat_image_id|storager}>) no-repeat center 18px;">
+        <{/if}>
+            <span style="position:relative;top:10px;"><{$cat0.title}> </span>
+        </a>
+        <{/if}>
+        <{if $key%4=='3' && $key!='7'}>
+        </div>
+        
+        <div class="flex">
+<{/if}>
+        <{/foreach}>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+(function(){
+    var cate = $('#home_cate_<{$widgets_id}> .cate');
+    $.each(cate,function(i){
+        var _this = $(this),
+            span = _this.find('span'),
+            a = _this.find('a'),
+            sl = a.size(),
+            act = 0;
+        span.css({'width':a.length*51,'-webkit-transform':'translate3d(0,0,0)'});
+        _this.swipeLeft(function(e){
+            if(act < sl - 5){
+                act = act + 1;
+                span.animate({
+                    'translate3d':0-(act*51)+'px,0,0'
+                });
+            }
+        }).swipeRight(function(e){
+            if(act != 0){
+                act = act - 1;
+                span.animate({
+                    'translate3d':0-(act*51)+'px,0,0'
+                });
+            }
+        });
+    });
+})();
+</script>

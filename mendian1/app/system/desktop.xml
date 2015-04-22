@@ -1,0 +1,6 @@
+<desktop>
+  <permissions>
+    <permission id="system" display='true' parent='0' workground='system'>系统设置</permission>
+  </permissions>
+
+</desktop>

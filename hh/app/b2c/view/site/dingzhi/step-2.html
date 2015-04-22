@@ -1,0 +1,163 @@
+
+					<!-- main choice -->
+					<div class="main-choice step2">
+						<div class="choice-item">
+							<div class="item-fill">
+								<div class="hd">
+									<h2>填充物选择</h2>
+								</div>
+								<div class="bd spec-main" data-spec-id="10">
+
+                        <{foreach from=$data.spec.10.spec_value item=item key=key name=spec}>
+
+                        <div class="fill-hard <{if $item.defalut==true}> cur <{/if}> fill s-item" data-s-id="<{$item.spec_value_id}>" data-title="<{$item.spec_value_name}>">
+										<div class="hard-pic img">
+											<i></i>
+											<div class="pic">
+												<img src="<{$item.spec_image}>" alt="" style="display: block;margin: 40px auto;"></div>
+										</div>
+										<div class="hard-txt txt">
+                                            <span><<{$item.spec_memo}></span>
+											<div class="line"></div>
+											<p><{$item.spec_memo}></p>
+										</div>
+									</div>
+                        <{/foreach}>
+
+									<!--<div class="fill-mid fill">-->
+										<!--<div class="mid-pic img">-->
+											<!--<i></i>-->
+											<!--<div class="pic">-->
+												<!--<img src="" alt=""></div>-->
+										<!--</div>-->
+										<!--<div class="mid-txt txt">-->
+											<!--<span>硬-弹簧垫</span>-->
+											<!--<div class="line"></div>-->
+											<!--<p>-->
+												<!--Wer nicht nur auf dem Sofa liegen, sondern auch länger Sitzen möchte, für den ist die mittelfeste Polsterung optimal. Ein geringeres Einsinken als bei der weichen Polsterung wird durch Verwendung eines etwas festeren Kaltschaums bewirkt. Wie bei all unseren Fül-->
+											<!--</p>-->
+										<!--</div>-->
+									<!--</div>-->
+									<!--<div class="fill-soft fill">-->
+										<!--<div class="soft-pic img">-->
+											<!--<i></i>-->
+											<!--<div class="pic">-->
+												<!--<img src="" alt=""></div>-->
+										<!--</div>-->
+										<!--<div class="soft-txt txt">-->
+											<!--<span>硬-弹簧垫</span>-->
+											<!--<div class="line"></div>-->
+											<!--<p>-->
+												<!--Wer nicht nur auf dem Sofa liegen, sondern auch länger Sitzen möchte, für den ist die mittelfeste Polsterung optimal. Ein geringeres Einsinken als bei der weichen Polsterung wird durch Verwendung eines etwas festeren Kaltschaums bewirkt. Wie bei all unseren Fül-->
+											<!--</p>-->
+										<!--</div>-->
+									<!--</div>-->
+								</div>
+							</div>
+							<!-- item-base -->
+							<div class="item-base item">
+								<div class="hd">
+									<h2>靠背高度</h2>
+								</div>
+								<div class="bd">
+									<div class="inner">
+										<div class="pic">
+											<!--<img src="" alt=""></div>-->
+                                            <{img src="images/b1.png" app="b2c"}>
+                                        </div>
+                                        <div class="size">
+                                            <ul class="spec-main" data-spec-id="11">
+                                                <{foreach from=$data.spec.11.spec_value item=item key=key}>
+                                                <li class="s-item <{if $item.defalut==true}> cur <{/if}>" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                                    <div class="p">
+                                                        <img src="<{$item.spec_image}>" alt=""> 
+                                                    </div>
+                                                    <!--<span class="n">扶手尺寸</span>-->
+                                                    <span class="s"> <{$item.spec_memo}></span>
+                                                </li>
+                                                <{/foreach}>
+                                            </ul>
+                                        </div>
+									</div>
+									<!--<div class="scroll">-->
+										<!--<div class="up"></div>-->
+										<!--<div class="scroll_bar">-->
+											<!--<div class="bar">-->
+												<!--<i>&equiv;</i>-->
+											<!--</div>-->
+										<!--</div>-->
+										<!--<div class="down"></div>-->
+									<!--</div>-->
+								</div>
+							</div>
+							<div class="item-detail-part1 item">
+								<div class="hd">
+									<h2>座深</h2>
+								</div>
+								<div class="bd">
+									<div class="inner">
+										<div class="pic">
+                                        <{img src="images/b2.png" app="b2c"}>
+                                            </div>
+										<div class="size clearfix">
+                                            <ul class="spec-main" data-spec-id="13">
+                                                <{foreach from=$data.spec.13.spec_value item=item key=key}>
+                                                <li class="s-item <{if $item.defalut==true}> cur <{/if}>"  data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                                    <div class="p">
+                                                        <img src="<{$item.spec_image}>" alt=""> 
+                                                    </div>
+                                                    <!--<span class="n">扶手尺寸</span>-->
+                                                    <span class="s"> <{$item.spec_memo}></span>
+                                                </li>
+                                                <{/foreach}>
+                                            </ul>
+										</div>
+									</div>
+									<!--<div class="scroll">-->
+										<!--<div class="up"></div>-->
+										<!--<div class="scroll_bar">-->
+											<!--<div class="bar">-->
+												<!--<i>&equiv;</i>-->
+											<!--</div>-->
+										<!--</div>-->
+										<!--<div class="down"></div>-->
+									<!--</div>-->
+								</div>
+							</div>
+							<div class="item-detail-part2 item">
+								<div class="hd">
+									<h2>座高</h2>
+								</div>
+								<div class="bd">
+									<div class="inner">
+										<div class="pic">
+                                            <{img src="images/b3.png" app="b2c"}>
+                                            </div>
+										<div class="size">
+                                            <ul class="spec-main" data-spec-id="12">
+                                                <{foreach from=$data.spec.12.spec_value item=item key=key}>
+                                                <li class="s-item <{if $item.defalut==true}> cur <{/if}>" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                                    <div class="p">
+                                                        <img src="<{$item.spec_image}>" alt=""> 
+                                                    </div>
+                                                    <!--<span class="n">扶手尺寸</span>-->
+                                                    <span class="s"> <{$item.spec_memo}></span>
+                                                </li>
+                                                <{/foreach}>
+                                            </ul>
+										</div>
+									</div>
+									<!--<div class="scroll">-->
+										<!--<div class="up"></div>-->
+										<!--<div class="scroll_bar">-->
+											<!--<div class="bar">-->
+												<!--<i>&equiv;</i>-->
+											<!--</div>-->
+										<!--</div>-->
+										<!--<div class="down"></div>-->
+									<!--</div>-->
+								</div>
+							</div>
+						</div>
+					</div>
+				

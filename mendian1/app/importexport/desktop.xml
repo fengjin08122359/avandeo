@@ -1,0 +1,7 @@
+<desktop>
+  <permissions>
+    <permission id="importexport" display='true' parent='0' workground='system'>队列导入导出</permission>
+  </permissions>
+   
+</desktop>
+

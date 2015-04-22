@@ -1,0 +1,8 @@
+<{foreach from=$space_type.props key=key item=aProp}>
+<tr class="prop">
+    <th><{$aProp.name}>：</th>
+    <td><{assign var="p_col" value="p_{$key}"}>
+        <{input name="space[props][p_{$key}][value]" type="select" nulloption="1" options=$aProp.options value="{$space.props[$p_col].value}" }>
+        </td>
+</tr>
+<{/foreach}>

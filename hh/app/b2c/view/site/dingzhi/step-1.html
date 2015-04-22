@@ -1,0 +1,160 @@
+<div class="style-list">
+    <div class="up"> <i></i>
+    </div>
+    <div class="list-pic">
+        <ul>
+            <!--li class="cur">
+                <a href="">
+                    <img src="" alt=""></a>
+            </li>
+            <li>
+                <a href="">
+                    <img src="" alt=""></a>
+            </li>
+            <li>
+                <a href="">
+                    <img src="" alt=""></a>
+            </li-->
+	<{foreach from=$data.ot_dz_data item=ds}>
+
+
+
+	<li>
+	<a href="<{link app=b2c ctl=site_dingzhi act=index arg0=$ds.dingzhi_id}>">
+                    <img src="<{$ds.image_url}>" alt=""></a>
+            	</li>
+
+	<{/foreach}>
+        </ul>
+    </div>
+    <div class="down"> <i></i>
+    </div>
+</div>
+<!-- main choice -->
+<div class="main-choice">
+    <div class="fin-pic">
+        <img class="s-pic" src="<{$data.image_url}>" alt=""></div>
+    <div class="choice-item">
+        <div class="item-base item">
+            <div class="hd">
+                <h2>材料&颜色</h2>
+            </div>
+            <div class="bd">
+                <div class="inner">
+                    <div class="base-a spec-main s-spec-item" data-spec-id="5">
+                        <span>皮/布</span>
+                        <ul >
+                            <{foreach from=$data.spec.5.spec_value item=item key=key}>
+                            <{if $item.defalut==true}>
+                            <li class="cur s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                <{else}>
+                                <li class="s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                    <{/if}>
+                                    <img src="<{$item.spec_image}>" alt="" > </li>
+                            <{/foreach}>
+                        </ul>
+                    </div>
+
+                    <div class="base-b spec-main s-spec-item" data-spec-id="6">
+                        <span>材料款式</span>
+                        <ul>
+                        <{foreach from=$data.spec.6.spec_value item=item key=key}>
+                        <li class="<{if $item.defalut==true}> cur <{/if}> s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <img src="<{$item.spec_image}>" alt=""> </li>
+                        <{/foreach}>
+                        </ul>
+                    </div>
+
+                    <div class="base-c spec-main" data-spec-id="1">
+                        <span>颜色列表</span>
+                        <ul>
+                        <{foreach from=$data.spec.1.spec_value item=item key=key}>
+                            <li class="<{if $item.defalut==true}> cur <{/if}> s-item" data-title="<{$item.spec_memo}>" data-s-id="<{$item.spec_value_id}>">
+                            <!--<i style="background-color:<{$item.spec_value_name}>"></i>-->
+                                <img src="<{$item.spec_image}>" alt="" > </li>
+                            </li>
+                        <{/foreach}>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scroll hide">
+                    <div class="up"></div>
+                    <div class="scroll_bar">
+                        <div class="bar">
+                            <i>&equiv;</i>
+                        </div>
+                    </div>
+                    <div class="down"></div>
+                </div>
+            </div>
+        </div>
+        <div class="item-detail-part1 item">
+            <div class="hd">
+                <h2>扶手位</h2>
+            </div>
+            <div class="bd">
+                <div class="inner">
+                    <div class="part1-a">
+                        <span>扶手样式</span>
+                        <ul class="spec-main" data-spec-id="8">
+                        <{foreach from=$data.spec.8.spec_value item=item key=key}>
+                            <li class="<{if $item.defalut==true}> cur <{/if}> s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <img src="<{$item.spec_image}>" alt=""> </li>
+                        <{/foreach}>
+                        </ul>
+                    </div>
+                    <div class="part1-a">
+                        <span>转角方向</span>
+                        <ul class="spec-main" data-spec-id="17">
+                        <{foreach from=$data.spec.17.spec_value item=item key=key}>
+                        <li class="<{if $item.defalut==true}> cur <{/if}> s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <img src="<{$item.spec_image}>" alt=""> </li>
+                        <{/foreach}>
+                        </ul>
+                    </div>
+
+
+
+                </div>
+                <!--<div class="scroll">-->
+                    <!--<div class="up"></div>-->
+                    <!--<div class="scroll_bar">-->
+                        <!--<div class="bar">-->
+                            <!--<i>&equiv;</i>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="down"></div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="item-detail-part2 item">
+            <div class="hd">
+                <h2>沙发腿</h2>
+            </div>
+            <div class="bd">
+                <div class="inner">
+                    <div class="part1-a">
+                        <span>沙发腿样式</span>
+
+                        <ul class="spec-main" data-spec-id="9">
+                        <{foreach from=$data.spec.9.spec_value item=item key=key}>
+                            <li class="<{if $item.defalut==true}> cur <{/if}> s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <img src="<{$item.spec_image}>" alt=""> </li>
+                        <{/foreach}>
+                        </ul>
+                    </div>
+                </div>
+                <!--<div class="scroll">-->
+                    <!--<div class="up"></div>-->
+                    <!--<div class="scroll_bar">-->
+                        <!--<div class="bar">-->
+                            <!--<i>&equiv;</i>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="down"></div>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</div>
+

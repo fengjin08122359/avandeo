@@ -1,0 +1,12 @@
+<desktop>
+    <permissions>
+        <permission id="message" display='true'>信息公告</permission>
+    </permissions>
+
+    <workground name="信息公告" id="message.workground.setting" controller="admin_stock" action="index" order='70'>
+        <menugroup name="信息公告管理">
+        	<menu controller='admin_index' action='index' permission='message' display='true'>信息列表</menu>
+        </menugroup>
+    </workground>
+
+</desktop>

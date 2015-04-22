@@ -1,0 +1,56 @@
+<!-- 会员中心主内容区 -->
+<div class="page-article">
+  <!-- 我的订单 -->
+  <div id="member_orders" class="member-orders member-mod">
+    <div class="member-tabs">
+      <a href="<{link app=b2c ctl='site_member' act='orders'}>" <{if !$archive}> class ='active'<{/if}> ><em>我的订单</em></a>
+      <{if $env.conf.archive.archive.status =='true'}>
+      <a href="<{link app=b2c ctl='site_member' act='archive_orders'}>" <{if $archive}> class ='active'<{/if}> ><em>三个月前</em></a>
+      <{/if}>
+    </div>
+    <{include file='site/member/order_item.html'}>
+  </div>
+  <{pagers data=$pager}>
+</div>
+
+<{if $orders}>
+<script>
+// Module = new Module('member', ['orders']);
+$('member_orders').addEvents({
+    'click:relay(.action-view-goods)':function (e) {
+        var parent = this.getParent('tr');
+        var actions = parent.getElement('.actions');
+        var next = parent.getNext('tr');
+        if(next.hasClass('hide')) {
+            actions.set('rowspan', 2);
+            next.removeClass('hide');
+        }
+        else {
+            actions.set('rowspan', 1);
+            next.addClass('hide');
+        }
+    }
+});
+
+window.addEvent('domready', function(){
+    var tipsHandle = $$('[data-tips]');
+    if(tipsHandle.length) {
+        var tips = new Tips({
+            type: 'tooltip',
+            'class': 'xtooltip',
+            arrow: false,
+            offset:{y:-1},
+            position: 'bl'
+        });
+        tipsHandle.addEvents({
+            'mouseenter': function(){
+                tips.show(null, this);
+            },
+            'mouseleave': function(){
+                tips.hide();
+            }
+        });
+    }
+});
+</script>
+<{/if}>

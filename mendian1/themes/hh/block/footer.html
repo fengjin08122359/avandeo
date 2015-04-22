@@ -1,0 +1,99 @@
+<!--<ul class="nav-list clearfix">
+-->
+<!-- footer start -->
+<div id="footer">
+	<a href="#top" class="back_to_top" id="back_to_top">
+	</a>
+	<!-- icons start -->
+	<div class="center">
+		<div class="icons">
+			<ul>
+				<li class="o2o"> <i></i>
+					<span>O2O双平台</span>
+					<span class="sm">全新智能体验</span>
+				</li>
+				<li class="global"> <i></i>
+					<span>全球化采购</span>
+					<span class="sm">高质评价经验</span>
+				</li>
+				<li class="quality">
+					<i></i>
+					<span>100%</span>
+					<span class="sm">德国品质</span>
+				</li>
+				<li class="check">
+					<i></i>
+					<span>双重质检</span>
+					<span class="sm">品质保证</span>
+				</li>
+				<li class="time">
+					<i></i>
+					<span>日日顺物流</span>
+					<span class="sm">最快5天到家</span>
+				</li>
+				<li class="return">
+					<i></i>
+					<span>7天</span>
+					<span class="sm">无理由退换货</span>
+				</li>
+				<li class="change">
+					<i></i>
+					<span>个性DIY</span>
+					<span class="sm">全品类定制</span>
+				</li>
+				<!-- <li class="evaluate">
+					<i></i>
+					<span>万千口碑</span>
+					<span class="sm">万千家庭的选择</span>
+				</li> -->
+			</ul>
+		</div>
+		<!-- icons end -->
+		<!-- footer-nav start -->
+		<div class="footer-nav">
+			<div class="about ft-nav">
+				<{widgets id="footer_info1"}>
+			</div>
+			<div class="brand ft-nav">
+				<{widgets id="footer_info2"}>
+			</div>
+			<div class="help ft-nav">
+				<{widgets id="footer_info3"}>
+			</div>
+			<div class="ft-logo">
+				<span>24小时客服热线</span>
+				<span> <{widgets id="tel"}> </span>
+				<div class="sm-logo">
+
+                    <{widgets id="code"}>
+
+					<span>扫一扫，有惊喜</span>
+				</div>
+			</div>
+		</div>
+	</div>		
+</div>
+<!-- float-link -->
+<ul class="side-link">
+    <li class="deng"><{widgets id="deng"}></li>
+    <li class="gou"><{widgets id="gou"}></li>
+    <li class="zhi"><{widgets id="zhi"}></li>
+</ul>
+<{widgets id="serv"}>
+ <script>
+    var lk = $$(".side-link");
+    var toph = ($("header").getHeight())+($("nav").getHeight())+5+"px";
+    window.addEvent('domready',function(){
+        var sw = $(window).getWidth();
+        var offwidth = (sw - 1200)/2;
+        var pst = (1200 + offwidth + 5)+"px";
+        lk.setStyles({'left':pst,'top':toph})
+    })
+    window.addEvent('scroll',function(){
+    	var offtop = $(document).getScrollTop();
+    	(offtop>157)?lk.tween('top',2):lk.tween('top',toph);
+    })
+</script>	
+ <{footer}>
+<!-- footer end -->
+<!-- <script type="text/javascript" src="http://kefu6.kuaishang.cn/bs/ks.j?cI=509943&fI=33187" charset="utf-8"></script> -->

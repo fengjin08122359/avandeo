@@ -1,0 +1,110 @@
+<?php
+/**
+ * ShopEx licence
+ *
+ * @copyright  Copyright (c) 2005-2010 ShopEx Technologies Inc. (http://www.shopex.cn)
+ * @license  http://ecos.shopex.cn/ ShopEx License
+ */
+
+$db['members'] = array(
+	'columns'    => array(
+		'member_id' => array(
+			'type'     => 'number',
+			'extra'    => 'auto_increment',
+			'pkey'     => true,
+			'label'    => app::get('b2c')->_('设计师ID'),
+		),
+		'name'             => array(
+			'type'            => 'varchar(50)',
+			'label'           => app::get('b2c')->_('姓名'),
+			'width'           => 75,
+			'searchtype'      => 'has',
+			'editable'        => true,
+			'filtertype'      => 'normal',
+			'filterdefault'   => 'true',
+			'in_list'         => true,
+			'is_title'        => true,
+			'default_in_list' => true,
+		),
+		'certification'    => array(
+			'type'            => 'varchar(50)',
+			'label'           => app::get('b2c')->_('认证资质'),
+			'width'           => 75,
+			'searchtype'      => 'has',
+			'editable'        => true,
+			'filtertype'      => 'normal',
+			'filterdefault'   => 'true',
+			'in_list'         => true,
+			'default_in_list' => true,
+		),
+		'position'         => array(
+			'type'            => 'varchar(50)',
+			'label'           => app::get('b2c')->_('职位'),
+			'width'           => 75,
+			'searchtype'      => 'has',
+			'editable'        => true,
+			'filtertype'      => 'normal',
+			'filterdefault'   => 'true',
+			'in_list'         => true,
+			'default_in_list' => true,
+		),
+		'contact'          => array(
+			'type'            => 'varchar(50)',
+			'label'           => app::get('b2c')->_('联系方式'),
+			'width'           => 75,
+			'searchtype'      => 'has',
+			'editable'        => true,
+			'filtertype'      => 'normal',
+			'filterdefault'   => 'true',
+			'in_list'         => true,
+			'default_in_list' => false,
+		),
+		'online_contact'=>array(
+			'type'=>'varchar(100)',
+			'label'=>'在线联系',
+			'width'           => 75,
+			'searchtype'      => 'has',
+			'editable'        => true,
+			'filtertype'      => 'normal',
+			'filterdefault'   => 'true',
+			'in_list'         => true,
+			'default_in_list' => false,
+		),
+		'birth_of_place'   => array(
+			'type'            => 'varchar(50)',
+			'label'           => app::get('b2c')->_('出生地'),
+			'width'           => 75,
+			'searchtype'      => 'has',
+			'editable'        => true,
+			'filtertype'      => 'normal',
+			'filterdefault'   => 'true',
+			'in_list'         => true,
+			'default_in_list' => false,
+		),
+		'adept_style'      => array(
+			'type'            => 'varchar(50)',
+			'label'           => app::get('b2c')->_('擅长风格'),
+			'width'           => 75,
+			'searchtype'      => 'has',
+			'editable'        => true,
+			'filtertype'      => 'normal',
+			'filterdefault'   => 'true',
+			'in_list'         => true,
+			'default_in_list' => false,
+		),
+		'image_default_id' => array(
+			'type'            => 'varchar(32)',
+			'label'           => app::get('b2c')->_('默认图片'),
+			'width'           => 75,
+			'hidden'          => true,
+			'editable'        => false,
+			'in_list'         => true,
+		),
+		'description' => array(
+			'type'       => 'text',
+			'label'      => app::get('b2c')->_('设计师简介'),
+			'required'   => false,
+		),
+	),
+	'comment' => app::get('b2c')->_('设计师表'),
+);

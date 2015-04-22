@@ -1,0 +1,14 @@
+<div class="blue-title">优惠订阅</div>
+<div class="blue-content">
+    <div class="subscribe-box">
+        <form name="emailsubs" method='post' action="<{link app=emailsubs ctl=site_emailaddr act=addNew}>" >
+            <input type="text" class="email-box" name="email" vtype="email&&required" onfocus="if(this.value=='请输入email地址'){this.value=''}" onblur="if(this.value==''){this.value='请输入email地址'}" value="请输入email地址"/>
+            <button type="submit" class="email-btn">订阅</button>
+        </form>
+    </div>
+    <div class="news">
+        <ul class="news-list">
+            <{$data.__html}>
+        </ul>
+    </div>
+</div>

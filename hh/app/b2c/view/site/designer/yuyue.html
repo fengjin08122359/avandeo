@@ -1,0 +1,44 @@
+<div id="appoint_pop">
+                            <div class="close">x</div>
+                            <form action="<{link app=b2c ctl=site_designer act=reserve}>" id="appoint"  method="post" class="form">
+                                <fieldset>
+                                    <legend>设计师预约</legend>
+                                    <ul>
+                                        <li><label for="name">预约人姓名 :</label><input type="text" name="name" class="x-inpt" vtype="required"></li>
+                                        <li><label for="tel">联系电话 :</label><input type="text" name="tel" class="x-inpt" vtype="required&&phone"></li>
+                                        <li><label for="email">常用邮箱 :</label><input type="text" name="email" class="x-inpt" vtype="required&&email"></li>
+                                        <li>
+                                            <label for="deigner">所选设计师 :</label>
+                                            <{html_options name='members[member_id]' options=$designers selected=$detail.member_id }>
+                                        </li>
+                                        <li>
+                                            <label for="housType">房屋类型 :</label>
+                                            <{assign var="options" value=array('0'=>'一室一厅','1'=>'两室一厅','2'=>'三室两厅')}><{html_options name='huxing' options=$options  }>
+                                        </li>
+                                        <li>
+                                            <label for="housType">房屋面积 :</label>
+                                            <{assign var="options" value=array('0'=>'50-100','1'=>'100-150','2'=>'150-300')}>
+                                            <{html_options name='area' options=$options }>
+                                            (平米)
+                                        </li>
+                                        <li>
+                                            <label for="other">其他需求 :</label>
+                                            <{input type="textarea" name="other_demand" cols=70 rows=8}>
+                                        </li>
+                                        <li class="form-item form-item-last">
+                                            <label class="form-label"></label>
+                                            <span class="form-act">
+                                              <{button type="submit" class="btn-caution" label=$___b2c="提交"|t:'b2c' rel="_request"}>
+                                            </span>
+                                          </li>
+<!--                                         <li class="form-item form-item-last">
+                                        <label class="form-label"></label>
+                                                                                   <{button type="submit" class="btn-caution" label=$___b2c="提交"|t:'b2c' rel="_request"}>
+
+                                         <input type="reset" value="重置信息" class="res-btn">
+                                       </li> -->
+
+                                    </ul>
+                                </fieldset>
+                            </form>
+                        </div>

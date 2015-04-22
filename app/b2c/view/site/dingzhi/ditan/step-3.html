@@ -1,0 +1,79 @@
+<!-- main choice -->
+<div class="main-choice">
+    <div class="choice-item">
+        <div class="item-angle">
+            <div class="hd">
+                <!--<h2>俯视角度的轮廓图</h2>-->
+            </div>
+            <div class="bd">
+                <div class="angle-view">
+                    <div class="paper" style="background:none;">
+                        <div class="title"></div>
+                        <div class="elementwrapper" style="width: 600px; overflow:hidden;">
+                          <div class="fin-pic">
+                              <img class="s-pic" src="<{$data.image_url}>" alt="" style="width: 600px; height: 300px;">
+                         </div>
+                        </div>
+                </div>
+                <div class="item-base item" style="width: 48%;margin-left:10px;">
+                    <div class="hd" style="width: auto;">
+                        <h2>总长</h2>
+                    </div>
+                    <div class="bd" style="padding:20px;">
+                        <div class="inner">
+
+                            <div class="base-a spec-main " data-spec-id="76">
+                                <!--<span style="float:left;margin-right:30px;margin-left:15px;">抱枕尺寸</span>-->
+                                <ul style="float:left;">
+                                    <{foreach from=$data.spec.76.spec_value item=item key=key}>
+                                    <{if $item.defalut==true}>
+                                    <li class="cur s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                        <{else}>
+                                        <li class="s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                            <{/if}>
+                                            <!--<img src="<{$item.spec_image}>" alt="" > -->
+                                            <span class="s"> <{$item.spec_memo}></span>
+                                        </li>
+                                        <{/foreach}>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="item-base item" style="width: 48%;margin-right: 0px;">
+                    <div class="hd" style="width: auto;">
+                        <h2>总宽</h2>
+
+                    </div>
+                    <div class="bd" style="padding:20px;">
+                        <div class="inner">
+
+                            <div class="base-a spec-main" data-spec-id="14">
+                                <!--<span style="float:left;margin-right:30px;margin-left:15px;">抱枕尺寸</span>-->
+                                <ul style="float:left;">
+                                    <{foreach from=$data.spec.14.spec_value item=item key=key}>
+                                    <{if $item.defalut==true}>
+                                    <li class="cur s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                        <{else}>
+                                        <li class="s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                            <{/if}>
+                                            <!--<img src="<{$item.spec_image}>" alt="" > -->
+                                            <span class="s"> <{$item.spec_memo}></span>
+                                        </li>
+                                        <{/foreach}>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!--<div class="view-txt"></div>-->
+                    <!--<div class="angle-info"></div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

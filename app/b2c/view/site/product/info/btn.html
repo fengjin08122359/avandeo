@@ -1,0 +1,15 @@
+<li class="product-buy-action">
+  <{if $page_product_basic.goods_marketable=='true' && $page_product_basic.product_marketable == 'true'}>
+  <{foreach from=$btn_page_list item=item}>
+    <{include file=$item.file app=$item.app}>
+  <{/foreach}>
+  <{else}>
+  <{t}>此商品已下架，看看其他商品吧<{/t}>
+  <{/if}>
+  <{if $login=='nologin'}>
+  <a href="<{link app=b2c ctl=site_passport act=login}>" class="btn btn-addfav"><i class="icon">&#x46;</i><{t}>收藏<{/t}></a>
+  <{else}>
+    <a href="javascript:void(0);" class="btn btn-addfav" rel="_favbtn_" data-gid="<{$page_product_basic.goods_id}>" <{if $page_product_basic.is_fav}> style="display:none;"<{/if}>><i class="icon">&#x46;</i><{t}>收藏<{/t}></a>
+    <a href="javascript:void(0);" class="btn btn-faved" rev="_favbtn_" <{if !$page_product_basic.is_fav}> style="display:none;"<{/if}>><em>已收藏</em></a>
+  <{/if}>
+</li>

@@ -1,0 +1,129 @@
+<div class="style-list">
+    <div class="up"> <i></i>
+    </div>
+    <div class="list-pic">
+        <ul>
+            <!--li class="cur">
+                <a href="">
+                    <img src="" alt=""></a>
+            </li>
+            <li>
+                <a href="">
+                    <img src="" alt=""></a>
+            </li>
+            <li>
+                <a href="">
+                    <img src="" alt=""></a>
+            </li-->
+	<{foreach from=$data.ot_dz_data item=ds}>
+
+
+
+	<li>
+	<a href="<{link app=b2c ctl=site_dingzhi act=index arg0=$ds.dingzhi_id arg1=$ds.dz_type}>">
+                    <img src="<{$ds.image_url}>" alt=""></a>
+            	</li>
+
+	<{/foreach}>
+        </ul>
+    </div>
+    <div class="down"> <i></i>
+    </div>
+</div>
+<!-- main choice -->
+<div class="main-choice">
+    <div class="fin-pic">
+        <img class="s-pic" src="<{$data.image_url}>" alt=""></div>
+    <div class="choice-item">
+        <div class="item-base item">
+            <div class="hd">
+                <h2>材料&颜色</h2>
+            </div>
+            <div class="bd">
+                <div class="inner">
+                    <div class="base-a spec-main" data-spec-id="38">
+                        <span>枕套面料</span>
+                        <ul >
+                            <{foreach from=$data.spec.38.spec_value item=item key=key}>
+                            <{if $item.defalut==true}>
+                            <li class="cur s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                <{else}>
+                                <li class="s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                                    <{/if}>
+                                    <img src="<{$item.spec_image}>" alt="" > </li>
+                            <{/foreach}>
+                        </ul>
+                    </div>
+
+                    <div class="base-b spec-main" data-spec-id="68">
+                        <span>枕套颜色</span>
+                        <ul>
+                        <{foreach from=$data.spec.68.spec_value item=item key=key}>
+                        <li class="<{if $item.defalut==true}> cur <{/if}> s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <img src="<{$item.spec_image}>" alt=""> </li>
+                        <{/foreach}>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="scroll hide">
+                    <div class="up"></div>
+                    <div class="scroll_bar">
+                        <div class="bar">
+                            <i>&equiv;</i>
+                        </div>
+                    </div>
+                    <div class="down"></div>
+                </div>
+            </div>
+        </div>
+        <div class="item-detail-part1 item">
+            <div class="hd">
+                <h2>形状款式</h2>
+            </div>
+            <div class="bd">
+                <div class="inner">
+                    <div class="part1-a">
+                        <span>形状</span>
+                        <ul class="spec-main" data-spec-id="40">
+                        <{foreach from=$data.spec.40.spec_value item=item key=key}>
+                            <li class="<{if $item.defalut==true}> cur <{/if}> s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <img src="<{$item.spec_image}>" alt=""> </li>
+                        <{/foreach}>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item-detail-part2 item">
+            <div class="hd">
+                <h2>图案款式</h2>
+            </div>
+            <div class="bd">
+                <div class="inner">
+                    <div class="part1-a">
+                        <span>图案</span>
+
+                        <ul class="spec-main" data-spec-id="41">
+                        <{foreach from=$data.spec.41.spec_value item=item key=key}>
+                            <li class="<{if $item.defalut==true}> cur <{/if}> s-item" data-title="<{$item.spec_value_name}>" data-s-id="<{$item.spec_value_id}>">
+                            <img src="<{$item.spec_image}>" alt=""> </li>
+                        <{/foreach}>
+                        </ul>
+                    </div>
+
+                </div>
+                <!--<div class="scroll">-->
+                    <!--<div class="up"></div>-->
+                    <!--<div class="scroll_bar">-->
+                        <!--<div class="bar">-->
+                            <!--<i>&equiv;</i>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="down"></div>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</div>
+

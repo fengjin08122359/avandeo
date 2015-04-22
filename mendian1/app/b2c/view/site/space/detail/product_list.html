@@ -1,0 +1,22 @@
+<div class="mod space-mod">
+    <div class="mod-title">
+        空间家具单品图片
+    </div>
+    <div class="bd">
+        <ul class="product">
+            <{foreach from=$page_product_basic.space_item item=pro}>
+            <li>
+                <div class="prd-pic">
+                    <img onload="$(this).zoomImg(200,200);" src="<{$pro.image_default_id|storager:'s'}>" alt="<{$pro.name}>">
+                    <div class="prd-n">
+                        <a class="name" href="<{link app=b2c ctl=site_product arg0=$pro.product_id}>"><{$pro.name}></a>
+                    </div>
+                </div>
+                <div class="info">
+                    <span class="pri">销售价：<i class="price"><{$pro.price|cur_odr}>元</i></span>
+                </div>
+            </li>
+            <{/foreach}>
+        </ul>
+    </div>
+</div>

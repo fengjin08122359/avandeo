@@ -1,0 +1,84 @@
+<{if $aCart.object.discount}>
+<{foreach from=$aCart.object.discount item=goods key=_obj_key}>
+ <tbody class="cart-item">
+    <!-- 主商品 -->
+    <tr class="cart-product">
+      <td>
+        <input type="hidden" name="obj_type" value="discount">
+        <input type="hidden" name="goods_ident" value="<{$goods.obj_ident}>">
+        <input type="hidden" name="goods_id" value="<{$goods.discount_id}>">
+        <input type="hidden" name="min" value="1"/>
+        <input type="hidden" name="max" value="<{$goods.store.real}>"/>
+        <input type="hidden" name="stock" value="<{$goods.store.store}>"/>
+        <div class="p-pic">
+          <a href="<{link app=b2c ctl=site_discount act=plist arg0=$goods.discount_id}>" target="_blank"><img src="<{$goods.image_default_id|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>" alt="<{$goods.name}>"></a>
+      </td>
+      <td class="p-info">
+        <div class="p-title"><a target="_blank" href="<{link app=b2c ctl=site_discount act=plist arg0=$goods.discount_id}>"><{$goods.discount_name}></a></div>
+        <!-- 商品促销 -->
+        <div class="p-promotion">
+          <ul>
+            <{foreach from=$aCart.promotion.goods.[$goods.obj_ident] item=goods_promotion}>
+            <{if $goods_promotion.cart_display}>
+            <li>
+              <b>[<{$goods_promotion.desc_tag}>]</b><{$goods_promotion.name}>
+            </li>
+            <{/if}>
+            <{/foreach}>
+          </ul>
+        </div>
+      </td>
+      <td class="p-price"><{$goods.price|cur_odr}></td>
+      <td>
+        <div class="p-quantity">
+          <a  href="javascript:void(0);" class="btn-decrease">-</a>
+          <input type="text" name="modify_quantity[<{$goods.obj_ident}>][quantity]" value="<{$goods.quantity}>">
+          <a href="javascript:void(0);" class="btn-increase">+</a>
+        </div>
+        <{if $goods.store.store == 0}><span class="warn-message"><{t}>库存不足<{/t}></span>
+        <{elseif $goods.store.store <= 5}><span class="warn-message"><{t}>余量有限<{/t}></span><{/if}>
+      </td>
+      <td class="p-discount"><{$goods.discount_amount_prefilter|cur_odr}></td>
+      <td class="p-integral">
+          <{if ($goods.subtotal_gain_score - $goods.subtotal_consume_score)}>
+          <{($goods.subtotal_gain_score - $goods.subtotal_consume_score)}>
+          <{else}>
+          -
+          <{/if}>
+      </td>
+      <td class="p-subtotal"><{$goods.subtotal_prefilter_after|cur_odr}></td>
+      <td class="p-action">
+        <a href="javascript:void(0);" class="btn-delete">移除</a>
+      </td>
+    </tr>
+    <!-- 团购item -->
+    <{foreach from=$goods.obj_items.products item=pitem key=key name=product}>
+    <tr class="p-adjunct<{if $smarty.foreach.product.last}> last<{/if}>">
+        <td>
+            <div class="p-adjunct-icon"><{t}>优惠特卖<{/t}><br><{t}>商品<{/t}></div>
+        </td>
+        <td class="p-info">
+            <div class="p-pic">
+                <a target="_blank" href="<{link app=b2c ctl=site_product arg0=$pitem.product_id}>"><img src="<{$pitem.default_image.thumbnail|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>" alt="<{$pitem.name}>,<{$pitem.spec_info}>"></a>
+            </div>
+            <div class="p-title"><a target="_blank" href="<{link app=b2c ctl=site_product arg0=$pitem.product_id}>"><{$pitem.name}>,<{$pitem.spec_info|spec_desc}></a></div>
+        </td>
+        <td class="p-price"><{$pitem.price.buy_price|cur_odr}></td>
+        <td>
+            <div class="p-quantity"><{$pitem.base_num}>（基数）</a>
+            </div>
+        </td>
+        <td class="p-discount"><{$pitem.price.discount_price|cur_odr}></td>
+        <td class="p-integral">
+            -
+        </td>
+        <td class="p-subtotal"><{$pitem.price.buy_price*$pitem.base_num-$pitem.price.discount_price|cur_odr}></td>
+        <td class="p-action">
+
+        </td>
+    </tr>
+    <{/foreach}>
+  </tbody>
+  <{/foreach}>
+<{/if}>
+

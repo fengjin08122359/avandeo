@@ -1,0 +1,60 @@
+<input type="hidden" class="action-pagedata" value="{total:<{$total}>, pagecurrent:<{$page|default:1}>, pagetotal:<{$pagetotal}>}">
+<{foreach from=$goodsData key=key item=goods}>
+<div id="product_adjunct" class="mod product-adjunct" data-sync-type="product_adjunct">
+    <div class="mod-title">
+        <h2>推荐搭配/组合</h2>
+    </div>
+    <form action="<{link app=b2c ctl=site_cart act=add arg0=discount}>" method="post" target="_dialog_minicart">
+        <input type="hidden" name="discount[discount_id]" value="<{$goods.discount_id}>">
+        <input type="hidden" name="discount[num]" value="1">
+        <table>
+            <tbody>
+            <tr>
+                <td class="adjunct-list">
+                    <table data-widget-type="Tabs">
+                        <tbody>
+                        <tr>
+                            <td class="content">
+                                <div class="adjunct-items tab-panel" data-widget-type="Switchable">
+                                    <div class="adjunct-group">
+                                        <ul class="clearfix switchable-content">
+                                            <{foreach from=$goods.discount_item item=pro}>
+                                            <li class="item">
+                                                <div class="goods-info">
+                                                    <a href="<{link app=b2c ctl=site_product arg0=$pro.product_id}>" target="_blank"><{$pro.name}></a>
+                                                </div>
+                                                <div class="goods-pic">
+                                                    <input type="checkbox" checked="" class="hide x-check" value="1" id="for_check_<{$pro.product_id}>" name="goods[adjunct][0][<{$pro.product_id}>]">
+                                                    <a href="<{link app=b2c ctl=site_product arg0=$pro.product_id}>" target="_blank"><img src="<{$pro.image_default_id|storager:'s'}>" alt="<{$pro.name}>"></a>
+                                                </div>
+                                                <i></i>
+                                            </li>
+                                            <{/foreach}>
+                                        </ul>
+                                    </div>
+                                    <div class="flip next hide"><a href="javascript:void(0);" class="icon">5</a></div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody></table>
+                </td>
+                <td class="info-area">
+                    <div class="info">
+                        <ul>
+                            <li><i><{$goods.name}></i></li>
+                            <li><i>原　　价: </i><em class="adj-oprice action-adjoprice"><{$goods.price|cur_odr}></em></li>
+                            <li><i>组合价: </i><em class="adj-amount action-adjamount"><{$goods.sales_price|cur_odr}></em></li>
+                        </ul>
+                        <div class="button-area">
+                            <button type="submit" class="btn btn-import btn-big action-addtocart "><span><span>仅仅限一套</span></span></button>            </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+<{/foreach}>
+<!--
+<{pagers data=$pager}>
+-->

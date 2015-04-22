@@ -1,0 +1,13 @@
+<desktop>
+    <permissions>
+        <permission id="wms" display='true'>库存模块</permission>
+    </permissions>
+
+    <workground name="库存" id="wms.workground.setting" controller="admin_stock" action="index" order='70'>
+        <menugroup name="库存管理">
+            <menu controller='admin_return' action='index' permission='wms' display='true'>退换货管理</menu>
+            <menu controller='admin_stock' action='search' permission='wms' display='true'>库存查询</menu>
+        </menugroup>
+    </workground>
+
+</desktop>

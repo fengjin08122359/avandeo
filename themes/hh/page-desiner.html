@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <{header}>
+        <link rel="stylesheet" href="images/css/all.css"/>
+
+    </head>
+    <body>
+        <{require file="block/header.html"}>
+        <div class="center">
+            <div class="page">
+                <div class="bread-crumbs">
+                    <{widgets id="bread_crumbs"}>
+                </div>
+                <!-- 结构开始 -->
+                    <div class="page-bn">
+                       <img src="http://localhost/www/wodihh/themes/hh/images/img/desiner-bn.jpg" alt="">
+                    </div>
+                    <!-- designer-list -->
+                    <div id="desiner_tab">
+                        <ul class="desiner-trigger">
+                            <li class="active">空间方案设计师列表</li>
+                            <li>空间优化案例页</li>
+                        </ul>
+                        <div class="desiner-panel">
+                            <ul class="clearfix">
+                                <li>
+                                    <a href="#" class="avatar-pic">
+                                        <img src="http://localhost/www/wodihh/themes/hh/images/img/desiner.jpg" alt="">
+                                    </a>
+                                    <h4>Felix Stark <span>平面设计总监</span><a href="#" class="fav" title="收藏">收藏</a></h4>
+                                    <a href="#" class="look">查看设计师简介</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="avatar-pic">
+                                        <img src="http://localhost/www/wodihh/themes/hh/images/img/desiner.jpg" alt="">
+                                    </a>
+                                    <h4>Felix Stark <span>平面设计总监</span><a href="#" class="fav" title="收藏">收藏</a></h4>
+                                    <a href="#" class="look">查看设计师简介</a>
+                                </li>
+                                <li>
+                                     <a href="#" class="avatar-pic">
+                                        <img src="http://localhost/www/wodihh/themes/hh/images/img/desiner.jpg" alt="">
+                                    </a>
+                                    <h4>Felix Stark <span>平面设计总监</span><a href="#" class="fav" title="收藏">收藏</a></h4>
+                                    <a href="#" class="look">查看设计师简介</a>
+                                </li>
+                                <li>
+                                     <a href="#" class="avatar-pic">
+                                        <img src="http://localhost/www/wodihh/themes/hh/images/img/desiner.jpg" alt="">
+                                    </a>
+                                    <h4>Felix Stark <span>平面设计总监</span><a href="#" class="fav" title="收藏">收藏</a></h4>
+                                    <a href="#" class="look">查看设计师简介</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="avatar-pic">
+                                        <img src="http://localhost/www/wodihh/themes/hh/images/img/desiner.jpg" alt="">
+                                    </a>
+                                    <h4>Felix Stark <span>平面设计总监</span><a href="#" class="fav" title="收藏">收藏</a></h4>
+                                    <a href="#" class="look">查看设计师简介</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="desiner-panel" style="display:none;">内容待添加...</div>
+                    </div>
+                <!-- 结构结束 -->
+            </div>
+        </div>
+        <{require file="block/footer.html"}>
+        <script>
+             (function(){
+               new Switchable('desiner_tab',{
+                 'eventType':'mouse',
+                 'autoplay':false,
+                 'triggersBox':'.desiner-trigger',
+                 'panels':'.desiner-panel'
+               });
+               $$(".desiner-panel li:nth-child(4n)").addClass("row-last");
+               $$(".fav").addEvent('click',function(){
+                     this.getParent().getElement("a").toggleClass("faved");
+                     return false;
+               });
+             })()
+        </script>
+    </body>
+</html>
