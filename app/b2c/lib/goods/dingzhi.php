@@ -9,9 +9,16 @@
 
 class b2c_goods_dingzhi{
 
-
+    private $type = array( //类型影射表
+        'shafa'=>'沙发',
+        'baozhen'=>'抱枕',
+        'chuang'=>'床',
+        'hua'=>'画',
+        'ditan'=>'地毯',
+    ); 
 
     function import_data($file,$type){
+        setlocale(LC_ALL, 'zh_CN');
         $mdl_b2c = app::get('b2c')->model('goods');
         $mdl_image_attach = app::get('image')->model('image_attach');
         $md_dingzhi = app::get('b2c')->model('dingzhi');
@@ -175,7 +182,7 @@ class b2c_goods_dingzhi{
                         exit;
                     }
                     $goods_data['image_default_id'] =$image_data['image_id'];
-                    $goods_data['name'] = "沙发".$data[$name_bn_sheet];
+                    $goods_data['name'] = $this->type[$type].$data[$name_bn_sheet];
                     $goods_data['bn'] = $data[$name_bn_sheet];
                     $goods_data['cp_name'] = $data[$cp_name_sheet];
                     $goods_data['sc_day'] = $data[$sc_day_sheet];
@@ -206,7 +213,9 @@ class b2c_goods_dingzhi{
                                 if(!$spec_value_id_data){
                                     echo "<pre>".print_r($data,1);
                                     echo "<hr/>";
-                                    echo 'error: '.$data[$key].' not exist';
+                                    print_r('key = '.$key.',value = '.$value);
+                                    echo "<hr/>";
+                                    echo 'error: '.$data[$key].' not exist'.' - insert';
                                     exit;
                                 }
                                 $em_index_data['spec_id'] = $value;

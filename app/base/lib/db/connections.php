@@ -60,6 +60,9 @@ class base_db_connections extends base_db_abstract implements base_interface_db
             b2c_forStressTest::$sqlAmount++;
             b2c_forStressTest::slowSqlStart();
         }
+
+        error_log($sql.PHP_EOL,3,'/data/httpd/wodi-hh.vip.ishopex.cn/abc.log');
+
         if($rs = mysql_query($sql,$db_lnk)){
             if(defined("STRESS_TESTING")){
                 b2c_forStressTest::slowSqlEnd($sql);
