@@ -244,7 +244,7 @@ class b2c_ctl_admin_products extends desktop_controller{
     public function getProducts($gid=0){
         if(!$gid) return false;
         $productMode = app::get('b2c')->model('products');
-        $productData = $productMode->getList('product_id,bn,price,cost,mktprice,store,freez,store_place,weight,marketable,spec_desc,is_default',array('goods_id'=>$gid));
+        $productData = $productMode->getList('product_id,bn,price,cost,mktprice,store,freez,store_place,weight,length,width,height,marketable,spec_desc,is_default',array('goods_id'=>$gid));
         foreach((array)$productData as $row){
             $unique_id = $this->get_unique_id($row['spec_desc']['spec_value_id']);
             $row['status'] = $row['marketable'];
@@ -602,6 +602,9 @@ class b2c_ctl_admin_products extends desktop_controller{
             $tmpProducts[$uid]['product_id'] = $row['product_id'];
             $tmpProducts[$uid]['bn'] = $row['bn'];
             $tmpProducts[$uid]['weight'] = $row['weight'];
+            $tmpProducts[$uid]['length'] = $row['length'];
+            $tmpProducts[$uid]['width'] = $row['width'];
+            $tmpProducts[$uid]['height'] = $row['height'];
             $tmpProducts[$uid]['store_place'] = $row['store_place'];
             $tmpProducts[$uid]['store'] = $row['store'];
             $tmpProducts[$uid]['freez'] = $row['freez'];

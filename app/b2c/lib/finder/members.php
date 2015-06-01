@@ -44,10 +44,11 @@ class b2c_finder_members{
 
         $member_model = $this->app->model('members');
         $a_mem = $member_model->dump($member_id);
-        $accountData = $userObject->get_members_data(array('account'=>'login_account'),$member_id);
-        $a_mem['contact']['name'] = $accountData['account']['local'];
-        $a_mem['contact']['email'] = $accountData['account']['email'];
-        $a_mem['contact']['phone']['mobile'] = $accountData['account']['mobile'];
+        $accountData = $userObject->get_members_data(array('account'=>'login_account','members'=>'*'),$member_id);
+        $a_mem['contact'] = $accountData['members'];
+        $a_mem['contact']['phone']['mobile'] = $a_mem['contact']['mobile'];
+        $a_mem['contact']['zipcode'] = $a_mem['contact']['zip'];
+        $a_mem['contact']['phone']['telephone'] = $a_mem['contact']['tel'];
 
 		$obj_extend_point = kernel::service('b2c.member_extend_point_info');
 		if ($obj_extend_point)
@@ -128,6 +129,12 @@ class b2c_finder_members{
         $membersData['lv']['value'] = $membersData['members']['member_lv_id'];
 
         $render = $app->render();
+
+        $store = kernel::single('storelist_store');
+        if($store->store_id > 0){
+            $render->pagedata['ifstore'] = true;
+        }
+
         $render->pagedata['mem'] = $membersData;
         $render->pagedata['attr'] = $userPassport->get_signup_attr($member_id);
         $render->pagedata['member_id'] = $member_id;

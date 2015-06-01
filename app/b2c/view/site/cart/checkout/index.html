@@ -439,6 +439,11 @@ $('main').addEvents({
         var cpn = ul.getElements('.action-cancel-coupon');
         var coupon = parent.getElement('select') || parent.getElement('input[type=text]');
         var value = coupon.value;
+        var addr_id = order.shipping.view.getElement('input[name=def_addr_id]').value;
+        if (addr_id) {
+            var address = JSON.decode($('for_shipping_'+addr_id).value);
+            var region_id = address.area;
+        };
         if(coupon.match('select')) {
             var cpn_id = coupon.getSelected().get('data-coupon');
         }
@@ -477,7 +482,7 @@ $('main').addEvents({
                     p.getParent('form').getElement('input[name=md5_cart_info]').value = rs.md5_cart_info;
                 }
             }
-        }).post(parent.toQueryString() + '&is_fastbuy=<{$is_fastbuy}>&response_json=true');
+        }).post(parent.toQueryString() + '&is_fastbuy=<{$is_fastbuy}>&response_json=true&region_id=' + region_id);
     },
     //= 取消优惠券
     'click:relay(.action-cancel-coupon)': function(e) {

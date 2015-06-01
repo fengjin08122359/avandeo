@@ -9,5 +9,24 @@
 <script>
 Module = new Module('page', ['signup']);
 var modname = 'page.signup';
+
+$$(".x-select")[2].addEvent('change',function(e){
+  var area=$$("input[name=area]").get('value');
+   reg_id=$$(".x-select")[2].get('value');
+   new Request({url:"<{link app='b2c' ctl='site_passport' act='get_area_store'}>",method:'post',data:'reg_id='+reg_id,onSuccess:function(res){
+   	  var res = JSON.decode(res);
+   	  if (res.status == 1) {
+   	  	var option = '<option value="0">请选择体验店</option>';
+   	  	res.data.each(function(i) { 
+			option += '<option value="'+i.store_id+'">'+i.store_name+'</option>';
+		});
+      	$('select-store').innerHTML = option;
+  		$$(".action-store").setStyle('display','');
+   	  }else{
+   	  	$$(".action-store").setStyle('display','none');
+   	  }
+    }}).send();
+
+});
 </script>
 

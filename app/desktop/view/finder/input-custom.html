@@ -1,0 +1,50 @@
+<div class="division">
+  <div class="table-grid">
+    <table class="gridlist" border="0" cellpadding="0" cellspacing="0" width="100%">
+      <thead>
+      <tr>
+        <th></th>
+        <!-- <th>ID</th> -->
+        <th>货号</th>
+        <th>商品</th>
+        <th>单价</th>
+        <th>数量</th>
+        <th>定制需求</th>
+        <th>金额</th>
+        <th>删除</th>
+      </tr>
+      </thead>
+      <tbody id="proNode">
+<{foreach from=$_input.items item=item key=key}>
+<{assign var="id" value=$item[$_input.idcol]}>
+        <tr>
+          <input type="hidden" name="<{$_input.name}>[]" item_id="<{$item[$_input.idcol]}>" value="<{$item[$_input.idcol]}>" />
+          <td><img src="<{if $item.udfimg == 'true'}><{$item.thumbnail_pic|storager:'s'}><{else}><{$item.image_default_id|default:$defaultImage|storager:'s'}><{/if}>" width="80" height="80"></td>
+          <!-- <td><{$item.product_id}></td> -->
+          <td width="19%"><{$item.bn}></td>
+          <td class="textleft" width="30%"><{$item.name}><br />规格型号：<{$item.spec_info|default:'-'}></td>
+          <td class="Colamount" id="price_<{$id}>"><{$item.price}></td>
+          <td width="12%"><{input name="goodsnum[{$id}]" value=1 id="num_{$id}" type="positive" required="true" max=$item.store-$item.freez style="width:50px;text-align:right" onchange="updateCart({$id})"}></td>
+          <td width="15%"><{input type="textarea" name="custom[{$id}]" cols="30" rows="3"}></td>
+          <td id="subtotal_<{$id}>"><{$item.price}></td>
+          <td><{img app="desktop" src="bundle/delecate.gif" onclick="$(this).getParent('tr').destroy();Order.addCart();" }></td>
+        </tr>   
+<{if $_input.view}>
+<{include file=$_input.view app=$_input.view_app}>
+<{/if}>
+<{/foreach}>
+    </tbody></table>
+<!--     <table>
+        <tr>
+          <td class="textright">已选<{$items_quantity}>件商品|商品总价(不含运费)</td>
+          <td><{$subtotal_price|cur}></td>
+        </tr>
+</table>
+ -->    </div>
+</div>
+<{if $id}>
+<div class="division" id="order_next">
+  <{button type="button" onclick="setCart();$('order_next').setStyle('display','none')" label=$___b2c="下一步"|t:'b2c'}>
+</div>
+<{/if}>
+

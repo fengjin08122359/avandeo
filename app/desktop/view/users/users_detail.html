@@ -8,7 +8,7 @@
 
         <input type="hidden" value="<{$account_id}>" name="account_id" />
        <tr><th><td>
- 	<div id="role" <{if !$super}>style="display:block"<{else}>style="display:none"<{/if}>><{t}>角色:<{/t}>
+ 	<div id="role" <{if $super || $default_store_role==$role_id}>style="display:none"<{else}>style="display:block"<{/if}>><{t}>角色:<{/t}>
      <ul><{if !$super}><input type='hidden'  vtype='requiredcheckbox'/> <{/if}><{foreach from=$workgroup item=item}>
          <li><input class="role" type="checkbox" value='<{$item.role_id}>' name=role[<{$item.role_id}>] <{if $item.checked=='true'}>checked='checked'<{/if}>/>
 <{$item.role_name}></li>

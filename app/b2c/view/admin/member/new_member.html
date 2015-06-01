@@ -1,0 +1,152 @@
+<form method="POST" id='newmember-edit-form' action="index.php?app=b2c&ctl=admin_member&act=add" class="tableform">
+    <input type="hidden" name="pam_account[login_password]" value="123qweasd">
+    <input type="hidden" name="pam_account[psw_confirm]" value="123qweasd">
+
+    <div class="division">
+        <table width="100%" >
+            <tr><th><em class="red">*</em><{t}>用户名：<{/t}></th><td><{input type="text" name="pam_account[login_name]"  onchange="nameCheck(this)" size="20" vtype="required"}><span></span></td></tr>
+            <tr><th><em class="red">*</em><{t}>Email：<{/t}></th><td><{input type="text" name="contact[email]" size="20" vtype="required"}></td></tr>
+            <tr><th><em class="red">*</em><{t}>手机：<{/t}></th><td><{input type="text" name="contact[phone][mobile]" size="20" vtype="required"}></td></tr>
+            <!--
+            <tr><th><em class="red">*</em>E-mail：</th><td><{input type="email" name="pam_account[login_name][email]" size="20" vtype="required&&email" onchange="emailCheck(this)"}><span></span></td></tr>
+            <tr><th><em class="red">*</em>手机号码：</th><td><{input type="mobile" name="pam_account[login_name][mobile]" size="20" vtype="required&&mobile" onchange="emailCheck(this)"}><span></span></td></tr>
+            -->
+        </table>
+        <table width="100%">
+            <{foreach from=$attr item=item name="item" key='row'}>
+            <tr><th><{if $item.attr_required eq 'true'}><em class="red">*</em><{/if}><{$item.attr_name}>：</th><td><{if $item.attr_type =='date'}>
+                    <{if $item.attr_value != '0-0-0'}>
+                    <{if $item.attr_required eq 'true'}>
+                    <{input type='date' vtype="required&&date" name=$item.attr_column value=$item.attr_value}>
+                    <{else}>
+                    <{input type='date' name=$item.attr_column value=$item.attr_value}>
+                    <{/if}>
+                    <{else}>
+                    <{if $item.attr_required eq 'true'}>
+                    <{input type="date" vtype="required&&date" name=$item.attr_column}>
+                    <{else}>
+                    <{input type="date" vtype="date" name=$item.attr_column}>
+                    <{/if}>
+                    <{/if}>
+                    <{/if}>
+                    <!-- 增加判断如果地区是非必选就不要必须选择@lujy -->
+                    <{if $item.attr_type =='region'}>
+                    <{if $item.attr_required eq 'true'}>
+                    <{input app=ectools type="region" name=$item.attr_column vtype='area' }>
+                    <{else}>
+                    <{input app=ectools type="region" name=$item.attr_column }>
+                    <{/if}>
+                    <{/if}>
+
+                    <{if $item.attr_type =='gender'}>
+                    <{input type='gender' name=$item.attr_column value=$item.attr_value }>
+                    <{/if}>
+
+                    <{if $item.attr_type =='select'}>
+                    <select name='<{$item.attr_column}>' <{if $item.attr_required eq 'true'}>class='_x_ipt' vtype='required'<{/if}>>
+                        <option value='' <{if $item.attr_value == ''}>selected='true'<{/if}>><{t}>- 请选择 -<{/t}></option>
+                        <{foreach from=$item.attr_option item=option name="option"}>
+                        <option value='<{$option}>' <{if $item.attr_value == $option}>selected='true'<{/if}>><{$option}></option>
+                        <{/foreach}>
+                    </select>
+                    <{/if}>
+
+                    <{if $item.attr_type =='checkbox'}>
+
+                    <{foreach from=$item.attr_option item=checkbox name="checkbox" }>
+                    <input type='checkbox' name=box:<{$item.attr_column}>[] value='<{$checkbox}>'><label><{$checkbox}></label><br/>
+                    <{/foreach}>
+                    <input type='hidden' name='<{$item.attr_column}>[]' value='%no%'>
+                    <{if $item.attr_required eq 'true'}>
+                    <input type='hidden' class='_x_ipt' vtype='requiredcheckbox'/>
+                    <{/if}>
+                    <{/if}>
+
+
+                    <{if $item.attr_type == 'text'}>
+                    <input type='text' name=<{$item.attr_column}> value='<{$item.attr_value}>' vtype='<{if $item.attr_required eq 'true'}>required&&<{/if}><{$item.attr_valtype}>' />
+                    <{/if}>
+
+                    <{if $item.attr_type == 'number'}>
+                    <input type='text' name=<{$item.attr_column}> value='<{$item.attr_value}>' vtype='<{if $item.attr_required eq 'true'}>required&&<{/if}><{$item.attr_valtype}>' />
+                    <{/if}>
+
+                    <{if $item.attr_type == 'alpha'}>
+                    <input type='text' name=<{$item.attr_column}> value='<{$item.attr_value}>' vtype='<{if $item.attr_required eq 'true'}>required&&<{/if}><{$item.attr_type}>' />
+                    <{/if}></td></tr>
+            <{/foreach}>
+            <tr><th><em class="red">*</em><{t}>会员等级：<{/t}></th><td><{input type='select' name='member_lv[member_group_id]' vtype="required" options=$mem.lv.options value=$mem.lv.value }></td></tr>
+        </table>
+    </div>
+</form>
+<{area inject='.mainFoot'}>
+
+
+<div class="table-action"><{button type="submit"  label=$___b2c="保存"|t:'b2c' id='newmember-edit-form-submit'}></div>
+
+
+<{/area}>
+
+
+<script>
+  (function(){
+    $('newmember-edit-form-submit').addEvent('click',function(){
+      var form = $('newmember-edit-form');
+      if(! validate(form)) return;
+
+      //this.getParent('form').fireEvent('sumit',{stop:$empty});
+      new Request({url:form.action,method:'post',data:form.toQueryString(),
+        onRequest:function(){
+          MessageBox.show('正在提交表单');
+        },
+        onComplete:function(json){
+          if(json == 'false') {
+            MessageBox.error('添加会员失败，可能用户名重复');
+            return;
+          }
+          $$('.nodisabled').removeClass('nodisabled').set('disabled',true);
+          MessageBox.success('保存成功');
+
+          $('newmember-edit-form').getParent('.dialog').retrieve('instance').close();
+        }
+      }).send();
+    });
+   
+  })()
+
+
+    function nameCheck(input){
+        new Request({
+            url:'<{link app=b2c ctl=admin_member act=namecheck}>',
+            method:'post',
+            data:input.name+'='+encodeURIComponent(input.value=input.value.trim()),
+            onSuccess: function(rs) {
+                rs = JSON.decode(rs);
+                if(rs.error) {
+                    input.getNext().innerHTML = '<span class="error caution notice-inline">' +rs.error + '</span>';
+                }
+                else if(rs.success) {
+                    input.getNext().innerHTML = '<span class="success notice-inline">' +rs.success + '</span>';
+                }
+            }
+        }).send();
+    }
+    //function emailCheck(input){
+    //    new Request({
+    //        url:'<{link app=b2c ctl=member_passport act=emailcheck}>',
+    //        method:'post',
+    //        data:input.name+'='+encodeURIComponent(input.value=input.value.trim()),
+    //        onSuccess: function(rs) {
+    //            rs = JSON.decode(rs);
+    //            if(rs.error) {
+    //                input.getNext().innerHTML = '<span class="error caution notice-inline">' +rs.error + '</span>';
+    //            }
+    //            // else if(rs.success) {
+    //            //     input.getNext().innerHTML = '<span class="success notice-inline">' +rs.success + '</span>';
+    //            // }
+    //        }
+    //    }).send();
+    //}
+</script>
+
+

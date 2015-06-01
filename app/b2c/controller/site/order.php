@@ -122,7 +122,7 @@ class b2c_ctl_site_order extends b2c_frontpage{
             $_POST['payment']['dis_point'] = $_POST['point']['score'];
         }
 
-        if (!$_POST['delivery']['ship_area'] ||  !$_POST['delivery']['ship_addr'] || !$_POST['delivery']['ship_name'] ||  (!$_POST['delivery']['ship_mobile'] && !$_POST['delivery']['ship_tel']) || !$_POST['delivery']['shipping_id'] || !$_POST['payment']['pay_app_id'])
+        if (!$_POST['delivery']['ship_area'] ||  !$_POST['delivery']['ship_addr'] || !$_POST['delivery']['ship_name'] || !$_POST['delivery']['ship_mobile'] || !$_POST['delivery']['shipping_id'] || !$_POST['payment']['pay_app_id'])
         {
             if (!$_POST['delivery']['ship_area'] )
             {
@@ -146,9 +146,9 @@ class b2c_ctl_site_order extends b2c_frontpage{
             }
             */
 
-            if (!$_POST['delivery']['ship_mobile'] && !$_POST['delivery']['ship_tel'])
+            if (!$_POST['delivery']['ship_mobile'])
             {
-                $msg .= app::get('b2c')->_("手机或电话必填其一！")."<br />";
+                $msg .= app::get('b2c')->_("请填写手机号码！")."<br />";
             }
 
             if (!$_POST['delivery']['shipping_id'])

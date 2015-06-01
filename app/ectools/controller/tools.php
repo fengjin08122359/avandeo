@@ -29,4 +29,29 @@ class ectools_ctl_tools extends desktop_controller{
             echo '';exit;
         }
     }
+	public function showRegionTreeList($serid,$multi=false,$role_id)
+    {
+    	if($role_id!=''){
+    		$this->pagedata['role_id']=$role_id;
+    	}
+         if ($serid)
+         {
+            $this->pagedata['sid'] = $serid;
+         }
+         else
+         {
+            $this->pagedata['sid'] = substr(time(),6,4);
+         }
+
+         $this->pagedata['multi'] =  $multi;
+         $this->singlepage('common/regionSelect.html');
+    }
+    
+    
+    public function getRegionById($pregionid)
+    {
+    	//$oDlyType = &$this->app->model('regions');
+    	$obj_regions_op = kernel::service('ectools_regions_apps', array('content_path'=>'ectools_regions_operation'));
+    	echo json_encode($obj_regions_op->getRegionById($pregionid));
+    }
 }

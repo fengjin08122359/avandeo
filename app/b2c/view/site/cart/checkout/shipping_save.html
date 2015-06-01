@@ -5,7 +5,7 @@
   <address>
     <{$save_addr.area|ship_area}><{$save_addr.addr}><i>(<{t}>收货人<{/t}>：<{$save_addr.name}>
         <{if $save_addr.mobile}><{t}>手机<{/t}>：<{$save_addr.mobile}><{/if}>
-        <{if $save_addr.tel}><{t}>固定电话<{/t}>：<{$save_addr.tel}><{/if}>
+        <{if $save_addr.tel}><{t}>备用电话<{/t}>：<{$save_addr.tel}><{/if}>
         <{if $save_addr.zip}><{t}>邮编<{/t}>：<{$save_addr.zip}><{/if}>)</i>
     <{if $site_checkout_receivermore_open == 'true'}>
       <{$save_addr.day}>, <{$save_addr.time}>

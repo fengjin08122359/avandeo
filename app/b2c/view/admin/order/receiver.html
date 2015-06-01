@@ -1,4 +1,3 @@
-<div class="receiver diviosion" id="receiver">
 	<div class="division">
     <{if $addrlist}>
       <ul class="receiver-sel">
@@ -45,8 +44,7 @@
           </select>
 	</div>
   </div>
-</div>
- <{if $addrlist}>
+<{if $addrlist}>
 <script>
 window.addEvent('domready',function(){
 
@@ -56,7 +54,6 @@ window.addEvent('domready',function(){
     var addlistRadios=$$('input[name^=delivery[addr_id]','receiver');
 
     if(addlistRadios.length){
-
         addlistRadios.addEvent('click', function(e,edit){
                 this.set('checked',true);
                 var _value=this.value;
@@ -64,9 +61,10 @@ window.addEvent('domready',function(){
                 if(_value!='0'){
                     if(edit){
                        $('checkout-recaddr').show();
+                    }else{
+                      $('checkout-recaddr').hide();
                     }
-                    else $('checkout-recaddr').hide();
-				    $('receiver').store('b2c-cart-checkout-ship-addr', 'true');
+				            $('receiver').store('b2c-cart-checkout-ship-addr', 'true');
                 }else{
                     $('checkout-recaddr').show();
 					$('receiver').store('b2c-cart-checkout-ship-addr', 'false');

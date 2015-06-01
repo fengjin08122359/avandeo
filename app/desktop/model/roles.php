@@ -12,6 +12,16 @@ class desktop_mdl_roles extends dbeav_model{
 ##进回收站前操作
     function pre_recycle($data)
     {
+    	$storeObj=kernel::single('storelist_store');
+    	$default_store_role=app::get('desktop')->getconf($storeObj::$store_owner_conf);
+    	foreach ($data as $v){
+    		
+    		if((int)$default_store_role==(int)$v['role_id']){
+    			$this->recycle_msg = app::get('desktop')->_('已经设置过门店管理员不能删除');
+    			return false;
+    		}
+    	}
+    	
         $falg = true;
         $obj_hasrole = app::get('desktop')->model('hasrole');
         $arr_role = array();
@@ -23,6 +33,7 @@ class desktop_mdl_roles extends dbeav_model{
             $this->recycle_msg = app::get('desktop')->_('角色下存在管理员,不能删除');
             $falg = false;
         }
+        
         return $falg;
     }
     
@@ -62,6 +73,7 @@ class desktop_mdl_roles extends dbeav_model{
         else
             return false;
     }
+    
     function getAllActions(){
         $actions = array(
             '1'=>app::get('desktop')->_('商品'),

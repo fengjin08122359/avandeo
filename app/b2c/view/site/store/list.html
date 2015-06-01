@@ -23,7 +23,7 @@
 				</tr>
 				<tr>
 					<td>交通： </td>
-					<td><{$s_d_item.traffic}> <a href="http://api.map.baidu.com/marker?location=39.916979519873,116.41004950566&title=<{$s_d_item.city}><{$s_d_item.district}><{$s_d_item.address}>&content=<{$s_d_item.name}>&output=html " target="_blank">地图显示</a></td>
+					<td><{$s_d_item.traffic}> <a href="http://api.map.baidu.com/geocoder?address=<{$s_d_item.city}><{$s_d_item.district}><{$s_d_item.address}>&output=html " target="_blank">地图显示</a></td>
 				</tr>
 			</table>
 			<div class="map-<{$s_d_key}>"  style="display:none; height:300px; width:100%;">

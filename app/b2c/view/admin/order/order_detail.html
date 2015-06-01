@@ -284,6 +284,10 @@ $$('.order-ctls button[act]').each(function(btn){
         <td><a href="<{$services.logisticstrack_url}>" style="color:red"><{t}>去查看<{/t}></a></td>
       </tr>
 	  <{/if}>
+      <tr>
+        <th><{t}>结算金额：<{/t}></th>
+        <td><{if $order.settle_accounts == 'true'}><{$order.rebate|cur}><{else}>未结算<{/if}> </td>
+      </tr>
     </table>
     </td>
 

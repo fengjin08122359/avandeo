@@ -267,9 +267,13 @@ class b2c_order_total
             $totalScore = 0;
             $subtotal_gain_score = 0;    //如果是非会员购买获得积分为0，@lujy
         }
+        $pmt_order_info = $pmt_coupon_info = array();
         foreach((array)$cart_info['promotion']['order'] as $k=>$v) {
-			$pmt_order_info .= $v['desc']."<br>";
+			$pmt_order_info[] = $v['desc'];
 		}
+        foreach((array)$cart_info['promotion']['coupon'] as $k=>$v) {
+            $pmt_coupon_info[] = $v['desc'];
+        }        
 		$cost_item = $objMath->number_minus(array($cost_item, $cart_info['discount_amount_prefilter']));
         $payment_detail = array('cost_item'=>$objCurrency->amount_nocur($cost_item, $sdf_order['cur'], false, false),
                                 'cost_protect'=>$objCurrency->amount_nocur($cost_protect, $sdf_order['cur'], false, false),
@@ -290,7 +294,8 @@ class b2c_order_total
                                 'totalConsumeScore' => $subtotal_consume_score,
                                 'totalGainScore' => $subtotal_gain_score,
                                 'totalScore' => $totalScore,
-								'pmt_order_info' => $pmt_order_info,
+                                'pmt_order_info' => $pmt_order_info,
+                                'pmt_coupon_info' => $pmt_coupon_info,
                             );
 
         if ($obj_point_dis && $site_point_usage == '2')

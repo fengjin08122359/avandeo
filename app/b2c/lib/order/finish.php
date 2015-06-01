@@ -41,12 +41,18 @@ class b2c_order_finish extends b2c_api_rpc_request
         $is_save = true;        
         //todo:ever 什么状态下需要解冻
         $objOrders = $controller->app->model('orders');
+        $sdf_order = $objOrders->dump($sdf['order_id'], '*');
+
+        if ($sdf_order['settle_accounts'] == 'false') {
+            $msg = '请先对订单进行结算';
+            return false;
+        }
+
         
         $arr_data['status'] = 'finish';
         $arr_data['order_id'] = $sdf['order_id'];
         $objOrders->save($arr_data);
         $this->request($arr_data);
-		$sdf_order = $objOrders->dump($sdf['order_id'], '*');
         
         // 订单积分结算埋点
         $policy_stage = $this->app->getConf("site.get_policy.stage");

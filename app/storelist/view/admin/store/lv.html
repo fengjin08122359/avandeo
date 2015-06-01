@@ -1,0 +1,79 @@
+
+
+<form method="POST" action="index.php?app=storelist&ctl=admin_store_lv&act=save" class="tableform" id="form_member_lv">
+<input type="hidden" value="<{$row.store_lv_id}>" name="store_lv_id" />
+<div class="division">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" >
+	<tr>
+	  <th><em class="c-red">*</em><{t}>等级名称：<{/t}></th>
+	 
+	  <td><{input type="text" name="name" size="20" vtype="required" value=$row.name}></td>
+	</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0"id='member_level' class="member-set">
+
+
+
+
+<tr class="member_retail">
+  <th><em class="c-red">*</em><{t}>最小值<{/t}>：</th>
+  <td><{input type="input" name="small_value"  class="_x_input" vtype="required&&number" value=$row.small_value}>  </td>
+</tr>
+
+<tr class="member_retail">
+  <th><em class="c-red">*</em><{t}>最大值<{/t}>：</th>
+  <td><{input type="input" name="max_value"  class="_x_input" vtype="required&&number" value=$row.max_value}>  </td>
+</tr>
+
+
+</table>
+
+</div>
+</form>
+<{area inject='.mainFoot'}>
+     <div class="table-action">
+	<{button type="button" label=$___b2c="保存"|t:'b2c' id="member_lv-form-submit"}>
+</div>
+<{/area}>
+
+
+
+
+
+<script>
+(function(){
+	var _form = $('form_member_lv');
+	var btn =$('member_lv-form-submit');
+	var finder = finderGroup['<{$env.get._finder.finder_id}>'];
+
+	_form.store('target',{
+		onSuccess:function(response){
+			var hash_res_obj = JSON.decode(response);
+
+			if (hash_res_obj.success != undefined && hash_res_obj.success != "")
+			{
+				try{
+					var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+				}catch(e){}
+
+				if(_dialogIns)
+				{
+					_dialogIns.close();
+					//window.finderGroup['<{$env.get._finder.finder_id}>'].refresh();
+					window.location.reload();
+				}
+			}
+
+		}
+	});
+
+	    btn.addEvent('click',function(){
+		    _form.fireEvent('submit',{stop:$empty});
+		});
+
+})();
+
+
+</script>
+
+

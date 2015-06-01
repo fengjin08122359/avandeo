@@ -25,6 +25,18 @@ $db['orders']=array (
       'in_list' => true,
       'default_in_list' => true,
     ),
+    'store_id'=>array(
+        'type'=>'table:storelist@storelist',
+        'required' => true,
+        'label' => app::get('desktop')->_('门店ID'),
+        'width' => 110,
+        'editable' => false,
+        'filtertype' => 'yes',
+        'filterdefault' => true,     
+        'in_list' => true,
+        //'default_in_list' => true,
+        'comment' => app::get('storelist')->_('门店ID'),
+    ),    
     'total_amount' =>
     array (
       'type' => 'money',
@@ -178,6 +190,47 @@ $db['orders']=array (
       'editable' => false,
       'in_list' => true,
 
+    ),
+     'verify' =>
+    array (
+      'type' => 'bool',
+      'default' => 'false',
+      'required' => true,
+      'label' => app::get('b2c')->_('审核'),
+      'width' => 75,
+      'hidden' => true,
+      'editable' => false,
+      'in_list' => true,
+    ),
+     'settle_accounts' =>
+    array (
+      'type' => 'bool',
+      'default' => 'false',
+      'required' => true,
+      'label' => app::get('b2c')->_('结算'),
+      'width' => 75,
+      'hidden' => true,
+      'editable' => false,
+      'in_list' => true,
+    ),
+     'store_pay' =>
+    array (
+      'type' => 'bool',
+      'default' => 'false',
+      'required' => true,
+      'label' => app::get('b2c')->_('门店是否支付'),
+      'width' => 75,
+      'hidden' => true,
+      'editable' => false,
+      'in_list' => true,
+    ),
+    'rebate' =>
+    array (
+      'type' => 'money',
+      'default' => '0',
+      'required' => true,
+      'editable' => false,
+      'comment' => app::get('b2c')->_('提成'),
     ),
     'confirm' =>
     array (

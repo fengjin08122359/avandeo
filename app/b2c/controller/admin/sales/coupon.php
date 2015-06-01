@@ -19,6 +19,7 @@ class b2c_ctl_admin_sales_coupon extends desktop_controller{
                                 array('label'=>app::get('b2c')->_('添加优惠券'),'href'=>'index.php?app=b2c&ctl=admin_sales_coupon&act=add','target'=>'_blank'),
                             ),
         		'base_filter'=>$arrays,
+                'use_buildin_filter'=>true,
                 ));
     }
     /**
@@ -38,6 +39,7 @@ class b2c_ctl_admin_sales_coupon extends desktop_controller{
         $aCoupon = $mCoupon->dump($coupon_id);
         if(empty($aCoupon)) $this->splash('fail','index.php?app=b2c&ctl=admin_sales_coupon',app::get('b2c')->_('数据错误'));
         $aCoupon['cpns_prefix'] = substr($aCoupon['cpns_prefix'],1);
+        $aCoupon['area'] = unserialize($aCoupon['area']);
         $this->pagedata['coupon'] = $aCoupon;
 
         ////////////////////////// 订单促销规则信息 ///////////////////////////
@@ -116,9 +118,62 @@ class b2c_ctl_admin_sales_coupon extends desktop_controller{
         
         $aCoupon = $aData['coupon'];
         $aCoupon['rule']['rule_id'] = $aRule['rule_id'];
+
+        $area_ids_str = $aCoupon['area']['areaGroupId'];
+
+        $aCoupon['area'] = serialize($aCoupon['area']);
         $oCoupon = $this->app->model('coupons');
 
-        $this->end($oCoupon->save($aCoupon),app::get('b2c')->_('操作成功'));
+        //$this->end($oCoupon->save($aCoupon),app::get('b2c')->_('操作成功'));
+        $coupon_save = $oCoupon->save($aCoupon);
+
+        if($coupon_save){
+            $cpns_id = $aCoupon['cpns_id']?$aCoupon['cpns_id']:$coupon_save;
+            $Coupon_region = app::get('b2c')->model('coupons_region');
+            if($aCoupon['cpns_id']){
+                $Coupon_region->delete(array('cpns_id' => $cpns_id));
+            }
+
+            $obj_area = app::get('ectools')->model('regions');
+            $area_ids_arr = $obj_area->getALLEndChildByRegionTreeList($area_ids_str);
+            if(is_array($area_ids_arr) && count($area_ids_arr) > 0){
+
+                foreach($area_ids_arr as $aikey => $aivalue){
+                    $data = array('region_id' => $aivalue,'cpns_id' => $cpns_id);
+                    $Coupon_region->insert($data);
+                    if($tag_arr[1] && $tag_arr[1] == 'close'){
+                        $regions = $obj_area->getList('region_id',array('region_path|has' => ','.$tag_arr[0].',','region_grade' => $area_depth));
+                        if(is_array($regions) && count($regions) > 0){
+                            foreach($regions as $rgkey => $rgvalue){
+                                $area_ids_arr[] = $rgvalue['region_id'];
+                            }
+                            unset($regions);
+                        }
+                        $tag_num = 0;
+                    }else{
+                        if($tag_num >= $area_depth){
+                            $area_ids_arr[] = $aavalue;
+                        }else{
+                            if($tag_num > 1){
+                                $child_num = $obj_area->count(array('p_region_id' => $tag_arr[0]));
+                                if($child_num < 1){
+                                    $area_ids_arr[] = $tag_arr[0];
+                                    $tag_num = 0;
+                                }
+                            }
+                        }
+                    }
+
+                    if($tag_num >= $area_depth){
+                        $tag_num = 0;
+                    }
+                }
+            }
+
+            $this->end(true,app::get('b2c')->_('操作成功'));
+        }else{
+            $this->end(false,app::get('b2c')->_('操作失败'));
+        }
     }
 
     function _prepareData($aData) {

@@ -18,7 +18,24 @@ class desktop_ctl_dashboard extends desktop_controller{
     }
   
 
-    function index(){    
+    function index(){
+        /**
+         * 重新排序
+         * @author qianzedong <qianzedong@shopex.cn>
+         */
+        function widgets_sort($sort_conf,&$arr)
+        {
+            $tmp = array();
+            foreach ($sort_conf as $key=>$val) {
+                foreach ($arr as $k=>$v) {
+                    if($v['class_full_name'] === $val)
+                    {
+                        $tmp[$key] = $v;
+                    }
+                }
+            }
+            $arr = $tmp;
+        }
 		//如果没有请求到证书，可以重新请求
 		if (!base_certificate::certi_id()|| !base_certificate::token()){
 			base_certificate::register();
@@ -66,13 +83,14 @@ class desktop_ctl_dashboard extends desktop_controller{
         foreach((array)$widgets as $key=>$arr){
 			$layout = $layout_map[$key];
 			if($user->get_conf('arr_dashboard_widgets_'.$layout.'_sort',$sort_conf)&&$sort_conf){
-				//echo $sort_conf.'<br/><br/>';
 				$sort_conf = explode(',',$sort_conf);
-				array_multisort($sort_conf,SORT_STRING,$arr);
+				//array_multisort($sort_conf,SORT_STRING,$arr); 排序有BUG by qianzedong
+                widgets_sort($sort_conf,$arr);
 			}
 				$widgets[$key] = $arr;
 			
         }
+
         $this->pagedata['left'] = $widgets['l-1'];
         $this->pagedata['right'] = $widgets['l-2'];
         $this->pagedata['top'] = $widgets['t-1'];
@@ -92,7 +110,6 @@ class desktop_ctl_dashboard extends desktop_controller{
     {
         $desktop_user = kernel::single('desktop_user');
         $arr = explode(':',trim($_GET['sort']));
-		
         $desktop_user->set_conf('arr_dashboard_widgets_'.$arr[0].'_sort',$arr[1]);
     }
     #End Func

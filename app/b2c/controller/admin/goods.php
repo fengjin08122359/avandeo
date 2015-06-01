@@ -65,15 +65,23 @@ class b2c_ctl_admin_goods extends desktop_controller{
 
 
         $custom_actions[] = array('label'=>app::get('b2c')->_('导入定制器商品'),'icon'=>'batch.gif','href'=>'index.php?app=b2c&ctl=admin_goods&act=importDingzhiData','target'=>'_blank');
+
+        $store = kernel::single('storelist_store');
+        if($store->store_id > 0){
+            unset($custom_actions);
+            $noedit = true;
+            $actions_base['use_buildin_recycle'] = false;
+        }
+
         $actions_base['title'] = app::get('b2c')->_('商品列表');
         $actions_base['actions'] = $custom_actions;
-        $actions_base['use_buildin_set_tag'] = true;
+        $actions_base['use_buildin_set_tag'] = $noedit?false:true;
         $actions_base['use_buildin_filter'] = true;
         if($this->has_permission('importgoods')){
-            $actions_base['use_buildin_import'] = true;
+            $actions_base['use_buildin_import'] = $noedit?false:true;
         }
         if($this->has_permission('exportgoods')){
-            $actions_base['use_buildin_export'] = true;
+            $actions_base['use_buildin_export'] = $noedit?false:true;
         }
         if(!$this->has_permission('deletegoods')){
             $actions_base['use_buildin_recycle'] = false;
@@ -688,4 +696,18 @@ class b2c_ctl_admin_goods extends desktop_controller{
 		/** end **/
 	}
 
+    function bngetstore(){
+        if($_POST['bns']){
+            $mdl_products = $this->app->model('products');
+            $bn_arr = explode(',',$_POST['bns']);
+            $products_list = $mdl_products->getList('name,spec_info,bn',array('bn|in' => $bn_arr));
+            $this->pagedata['products'] = $products_list;
+            $this->pagedata['postbns'] = $_POST['bns'];
+            $this->pagedata['ifpost'] = true;
+        }else{
+            $this->pagedata['ifpost'] = false;
+        }
+        //$this->display('admin/goods/bngetstore.html');
+        $this->page('admin/goods/bngetstore.html');
+    }
 }

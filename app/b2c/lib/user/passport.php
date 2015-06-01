@@ -244,7 +244,7 @@ class b2c_user_passport
                 $data[$aTmp[1]] = serialize($val);
             }
         }
-        $arr_colunm = array('regtime','reg_ip','currency','contact','profile','member_lv');
+        $arr_colunm = array('regtime','reg_ip','currency','contact','profile','member_lv','op_id','store_id');
         $attr = $this->app->model('member_attr')->getList('attr_column');
         foreach($attr as $attr_colunm){
             $colunm = $attr_colunm['attr_column'];

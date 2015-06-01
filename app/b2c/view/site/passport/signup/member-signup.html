@@ -3,7 +3,7 @@
   <input name="mini" type="hidden" value="<{$mini_passport}>">
   <ul>
     <li class="form-item">
-      <label for=""  class="form-label"><em class="warn">*</em>用户名：</label><span class="form-act"><{input type="text" name="pam_account[login_name]" id="" class="action-account-check" placeholder="4-20个字符" vtype="required" data-caution="请填写用户名，最少4个字符" autofocus}><span class="validation-messagebox"></span></span>
+      <label for=""  class="form-label"><em class="warn">*</em>用户名：</label><span class="form-act"><{input type="text" name="pam_account[login_name]" id="" class="action-account-check" maxlength="20" placeholder="4-20个字符" vtype="required" data-caution="请填写用户名，最少4个字符" autofocus}><span class="validation-messagebox"></span></span>
     </li>
     <li class="form-item">
     <label for="" class="form-label"><em class="warn">*</em>密码：</label><span class="form-act"><{input type="password" name="pam_account[login_password]" maxlength="20" placeholder="6-20个字符" vtype="required&&minLength:6&&maxLength:20" data-caution="请填写密码，6-20个字符&&输入不正确，最少6个字符&&输入不正确，最多20个字符" }></span>
@@ -11,10 +11,13 @@
     <li class="form-item">
     <label for="" class="form-label"><em class="warn">*</em>确认密码：</label><span class="form-act"><{input type="password" name="pam_account[psw_confirm]" id="" class="x-input" maxlength="20" placeholder="再次输入密码" vtype="equal:pam_account[login_password]" data-caution="密码与确认密码不相符，请重新填写"}><span class="validation-messagebox"></span></span>
     </li>
-	<li class="form-item" style="display:none">
+    <li class="form-item">
+    <label for="" class="form-label">手机：</label><span class="form-act"><{input type="text" name="contact[phone][mobile]" id="" class="x-input" maxlength="20" placeholder="例：13566668888" vtype="required&&mobile" data-caution="请输入手机号码"}><span class="validation-messagebox"></span></span>
+    </li>
+	  <li class="form-item">
     <label for="" class="form-label">邮箱：</label><span class="form-act"><{input type="text" name="contact[email]" id="" class="x-input" maxlength="20" placeholder="例：yourname@hotmail.com" vtype="required&&email" data-caution="请输入邮箱或正确的邮箱格式"}><span class="validation-messagebox"></span></span>
     </li>
-    <{*foreach from=$attr item=item name="item" key='row'}>
+    <{foreach from=$attr item=item name="item" key='row'}>
     <li class="form-item">
     <label for="" class="form-label"><{if $item.attr_required eq 'true'}><em class="warn">*</em><{/if}><{$item.attr_name}>：</label>
     <span class="form-act">
@@ -66,7 +69,13 @@
       <{/if}>
     </span>
     </li>
-    <{/foreach*}>
+    <{/foreach}>
+    <li class="form-item action-store" style="display:none;">
+      <label for="" class="form-label">体验店：</label>
+      <span class="form-act">
+        <select id="select-store" class="x-select" name="store_id"><option value="0">请选择体验店</option></select>
+      </span>
+    </li>    
     <{if $valideCode == 'true'}>
     <li class="form-item action-verifycode">
       <label for="" class="form-label"><em class="warn">*</em>验证码：</label>

@@ -1,5 +1,7 @@
 <services>
     <service id="desktop.widgets">
+        <class>b2c_desktop_widgets_news</class>
+        <class>b2c_desktop_widgets_chat</class>
 		<class>b2c_desktop_widgets_workcount</class>
         <class>b2c_desktop_widgets_stats</class>
         <class>b2c_desktop_widgets_exstatistics</class>
@@ -666,4 +668,8 @@
     </service>
     -->
     <!-- 折扣特卖-end -->
+
+    <service id="extend_filter_b2c_mdl_coupons">
+        <class>b2c_finder_extend_coupons</class>
+    </service>
 </services>

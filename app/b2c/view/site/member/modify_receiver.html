@@ -20,9 +20,9 @@
     <li class="form-item">
       <label for="" class="form-label"><em class="text-warn">*</em> 手机：</label>
       <span class="form-act">
-        <input type="text" name="mobile" value="<{$phone.mobile}>" id="" class="x-input" vtype="requiredone">
-        <label class="form-sub-label"> 或 固定电话：</label>
-        <input type="text" name="tel" value="<{$phone.telephone}>" id="" vtype="requiredone" data-caution="请填写手机号码或者固定电话">
+        <input type="text" name="mobile" value="<{$phone.mobile}>" id="" class="x-input" vtype="required&&mobile">
+        <label class="form-sub-label"> 或 备用电话：</label>
+        <input type="text" name="tel" value="<{$phone.telephone}>" id="" data-caution="请填写手机号码或者固定电话">
       </span>
     </li>
     <li class="form-item">

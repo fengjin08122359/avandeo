@@ -1,0 +1,31 @@
+<{if $order}>
+<form action="<{link app=b2c ctl=admin_order act=settle_accounts}>" id="act-form" method="post">
+<input type="hidden" name="doSubmit" value="do" />
+<input type="hidden" name="order_id" value="<{$order.order_id}>">
+<div class="tableform">
+<div class="division">
+<table>
+    <tr><th>订单金额：</th><td><font color="red"><{$order.total_amount|cur}></font></td></tr>
+    <tr>
+        <th>提成： </th>
+        <td><input type="text" id="rebate" name="rebate" vtype="required" data-caution="请输入提成金额，不能大于订单总金额" value="0" /></td>
+    </tr>
+</table>
+</div>
+</div>
+<div class="table-action">
+  <{button label=$___b2c="结算并提成"|t:'b2c'  type="submit" confirm="确认要对订单进行结算吗?"}>
+  <{button label=$___b2c="取消"|t:'b2c' isCloseDialogBtn="true"}>
+</div>
+</form>
+<script type="text/javascript">
+      $('act-form').store('target',{
+        onComplete:function(re){
+           re = JSON.decode(re);
+           if(re.error)return;
+          if($('act-form').getParent('.dialog'))
+          $('act-form').getParent('.dialog').retrieve('instance').close();
+        }
+      });
+</script>
+<{/if}>

@@ -36,6 +36,8 @@ class desktop_mdl_users extends dbeav_model{
     );
    function pre_recycle($data){
         $obj_pam = app::get('pam')->model('account');
+        $storelistRelatObj=app::get('storelist')->model('storelist_relat');
+        $storelistRoleObj=app::get('storelist')->model('storelist_roles');
         $falg = true;
         $users = kernel::single('desktop_user');
         foreach($data as $val){
@@ -43,6 +45,13 @@ class desktop_mdl_users extends dbeav_model{
                 $this->recycle_msg = app::get('desktop')->_('自己不能删除自己');
                 $falg = false;
                 break;
+            }
+            $stores_id=$storelistRelatObj->getRow("stores_id",array('oper_id'=>intval($val['user_id'])));
+            $role_id=$storelistRoleObj->getList("role_id",array('stores_id'=>intval($stores_id['stores_id'])));
+            if($role_id){
+            	 $this->recycle_msg = app::get('desktop')->_('不能删除,因为门店主下面有子职员');
+            	 $falg = false;
+            	 break;
             }
         }
         return $falg;
@@ -213,5 +222,29 @@ class desktop_mdl_users extends dbeav_model{
             }
         }
      
+        }
+        
+        /* 重写搜索的下拉选项方法
+         * @param null
+        * @return null
+        */
+        public function searchOptions(){
+        	$columns = array();
+        
+        	foreach($this->_columns() as $k=>$v)
+        	{
+        		if(isset($v['searchtype']) && $v['searchtype'])
+        		{
+        			$columns[$k] = $v['label'];
+        		}
+        	}
+        
+        	$columns = array_merge(array(
+        			'name'=>app::get('desktop')->_('姓名'),
+        			//'name'=>app::get('sysitem')->_('号码'),
+        
+        	),$columns);
+        
+        	return $columns;
         }
 }

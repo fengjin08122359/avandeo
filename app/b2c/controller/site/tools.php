@@ -163,6 +163,21 @@ class b2c_ctl_site_tools extends b2c_frontpage{
 		echo '{success:"'.app::get('b2c')->_('成功！').'",msg:"'.app::get('b2c')->_('成功！').'"}';exit;
 	}
 
+    // 从后台发起
+    public function do_pay()
+    {
+        if (!$_POST['token'] || !$_POST['order_id']){
+            echo '{failed:"'.app::get('b2c')->_('错误的请求').'",msg:"'.app::get('b2c')->_('错误的请求').'"}';exit;
+        }
+        $order_id = $_POST['order_id'];
+        if ($_POST['token'] == md5($this->app->getConf('certificate.token').$order_id)) {
+            setcookie('ST_ShopEx-Order-Buy', $_POST['token']);
+            $url = array('app'=>'b2c', 'ctl'=>'site_paycenter','act'=>'index','full'=>1,'args'=>array($order_id));
+        }
+        $this->redirect( $url );
+    }
+
+
 	public function send_payments()
 	{
 		if (!$_POST['payment_id']){

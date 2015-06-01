@@ -3,7 +3,7 @@
   <input type="radio" name="address" id="for_shipping_<{$addr.addr_id}>" value='{"addr_id":<{$addr.addr_id}>,"area":<{$addr.area|ship_area_id}>}' class="action-change-shipping" <{if $def_addr.addr_id == $addr.addr_id}>checked="checked"<{/if}>>
   <label for="for_shipping_<{$addr.addr_id}>">
     <address>
-      <{$addr.area|ship_area}><{$addr.addr}><i>(<{t}>收货人<{/t}>：<{$addr.name}>　<{if $addr.mobile}><{t}>手机<{/t}>：<{$addr.mobile}><{/if}> <{if $addr.tel}><{t}>固定电话<{/t}>：<{$addr.tel}><{/if}>　 <{if $addr.zip}><{t}>邮编<{/t}>：<{$addr.zip}><{/if}>)</i>
+      <{$addr.area|ship_area}><{$addr.addr}><i>(<{t}>收货人<{/t}>：<{$addr.name}>　<{if $addr.mobile}><{t}>手机<{/t}>：<{$addr.mobile}><{/if}> <{if $addr.tel}><{t}>备用电话<{/t}>：<{$addr.tel}><{/if}>　 <{if $addr.zip}><{t}>邮编<{/t}>：<{$addr.zip}><{/if}>)</i>
       <{if $site_checkout_receivermore_open == 'true'}>
       <{$addr.day}> , <{$addr.time}>
       <{/if}>

@@ -43,20 +43,22 @@
   <div class="section">
     <div class="form-title">
       <h5>
-      <span>1</span>
+      <span>3</span>
       <{t}>收货信息确认<{/t}>
       <em class="c-red">*</em>
       </h5>
     </div>
     <div class="form-body">
-      <{include file="admin/order/receiver.html" app=b2c}>
+      <div class="receiver diviosion" id="receiver">
+        <{include file="admin/order/receiver.html" app=b2c}>
+      </div>
     </div>
   </div>
 
   <div class="section">
     <div class="form-title">
       <h5>
-      <span>2</span>
+      <span>4</span>
       <{t}>配送方式确认<{/t}>
       <em class="c-red">*</em>
       </h5>
@@ -77,7 +79,7 @@
   <div class="section">
     <div class="form-title">
       <h5>
-        <span>3</span>
+        <span>5</span>
         <{t}>支付方式确认<{/t}>
         <em class="c-red">*</em>
       </h5>
@@ -90,7 +92,9 @@
       </div>
       -->
       <div id='payment'>
-          <{$payment_html}>
+          <div class="notice" >
+          <{t}>请先选择配送方式<{/t}>
+          </div>
       </div>
   </div>
   </div>
@@ -98,7 +102,7 @@
   <div class="section">
       <div class="form-title">
           <h5>
-              <span>4</span>
+              <span>5</span>
               <{t}>发票信息确认<{/t}>
               <em class="c-red">*</em>
           </h5>

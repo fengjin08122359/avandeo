@@ -27,6 +27,7 @@ class couponlog_ctl_admin_log extends desktop_controller
         $this->finder('couponlog_mdl_order_coupon_user',array(
             'title'=>app::get('b2c')->_('优惠券使用记录'),
             'use_buildin_recycle'=>false,
+            'use_buildin_filter'=>true,
             ));
     }
     #End Func

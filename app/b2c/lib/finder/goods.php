@@ -8,7 +8,9 @@
 
 class b2c_finder_goods{
     var $detail_basic = '基本信息';
+    var $detail_productlist = '货品列表';
     var $column_control = '操作';
+    var $column_controlstore = '有无库存';
 
 
     function __construct($app){
@@ -28,13 +30,32 @@ class b2c_finder_goods{
     }
 
     function column_control($row){
-        $returnValue = '<a href="index.php?app=b2c&ctl=admin_goods_editor&act=edit&p[0]='.$row['goods_id'].'&finder_id='.$_GET['_finder']['finder_id'].'"  target="blank">'.app::get('b2c')->_('编辑').'</a>';
-        $aGoods = app::get('b2c')->model('goods')->getList('spec_desc',array('goods_id'=>$row['goods_id']));
-        if($aGoods && $aGoods[0]['spec_desc']){
-            $returnValue .= ' <a href="index.php?app=b2c&ctl=admin_products&act=set_spec_index&nospec=0&goods_id='.$row['goods_id'].'"  target="blank">'.app::get('b2c')->_('编辑货品').'</a>';
+        $store = kernel::single('storelist_store');
+        if($store->store_id > 0){
+            $returnValue = '';
+        }else{
+            $returnValue = '<a href="index.php?app=b2c&ctl=admin_goods_editor&act=edit&p[0]='.$row['goods_id'].'&finder_id='.$_GET['_finder']['finder_id'].'"  target="blank">'.app::get('b2c')->_('编辑').'</a>';
+            $aGoods = app::get('b2c')->model('goods')->getList('spec_desc',array('goods_id'=>$row['goods_id']));
+            if($aGoods && $aGoods[0]['spec_desc']){
+                $returnValue .= ' <a href="index.php?app=b2c&ctl=admin_products&act=set_spec_index&nospec=0&goods_id='.$row['goods_id'].'"  target="blank">'.app::get('b2c')->_('编辑货品').'</a>';
+            }
         }
         return $returnValue;
     }
+
+    function column_controlstore($row){
+
+        $obj_goods = app::get('b2c')->model('goods');
+        $goods_store = $obj_goods->dump(array('goods_id' => $row['goods_id']),'store,delivery_cyc');
+        if($goods_store['store'] > 0){
+            $returnValue = '有';
+        }else{
+            $returnValue = '无，发货周期为'.($goods_store['delivery_cyc'] > 0?$goods_store['delivery_cyc']:0).'天';
+        }
+
+        return $returnValue;
+    }
+
     function detail_basic($gid){
         $render =  app::get('b2c')->render();
         $o = $render->app->model('goods');
@@ -136,5 +157,11 @@ class b2c_finder_goods{
 
 
 */
+    function detail_productlist($gid){
+        $render =  app::get('b2c')->render();
+        $list_product = app::get('b2c')->model('products')->getList('bn,name,spec_info,store',array('goods_id'=>$gid));
 
+        $render->pagedata['products'] = $list_product;
+        return $render->fetch('admin/goods/detail/productlist.html');
+    }
 }

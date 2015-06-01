@@ -1,0 +1,21 @@
+<{if $coupon}>
+已使用优惠券：<{$coupon}> <a href="javascript:void(0);" class="lnklike action-cancel-coupon" id="coupon-remove">[取消使用]</a>
+<input type="hidden" name="coupon" id="for_input_coupon"  value="<{$coupon}>">
+<script>
+  $('coupon-remove').addEvent('click',function(e){
+      Order.removeCoupon();
+  });
+</script>
+<{else}>
+<label for="for_input_coupon">使用优惠券：</label>
+<input type="text" id="for_input_coupon" size="15">
+<button type="button" class="btn btn-simple action-confirm-coupon" id="coupon-use"><span><span>确定</span></span></button>
+<script>
+<{if $msg}>
+alert('<{$msg}>');
+<{/if}>
+  $('coupon-use').addEvent('click',function(e){
+      Order.useCoupon();
+  });
+</script>
+<{/if}>

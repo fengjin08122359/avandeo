@@ -45,6 +45,18 @@
     <th><{t}>重量：<{/t}></th>
     <td><{input type="unsigned" key="weight" value=$product.weight name="goods[product][0][weight]" style="width:60px" maxlength="25" }><{t}>克(g)<{/t}></td>
   </tr>
+  <tr>
+    <th><{t}>长：<{/t}></th>
+    <td><{input type="unsigned" key="length" value=$product.length name="goods[product][0][length]" style="width:60px" maxlength="25" }></td>
+  </tr>
+  <tr>
+    <th><{t}>宽：<{/t}></th>
+    <td><{input type="unsigned" key="width" value=$product.width name="goods[product][0][width]" style="width:60px" maxlength="25" }></td>
+  </tr>
+  <tr>
+    <th><{t}>高：<{/t}></th>
+    <td><{input type="unsigned" key="height" value=$product.height name="goods[product][0][height]" style="width:60px" maxlength="25" }></td>
+  </tr>
   <{if $goods.type.is_physical || $gtype.0.is_physical}>
   <tr>
     <th><{t}>库存：<{/t}></th>

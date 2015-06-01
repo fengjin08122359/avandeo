@@ -3,7 +3,7 @@
     <panelgroup id="user" icon="panel-user.png" order="50">管理员和权限</panelgroup>
 <!--    <panelgroup id="network" icon="panel-network.png" order="80">联网</panelgroup>-->
     <panelgroup id="other" icon="panel-other.png" order="70">其他</panelgroup>
-
+	
 
 
     
@@ -16,6 +16,7 @@
     <adminpanel group="desktop_other" permission="other" controller="pam" display='true'>登陆认证设置</adminpanel> 
     <adminpanel group="desktop_setting" controller="certificate" action="index" permission="shopsetting" display="true" order='51'>授权证书</adminpanel>
     <adminpanel group="desktop_setting" controller="adminpanel" action="index" permission="setting" display="false" order='20'>配送方式</adminpanel>
+    
 
 <!--    <adminpanel group="desktop_network" controller="network">网店邻居</adminpanel> -->
     <adminpanel group="desktop_other" permission="setting" controller="data" display='true'>数据备份与还原</adminpanel>

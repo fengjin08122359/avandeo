@@ -1,0 +1,44 @@
+<div class="tableform">
+<table style="width:450px;">
+    <tr>
+        <td>
+            <form id="search_form" action="index.php?app=b2c&ctl=admin_goods&act=bngetstore" style="maring:5px 0;" method="post" class="tableform">
+            <table  width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr style="float:left">
+                    <td><{t}>货号：<{/t}></td>
+                    <td>
+                    <{input type="text" value=$postbns name="bns"}> <{t}>多货号请使用英文半角逗号“,”分割<{/t}>
+                    </td>
+                    <td><{button label="搜索" type="submit"}></td>
+                </tr>
+            </table>
+            </form>
+        </td>
+    </tr>
+</table>
+</div>
+<hr>
+<{if $ifpost}>
+<div class="division" id='division_content'>
+  <table class="gridlist" width="100%" border="0" cellpadding="0" cellspacing="0">
+  <thead>
+    <tr>
+      <th><{t}>名称<{/t}></th>
+      <th><{t}>规格<{/t}></th>
+      <th><{t}>货号<{/t}></th>
+      <th><{t}>库存<{/t}></th>
+    </tr>
+  </thead>
+  <tbody>
+    <{foreach from=$products item=product}>
+    <tr>
+        <td><{$product.name}></td>
+        <td><{$product.spec_info}></td>
+        <td><{$product.bn}></td>
+        <td><{$product.store}></td>
+    </tr>
+    <{/foreach}>
+  </tbody>
+</table>
+</div>
+<{/if}>

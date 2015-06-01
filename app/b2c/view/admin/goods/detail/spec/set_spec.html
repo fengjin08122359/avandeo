@@ -43,6 +43,15 @@
       <{input type="text" vtype="unsigned" value="{weight}" name="{idx}[weight]" size="4"}>
     </td>
     <td>
+      <{input type="text" vtype="unsigned" value="{length}" name="{idx}[length]" size="4"}>
+    </td>
+    <td>
+      <{input type="text" vtype="unsigned" value="{width}" name="{idx}[width]" size="4"}>
+    </td>
+    <td>
+      <{input type="text" vtype="unsigned" value="{height}" name="{idx}[height]" size="4"}>
+    </td>
+    <td>
       <{input type="text" value="{store_place}" name="{idx}[store_place]" size="4"}>
     </td>
     <td>
@@ -69,10 +78,13 @@
             <th style="width:4%;">上架</th>
             <th style="width:6%;">库存</th>
             <th style="width:6%;">冻结库存</th>
-            <th style="width:15%;">销售价</th>
+            <th style="width:8%;">销售价</th>
             <th style="width:8%;">成本价</th>
             <th style="width:8%;">市场价</th>
             <th style="width:8%;">重量(g)</th>
+            <th style="width:8%;">长</th>
+            <th style="width:8%;">宽</th>
+            <th style="width:8%;">高</th>
             <th style="width:8%;">货位</th>
             <th style="width:5%;">默认货品</th>
             <th style="width:4%;">操作</th>
@@ -619,7 +631,7 @@ var goodsSpecTree = new Klass({
 
         html = null;
     },
-    props: ['product_id', 'status', 'bn', 'store', 'freez' ,'price', 'member_lv_price', 'cost', 'mktprice', 'weight', 'store_place', 'is_default'],
+    props: ['product_id', 'status', 'bn', 'store', 'freez' ,'price', 'member_lv_price', 'cost', 'mktprice', 'weight', 'length', 'width', 'height', 'store_place', 'is_default'],
     processProducts: function(arr, index, length, id, name, value, pvid) {
         var specid = {}, spec_name = [arr[index].name], specvalue = {}, specpvid={}, sname, spec_id = arr[index].id, uid;
         if(name) {

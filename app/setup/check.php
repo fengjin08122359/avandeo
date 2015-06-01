@@ -114,6 +114,7 @@ function check_pathinfo(){
             fclose($fp);
         }
         $content = preg_split("\r?\n\r?\n",$content);
+        return true;
         if(strpos($content[1],'SUPPORT_PATHINFO')!==false){
             return true;
         }
@@ -137,8 +138,8 @@ if(check_pathinfo()){
     Header('Location: ' . $url);    //todo:进入安装流程
     exit;
 }else{
-    Header('Location: view/notice_pathinfo.html');   //todo:不支持pathinfo，警告页
-    exit;
+    //Header('Location: view/notice_pathinfo.html');   //todo:不支持pathinfo，警告页
+    //exit;
 }
 
 ?>

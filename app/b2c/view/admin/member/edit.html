@@ -9,17 +9,17 @@
         <tr>
           <th><{t}>邮箱<{/t}></th>
           <td>
-            <{$mem.account.email}>
+            <input type="text" name="contact[email]" value="<{$mem.members.email}>" />
           </td>
         </tr>
         <tr>
           <th><{t}>手机号码<{/t}></th>
           <td>
-            <{$mem.account.mobile}>
+            <input type="text" name="contact[phone][mobile]" value="<{$mem.members.mobile}>" />
           </td>
         </tr>
         <tr>  <th><{t}>会员等级<{/t}></th>
-          <td> <{input type='select' name='member_lv[member_group_id]' options=$mem.lv.options required=true value=$mem.lv.value }>  <span onclick="new Dialog('index.php?app=b2c&ctl=admin_member&act=chkpassword&p[0]=<{$member_id}>',{width:400,height:300,title:'<{t}>修改密码<{/t}>'})" class="lnk">[<{t}>修改密码<{/t}>]</span> </td>
+          <td> <{input type='select' name='member_lv[member_group_id]' options=$mem.lv.options required=true value=$mem.lv.value }>  <{if !$ifstore}><span onclick="new Dialog('index.php?app=b2c&ctl=admin_member&act=chkpassword&p[0]=<{$member_id}>',{width:400,height:300,title:'<{t}>修改密码<{/t}>'})" class="lnk">[<{t}>修改密码<{/t}>]</span><{/if}> </td>
         </tr>
         <{foreach from=$attr item=item name="item" key='row'}>
         <tr>

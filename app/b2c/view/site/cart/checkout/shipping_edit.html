@@ -3,7 +3,9 @@
   <tbody>
     <tr>
         <th><em>*</em><{t}>收货地区<{/t}>：</th>
-      <td><{input app=ectools type="region" name='area' vtype='area' value=$edit_addr.area callback="selectArea"}></td>
+      <td><{input app=ectools type="region" name='area' vtype='area' value=$edit_addr.area callback="selectArea"}> 
+        <span class="action-store" style="display:none"><select id="select-store" class="x-select"><option value="0">请选择体验店</option></select></span>
+      </td>
     </tr>
     <tr>
       <th><em>*</em><{t}>收货地址<{/t}>：</th>
@@ -18,12 +20,12 @@
       <td><{input type="text" name=name id="" vtype="required" value=$edit_addr.name data-caution="请填写收货人姓名"}></td>
     </tr>
     <tr>
-      <th><{t}>手机<{/t}>：</th>
-      <td><{input type="text" name="mobile" id="" vtype="onesecond" data-caution="请填写手机号码或者固定电话" value=$edit_addr.mobile}> <span class="caution notice-inline">手机号码和固定电话至少填写一个</span></td>
+      <th><em>*</em><{t}>手机<{/t}>：</th>
+      <td><{input type="text" name="mobile" id="" vtype="required&&mobile" data-caution="请填写手机号码" value=$edit_addr.mobile}> <!-- <span class="caution notice-inline">手机号码和固定电话至少填写一个</span> --></td>
     </tr>
     <tr>
-      <th><{t}>固定电话<{/t}>：</th>
-      <td><{input type="text" name="tel" id="" value=$edit_addr.tel vtype="onesecond"}></td>
+      <th><{t}>备用电话<{/t}>：</th>
+      <td><{input type="text" name="tel" id="" value=$edit_addr.tel}></td>
     </tr>
     <{if $site_checkout_receivermore_open == 'true'}>
     <tr>
@@ -69,3 +71,24 @@
     <{/if}>
   </tbody>
 </table>
+
+<script>
+$$(".x-select")[2].addEvent('change',function(e){
+  var area=$$("input[name=area]").get('value');
+   reg_id=$$(".x-select")[2].get('value');
+   new Request({url:"<{link app='b2c' ctl='site_passport' act='get_area_store'}>",method:'post',data:'reg_id='+reg_id,onSuccess:function(res){
+      var res = JSON.decode(res);
+      if (res.status == 1) {
+        var option = '<option value="0">请选择体验店</option>';
+        res.data.each(function(i) { 
+      option += '<option value="'+i.store_id+'">'+i.store_name+'</option>';
+    });
+        $('select-store').innerHTML = option;
+      $$(".action-store").setStyle('display','');
+      }else{
+        $$(".action-store").setStyle('display','none');
+      }
+    }}).send();
+
+});
+</script>

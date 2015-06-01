@@ -515,9 +515,32 @@ class b2c_mdl_orders extends dbeav_model{
                 $obj_filter->extend_filter($filter);
             }
         }
+
+        if($filter['area_fee_conf']['area_fee']['areaGroupId']){
+            $areaGroupId = $filter['area_fee_conf']['area_fee']['areaGroupId'];
+            unset($filter['area_fee_conf']['area_fee']['areaGroupId']);
+        }
+
+
 		$info_object = kernel::service('sensitive_information');
 		if(is_object($info_object)) $info_object->opinfo($filter,'b2c_mdl_orders',__FUNCTION__);
         $filter = parent::_filter($filter);
+
+
+        // 筛选门店人自己的订单或者属于区域的订单
+        $store = kernel::single('storelist_store');
+        if($store->store_id > 0){
+            $filter .= " and (store_id = ".$store->store_id." or (store_id = 0 && substring_index(ship_area,':',-1) in ('".implode("','",$store->share_area)."'))) ";
+        }
+
+        if($areaGroupId){
+            $obj_area = app::get('ectools')->model('regions');
+            $area_ids_arr = $obj_area->getALLEndChildByRegionTreeList($areaGroupId);
+            if(is_array($area_ids_arr) && count($area_ids_arr) > 0){
+                $filter .= " and substring_index(ship_area,':',-1) in ('".implode("','",$area_ids_arr)."') ";
+            }
+        }
+
         return $filter;
     }
 

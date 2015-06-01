@@ -803,6 +803,27 @@ class b2c_finder_orders{
         //$all_actions = array_merge($actions['sequence'],$actions['re_sequence'],$extends_actions);
         /** 结束 **/
 
+        $order_verify_disable = true;
+        if ($arr_order['verify'] == 'false') {
+            $order_verify_disable = false;
+        }     
+
+        // BEGIN 权限判断，无权限的菜单直接不显示
+        $this->user = kernel::single('desktop_user');
+        if(!$this->user->is_super()){
+            $permObj = kernel::single('desktop_controller');
+            if(!$permObj->has_permission('verifyyorder')){
+                $order_verify_disable = true;
+            }
+            if(!$permObj->has_permission('storeorderpay')){
+                unset($actions['sequence']['paynew']);
+            } 
+            if(!$permObj->has_permission('storesettleaccounts')){
+                unset($actions['sequence']['settle_accounts']);
+            }            
+        }        
+        // END         
+
         /** 根据状态，判定显示与否 **/
         if ($actions['sequence']){
             foreach ($actions['sequence'] as $key=>$buttons){
@@ -852,6 +873,17 @@ class b2c_finder_orders{
                 'target'=>'_blank',
                 'disable'=>$order_edit_disable
             );
+
+        // 订单审核
+        if (!$order_verify_disable){
+            $arr_link['info']['verify'] = array(
+                'href'=>'index.php?app='.$_GET['app'].'&ctl=admin_order&act=doverify&p[0]='.$row['order_id'].'&finder_id='.$_GET['_finder']['finder_id'],
+                'label'=>'审核',
+                'target'=>'_blank',
+                'disable'=>$order_edit_disable
+            ); 
+        }
+     
 
         if ($actions['sequence'])
             foreach($actions['sequence'] as $key=>$link){
@@ -951,7 +983,8 @@ class b2c_finder_orders{
         $html = '<div class="clearfix print-col">';
         $html.='<div class="span-auto"><a href="index.php?app=b2c&ctl=admin_order&act=printing&p[0]=1&p[1]=' . $row['order_id'] . '" title='.app::get('b2c')->_("购物清单").' target="_blank">'.app::get('b2c')->_('购').'</a></div><div class="span-auto">
                             <a href="index.php?app=b2c&ctl=admin_order&act=printing&p[0]=2&p[1]=' . $row['order_id'] . '" title='.app::get('b2c')->_("配货单").' target="_blank">'.app::get('b2c')->_('配').'</a></div><div class="span-auto">
-                              <a href="index.php?app=b2c&ctl=admin_order&act=printing&p[0]=4&p[1]=' . $row['order_id'] . '" title='.app::get('b2c')->_("联合打印").' target="_blank">合</a></div><div class="span-auto last">
+                              <!--<a href="index.php?app=b2c&ctl=admin_order&act=printing&p[0]=4&p[1]=' . $row['order_id'] . '" title='.app::get('b2c')->_("联合打印").' target="_blank">合</a></div><div class="span-auto last">-->
+                              		<a href="index.php?app=b2c&ctl=admin_order&act=print_new&p[0]=4&p[1]=' . $row['order_id'] . '" title='.app::get('b2c')->_("联合打印").' target="_blank">合</a></div><div class="span-auto last">
                             ';
          $app_express = app::get('express');
         if (isset($app_express) && $app_express && is_object($app_express))

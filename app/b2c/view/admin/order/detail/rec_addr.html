@@ -4,6 +4,7 @@
     <th><em class="c-red">*</em><{t}>收货地区：<{/t}></td>
     <td colspan=2>
       <span id="checkout-select-area"><{input id="shipping-area" app="ectools" class="inputstyle" name="order[consignee][area]" type="region" required="true" value=$addr.area callback="selectArea"}></span>
+      <span class="action-store" style="display:none"><select id="select-store" class="x-select"><option value="0">请选择体验店</option></select></span>
     </td>
   </tr>
   <tr>

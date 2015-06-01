@@ -1,1 +1,13 @@
-<a href='index.php?app=desktop&ctl=roles&act=edit&p[0]=<{$role_id}>&finder_id=<{$name}>' target="dialog::{'title':'<{t}>角色编辑<{/t}>'}" ><span><{t}>编辑<{/t}></span></a>
+
+<{if $role_id neq $set_role_id}>
+<a href='index.php?app=desktop&ctl=roles&act=edit&p[0]=<{$rs_id}>&finder_id=<{$name}>' target="dialog::{'title':'<{t}>角色编辑<{/t}>'}" ><span><{t}>编辑<{/t}></span></a>
+<{else}>
+<a href='index.php?app=storelist&ctl=admin_storerole&act=edit&p[0]=<{$rs_id}>&finder_id=<{$name}>' target="dialog::{'title':'<{t}>角色编辑<{/t}>'}" ><span><{t}>编辑<{/t}></span></a>
+<{/if}>
+<{if !$set_role_id && $rs_id neq $set_role_id && $app eq 'desktop'}>
+ <a href='index.php?app=desktop&ctl=roles&act=manage&p[0]=<{$rs_id}>&finder_id=<{$name}>'><span><{t}>设为门店管理员<{/t}></span></a> 
+<{elseif $set_role_id!='' && $rs_id eq $set_role_id && $app eq 'desktop' }>
+<span><{t}>门店管理员<{/t}></span>
+<{else}>
+<span><{t}><{/t}></span>
+<{/if}>

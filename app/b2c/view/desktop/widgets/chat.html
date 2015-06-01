@@ -1,0 +1,145 @@
+<style type="text/css">
+	.to_id {
+		width:50px;
+	}
+	.message{
+		width: 95%;
+	}
+	.message_box{
+		height: 295px;
+		overflow-y:auto; 
+		overflow-x:hidden; 
+		line-height: 20px;
+		font-size: 12px;
+	}
+	.message_box div{
+		margin: 0px 5px;
+	}
+	.from_name{
+		color: blue;
+		cursor: pointer;
+		margin-right: 5px;
+	}
+</style>
+<div class="clearfix">
+	<div class="message_box" id="message_box">
+	</div>
+</div>
+<div class="clearfix">
+	<table cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<td style="width: 60px;" align="center" id="to_name">
+				<select name="to_id" id="to_id">
+				<{foreach from=$to_users key=key item=item}>
+					<option value="<{$item.user_id}>"><{$item.name}></option>
+				<{/foreach}>
+				</select>
+			</td>
+			<td><{input type="text" id="message" class="message"}></td>
+			<td style="width:20px;"><button class="btn btn-primary" onclick="to_send()" type="button"><span><span>提交</span></span></button></td>
+		</tr>
+	</table>
+</div>
+<script type="text/javascript">
+
+	var addtime = 0; //最后更新时间
+	var kaiguan1 = 1; //自动获取信息开关:0停止,1启动
+	var processing = 0; //获取信息节点:1进行中,0已完成
+	var message_box = document.getElementById('message_box');
+	var uid = <{$user_id}>;
+
+	run();
+
+	/**
+	 * 自动加载
+	 */
+	function run()
+	{
+		window.setInterval('get_message()',3000);
+	}
+	
+	/**
+	 * 加载聊天记录
+	 */
+	function get_message(){
+		if(kaiguan1 != 1)
+		{
+			return false;
+		}
+		if(processing == 1)
+		{
+			return false;
+		}
+		processing = 1;
+		var url = 'index.php?app=storelist&ctl=admin_chat_record&act=ajax_get_message'+'&p[0]='+addtime;
+		var method = 'get';
+		new Request({
+			url:url,
+			method:method,
+			onComplete:function(e){
+				var record = JSON.decode(e);
+				var record_string = '';
+				record.each(function(item,index){
+
+				var unixTimestamp = new Date(item.addtime* 1000); 
+				commonTime = unixTimestamp.toLocaleString();
+
+					record_string += '<div id="r'+item.record_id+'"><span class="from_name" onclick="prepare_to_send(this)" data-id="'+item.from_id+'">'+item.from_user.name+'</span><span>'+item.message+' ('+commonTime+')</span></div>';
+					addtime = item.addtime;
+				});
+				$('message_box').set('html',$('message_box').get('html')+record_string);
+				processing = 0;
+				if(record_string!=''){
+	    			message_box.scrollTop=message_box.scrollHeight;
+	    		}
+			}
+	    }).send();
+    }
+
+	/**
+	 * 整理发送资料
+	 */
+	function prepare_to_send(t)
+	{
+		if(parseInt($(t).get('data-id')) != uid)
+		{
+			var to_id_list = document.id('to_id').getElements('option');
+
+			to_id_list.each(function(item,index){
+				if(item.get('value') == parseInt($(t).get('data-id')))
+				{
+					item.set('selected',true);
+				}else{
+					item.set('selected',false);
+				}
+
+			});
+			$('message').focus();
+		}
+	}
+
+	/**
+	 * 发送
+	 */
+	function to_send()
+	{
+		var to_id = $('to_id').get('value');
+		var message = $('message').get('value');
+
+		var url = 'index.php?app=storelist&ctl=admin_chat_record&act=ajax_add';
+		var method = 'post';
+		var data = 'to_id='+to_id+'&message='+message;
+		new Request({
+			url:url,
+			method:method,
+			data:data,
+			onComplete:function(e){
+				if(JSON.decode(e).result == 'succ'){
+					get_message();
+					$('message').set('value','');
+				}
+			}
+	    }).send();
+	}
+
+</script>

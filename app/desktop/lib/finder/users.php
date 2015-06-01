@@ -15,13 +15,29 @@ class desktop_finder_users{
     }
     
      function column_control($row){
-        /* 
-         if($row['super']){
-              return '<a onclick="return false" href="index.php?app=desktop&ctl=users&act=edit&_finder[finder_id]='.$_GET['_finder']['finder_id'].'&p[0]='.$row['user_id'].'" target="dialog::{title:\''.app::get('desktop')->_('编辑操作员').'\', width:680, height:450}">'.app::get('desktop')->_('编辑').'</a>';
-         }
-         else{*/
-              return '<a href="index.php?app=desktop&ctl=users&act=edit&_finder[finder_id]='.$_GET['_finder']['finder_id'].'&p[0]='.$row['user_id'].'" target="dialog::{title:\''.app::get('desktop')->_('编辑操作员').'\', width:680, height:450}">'.app::get('desktop')->_('编辑').'</a>';
-       //  }
+     	$user_id=$_SESSION['account']['user_data']['user_id'];
+     	$role_id=app::get('desktop')->model('hasrole')->getRow("*",array('user_id'=>intval($user_id)));
+     	$setconf_role_id=app::get('desktop')->getconf('default_store_roles');
+     	$r_id=app::get('storelist')->model('storelist_roles')->getRow("*",array('role_id'=>intval($role_id['role_id'])));
+     	$is_super=app::get('desktop')->model('users')->dump(intval($user_id));
+     	$relatObj=app::get('storelist')->model('storelist_relat');
+     	$storeListObj=app::get('storelist')->model('storelist');
+     	$stores_id=$relatObj->getRow("stores_id",array('oper_id'=>intval($row['user_id'])));
+     	if(!empty($stores_id)){
+     		$store_n=$storeListObj->getRow("store_name",array('store_id'=>intval($stores_id['stores_id'])));
+     		if(!empty($store_n)){
+     			$store_name=$store_n['store_name'];
+     		}
+     	}
+     	
+     	if($is_super['super']==1 ||intval($role_id['role_id'])!=intval($setconf_role_id) && empty($r_id)){
+     		//$str  =  '<a href="index.php?app=storelist&ctl=admin_storelist&act=addstore&p[0]='.$row['store_id'].'&finder_id='.$_GET['_finder']['finder_id'].'" target="dialog::{title:\''.app::get('storelist')->_('编辑门店').'\'}">'.app::get('storelist')->_('编辑').'</a>';
+     		return '<a href="index.php?app=desktop&ctl=users&act=edit&_finder[finder_id]='.$_GET['_finder']['finder_id'].'&p[0]='.$row['user_id'].'" target="dialog::{title:\''.app::get('desktop')->_('编辑操作员').'\', width:680, height:450}">'.app::get('desktop')->_('编辑').'</a>'."&nbsp&nbsp&nbsp".$store_name;
+     	}elseif (intval($role_id['role_id'])==intval($setconf_role_id)){
+     		return '<a href="index.php?app=desktop&ctl=users&act=edit&_finder[finder_id]='.$_GET['_finder']['finder_id'].'&p[0]='.$row['user_id'].'" target="dialog::{title:\''.app::get('desktop')->_('编辑操作员').'\', width:680, height:450}">'.app::get('desktop')->_('编辑').'</a>';
+     	}
+             
+       
       }
     /*
     function detail_info($param_id){

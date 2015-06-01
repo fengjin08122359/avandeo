@@ -15,6 +15,11 @@
  */
 class site_controller extends base_controller
 {
+    /**
+     * shopname 通用
+     * @author qianzedong <qianzedong@shopex.cn>
+     */
+    public $shopname = null;
     /*
      * @var string $__theme
      * @access private
@@ -95,6 +100,7 @@ class site_controller extends base_controller
     function __construct(&$app)
     {
         parent::__construct($app);
+        $this->shopname = app::get('b2c')->getConf('system.shopname');
         if(@constant('WITHOUT_STRIP_HTML')){
             $this->enable_strip_whitespace = false;
         }

@@ -85,7 +85,10 @@ class b2c_mdl_goods extends dbeav_model{
             'col:详细介绍' => 'description',
             'col:重量' => array('weight','product'),
             'col:单位' => 'unit',
-            'col:库存' => array( 'store','product' )
+            'col:库存' => array( 'store','product' ),
+            'col:长' => array('length','product'),
+            'col:宽' => array('width','product'),
+            'col:高' => array('height','product'),
         )
     );
 
@@ -117,7 +120,10 @@ class b2c_mdl_goods extends dbeav_model{
                     app::get('b2c')->_('col:商品名称') => 'name',
                     app::get('b2c')->_('col:上架') => 'status',
                     app::get('b2c')->_('col:规格') => 'spec',
-                    app::get('b2c')->_('col:库存') => 'store'
+                    app::get('b2c')->_('col:库存') => 'store',
+                    app::get('b2c')->_('col:长') => 'length',
+                    app::get('b2c')->_('col:宽') => 'width',
+                    app::get('b2c')->_('col:高') => 'height'
                 );
                 $oMlv = $this->app->model('member_lv');
                 foreach( $oMlv->getList() as $mlv ){
@@ -212,6 +218,8 @@ class b2c_mdl_goods extends dbeav_model{
             }
         }
         $filter = kernel::single('b2c_goods_filter')->goods_filter($filter, $this);
+
+        $filter['e_type'] = 'normal';
 
         $extend_where = "";
 
@@ -1717,4 +1725,28 @@ class b2c_mdl_goods extends dbeav_model{
 
 	//	return true;
 	//}
+
+    public function get_schema(){
+        $schema = parent::get_schema();
+
+        $store = kernel::single('storelist_store');
+        if($store->store_id > 0){
+            $schema['columns']['store']['default_in_list'] = false;
+            $schema['columns']['store']['in_list'] = false;
+
+            foreach($schema['default_in_list'] as $key => $value){
+                if( $value== 'store'){
+                    unset($schema['default_in_list'][$key]);
+                }
+            }
+
+            foreach($schema['in_list'] as $key => $value){
+                if( $value== 'store'){
+                    unset($schema['in_list'][$key]);
+                }
+            }
+        }
+
+        return $schema;
+    }
 }

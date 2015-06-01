@@ -1,9 +1,11 @@
 <desktop>
 
    <panelgroup id="shipment" icon="panel-shipment.png" order='30'>配送设置</panelgroup>
-	<widgets id="b2c_desktop_widgets_stats" order='30'>业务概览</widgets>
-	<widgets id="b2c_desktop_widgets_workcount" order='30'>待处理事项</widgets>
-	<widgets id="b2c_desktop_widgets_exstatistics" order='30'>运营分析</widgets>
+    <widgets id="b2c_desktop_widgets_chat" order='30'>互动平台</widgets>
+    <widgets id="b2c_desktop_widgets_news" order='30'>新闻公告</widgets>
+	<widgets id="b2c_desktop_widgets_stats" order='20'>业务概览</widgets>
+	<widgets id="b2c_desktop_widgets_workcount" order='20'>待处理事项</widgets>
+    <widgets id="b2c_desktop_widgets_exstatistics" order='10'>运营分析</widgets>
     <adminpanel group="desktop_setting" controller="admin_setting" action="index" permission="shopsetting" display="true" order='10'>商店设置</adminpanel>
     <adminpanel group="b2c_shipment" controller="admin_dlytype" action="index" permission="shipment" display="true" order='20'>配送方式</adminpanel>
 	<adminpanel group="b2c_shipment" controller="admin_dlytype" action="add_dlytype" permission="shipment" display="false" order='21'>添加配送方式</adminpanel>
@@ -30,11 +32,13 @@
 		<permission id="exportgoods" display='true' parent='goods' workground='b2c.wrokground.goods'>商品导出</permission>
 		<permission id="deletegoods" display='true' parent='goods' workground='b2c.wrokground.goods'>商品删除</permission>
         <permission id="stogoods" display='true' parent='goods' workground='b2c.wrokground.goods'>到货通知</permission>
+        <permission id="bngetstore" display='true' parent='goods' workground='b2c.wrokground.goods'>货号库存查询</permission>
         <permission id="catgoods" display='true' parent='goods' workground='b2c.wrokground.goods'>商品分类</permission>
         <permission id="typegoods" display='true' parent='goods' workground='b2c.wrokground.goods'>商品类型</permission>
         <permission id="style" display='true' parent='goods' workground='b2c.wrokground.goods'>风格搭配</permission>
         <permission id="store" display='true' parent='goods' workground='b2c.wrokground.goods'>线下体验店</permission>
         <permission id="specificationgoods" display='true' parent='goods' workground='b2c.wrokground.goods'>商品规格</permission>
+        <permission id="dingzhiimport" display='true' parent='goods' workground='b2c.wrokground.dingzhi'>定制器商品导入</permission>
         <permission id="brandgoods" display='true' parent='goods' workground='b2c.wrokground.goods'>商品品牌</permission>
         <permission id="virtualcatgoods" display='true' parent='goods' workground='b2c.wrokground.goods'>虚拟分类</permission>
 
@@ -50,11 +54,15 @@
         <permission id="editstore" display='true' parent='editgoods' workground='b2c.wrokground.goods'>单商品库存编辑</permission>
         <permission id="batcheditstore" display='true' parent='editgoods' workground='b2c.wrokground.goods'>商品库存批量编辑</permission>
         <permission id="nostore_sell" display='true' parent='editgoods' workground='b2c.wrokground.goods'>无库存也可销售</permission>
+        <permission id="delivery_cyc" display='true' parent='editgoods' workground='b2c.wrokground.goods'>发货周期编辑</permission>
 
 		<permission id="deleteproducts" display='true' parent='editgoods' workground='b2c.wrokground.goods'>货品删除</permission>
         <!--订单-->
         <permission id="order" access_opctl='b2c_access:test' display='true' parent='0' workground='ectools.wrokground.order'>查看订单列表</permission>
-        <permission id="addorder" display='true' parent='0' workground='ectools.wrokground.order'>添加订单</permission>
+        <permission id="addorder" display='true' parent='0' workground='storelist.wrokground.order'>门店订单添加</permission>
+        <permission id="verifyorder" display='true' parent='0' workground='storelist.wrokground.order'>门店订单审核</permission>
+        <permission id="storeorderpay" display='true' parent='0' workground='storelist.wrokground.order'>门店订单支付</permission>
+        <permission id="storesettleaccounts" display='true' parent='0' workground='storelist.wrokground.order'>门店订单结算</permission>
         <permission id="editorder" display='true' parent='0' workground='ectools.wrokground.order'>编辑订单</permission>
         <permission id="bills" display='true' parent='0' workground='ectools.wrokground.order'>单据管理</permission>
         <!--会员-->
@@ -76,7 +84,7 @@
         <permission id="sales" display='true' parent='0' workground='b2c.wrokground.sale'>订单促销</permission>
         <permission id="salesgood" display='true' parent='0' workground='b2c.wrokground.sale'>商品促销</permission>
         <permission id="salescoupon" display='true' parent='0' workground='b2c.wrokground.sale'>优惠券</permission>
-        <permission id="salesfororder" display='true' parent='0' workground='b2c.wrokground.sale'>优惠券</permission>
+        <permission id="salesfororder" display='true' parent='0' workground='b2c.wrokground.sale'>凑单功能配置</permission>
         <!--报表-->
         <permission id="analysis" display='true' parent='0' workground='b2c.wrokground.analysis'>经营概况</permission>
         <permission id="saleanalysis" display='true' parent='0' workground='b2c.wrokground.analysis'>销售收入统计</permission>
@@ -96,9 +104,12 @@
         <menugroup name="订单列表">
             <menu controller='admin_order' action='addnew' permission='addorder' display='false' order='10'>新建订单</menu>
             <menu controller='admin_order' action='showEdit' permission='editorder' display='false' order='11'>编辑订单</menu>
+            <menu controller='admin_order' action='doverify' permission='verifyorder' display='false' order='11'>门店订单审核</menu>
+            <menu controller='admin_order' action='gopaynew' permission='storeorderpay' display='false' order='11'>门店订单支付</menu>
+            <menu controller='admin_order' action='dosettle_accounts' permission='storesettleaccounts' display='false' order='11'>门店订单结算</menu>
             <menu controller='admin_order' action='index' permission='order' display='true' order='20'>订单</menu>
             <menu controller='admin_delivery' action='index' permission='bills' display='true' order='40'>发货单</menu>
-            <menu controller='admin_reship' action='index' permission='bills' display='true' order='60'>退货单</menu>
+            <!-- <menu controller='admin_reship' action='index' permission='bills' display='true' order='60'>退货单</menu> -->
         </menugroup>
     </workground>
 
@@ -112,10 +123,11 @@
 			<menu controller='admin_goods' action='index' params='action:export' permission='exportgoods' display='false' order='23'>商品列表导出</menu>
 			<menu controller='admin_goods' action='index' params='action:dorecycle' permission='deletegoods' display='false' order='24'>商品删除</menu>
             <menu controller='admin_goods_sto' action='index' permission='stogoods' display='true' order='25'>到货通知</menu>
+            <menu controller='admin_goods' action='bngetstore' permission='bngetstore' display='true' order='26'>货号库存查询</menu>
             <menu permission='batcheditmarketable' display='false'>批量商品上下架</menu>
         </menugroup>
-        <menugroup name="定制器商品管理">
-            <menu controller='admin_dingzhi_goods' action='import' permission='goods' display='true' order='20'>定制器商品导入</menu>
+        <menugroup name="定制器商品管理" id="b2c.workground.dingzhi">
+            <menu controller='admin_dingzhi_goods' action='import' permission='dingzhiimport' display='true' order='20'>定制器商品导入</menu>
             <menu controller='admin_dingzhi_type' action='import' permission='importgoods' display='false' order='22'>类型列表</menu>
             <menu controller='admin_dingzhi_specification' action='index' permission='importgoods' display='false' order='22'>规格列表</menu>
         </menugroup>
@@ -163,6 +175,7 @@
         <menugroup name="会员管理">
             <menu controller='admin_member' action='add_page' permission='addmember' display='false' order='10'>添加会员</menu>
             <menu controller='admin_member' action='index' permission='member' display='true' order='20'>会员列表</menu>
+            <menu controller='admin_member' action='lastlogin' permission='member' display='true' order='21'>最近会员</menu>
             <menu controller='admin_member' action='index' params='action:detail|finderview:detail_advance' permission='editadvance' display='false' order='21'>编辑会员预存款</menu>
             <menu controller='admin_member' action='index' params='action:detail|finderview:detail_experience' permission='editexp' display='false' order='22'>编辑会员经验值</menu>
             <menu controller='admin_member' action='index' params='action:detail|finderview:detail_point' permission='editscore' display='false' order='23'>编辑会员积分</menu>

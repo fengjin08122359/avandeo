@@ -20,9 +20,9 @@ class b2c_ctl_admin_member extends desktop_controller{
 
    function index(){
         //增加会员相关权限判断@lujy
-        if($this->has_permission('addmember')){
-            $custom_actions[] = array('label'=>app::get('b2c')->_('添加会员'),'href'=>'index.php?app=b2c&ctl=admin_member&act=add_page','target'=>'dialog::{title:\''.app::get('b2c')->_('添加会员').'\',width:460,height:460}');
-        }
+        //if($this->has_permission('addmember')){
+        //    $custom_actions[] = array('label'=>app::get('b2c')->_('添加会员'),'href'=>'index.php?app=b2c&ctl=admin_member&act=add_page','target'=>'dialog::{title:\''.app::get('b2c')->_('添加会员').'\',width:460,height:460}');
+        //}
         if($this->has_permission('send_email')){
             $custom_actions[] =  array('label'=>app::get('b2c')->_('群发邮件'),'submit'=>'index.php?app=b2c&ctl=admin_member&act=send_email','target'=>'dialog::{title:\''.app::get('b2c')->_('群发邮件').'\',width:700,height:400}');
         }
@@ -41,6 +41,33 @@ class b2c_ctl_admin_member extends desktop_controller{
         $actions_base['use_buildin_filter'] = true;
         $actions_base['use_view_tab'] = true;
 
+        $this->finder('b2c_mdl_members',$actions_base);
+    }
+
+   function lastlogin(){
+        //增加会员相关权限判断@lujy
+        //if($this->has_permission('addmember')){
+        //    $custom_actions[] = array('label'=>app::get('b2c')->_('添加会员'),'href'=>'index.php?app=b2c&ctl=admin_member&act=add_page','target'=>'dialog::{title:\''.app::get('b2c')->_('添加会员').'\',width:460,height:460}');
+        //}
+        if($this->has_permission('send_email')){
+            $custom_actions[] =  array('label'=>app::get('b2c')->_('群发邮件'),'submit'=>'index.php?app=b2c&ctl=admin_member&act=send_email','target'=>'dialog::{title:\''.app::get('b2c')->_('群发邮件').'\',width:700,height:400}');
+        }
+        if($this->has_permission('send_msg')){
+            $custom_actions[] =  array('label'=>app::get('b2c')->_('群发站内信'),'submit'=>'index.php?app=b2c&ctl=admin_member&act=send_msg','target'=>'dialog::{title:\''.app::get('b2c')->_('群发站内信').'\',width:500,height:350}');
+        }
+        if($this->has_permission('send_sms')){
+            $custom_actions[] =  array('label'=>app::get('b2c')->_('群发短信'),'submit'=>'index.php?app=b2c&ctl=admin_member&act=send_sms','target'=>'dialog::{title:\''.app::get('b2c')->_('群发短信').'\',width:500,height:350}');
+        }
+
+        $actions_base['title'] = app::get('b2c')->_('最近会员');
+        $actions_base['actions'] = $custom_actions;
+        $actions_base['allow_detail_popup'] = true;
+        $actions_base['use_buildin_set_tag'] = true;
+        $actions_base['use_buildin_export'] = true;
+        $actions_base['use_buildin_filter'] = true;
+        $actions_base['use_view_tab'] = true;
+        $actions_base['orderBy'] = 'lastlogin';
+        $actions_base['orderType'] = 'DESC';
         $this->finder('b2c_mdl_members',$actions_base);
     }
 
@@ -111,6 +138,12 @@ class b2c_ctl_admin_member extends desktop_controller{
         }
         $a_mem['lv']['options'] = is_array($options) ? $options : array(app::get('b2c')->_('请添加会员等级')) ;
         $attr = kernel::single('b2c_user_passport')->get_signup_attr();
+
+        $store = kernel::single('storelist_store');
+        if($store->store_id > 0){
+            $this->pagedata['ifstore'] = true;
+        }
+
         $this->pagedata['attr'] = $attr;
         $this->pagedata['mem'] = $a_mem;
         $this->display('admin/member/new.html');
@@ -129,6 +162,17 @@ class b2c_ctl_admin_member extends desktop_controller{
       $userPassport = kernel::single('b2c_user_passport');
       $member_model = app::get('b2c')->model('members');
       
+      //增加操作人ID与门店ID
+
+      $obj_op = new desktop_user();
+      $_POST['op_id'] = $obj_op->get_id();unset($obj_op);
+      $store = kernel::single('storelist_store');
+      if($store->store_id > 0){
+          $_POST['store_id'] = $store->store_id;
+          $_POST['pam_account']['login_password'] = $store->store['default_pass'];
+          $_POST['pam_account']['psw_confirm'] = $store->store['default_pass'];
+      }
+
       if( !$userPassport->check_signup_account($_POST['pam_account']['login_name'],$message) ){
         $this->end(false, $message);
       }
@@ -138,6 +182,7 @@ class b2c_ctl_admin_member extends desktop_controller{
       }
 
       $saveData = $_POST;
+
       $saveData = $userPassport->pre_signup_process($saveData);
       if( !$userPassport->save_members($saveData,$msg) ){
           $this->end(true, app::get('b2c')->_('添加失败！'));
@@ -441,5 +486,18 @@ class b2c_ctl_admin_member extends desktop_controller{
         $this->pagedata['privacy'] = app::get('b2c')->getConf('b2c.register.setting_member_privacy'); 
         $this->page('admin/member/member_privacy.html');
     }
+
+    function new_member(){
+        $member_lv=$this->app->model("member_lv");
+        foreach($member_lv->getMLevel() as $row){
+            $options[$row['member_lv_id']] = $row['name'];
+        }
+        $a_mem['lv']['options'] = is_array($options) ? $options : array(app::get('b2c')->_('请添加会员等级')) ;
+        $attr = kernel::single('b2c_user_passport')->get_signup_attr();
+        $this->pagedata['attr'] = $attr;
+        $this->pagedata['mem'] = $a_mem;
+        $this->display("admin/member/new_member.html");
+    }
+
 
 }

@@ -1,0 +1,11 @@
+<services>
+    <service id="desktop_finder.storelist_mdl_storelist">
+        <class>storelist_finder_storelist</class>
+    </service>
+    <service id="desktop_finder.storelist_mdl_news">
+        <class>storelist_finder_news</class>
+    </service>
+    <service id="desktop_finder.storelist_mdl_store_lv">
+        <class>storelist_finder_store_lv</class>
+    </service>
+</services>

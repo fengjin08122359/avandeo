@@ -5,6 +5,7 @@
     <th><em class="c-red">*</em><{t}>收货地区：<{/t}></td>
     <td colspan=2>
       <span id="checkout-select-area"><{input type="region" id="shipping-area" name="delivery[ship_area]" app="ectools" vtype="area" value=$addr.area callback="selectArea"}></span>
+      <span class="action-store" style="display:none"><select name="store_id" id="select-store" class="x-select"><option value="0">请选择体验店</option></select></span>
     </td>
   </tr>
   <tr>
@@ -42,7 +43,7 @@
   </tr>
   <tr>
     <th>
-      <{t}>固定电话：<{/t}>
+      <{t}>备用电话：<{/t}>
     </td>
     <td colspan=2>
      <{input class="inputstyle" name="delivery[ship_tel]" size="15" type="text" id="tel" value=$addr.phone.telephone}>
@@ -82,6 +83,28 @@ window.addEvent('domready',function(){
         $('addr').set('value',_replaced_value);
         Order.setShippingFromArea(lastsel.getSelected()[0]);
     };
+
+  $$(".x-select")[2].addEvent('change',function(e){
+    var area=$$("input[name=area]").get('value');
+     reg_id=$$(".x-select")[2].get('value');
+     new Request({url:"index.php?app=b2c&ctl=admin_order&act=get_area_store",method:'post',data:'reg_id='+reg_id,onSuccess:function(res){
+        var res = JSON.decode(res);
+        if (res.status == 1) {
+          var option = '<option value="0">请选择体验店</option>';
+          res.data.each(function(i) { 
+          option += '<option value="'+i.store_id+'">'+i.store_name+'</option>';
+      });
+          // $('region_id').value = reg_id;
+          $('select-store').innerHTML = option;
+          $$(".action-store").setStyle('display','');
+        }else{
+          $$(".action-store").setStyle('display','none');
+        }
+      }}).send();
+
+  });
+
     
 });
+
 </script>

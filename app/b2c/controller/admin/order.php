@@ -26,17 +26,24 @@ class b2c_ctl_admin_order extends desktop_controller{
 
     public function index(){
         if($_GET['action'] == 'export') $this->_end_message = '导出订单';
+        $actions = array(
+                            array('label'=>app::get('b2c')->_('添加门店订单'),'href'=>'index.php?app=b2c&ctl=admin_order&act=addnew','target'=>'_blank','icon'=>'sss.ccc'),
+                            array('label'=>app::get('b2c')->_('打印样式'),'target'=>'_blank','href'=>'index.php?app=b2c&ctl=admin_order&act=showPrintStyle'),
+                            array('label'=>app::get('b2c')->_('打印选定订单'),'submit'=>'index.php?app=b2c&ctl=admin_order&act=toprint','target'=>'_blank'),
+        );
+        $store = kernel::single('storelist_store');
+        if(!$store->store_id){
+            unset($actions[0]);
+        }
+
         $this->finder('b2c_mdl_orders',array(
 
             'title'=>app::get('b2c')->_('订单列表'),
             'allow_detail_popup'=>true,
             'base_filter'=>array('order_refer'=>'local','disabled'=>'false'),
             'use_buildin_export'=>true,
-            'actions'=>array(
-                            array('label'=>app::get('b2c')->_('添加订单'),'href'=>'index.php?app=b2c&ctl=admin_order&act=addnew','target'=>'_blank','icon'=>'sss.ccc'),
-                            array('label'=>app::get('b2c')->_('打印样式'),'target'=>'_blank','href'=>'index.php?app=b2c&ctl=admin_order&act=showPrintStyle'),
-                            array('label'=>app::get('b2c')->_('打印选定订单'),'submit'=>'index.php?app=b2c&ctl=admin_order&act=toprint','target'=>'_blank'),
-                        ),'use_buildin_set_tag'=>true,'use_buildin_recycle'=>false,'use_buildin_filter'=>true,'use_view_tab'=>true,
+            'actions'=>$actions,
+            'use_buildin_set_tag'=>true,'use_buildin_recycle'=>false,'use_buildin_filter'=>true,'use_view_tab'=>true,
             ));
     }
 
@@ -48,16 +55,18 @@ class b2c_ctl_admin_order extends desktop_controller{
     public function _views(){
         $mdl_order = $this->app->model('orders');
         $sub_menu = array(
-            0=>array('label'=>app::get('b2c')->_('待发货'),'optional'=>false,'filter'=>array('ship_status'=>array('0','2'),'pay_status'=>array('1','2','3'),'status'=>'active','disabled'=>'false')),
-            1=>array('label'=>app::get('b2c')->_('已发货'),'optional'=>false,'filter'=>array('ship_status'=>array('1'),'status'=>'active','disabled'=>'false')),
-            2=>array('label'=>app::get('b2c')->_('待支付'),'optional'=>false,'filter'=>array('pay_status'=>array('0','3'),'status'=>'active','disabled'=>'false')),
-            3=>array('label'=>app::get('b2c')->_('已支付到担保方'),'optional'=>false,'filter'=>array('pay_status'=>array('2'),'status'=>'active','disabled'=>'false')),
-            4=>array('label'=>app::get('b2c')->_('已支付'),'optional'=>false,'filter'=>array('pay_status'=>array('1'),'status'=>'active','disabled'=>'false')),
-            5=>array('label'=>app::get('b2c')->_('货到付款'),'optional'=>false,'filter'=>array('pay_status'=>array('-1'),'status'=>'active','disabled'=>'false')),
-            6=>array('label'=>app::get('b2c')->_('活动'),'optional'=>false,'filter'=>array('status'=>'active','disabled'=>'false')),
-            7=>array('label'=>app::get('b2c')->_('已作废'),'optional'=>false,'filter'=>array('status'=>'dead','disabled'=>'false')),
-            8=>array('label'=>app::get('b2c')->_('已完成'),'optional'=>false,'filter'=>array('status'=>'finish','disabled'=>'false')),
-            9=>array('label'=>app::get('b2c')->_('全部'),'optional'=>false,'filter'=>array('disabled'=>'false')),
+            0=>array('label'=>app::get('b2c')->_('待发货'),'optional'=>false,'filter'=>array('verify'=>'true','ship_status'=>array('0','2'),'pay_status'=>array('1','2','3'),'status'=>'active','disabled'=>'false')),
+            1=>array('label'=>app::get('b2c')->_('已发货'),'optional'=>false,'filter'=>array('verify'=>'true','settle_accounts'=>'false','ship_status'=>array('1'),'status'=>'active','disabled'=>'false')),
+            2=>array('label'=>app::get('b2c')->_('待支付'),'optional'=>false,'filter'=>array('verify'=>'true','pay_status'=>array('0','3'),'status'=>'active','disabled'=>'false')),
+            3=>array('label'=>app::get('b2c')->_('已支付到担保方'),'optional'=>false,'filter'=>array('verify'=>'true','pay_status'=>array('2'),'status'=>'active','disabled'=>'false')),
+            // 4=>array('label'=>app::get('b2c')->_('已支付'),'optional'=>false,'filter'=>array('verify'=>'true','pay_status'=>array('1'),'status'=>'active','disabled'=>'false')),
+            4=>array('label'=>app::get('b2c')->_('待确认'),'optional'=>false,'filter'=>array('verify'=>'true','pay_status'=>array('0'),'store_pay'=>'true','status'=>'active','disabled'=>'false')),
+            5=>array('label'=>app::get('b2c')->_('货到付款'),'optional'=>false,'filter'=>array('verify'=>'true','pay_status'=>array('-1'),'status'=>'active','disabled'=>'false')),
+            6=>array('label'=>app::get('b2c')->_('活动'),'optional'=>false,'filter'=>array('verify'=>'true','status'=>'active','disabled'=>'false')),
+            7=>array('label'=>app::get('b2c')->_('已作废'),'optional'=>false,'filter'=>array('verify'=>'true','status'=>'dead','disabled'=>'false')),
+            8=>array('label'=>app::get('b2c')->_('已结算'),'optional'=>false,'filter'=>array('verify'=>'true','settle_accounts'=>'true','status'=>'active','disabled'=>'false')),            
+            // 9=>array('label'=>app::get('b2c')->_('已完成'),'optional'=>false,'filter'=>array('verify'=>'true','status'=>'finish','disabled'=>'false')),
+            10=>array('label'=>app::get('b2c')->_('全部'),'optional'=>false,'filter'=>array('disabled'=>'false')),
         );
         //新留言订单
         //fix filter condition by danny(数据量大后是性能瓶颈)
@@ -73,7 +82,7 @@ class b2c_ctl_admin_order extends desktop_controller{
             $forders['order_id'] = array_unique($forders['order_id']);
         }
 
-        $sub_menu[10] = array('label'=>app::get('b2c')->_('新留言订单'),'optional'=>true,'filter'=>$forders,'addon'=>count($forders['order_id']),'href'=>'index.php?app=b2c&ctl=admin_order&act=index&view=8&view_from=dashboard');
+        $sub_menu[11] = array('label'=>app::get('b2c')->_('新留言订单'),'optional'=>true,'filter'=>$forders,'addon'=>count($forders['order_id']),'href'=>'index.php?app=b2c&ctl=admin_order&act=index&view=8&view_from=dashboard');
 
         $mdl_orders = $this->app->model('orders');
         //今日订单
@@ -89,7 +98,7 @@ class b2c_ctl_admin_order extends desktop_controller{
                         )
                 );
         $today_order = $mdl_orders->count($today_filter);
-        $sub_menu[11] = array('label'=>app::get('b2c')->_('今日订单'),'optional'=>true,'filter'=>$today_filter,'addon'=>$today_order,'href'=>'index.php?app=b2c&ctl=admin_order&act=index&view=9&view_from=dashboard');
+        $sub_menu[12] = array('label'=>app::get('b2c')->_('今日订单'),'optional'=>true,'filter'=>$today_filter,'addon'=>$today_order,'href'=>'index.php?app=b2c&ctl=admin_order&act=index&view=9&view_from=dashboard');
 
         //昨日订单
         $date = strtotime('yesterday');
@@ -105,17 +114,17 @@ class b2c_ctl_admin_order extends desktop_controller{
                         )
                 );
         $yesterday_order = $mdl_orders->count($yesterday_filter);
-        $sub_menu[12] = array('label'=>app::get('b2c')->_('昨日订单'),'optional'=>true,'filter'=>$yesterday_filter,'addon'=>$yesterday_order,'href'=>'index.php?app=b2c&ctl=admin_order&act=index&view=10&view_from=dashboard');
+        $sub_menu[13] = array('label'=>app::get('b2c')->_('昨日订单'),'optional'=>true,'filter'=>$yesterday_filter,'addon'=>$yesterday_order,'href'=>'index.php?app=b2c&ctl=admin_order&act=index&view=10&view_from=dashboard');
 
         //今日已付款订单
         $today_filter = array_merge($today_filter,array('pay_status'=>'1'));
         $today_payed = $mdl_orders->count($today_filter);
-        $sub_menu[13] = array('label'=>app::get('b2c')->_('今日已付款'),'optional'=>true,'filter'=>$today_filter,'addon'=>$today_payed,'href'=>'index.php?app=b2c&ctl=admin_order&act=index&view=11&view_from=dashboard');
+        $sub_menu[14] = array('label'=>app::get('b2c')->_('今日已付款'),'optional'=>true,'filter'=>$today_filter,'addon'=>$today_payed,'href'=>'index.php?app=b2c&ctl=admin_order&act=index&view=11&view_from=dashboard');
 
         //昨日已付款订单
         $yesterday_filter = array_merge($yesterday_filter,array('pay_status'=>'1'));
         $yesterday_payed = $mdl_orders->count($yesterday_filter);
-        $sub_menu[14] = array('label'=>app::get('b2c')->_('昨日已付款'),'optional'=>true,'filter'=>$yesterday_filter,'addon'=>$yesterday_payed,'href'=>'index.php?app=b2c&ctl=admin_order&act=index&view=11&view_from=dashboard');
+        $sub_menu[15] = array('label'=>app::get('b2c')->_('昨日已付款'),'optional'=>true,'filter'=>$yesterday_filter,'addon'=>$yesterday_payed,'href'=>'index.php?app=b2c&ctl=admin_order&act=index&view=11&view_from=dashboard');
 
         //TAB扩展
         foreach(kernel::servicelist('b2c_order_view_extend') as $service){
@@ -125,6 +134,11 @@ class b2c_ctl_admin_order extends desktop_controller{
         }
 
         if(isset($_GET['optional_view'])) $sub_menu[$_GET['optional_view']]['optional'] = false;
+
+        // 增加待审核
+        $verify_menu = array('label'=>app::get('b2c')->_('待审核'),'optional'=>false,'filter'=>array('verify'=>'false','disabled'=>'false'));
+        array_unshift($sub_menu, $verify_menu);
+
 
 
         foreach($sub_menu as $k=>$v){
@@ -136,10 +150,10 @@ class b2c_ctl_admin_order extends desktop_controller{
                     $v['filter'] = array('order_refer'=>'local');
                 }
                 $show_menu[$k]['filter'] = $v['filter']?$v['filter']:null;
-                if($k==$_GET['view']){
+                // if($k==$_GET['view']){
                     $show_menu[$k]['newcount'] = true;
                     $show_menu[$k]['addon'] = $mdl_order->count($v['filter']);
-                }
+                // }
                 $show_menu[$k]['href'] = 'index.php?app=b2c&ctl=admin_order&act=index&view='.($k).(isset($_GET['optional_view'])?'&optional_view='.$_GET['optional_view'].'&view_from=dashboard':'');
             }elseif(($_GET['view_from']=='dashboard')&&$k==$_GET['view']){
                 $show_menu[$k] = $v;
@@ -155,8 +169,179 @@ class b2c_ctl_admin_order extends desktop_controller{
      * @return null
      */
     public function addnew(){
+        $store = kernel::single('storelist_store');
+        if(!$store->store_id){
+            exit('没有权限');
+        }        
+        if ($_COOKIE['orders']['last_member_id'])
+        {
+            $obj_mCart = $this->app->model('cart');
+            $member_indent = md5($_COOKIE['orders']['last_member_id'] . kernel::single('base_session')->sess_id());
+            $data_org = $obj_mCart->get_cookie_cart_arr($member_indent,$_COOKIE['orders']['last_member_id']);
+            if ($data_org)
+                $obj_mCart->del_cookie_cart_arr($member_indent);
+        }
         $this->pagedata['finder_id'] = $_GET['finder_id'];
         $this->singlepage('admin/order/detail/page.html');
+    }
+
+    /**
+     * 订单创建的第二步
+     * @param null
+     * @return null
+     */
+    public function addCart($return = false)
+    {
+        $result = array(
+            'status' => 'fail',
+            'msg' => '加入失败',
+        );
+        $order = &$_POST['order'];
+        $member_point = 0;
+        if (!empty($_POST['member_id']))
+        {
+            $obj_pam_members = app::get('pam')->model('members');
+            $aUser = $obj_pam_members->dump(array('member_id'=>$_POST['member_id']));
+            $aUser['account_id'] = $aUser['member_id'];
+            $order['member_id'] = $aUser['account_id'];
+
+            if (empty($aUser['account_id']))
+            {
+                $result['msg'] = '会员不存在！';
+                if ($return) {
+                    return $result;
+                }
+                echo json_encode($result);
+                exit;
+            }
+            // 得到当前会员的积分
+            $member_point = $aUser['score']['total'];
+        }
+        else
+        {
+            $result['msg'] = '请先选择会员！';
+            if ($return) {
+                return $result;
+            }              
+            echo json_encode($result);
+            exit;
+        }
+        $_SESSION['tmp_admin_create_order'] = array();
+        $_SESSION['tmp_admin_create_order']['member'] = $aUser;
+
+        if(!$order['product_id']){//todo goods_id为product_id，遗留问题
+            $result['msg'] = '没有购买商品或者购买数量为0！';
+            if ($return) {
+                return $result;
+            }            
+            echo json_encode($result);
+            exit;
+        }
+
+        $data = array();
+        // 生成购物车数据
+        $mdl_product = $this->app->model('products');
+        foreach($_POST['order']['product_id'] as $product_id)
+        {
+            $product = $mdl_product->dump($product_id,'*');
+            if ( ($product['store']-$product['freez']) < $_POST['goodsnum'][$product_id] )
+            {
+                $result['msg'] = $product['bn'].'('.$product['spec_info'].'库存不足，请检查！';
+                if ($return) {
+                    return $result;
+                }                                  
+                echo json_encode($result);
+                exit;          
+            }
+            $data['goods'][] = array('goods'=>array(
+                'goods_id'=>$product['goods_id'],
+                'product_id'=>$product['product_id'],
+                'adjunct' => 'na',
+                'num' =>$_POST['goodsnum'][$product_id],
+                'custom' => $_POST['custom'][$product_id],
+            ));
+        }
+
+        if ($_POST['coupon']) {
+            $msg = '';
+            $coupon = array(
+                'coupon'=> trim($_POST['coupon']),
+                'is_store' => true,
+            );
+            if (kernel::single('b2c_cart_object_coupon')->check_object($coupon,$msg)) {
+                $data['coupon'][] = $coupon;
+            }
+        }        // 购物券数据
+        
+        $obj_mCart = $this->app->model('cart');
+        if ($order['member_id'])
+        {
+            $member_indent = md5(kernel::single('base_session')->sess_id());
+            $_SESSION['account']['member'] = $order['member_id'];
+            $data_org = $obj_mCart->get_cookie_cart_arr($member_indent,$order['member_id']);
+            if ($data_org)
+                $obj_mCart->del_cookie_cart_arr($member_indent);
+
+            if ($_COOKIE['orders']['last_member_id'])
+            {
+                $member_indent = md5($_COOKIE['orders']['last_member_id'] . kernel::single('base_session')->sess_id());
+                $data_org = $obj_mCart->get_cookie_cart_arr($member_indent,$order['member_id']);
+
+                if ($data_org)
+                    $obj_mCart->del_cookie_cart_arr($member_indent);
+            }
+
+            setcookie('orders[last_member_id]', $order['member_id']);
+            $member_indent = md5($order['member_id'] . kernel::single('base_session')->sess_id());
+        }
+        else
+            $member_indent = md5(kernel::single('base_session')->sess_id());
+
+        $obj_mCart->set_cookie_cart_arr($data, $member_indent);
+        $arr_cart_objects = $obj_mCart->get_cart_object($data);
+        if (!isset($arr_cart_objects['cart_status']) || !$arr_cart_objects['cart_status'] || $arr_cart_objects['cart_status'] == 'true') {
+            $result = array(
+                'status' => 'succ',
+            );
+        }
+        if ($return) {
+            return $result;
+        }                      
+
+        // echo '<pre>';
+        // print_r($data);
+        // print_r($arr_cart_objects);exit;
+        echo json_encode($result);
+        exit;        
+    }
+
+    public function getReceiver($value='')
+    {
+        $member_addrs = &$this->app->model('member_addrs');
+        $addrlist = $member_addrs->getList('*',array('member_id'=>$_POST['member_id']));
+        foreach ($addrlist as $rows)
+        {
+            if (empty($rows['tel']))
+            {
+                $str_tel = app::get('b2c')->_('手机：').$rows['mobile'];
+            }
+            else
+            {
+                $str_tel = app::get('b2c')->_('电话：').$rows['tel'];
+            }
+
+            $addr[] = array(
+                'addr_id'=> $rows['addr_id'],
+                'def_addr'=>$rows['def_addr'],
+                'addr_region'=> $rows['area'],
+                'addr_label'=> $rows['addr'].app::get('b2c')->_(' (收货人：').$rows['name'].' '.$str_tel.app::get('b2c')->_(' 邮编：').$rows['zip'].')'
+            );
+        }
+
+        $this->pagedata['addrlist'] = $addr;
+        $this->pagedata['is_allow'] = (count($addr)<5 ? 1 : 0);
+        $this->pagedata['address']['member_id'] = $_POST['member_id'];
+        $this->display('admin/order/receiver.html');
     }
 
     /**
@@ -216,22 +401,17 @@ class b2c_ctl_admin_order extends desktop_controller{
                 'num' =>$_POST['goodsnum'][$product_id]
             ));
         }
-
+        // $_POST['coupon'] = array(
+        //     'name'=>'Bqcm300j50ACCF70001F',
+        //     // 'coupon' => 'Bqcm300j507005E00001',
+        // );
         // 购物券数据
-        if (isset($_POST['coupon']) && $_POST['coupon'])
-        {
-            foreach ($_POST['coupon'] as $arr_coupon)
-            {
-                $data['coupon'][] = array(
-                    'coupon'=> $arr_coupon['name'],
-                );
-            }
-        }
-
+        
         $obj_mCart = $this->app->model('cart');
         if ($order['member_id'])
         {
             $member_indent = md5(kernel::single('base_session')->sess_id());
+            $_SESSION['account']['member'] = $order['member_id'];
             $data_org = $obj_mCart->get_cookie_cart_arr($member_indent,$order['member_id']);
             if ($data_org)
                 $obj_mCart->del_cookie_cart_arr($member_indent);
@@ -253,6 +433,9 @@ class b2c_ctl_admin_order extends desktop_controller{
 
         $obj_mCart->set_cookie_cart_arr($data, $member_indent);
         $arr_cart_objects = $obj_mCart->get_cart_object($data);
+        // echo '<pre>';
+        // print_r($data);
+        // print_r($arr_cart_objects);exit;
 
         if (!isset($arr_cart_objects['cart_status']) || !$arr_cart_objects['cart_status'] || $arr_cart_objects['cart_status'] == 'true')
         {
@@ -361,6 +544,12 @@ class b2c_ctl_admin_order extends desktop_controller{
                 'final_amount' => $currency->changer($total_amount, $this->app->getConf("site.currency.defalt_currency"), true),
             );
 
+            $this->pagedata['goods'] = $arr_cart_objects['object']['goods'];
+            $this->pagedata['items_quantity'] = $arr_cart_objects['items_quantity'];
+            $this->pagedata['subtotal_price'] = $arr_cart_objects['subtotal_price'];
+
+            // var_dump('<pre>',$this->pagedata['goods']);exit;
+
             $odr_decimals = $this->app->getConf('system.money.decimals');
             $total_amount = $this->objMath->get($this->pagedata['order_detail']['total_amount'], $odr_decimals);
             $this->pagedata['order_detail']['discount'] = $this->objMath->number_minus(array($this->pagedata['order_detail']['total_amount'], $total_amount));
@@ -374,6 +563,30 @@ class b2c_ctl_admin_order extends desktop_controller{
         $this->pagedata['finder_id'] = $_POST['finder_id'];
         $this->pagedata['cart_status'] = (!isset($arr_cart_objects['cart_status']) || !$arr_cart_objects['cart_status'] || $arr_cart_objects['cart_status'] == 'true') ? true : false;
         $this->display('admin/order/order_create.html');
+    }
+
+    public function useCoupon()
+    {
+        if ($_POST['coupon']) {
+            $obj_mCart = $this->app->model('cart');
+            $member_indent = md5($_POST['member_id'] . kernel::single('base_session')->sess_id());
+            $data = $obj_mCart->get_cookie_cart_arr($member_indent,$_POST['member_id']);
+            if ($data) {
+                $coupon = array(
+                    'coupon' => trim($_POST['coupon']),
+                    'is_store' => true,
+                );
+                $msg = '';
+                $res = kernel::single('b2c_cart_object_coupon')->add_object($coupon,$msg);
+                if ($res) {
+                    $this->pagedata['coupon'] = $coupon['coupon'];
+                }              
+            }else{
+                $this->pagedata['msg'] = '没有可购买的商品';
+            }
+            $this->pagedata['msg'] = $msg;
+        }
+        $this->display('admin/order/coupon.html');
     }
 
     public function getAddr()
@@ -823,7 +1036,318 @@ class b2c_ctl_admin_order extends desktop_controller{
                 break;
         }
     }
-
+    /**
+     * 打印订单的接口 New
+     * @param string 打印类型
+     * @param string order id
+     * @return null
+     */
+    public function print_new($type,$order_id)
+    {
+    	$order = &$this->app->model('orders');
+    	$member = &$this->app->model('members');
+    	//$order->setPrintStatus($order_id,$type,true);
+    
+    	$subsdf = array('order_objects'=>array('*',array('order_items'=>array('*',array(':products'=>'*')))));
+    	$orderInfo = $order->dump($order_id, '*', $subsdf);
+    	$orderInfo['self'] = $this->objMath->number_minus(array(0, $orderInfo['discount'], $orderInfo['pmt_goods'], $orderInfo['pmt_order']));
+    
+    	// 所有的goods type 处理的服务的初始化.
+    	$arr_service_goods_type_obj = array();
+    	$arr_service_goods_type = kernel::servicelist('order_goodstype_operation');
+    	foreach ($arr_service_goods_type as $obj_service_goods_type)
+    	{
+    		$goods_types = $obj_service_goods_type->get_goods_type();
+    		$arr_service_goods_type_obj[$goods_types] = $obj_service_goods_type;
+    	}
+    
+    	$memberInfo = $member->getList('*', array('member_id'=>$orderInfo['member_id']));
+    	$order_items = array();
+    	$gift_items = array();
+    	foreach ($orderInfo['order_objects'] as $k=>$v)
+    	{
+    		$index = 0;
+    		$index_adj = 0;
+    		$index_gift = 0;
+    		if ($v['obj_type'] == 'goods')
+    		{
+    			foreach ($v['order_items'] as $key => $item)
+    			{
+    				if (!$item['products'])
+    				{
+    					$o = $this->app->model('order_items');
+    					$tmp = $o->getList('*', array('item_id'=>$item['item_id']));
+    					$item['products']['product_id'] = $tmp[0]['product_id'];
+    				}
+    
+    				if ($item['item_type'] != 'gift')
+    				{
+    					if ($item['item_type'] == 'product')
+    						$item['item_type'] = 'goods';
+    					$str_service_goods_type_obj = $arr_service_goods_type_obj[$item['item_type']];
+    					$str_service_goods_type_obj->get_order_object(array('goods_id' => $item['goods_id'],'product'=>$item['products']['product_id']), $arrGoods, 'admin_order_printing');
+    
+    					$gItems[$k]['addon'] = unserialize($item['addon']);
+    
+    					if ($item['addon'] && unserialize($item['addon']))
+    					{
+    						$gItems[$k]['minfo'] = unserialize($item['addon']);
+    					}
+    					else
+    					{
+    						$gItems[$k]['minfo'] = array();
+    					}
+    
+    					if ($item['item_type'] == 'goods')
+    					{
+    						$order_items[$k] = $item;
+    						$order_items[$k]['small_pic'] = $arrGoods['image_default_id'] ? $arrGoods['image_default_id'] : '';
+    						$order_items[$k]['is_type'] = $v['obj_type'];
+    						$order_items[$k]['item_type'] = ($arrGoods) ? $arrGoods['category']['cat_name'] : '';
+    						$order_items[$k]['minfo'] = $gItems[$k]['minfo'];
+    						$order_items[$k]['link_url'] = $arrGoods['link_url'];
+    
+    						$order_items[$k]['name'] = $item['name'];
+    						if ($item['addon'])
+    						{
+    							$item['addon'] = unserialize($item['addon']);
+    							if ($item['addon']['product_attr'])
+    							{
+    								$order_items[$k]['name'] .= '(';
+    								foreach ($item['addon']['product_attr'] as $arr_special_info)
+    								{
+    									$order_items[$k]['name'] .= $arr_special_info['label'] . app::get('b2c')->_('：') . $arr_special_info['value'] . app::get('b2c')->_('、');
+    								}
+    								$order_items[$k]['name'] = substr($order_items[$k]['name'], 0, strrpos($order_items[$k]['name'], app::get('b2c')->_('、')));
+    								$order_items[$k]['name'] .= ')';
+    							}
+    						}
+    					}
+    					else
+    					{
+    						$order_items[$k]['adjunct'][$index_adj] = $item;
+    						$order_items[$k]['adjunct'][$index_adj]['small_pic'] = $arrGoods['image_default_id'];
+    						$order_items[$k]['adjunct'][$index_adj]['is_type'] = $v['obj_type'];
+    						$order_items[$k]['adjunct'][$index_adj]['item_type'] = $arrGoods['category']['cat_name'];
+    						$order_items[$k]['adjunct'][$index_adj]['link_url'] = $arrGoods['link_url'];
+    
+    						$order_items[$k]['adjunct'][$index_adj]['name'] = $item['name'];
+    						if ($item['addon'])
+    						{
+    							$item['addon'] = unserialize($item['addon']);
+    							if ($item['addon']['product_attr'])
+    							{
+    								$order_items[$k]['adjunct'][$index_adj]['name'] .= '(';
+    								foreach ($item['addon']['product_attr'] as $arr_special_info)
+    								{
+    									$order_items[$k]['adjunct'][$index_adj]['name'] .= $arr_special_info['label'] . app::get('b2c')->_('：') . $arr_special_info['value'] . app::get('b2c')->_('、');
+    								}
+    								$order_items[$k]['adjunct'][$index_adj]['name'] = substr($$order_items[$k]['adjunct'][$index_adj]['name'], 0, strpos($order_items[$k]['adjunct'][$index_adj]['name'], app::get('b2c')->_('、')));
+    								$order_items[$k]['adjunct'][$index_adj]['name'] .= ')';
+    							}
+    						}
+    
+    						$index_adj++;
+    					}
+    				}
+    				else
+    				{
+    					$str_service_goods_type_obj = $arr_service_goods_type_obj[$item['item_type']];
+    					$str_service_goods_type_obj->get_order_object(array('goods_id' => $item['goods_id'],'product'=>$item['products']['product_id']), $arrGoods, 'admin_order_printing');
+    
+    					$order_items[$k]['gifts'][$index_gift] = $item;
+    					$order_items[$k]['gifts'][$index_gift]['small_pic'] = $arrGoods['image_default_id'];
+    					$order_items[$k]['gifts'][$index_gift]['is_type'] = $v['obj_type'];
+    					$order_items[$k]['gifts'][$index_gift]['item_type'] = $arrGoods['category']['cat_name'];
+    					$order_items[$k]['gifts'][$index_gift]['link_url'] = $arrGoods['link_url'];
+    
+    					$order_items[$k]['gifts'][$index_gift]['name'] = $item['name'];
+    					if ($item['addon'])
+    					{
+    						$item['addon'] = unserialize($item['addon']);
+    						if ($item['addon']['product_attr'])
+    						{
+    							$order_items[$k]['gifts'][$index_gift]['name'] .= '(';
+    							foreach ($item['addon']['product_attr'] as $arr_special_info)
+    							{
+    								$order_items[$k]['gifts'][$index_gift]['name'] .= $arr_special_info['label'] . app::get('b2c')->_('：') . $arr_special_info['value'] . app::get('b2c')->_('、');
+    							}
+    							$order_items[$k]['gifts'][$index_gift]['name'] = substr($order_items[$k]['gifts'][$index_gift]['name'], 0, strpos($order_items[$k]['gifts'][$index_gift]['name'], app::get('b2c')->_('、')));
+    							$order_items[$k]['gifts'][$index_gift]['name'] .= ')';
+    						}
+    					}
+    
+    					$index_gift++;
+    				}
+    			}
+    		}
+    		else
+    		{
+    			if ($v['obj_type'] == 'gift')
+    			{
+    				if ($arr_service_goods_type_obj['gift'])
+    				{
+    					$str_service_goods_type_obj = $arr_service_goods_type_obj['gift'];
+    					foreach ($v['order_items'] as $gift_key => $gift_item)
+    					{
+    						if (isset($gift_items[$gift_item['goods_id']]) && $gift_items[$gift_item['goods_id']])
+    							$gift_items[$gift_item['goods_id']]['nums'] = $this->objMath->number_plus(array($gift_items[$gift_item['goods_id']]['nums'], $gift_item['quantity']));
+    						else
+    						{
+    							if (!$gift_item['products'])
+    							{
+    								$o = $this->app->model('order_items');
+    								$tmp = $o->getList('*', array('item_id'=>$gift_item['item_id']));
+    								$gift_item['products']['product_id'] = $tmp[0]['product_id'];
+    							}
+    
+    							$str_service_goods_type_obj->get_order_object(array('goods_id' => $gift_item['goods_id'],'product'=>$gift_item['products']['product_id']), $arrGoods, 'admin_order_printing');
+    
+    							$gift_name = $gift_item['name'];
+    							if ($gift_item['addon'])
+    							{
+    								$arr_addon = unserialize($gift_item['addon']);
+    
+    								if ($arr_addon['product_attr'])
+    								{
+    									$gift_name .= '(';
+    
+    									foreach ($arr_addon['product_attr'] as $arr_product_attr)
+    									{
+    										$gift_name .= $arr_product_attr['label'] . $this->app->_(":") . $arr_product_attr['value'] . $this->app->_(" ");
+    									}
+    
+    									if (strpos($gift_name, $this->app->_(" ")) !== false)
+    									{
+    										$gift_name = substr($gift_name, 0, strrpos($gift_name, $this->app->_(" ")));
+    									}
+    
+    									$gift_name .= ')';
+    								}
+    							}
+    
+    							$gift_items[$gift_item['goods_id']] = array(
+    									'goods_id' => $gift_item['goods_id'],
+    									'bn' => $gift_item['bn'],
+    									'nums' => $gift_item['quantity'],
+    									'name' => $gift_name,
+    									'item_type' => $arrGoods['category']['cat_name'],
+    									'price' => $gift_item['price'],
+    									'quantity' => $gift_item['quantity'],
+    									'sendnum' => $gift_item['sendnum'],
+    									'small_pic' => $arrGoods['image_default_id'],
+    									'is_type' => $v['obj_type'],
+    							);
+    						}
+    					}
+    				}
+    			}
+    			else
+    			{
+    				$str_service_goods_type_obj = $arr_service_goods_type_obj[$v['obj_type']];
+    				$str_service_goods_type_obj->get_order_object($v, $arr_Goods, 'admin_order_printing');
+    
+    				if (is_array($arr_Goods) && $arr_Goods)
+    				{
+    					foreach ($arr_Goods as $arr)
+    						$extend_items[$v['obj_type']][$arr['goods_id']] = array(
+    								'goods_id' => $arr['goods_id'],
+    								'bn' => $arr['bn'],
+    								'nums' => $arr['quantity'],
+    								'name' => $arr['name'],
+    								'item_type' => $arr['category']['cat_name'],
+    								'price' => $arr['price'],
+    								'quantity' => $arr['quantity'],
+    								'sendnum' => $arr['sendnum'],
+    								'small_pic' => $arr['image_default_id'],
+    								'is_type' => $arr['obj_type'],
+    						);
+    				}
+    			}
+    		}
+    	}
+    
+    	$order_sum = $this->sum_order($orderInfo['member_id']);
+    	//获取优惠名称
+    	$orderInfo['sales']=kernel::database()->selectRow("SELECT order_id,pmt_amount,pmt_tag FROM ".kernel::database()->prefix."b2c_order_pmt WHERE order_id={$order_id} AND pmt_amount!=0.000");
+    	if($order_items){
+    		foreach($order_items as $k=>$v){
+    			$order_items[$k]['spac_info']=strpos($v['name'],"(")?substr($v['name'],strpos($v['name'],"("),strlen($v['name'])):"";
+    			$order_items[$k]['names']=strstr($v['name'],"(",true)?strstr($v['name'],"(",true):$v['name'];
+    		}
+    	}
+    	$this->pagedata['goodsItem'] = $order_items;#print_r($order_items);exit;
+    	$this->pagedata['giftsItem'] = $gift_items;
+    	$this->pagedata['extend_items'] = $extend_items;
+    	$orderInfo['consignee']['telephone'] = $orderInfo['consignee']['telephone'] ? $orderInfo['consignee']['telephone'] :$orderInfo['consignee']['mobile'];
+    	$this->pagedata['orderInfo'] = $orderInfo;
+    	$this->pagedata['orderSum'] = $order_sum;
+    	$this->pagedata['res_url'] = $this->app->res_url;
+    	$this->pagedata['memberPoint'] = $memberInfo[0]['point'] ? $memberInfo[0]['point'] : 0;
+    	$this->pagedata['storeplace_display_switch'] = $this->app->getConf('storeplace.display.switch');
+    	$this->pagedata['defaultImage'] = $imageDefault['S']['default_image'];
+    	$logo_id = app::get('b2c')->getConf('site.logo');
+    	$this->pagedata['logo_image'] = base_storager::image_path($logo_id);
+    	$imageDefault = app::get('image')->getConf('image.set');
+    	$this->pagedata['image_set'] = $imageDefault;
+    	$this->pagedata['defaultImage'] = $imageDefault['S']['default_image'];
+    	$this->pagedata['shop'] = array(
+    			'name'=>app::get('site')->getConf('site.name'),
+    			'url'=>kernel::base_url(true),
+    			'email'=>$this->app->getConf('store.email'),
+    			'tel'=>$this->app->getConf('store.telephone'),
+    			'logo'=>$this->app->getConf('site.logo')
+    	);
+    	$this->_systmpl = &$this->app->model('member_systmpl');
+    	switch($type)
+    	{
+    		
+    		case $order->arr_print_type['ORDER_PRINT_CART']:  /*购物清单*/
+    			$this->pagedata['printType'] = array("cart");
+    			$this->pagedata['printContent']['cart'] = true;
+    			$this->pagedata['memberPoint'] = $memberInfo[0]['point'] ? $memberInfo[0]['point'] : 0;
+    			$this->pagedata['content_cart'] = $this->_systmpl->fetch('admin/order/print_cart_new',$this->pagedata);
+    			$this->pagedata['page_title'] = app::get('b2c')->_('购物单打印');
+    			$this->display('admin/order/print_new.html');
+    			break;
+    			/*配货单*/
+    		/* case $order->arr_print_type['ORDER_PRINT_SHEET']:   
+    			$this->pagedata['printContent']['sheet'] = true;
+    			$this->pagedata['memberPoint'] = $memberInfo[0]['point'] ? $memberInfo[0]['point'] : 0;
+    			$this->pagedata['content_sheet'] = $this->_systmpl->fetch('admin/order/print_sheet',$this->pagedata);
+    			$this->pagedata['page_title'] = app::get('b2c')->_('配货单打印');
+    			$this->display('admin/order/print.html');
+    			break; */
+    			/*联合打印*/
+    		 case $order->arr_print_type['ORDER_PRINT_MERGE']:   
+    			$this->pagedata['printType'] = array("cart");
+    			$this->pagedata['printContent']['cart'] = true;
+    			$this->pagedata['printContent']['sheet'] = true;
+    			$this->pagedata['memberPoint'] = $memberInfo[0]['point'] ? $memberInfo[0]['point'] : 0;
+    			$this->pagedata['content_cart'] = $this->_systmpl->fetch('admin/order/print_cart_new',$this->pagedata);
+    			$this->pagedata['content_sheet'] = $this->_systmpl->fetch('admin/order/print_sheet_new',$this->pagedata);
+    			$this->pagedata['page_title'] = app::get('b2c')->_('联合打印');
+    			$this->display('admin/order/print_new.html');
+    			break; 
+    			/*快递单打印*/
+    		/* case $order->arr_print_type['ORDER_PRINT_DLY']:    
+    			$printer = &app::get('express')->model('dly_center');
+    			$this->pagedata['dly_centers'] = $printer->getList('dly_center_id,name',array('disable'=>'false'));
+    			$this->pagedata['default_dc'] = $this->app->getConf('system.default_dc');
+    			$this->pagedata['the_dly_center'] = $printer->dump($this->pagedata['default_dc']?$this->pagedata['default_dc']:$this->pagedata['dly_centers'][0]['dly_center_id']);
+    			$this->pagedata['printContent']['express'] = true;
+    			$printer = &app::get('express')->model('print_tmpl');
+    			$this->pagedata['printers'] = $printer->getList('prt_tmpl_id,prt_tmpl_title',array('shortcut'=>'true'));
+    			$this->pagedata['type'] = 'ORDER_PRINT_DLY';
+    			$this->pagedata['order_status'] = $orderInfo['status'];
+    
+    			$this->singlepage('admin/order/detail/printer.html');
+    			break; */
+    		default:
+    			echo app::get('b2c')->_('无效的打印类型');
+    			break;
+    	}
+    }
     /**
      * 求出同一个会员对应订单的总额
      * @param string member id
@@ -936,6 +1460,85 @@ class b2c_ctl_admin_order extends desktop_controller{
 
         $this->display('admin/order/gopay.html');
     }
+
+    /**
+     * POS新版产生支付页面
+     * @params string order id
+     * @return string html
+     */
+    public function gopaynew($order_id)
+    {
+        if (!$order_id)
+        {
+            header('Content-Type:text/jcmd; charset=utf-8');
+            echo '{error:"'.app::get('b2c')->_("订单号传递出错.").'",_:null}';exit;
+        }
+        $this->pagedata['order_id'] = $order_id;
+        $objOrder = &$this->app->model('orders');
+        $order = $objOrder->dump($order_id);
+        if ($order['payinfo']['pay_app_id'] == 'offline') {
+            if ($order['store_pay'] == 'true') {
+                exit('门店已支付，无需重复操作！');
+            }
+            $_minus = array($order['cur_amount'],$order['payed']);
+            $order['require_pay'] = $this->objMath->number_minus($_minus);
+            $this->pagedata['url'] = 'index.php?app=b2c&ctl=admin_order&act=storepay';
+        }else{
+            $this->pagedata['url'] = app::get('site')->router()->gen_url(array('app'=>'b2c','ctl'=>'site_paycenter','full'=>1,'act'=>'index','arg'=>$order['order_id']));
+            kernel::single('b2c_user_object')->set_member_session($order['member_id']);
+            $this->pagedata['token'] = md5($this->app->getConf('certificate.token').$order_id);
+        }
+
+        $this->pagedata['order'] = $order;
+        $this->display('admin/order/gopaynew.html');
+    }   
+
+    // 门店支付确认
+    public function storepay()
+    {
+        $this->begin();
+
+        $sdf = $_POST;
+
+        $objOrders = $this->app->model('orders');
+        $sdf_order = $objOrders->dump($sdf['order_id'], '*');
+
+        if ($sdf_order['store_pay'] == 'false' && $sdf_order['payinfo']['pay_app_id'] == 'offline') {
+            $update = array(
+                'store_pay' => 'true',
+            );
+            $result = $this->app->model('orders')->update($update,array('order_id'=>$sdf_order['order_id']));
+
+            if ($result) {
+                $msg = '门店支付成功！';
+                // 记录订单日志
+                $objorder_log = $this->app->model('order_log');
+                $log_text = app::get('b2c')->_("门店订单支付");
+                $sdf_order_log = array(
+                    'rel_id' => $sdf['order_id'],
+                    'op_id' => $this->user->user_id,
+                    'op_name' => $this->user->user_data['account']['login_name'],
+                    'alttime' => time(),
+                    'bill_type' => 'order',
+                    'behavior' => 'updates',
+                    'result' => 'SUCCESS',
+                    'log_text' => $msg,
+                );
+                $log_id = $objorder_log->save($sdf_order_log);
+
+                //新的版本控制api 下单后需要门店确认才执行推送
+                $obj_apiv = kernel::single('b2c_apiv_exchanges_request');
+                $obj_apiv->rpc_caller_request($sdf_order, 'ordercreate');
+            }else{
+                $msg = '门店支付失败';
+            }
+        }else{
+            $result = false;
+            $msg = '订单状态错误';
+        }
+        $this->end($result,$msg);
+
+    } 
 
     /**
      * 订单开始支付
@@ -1738,7 +2341,7 @@ class b2c_ctl_admin_order extends desktop_controller{
         }
         else
         {
-            $this->end(false, app::get('b2c')->_('完成订单失败！'));
+            $this->end(false, app::get('b2c')->_('完成订单失败！'.$message));
         }
     }
 
@@ -1823,7 +2426,22 @@ class b2c_ctl_admin_order extends desktop_controller{
             $data = $obj_mCart->get_cookie_cart_arr($member_indent);
         }
 
+        if ($_POST['coupon']) {
+            $msg = '';
+            $coupon = array(
+                'coupon'=> trim($_POST['coupon']),
+                'is_store' => true,
+            );
+            if (kernel::single('b2c_cart_object_coupon')->check_object($coupon,$msg)) {
+                $this->pagedata['coupon'] = $coupon['coupon'];
+                $data['coupon'][] = $coupon;
+            }else{
+                $this->pagedata['msg'] = $msg;
+            }
+
+        }
         $arr_cart_objects = $obj_mCart->get_cart_object($data);
+        // echo '<pre>';print_r($arr_cart_objects);exit;
 
         $obj_total = kernel::single('b2c_order_total');
         $sdf_order = $_POST;
@@ -1849,6 +2467,7 @@ class b2c_ctl_admin_order extends desktop_controller{
      */
     public function docreate()
     {
+        // var_dump($_POST);exit;
         $this->begin("index.php?app=b2c&ctl=admin_order&act=addnew");
 
         $msg = "";
@@ -1898,6 +2517,9 @@ class b2c_ctl_admin_order extends desktop_controller{
             $this->end(false, $msg);
         }
 
+        // 处理购物车中的数据
+        $this->addCart(true);
+
         $obj_mCart = $this->app->model('cart');
         if (!$_POST['member_id'])
         {
@@ -1911,6 +2533,8 @@ class b2c_ctl_admin_order extends desktop_controller{
         }
 
         $objCarts = $obj_mCart->get_cart_object($data);
+        // var_dump('<pre>',$_POST,'data=>>>>>',$data,$objCarts);exit;
+
         $is_empty = $obj_mCart->is_empty($objCarts);
         if ($is_empty)
         {
@@ -1919,9 +2543,18 @@ class b2c_ctl_admin_order extends desktop_controller{
 
         $order = &$this->app->model('orders');
         $_POST['order_id'] = $order_id = $order->gen_id();
+        $store = kernel::single('storelist_store');
+        if($store->store_id > 0){
+            $_POST['store_id'] = $store->store_id;
+        }  
+              
         $order_data = array();
         $obj_order_create = kernel::single("b2c_order_create");
         $order_data = $obj_order_create->generate($_POST, $member_indent, $msg, $objCarts);
+        // echo '<pre>';
+        // print_r($_POST['cutom']);
+        // print_r($objCarts);
+        // print_r($order_data);exit;
         if (!$order_data)
         {
             $this->end(false, $msg, "index.php?app=b2c&ctl=admin_order&act=index");
@@ -1939,9 +2572,9 @@ class b2c_ctl_admin_order extends desktop_controller{
         {
             $obj_order_create->rpc_caller_request($order_data);
             }*/
-        //新的版本控制api
-        $obj_apiv = kernel::single('b2c_apiv_exchanges_request');
-        $obj_apiv->rpc_caller_request($order_data, 'ordercreate');
+        //新的版本控制api 下单后需要门店确认才执行推送
+        // $obj_apiv = kernel::single('b2c_apiv_exchanges_request');
+        // $obj_apiv->rpc_caller_request($order_data, 'ordercreate');
 
         // 取到日志模块
         $log_text = "";
@@ -1972,6 +2605,18 @@ class b2c_ctl_admin_order extends desktop_controller{
             // 订单成功后清除购物车的的信息
             $cart_model = $this->app->model('cart');
             $cart_model->del_cookie_cart_arr($member_indent);
+
+            // 设定优惠券不可以使用
+            if (isset($objCarts['object']['coupon']) && $objCarts['object']['coupon'])
+            {
+                $obj_coupon = kernel::single("b2c_coupon_mem");
+                foreach ($objCarts['object']['coupon'] as $coupons)
+                {
+                    if($coupons['used'])
+                        $obj_coupon->use_c($coupons['coupon'], $order_data['member_id']);
+                }
+            }
+
 
             // 得到物流公司名称
             if ($order_data['order_objects'])
@@ -2498,6 +3143,7 @@ class b2c_ctl_admin_order extends desktop_controller{
         }
 
         $arr_data = $this->_process_fields($_POST);
+        $arr_data['verify'] = 'true'; // 审核完成
         $obj_order = $this->app->model('orders');
         #↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓记录管理员操作日志@lujy↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
         if($obj_operatorlogs = kernel::service('operatorlog.members')){
@@ -2663,4 +3309,463 @@ class b2c_ctl_admin_order extends desktop_controller{
         else
             $this->end(false,$msg);
     }
+
+    // 订单审核
+    public function doverify($orderid)
+    {
+        $objOrder = &$this->app->model('orders');
+        //已完成订单与已发货订单不可操作
+        $order_status = $objOrder->getList('status,ship_status',array('order_id'=>$orderid));
+        if($order_status[0]['status'] == 'finish' or $order_status[0]['ship_status'] == 1){
+            header('Content-Type: text/html; charset=utf-8');
+            echo "非法操作！";exit;
+        }
+        $this->path[] = array('text'=>app::get('b2c')->_('订单编辑'));
+
+        $aOrder = $objOrder->dump($orderid,'*');
+
+        $objCurrency = app::get('ectools')->model("currency");
+        $aCur = $objCurrency->getSysCur();
+
+        // 所有的goods type 处理的服务的初始化.
+        $arr_service_goods_type_obj = array();
+        $arr_service_goods_type = kernel::servicelist('order_goodstype_operation');
+        foreach ($arr_service_goods_type as $obj_service_goods_type)
+        {
+            $goods_types = $obj_service_goods_type->get_goods_type();
+            $arr_service_goods_type_obj[$goods_types] = $obj_service_goods_type;
+        }
+
+        $subsdf = array('order_objects'=>array('*',array('order_items'=>array('*',array(':products'=>'*')))));
+        $aORet = $objOrder->dump($orderid,'*',$subsdf);
+        $order_items = array();
+        foreach($aORet['order_objects'] as $k=>$v)
+        {
+            $index = 0;
+            $index_adj = 0;
+            $index_gift = 0;
+            if ($v['obj_type'] == 'goods')
+            {
+                foreach($v['order_items'] as $key => $item)
+                {
+                    if (!$item['products'])
+                    {
+                        $o = $this->app->model('order_items');
+                        $tmp = $o->getList('*', array('item_id'=>$item['item_id']));
+                        $item['products']['product_id'] = $tmp[0]['product_id'];
+                    }
+
+                    if ($item['item_type'] != 'gift')
+                    {
+                        $gItems[$k]['addon'] = unserialize($item['addon']);
+                        if($item['minfo'] && unserialize($item['minfo'])){
+                            $gItems[$k]['minfo'] = unserialize($item['minfo']);
+                        }else{
+                            $gItems[$k]['minfo'] = array();
+                        }
+
+                        if ($item['item_type'] == 'product')
+                        {
+                            if ($arr_service_goods_type_obj['goods'])
+                            {
+                                $str_service_goods_type_obj = $arr_service_goods_type_obj['goods'];
+                                $str_service_goods_type_obj->get_order_object(array('goods_id' => $item['goods_id'],'product_id'=>$item['products']['product_id']), $arrGoods, 'admin_order_edit');
+                            }
+
+                            $order_items[$k] = $item;
+                            $order_items[$k]['small_pic'] = $arrGoods['image_default_id'];
+                            $order_items[$k]['is_type'] = $v['obj_type'];
+                            $order_items[$k]['item_type'] = $arrGoods['category']['cat_name'];
+                            $order_items[$k]['link_url'] = $arrGoods['link_url'];
+
+                            $order_items[$k]['name'] = $item['name'];
+                            if ($item['addon'])
+                            {
+                                $item['addon'] = unserialize($item['addon']);
+                                if ($item['addon']['product_attr'])
+                                {
+                                    $order_items[$k]['name'] .= '(';
+                                    foreach ($item['addon']['product_attr'] as $arr_special_info)
+                                    {
+                                        $order_items[$k]['name'] .= $arr_special_info['label'] . app::get('b2c')->_('：') . $arr_special_info['value'] . app::get('b2c')->_('、');
+                                    }
+                                    $order_items[$k]['name'] = substr($order_items[$k]['name'], 0, strpos($order_items[$k]['name'], app::get('b2c')->_('、')));
+                                    $order_items[$k]['name'] .= ')';
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if ($arr_service_goods_type_obj['adjunct'])
+                            {
+                                $str_service_goods_type_obj = $arr_service_goods_type_obj['adjunct'];
+                                $str_service_goods_type_obj->get_order_object(array('goods_id' => $item['goods_id'],'product_id'=>$item['products']['product_id']), $arrGoods, 'admin_order_edit');
+                            }
+
+                            $order_items[$k]['adjunct'][$index_adj] = $item;
+                            $order_items[$k]['adjunct'][$index_adj]['small_pic'] = $arrGoods['image_default_id'];
+                            $order_items[$k]['adjunct'][$index_adj]['is_type'] = $v['obj_type'];
+                            $order_items[$k]['adjunct'][$index_adj]['item_type'] = $arrGoods['category']['cat_name'];
+                            $order_items[$k]['adjunct'][$index_adj]['link_url'] = $arrGoods['link_url'];
+
+                            $order_items[$k]['adjunct'][$index_adj]['name'] = $item['name'];
+                            if ($item['addon'])
+                            {
+                                $item['addon'] = unserialize($item['addon']);
+                                if ($item['addon']['product_attr'])
+                                {
+                                    $order_items[$k]['adjunct'][$index_adj]['name'] .= '(';
+                                    foreach ($item['addon']['product_attr'] as $arr_special_info)
+                                    {
+                                        $order_items[$k]['adjunct'][$index_adj]['name'] .= $arr_special_info['label'] . app::get('b2c')->_('：') . $arr_special_info['value'] . app::get('b2c')->_('、');
+                                    }
+                                    $order_items[$k]['adjunct'][$index_adj]['name'] = substr($order_items[$k]['adjunct'][$index_adj]['name'], 0, strpos($order_items[$k]['adjunct'][$index_adj]['name'], app::get('b2c')->_('、')));
+                                    $order_items[$k]['adjunct'][$index_adj]['name'] .= ')';
+                                }
+                            }
+
+                            $index_adj++;
+                        }
+                    }
+                    else
+                    {
+                        if ($arr_service_goods_type_obj['gift'])
+                        {
+                            $str_service_goods_type_obj = $arr_service_goods_type_obj['gift'];
+                            $str_service_goods_type_obj->get_order_object(array('goods_id' => $item['goods_id'],'product_id'=>$item['products']['product_id']), $arrGoods, 'admin_order_edit');
+
+                            $order_items[$k]['gifts'][$index_gift] = $item;
+                            $order_items[$k]['gifts'][$index_gift]['small_pic'] = $arrGoods['image_default_id'];
+                            $order_items[$k]['gifts'][$index_gift]['is_type'] = $v['obj_type'];
+                            $order_items[$k]['gifts'][$index_gift]['item_type'] = $arrGoods['category']['cat_name'];
+                            $order_items[$k]['gifts'][$index_gift]['link_url'] = $arrGoods['link_url'];
+
+                            $order_items[$k]['gifts'][$index_gift]['name'] = $item['name'];
+                            if ($item['addon'])
+                            {
+                                $item['addon'] = unserialize($item['addon']);
+                                if ($item['addon']['product_attr'])
+                                {
+                                    $order_items[$k]['gifts'][$index_gift]['name'] .= '(';
+                                    foreach ($item['addon']['product_attr'] as $arr_special_info)
+                                    {
+                                        $order_items[$k]['gifts'][$index_gift]['name'] .= $arr_special_info['label'] . app::get('b2c')->_('：') . $arr_special_info['value'] . app::get('b2c')->_('、');
+                                    }
+                                    $order_items[$k]['gifts'][$index_gift]['name'] = substr($order_items[$k]['gifts'][$index_gift]['name'], 0, strpos($order_items[$k]['gifts'][$index_gift]['name'], app::get('b2c')->_('、')));
+                                    $order_items[$k]['gifts'][$index_gift]['name'] .= ')';
+                                }
+                            }
+
+                            $index_gift++;
+                        }
+                    }
+                   //获取商品类型的库存是否设置为小数库存---anjiaxin--start
+                    if($item['type_id']){
+                      $type=app::get('b2c')->model('goods_type')->dump($item['type_id']);
+                      $order_items[$k]['numtype'] = $type['floatstore'];
+                    }
+                   //----------end
+                }
+            }
+            else
+            {
+                if ($v['obj_type']=='gift')
+                {
+                    $str_service_goods_type_obj = $arr_service_goods_type_obj['gift'];
+                    foreach ($v['order_items'] as $gift_key => $gift_item)
+                    {
+                        if (!$gift_item['products'])
+                        {
+                            $o = $this->app->model('order_items');
+                            $tmp = $o->getList('*', array('item_id'=>$gift_item['item_id']));
+                            $gift_item['products']['product_id'] = $tmp[0]['product_id'];
+                        }
+
+                        if (isset($gift_items[$gift_item['goods_id']]) && $gift_items[$gift_item['goods_id']])
+                            $gift_items[$gift_item['goods_id']]['nums'] = $this->objMath->number_plus(array($gift_items[$gift_item['goods_id']]['nums'], $item['quantity']));
+                        else
+                        {
+                            $str_service_goods_type_obj->get_order_object(array('goods_id' => $gift_item['goods_id'], 'product_id'=>$gift_item['products']['product_id']), $arrGoods, 'admin_order_edit');
+
+                            $gift_name = $gift_item['name'];
+                            if ($gift_item['addon'])
+                            {
+                                $arr_addon = unserialize($gift_item['addon']);
+
+                                if ($arr_addon['product_attr'])
+                                {
+                                    $gift_name .= '(';
+
+                                    foreach ($arr_addon['product_attr'] as $arr_product_attr)
+                                    {
+                                        $gift_name .= $arr_product_attr['label'] . $this->app->_(":") . $arr_product_attr['value'] . $this->app->_(" ");
+                                    }
+
+                                    if (strpos($gift_name, $this->app->_(" ")) !== false)
+                                    {
+                                        $gift_name = substr($gift_name, 0, strrpos($gift_name, $this->app->_(" ")));
+                                    }
+
+                                    $gift_name .= ')';
+                                }
+                            }
+
+                            $gift_items[$gift_item['products']['product_id']] = array(
+                                'goods_id' => $gift_item['goods_id'],
+                                'product_id' => $gift_item['products']['product_id'],
+                                'bn' => $gift_item['bn'],
+                                'nums' => $gift_item['quantity'],
+                                'name' => $gift_name,
+                                'item_type' => $arrGoods['category']['cat_name'],
+                                'price' => $gift_item['price'],
+                                'quantity' => $gift_item['quantity'],
+                                'sendnum' => $gift_item['sendnum'],
+                                'small_pic' => $arrGoods['image_default_id'],
+                                'is_type' => $v['obj_type'],
+                                'link_url' => $arrGoods['link_url'],
+                                'item_id' => $gift_item['item_id'],
+                            );
+                        }
+                    }
+                }
+                else
+                {
+                    // 赠品以外的其他区块的解析.
+                    if ($arr_service_goods_type_obj[$v['obj_type']])
+                    {
+                        $str_service_goods_type_obj = $arr_service_goods_type_obj[$v['obj_type']];
+                        $extends_items[] = $str_service_goods_type_obj->get_order_object($v, $arrGoods, 'admin_order_edit');
+                    }
+                }
+            }
+        }
+        $aOrder['items'] = $order_items;
+        $aOrder['gifts'] = $gift_items;
+        $aOrder['extends_items'] = $extends_items;
+
+        if ($aOrder['member_id'] > 0)
+        {
+            $objMember = &$this->app->model('members');
+            $aOrder['member'] = $objMember->dump($aOrder['member_id'], '*',array( 'pam_account'=>array('*')));
+            $aOrder['ship_email'] = $aOrder['member']['email'];
+        }
+        else
+        {
+            $aOrder['member'] = array();
+        }
+
+        $objDelivery = &$this->app->model('dlytype');
+        $aArea = app::get('ectools')->model('regions')->getList('*',null,0,-1);
+        foreach ($aArea as $v)
+        {
+            $aTmp[$v['name']] = $v['name'];
+        }
+        $aOrder['deliveryArea'] = $aTmp;
+
+        $aRet = $objDelivery->getList('*',null,0,-1);
+        foreach ($aRet as $v)
+        {
+            $aShipping[$v['dt_id']] = $v['dt_name'];
+        }
+        $aOrder['selectDelivery'] = $aShipping;
+
+        $objPayment = app::get('ectools')->model('payment_cfgs');
+
+        $aRet = $objPayment->getList('*', array('status' => 'true', 'platform'=>array('iscommon','ispc'), 'is_frontend' => true));
+        if (!$aORet['member_id'])
+        {
+            if ($aRet)
+            {
+                foreach ($aRet as $key=>$arr_payments)
+                {
+                    if (trim($arr_payments['app_id']) == 'deposit')
+                    {
+                        unset($aRet[$key]);
+                    }
+                }
+            }
+        }
+        $aPayment[-1] = app::get('b2c')->_('货到付款');
+        foreach ($aRet as $v)
+        {
+            $aPayment[$v['app_id']] = $v['app_name'];
+        }
+
+        $aOrder['selectPayment'] = $aPayment;
+
+        $objCurrency = app::get('ectools')->model("currency");
+        $aRet = $objCurrency->curAll();
+        foreach ($aRet as $v)
+        {
+            $aCurrency[$v['cur_code']] = $v['cur_name'];
+        }
+
+        $site_trigger_tax = $this->app->getConf('site.trigger_tax');
+        $this->pagedata['site_trigger_tax'] = $site_trigger_tax;
+        $tax_content = $this->app->getConf('site.tax_content'); //发票内容选项
+        if($tax_content){
+                $arr_tax_content = explode(',',$tax_content);
+                foreach($arr_tax_content as $tax_content_value){
+                    $select_tax_content[$tax_content_value] = $tax_content_value;
+                }
+        }
+        $this->pagedata['tax_content'] = $select_tax_content;
+
+        $aOrder['curList'] = $aCurrency;
+        $aOrder['cur_name'] = $aCurrency[$aOrder['currency']];
+
+        $this->pagedata['order'] = $aOrder;
+        $this->pagedata['finder_id'] = $_GET['finder_id'];
+        // $this->singlepage('admin/order/detail/page_has_btn.html');
+        $this->singlepage('admin/order/od_verify.html');
+    }
+
+    // todo 审核
+    public function verify()
+    {
+	@ini_set('memory_limit','128M');
+        $_POST['user_id'] = $this->user->user_id;
+        $_POST['account']['login_name'] = $this->user->user_data['account']['login_name'];
+
+        /** 检查订单是否可以被操作 **/
+        $obj_order_check = kernel::single('b2c_order_checkorder');
+        if (!$obj_order_check->checkfor_order_update($_POST, $msg))
+        {
+            header('Content-Type:text/jcmd; charset=utf-8');
+            echo '{error:"'.$msg.'",_:null}';exit;
+        }
+
+        $arr_data = $this->_process_fields($_POST);
+        $obj_order = $this->app->model('orders');
+        #↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓记录管理员操作日志@lujy↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+        if($obj_operatorlogs = kernel::service('operatorlog.members')){
+                $olddata = app::get('b2c')->model('orders')->dump($_POST['order_id']);
+        }
+        #↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑记录管理员操作日志@lujy↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+        $result = $obj_order->save($arr_data);
+        if (count($_POST['aItems']))
+        {
+
+            if ($result)
+            {
+                $_POST['verify'] = 'true';
+                $obj_order_update = kernel::single('b2c_order_update');
+                if ($obj_order_update->generate($_POST, true, $msg))
+                {
+                    header('Content-Type:text/jcmd; charset=utf-8');
+                    echo '{success:"'.app::get('b2c')->_("成功.").'",_:null,order_id:"'.$_POST['order_id'].'"}';
+                    #↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓记录管理员操作日志@lujy↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+                    if($obj_operatorlogs = kernel::service('operatorlog.order')){
+                        if(method_exists($obj_operatorlogs,'editOrder_log')){
+                            $newdata = app::get('b2c')->model('orders')->dump($_POST['order_id']);
+                            $obj_operatorlogs->editOrder_log($newdata,$olddata);
+                        }
+                    }
+                    #↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑记录管理员操作日志@lujy↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+                }
+                else
+                {
+                    $this->begin('index.php?app=b2c&ctl=admin_order&act=showEdit&p[0]=' . $_POST['order_id']);
+                    if (isset($msg) && $msg)
+                        eval("\$msg = \"$msg\";");
+                    $this->end(false, $msg);
+                }
+            }
+            else
+            {
+                $this->begin('index.php?app=b2c&ctl=admin_order&act=showEdit&p[0]=' . $_POST['order_id']);
+                if (isset($msg) && $msg)
+                    eval("\$msg = \"$msg\";");
+                $this->end(false, $msg);
+            }
+        }
+        else
+        {
+            $subsdf = array('order_objects'=>array('*',array('order_items'=>array('*',array(':products'=>'*')))));
+            $arr_orders = $obj_order->dump($_POST['order_id'], '*', $subsdf);
+            if (count($arr_orders['order_objects']) == 0)
+            {
+                $this->begin('index.php?app=b2c&ctl=admin_order&act=showEdit&p[0]=' . $_POST['order_id']);
+                $this->end(false, app::get('b2c')->_('订单详细不存在，请确认！'));
+            }
+            else
+            {
+                header('Content-Type:text/jcmd; charset=utf-8');
+                echo '{success:"'.app::get('b2c')->_("成功.").'",_:null,order_id:"'.$_POST['order_id'].'"}';
+            }
+        }  
+    }
+
+
+    // 订单结算
+    public function dosettle_accounts($order_id)
+    {
+        $order = $this->app->model('orders')->dump($order_id);
+        if ($order['settle_accounts'] == 'true') {
+            exit('settle_accounts error');
+        }
+        $this->pagedata['order'] = $order;
+        $this->display('admin/order/settle_accounts.html');
+    }
+
+    public function settle_accounts()
+    {
+        $order_id = $_POST['order_id'];        
+        if ($_POST['doSubmit'] == 'do') {
+            $order = $this->app->model('orders')->dump($order_id);
+            $this->begin('');
+            $rebate = floatval($_POST['rebate']);
+            if ($rebate > $order['total_amount']) {
+                $this->end(false,'提成的金额不能大于订单总金额');
+            }
+            $update = array(
+                'settle_accounts' => 'true',
+                'rebate' => $rebate,
+            );
+            $this->app->model('orders')->update($update,array('order_id'=>$order['order_id']));
+            $this->end(true,'结算成功');
+        }
+    }
+
+    function getMembers(){
+        $mbObj = $this->app->model('members');
+        if($_POST['mobile']){
+            $filter = array(
+                'mobile' => $_POST['mobile'],
+            );
+        }elseif ($_POST['uname']){
+            $filter = array('login_account' => $_POST['uname']);
+            $pam = app::get('pam')->model('members')->dump($filter);
+            $filter['member_id'] = $pam['member_id'];
+        }else{
+            echo '';
+            exit;
+        }
+        $data = $mbObj->getList('*',$filter);
+        if ($data){
+            echo "window.autocompleter_json=".json_encode($data);
+            exit;
+        }
+        echo "";
+    }
+
+
+    /**
+     * 
+     * ajax获取区域的体验店
+     */
+    public  function get_area_store(){
+        $res = array('status'=>0);
+        $reg_id=(int)$_POST['reg_id'];
+        $list = app::get('storelist')->model('storelist')->getList("store_id,store_name",array('reg_id'=>$reg_id));
+        if ($list) {
+            $res = array(
+                'status' => 1,
+                'data' => $list,
+            );
+        }
+        echo json_encode($res);
+        exit();
+    }    
 }

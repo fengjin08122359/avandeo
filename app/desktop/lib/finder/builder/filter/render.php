@@ -52,6 +52,7 @@ class desktop_finder_builder_filter_render
                     $addon = app::get('desktop')->_('是');
                 else $addon = '';
             }
+
             $columns[$c]['addon'] = $addon;
             if($v['type']=='last_modify'){
                 $v['type'] = 'time';
@@ -73,6 +74,33 @@ class desktop_finder_builder_filter_render
             
             
             $inputer = $ui->input($params);
+
+
+
+            //add by qianzedong 增加regions类型
+            if($v['type'] == 'regions')
+            {
+                $inputer = "";
+                $inputer .= "<div class=\"regionSelectBox\">";
+                $inputer .= "<span class=\"citys\"></span>";
+                $inputer .= " <input type='hidden' name='area_fee_conf[".$c."][areaGroupName]' />";
+                $inputer .= " <input type='hidden' name='area_fee_conf[".$c."][areaGroupId]' />";
+                $inputer .= " <span class=\"lnk\" onclick=\"regionSelect(this)\">地区选择</span>";
+                $inputer .= "</div>";
+                $inputer .= "<script>";
+                $inputer .= " var regionSelect = function(el){";
+                $inputer .= "     var el=$(el).getParent('.regionSelectBox');";
+                $inputer .= "     var ipt = el.getElements('input[type=hidden]');";
+                $inputer .= "     Ex_Loader('modedialog',function(){";
+                $inputer .= "         new ModeDialog(";
+                $inputer .= "             'index.php?app=ectools&ctl=regions&act=showRegionTreeList&p[0]=".time()."&p[1]=multi',";
+                $inputer .= "             {width:270,height:window.getSize().y*.9,params:{iptText:ipt[0],iptHidden:ipt[1]}}";
+                $inputer .= "         );";
+                $inputer .= "     });";
+                $inputer .= " };";
+                $inputer .= "</script>";
+            }
+
             $columns[$c]['inputer'] = $inputer;
         }
         

@@ -104,6 +104,18 @@ class b2c_mdl_products extends dbeav_model{
             }
         }
 
+        // 门店下单专用 载入图片
+        if ($_GET['row_type'] == 'custom') {
+            $imageDefault = app::get('image')->getConf('image.set');
+            $this->pagedata['defaultImage'] = $imageDefault['S']['default_image'];
+            $mdl_goods = $this->app->model('goods');
+            foreach ($arr_product as $k => $v) {
+                $goods = $mdl_goods->dump($v['goods_id'],'image_default_id,udfimg');
+                $arr_product[$k]['udfimg'] = $goods['udfimg'];
+                $arr_product[$k]['image_default_id'] = $goods['image_default_id'];
+            }
+        }
+
         return $arr_product;
     }
 

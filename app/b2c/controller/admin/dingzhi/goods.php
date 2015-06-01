@@ -138,6 +138,7 @@ class b2c_ctl_admin_dingzhi_goods extends desktop_controller{
     }
 
     function import(){
+        strval($_GET['import']) === '1' || die;
         $file = 'http://wodi-hh.vip.ishopex.cn/app/b2c/crontab/1.csv';
         $type = 'baozhen';
         kernel::single('b2c_goods_dingzhi')->import_data($file,$type);

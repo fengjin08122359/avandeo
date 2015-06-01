@@ -1,0 +1,24 @@
+<div class="form-title">
+  <h5>      
+    <span>2</span>
+<{t}>添加订单商品<{/t}>
+<em class="c-red">*</em>
+</h5>
+
+</div>
+<div class="form-body" id="order_product" style="display:none">
+<!-- <span class="fr">按货品编码添加:<input type="text" name="product_bn" disabled="disabled" /> 按货品名称添加:<input type="text" name="product_name" disabled="disabled" /></span> -->
+<!-- <{button label="添加商品" id="btn_add_product" disabled="disabled"}> -->
+<{input type="object" object="products" vtype="required" name="order[product_id]" return_url="index.php?app=desktop&ctl=editor&act=object_rows&row_type=custom" textcol="name" cols="name" filter="e_type=normal" multiple="true" select="checkbox"}>
+</div>
+<script type="text/javascript">
+function setCart(){
+	$('order_create').setStyle('display','');
+	Order.addCart();
+}
+function updateCart(id){
+  $('subtotal_'+id).innerHTML = $('num_'+id).value.toFloat() * $('price_'+id).innerHTML.toFloat();
+  Order.addCart();
+}
+
+</script>

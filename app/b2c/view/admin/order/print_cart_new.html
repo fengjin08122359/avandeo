@@ -1,0 +1,324 @@
+<style>
+ul{list-style:none;}
+.left{float:left;display:block;}
+.right{float:right;display:block;}
+.business ul li{line-height:30px;}
+.table{margin-top:-10px;}
+.table tr td{border-bottom:1px solid #ccc;font-size:12px;}
+.date ul li{line-height:30px;font-size:14px;}
+</style>
+<div class="oder-printbox">
+<div style="height:120px;margin:0 auto;">
+<div class="right">
+<img src="/app/desktop/statics/images/wodi_logoin_revised_02.gif" height="60"/><Br/>
+
+</div><br/><br/>
+<div style="margin-top:60px;text-align:center;font-family:'黑体';margin-bottom:15px;font-size:30px;">沃棣家居专用销售单</div>
+</div>
+<br/>
+<div style="height:80px;margin-bottom:3px;">
+<div class="date right" style="margin-right:60px;">
+<ul>
+	<li>日期：<{$orderInfo.createtime|userdate}>
+	</li>
+	<li>编号：<{$orderInfo.order_id}>
+	</li>
+</ul>
+</div>
+</div>
+  <div class="" style="font-size:16px;margin-bottom:3px;"><{t}>客户信息<{/t}></div>
+  <!-- <table width="100%" border="1" cellpadding="0" cellspacing="0">
+    <tr>
+      <td colspan="2" ></td>
+      <td><div id="chk_print1" class="noprint">
+          <input name="chk_pic_print" type="checkbox" id="chk_pic_print"  checked="checked" />
+          <label class="label_pic_print" for="chk_pic_print"><{t}>打印图片<{/t}></label>
+        </div></td>
+    </tr>
+    <tr>
+      <td rowspan="5" width="15%"><img src="<{$logo_image|storager}>" width="150" height="60" /></td>
+      <td width="65%" rowspan="5"><h1><{$shop.name}></h1>
+        <{$shop.url}></td>
+      <tr style="border:1px solid #ccc;text-align:center;"><td><{t}>*收货人姓名：<{/t}><{$orderInfo.consignee.name}></td></tr>
+     <tr style="border:1px solid #ccc;text-align:center;"><td> <{t}>*配送区域：<{/t}><{$orderInfo.consignee.area|region}></td></tr>
+    <tr style="border:1px solid #ccc;text-align:center;"><td> <{t}>*详细地址：<{/t}><{$orderInfo.consignee.addr}></td></tr>
+    <tr style="border:1px solid #ccc;text-align:center;"><td> <{t}>*手机号：<{/t}><{$orderInfo.consignee.mobile}></td></tr>
+    <tr style="border:1px solid #ccc;text-align:center;"><td> <{t}>备用电话：<{/t}><{$orderInfo.consignee.telephone}></td></tr>
+   
+    <tr style="border:1px solid #ccc;text-align:center;">
+      <td><{t}>订购日期：<{/t}><{$orderInfo.createtime|userdate}></td>
+    </tr>
+  </table> -->
+  <div style="border:1px solid #ccc;height:120px;margin-bottom:3px;">
+  	<div class="business left">
+  		<ul>
+  		<li>客户姓名：<{$orderInfo.consignee.name}></li>
+  		<li>联系电话：<{if $orderInfo.consignee.mobile}><{$orderInfo.consignee.mobile}><{else}>  <{$orderInfo.consignee.telephone}><{/if}></li>
+  		<li>送货地址：<{$orderInfo.consignee.area|region}>&nbsp;<{$orderInfo.consignee.addr}></li>
+  		</ul>
+  	</div>
+  	<div class="business right" style="margin-right:200px;">
+  	<ul>
+  		<li>&nbsp;</li>
+  		<li>邮箱：<{$orderInfo.consignee.email}></li>
+  		<li>邮编：<{$orderInfo.consignee.zip}></li>
+  		</ul>
+  	</div>
+  </div>
+  <div class="" style="font-size:16px;" ><{t}>产品明细<{/t}></div><Br/>
+  <table width="100%" border="0" align="center" cellpadding="0"  cellspacing="0" class="table">
+    <tr class="" >
+      <td align="center">No</td>
+      <td align="center"><{t}>商品名称/货号<{/t}></td>
+       <td align="center"><{t}>单价<{/t}></td>
+      <td align="center"><{t}>数量<{/t}></td>
+      <!-- <td align="center"><{t}>折扣<{/t}></td> -->
+      <td align="center"><{t}>优惠<{/t}></td>
+      <td align="center"><{t}>定制需求<{/t}></td>
+      <!-- <td align="center"><{t}>货号<{/t}></td> -->
+      
+     
+      <td align="center"><{t}>金额<{/t}></td>
+      <td align="center"><{t}>备注<{/t}></td>
+    </tr>
+    <{foreach from=$goodsItem item=aGoods name="item"}>
+    <tr >
+      <td align="center"><{$smarty.foreach.item.iteration}></td>
+     
+      <td align="center">
+      <div style="max-width:250px;height:50px;">
+      <div class="left" >
+      <{if $aGoods.small_pic}><img class="product" style="margin-top:10px;" src="<{$aGoods.small_pic|storager}>" width="50" height="50" align="absmiddle" /><{else}>
+      	<span style="display:block;margin-top:20px;">暂无图片</span>
+      <{/if}>
+      </div>
+      <div  class="right" >
+      <p>货号：<{$aGoods.bn}></p>
+      <p><{$aGoods.names}></p>
+      <{if $aGoods.spac_info}><{$aGoods.spac_info}><{/if}>
+      </div>
+      </div>
+      
+      
+      
+      
+      
+        <{if count($aGoods.minfo)}>
+        <{foreach from=$aGoods.minfo item=minfo key=name}> <br/>
+        <{$minfo.label}><{if $minfo.label && $minfo.value}>：<{/if}><{$minfo.value}>
+        <{/foreach}>
+        <{/if}>
+        </td>
+      <td align="center"><{$aGoods.price|cur}></td>
+      <td align="center"><{$aGoods.quantity}></td>
+      <!-- <td align="center" ><{$orderInfo.pmt_order|cur}></td> -->
+      <td align="center"><{if $orderInfo.sales.pmt_tag}><font color="red">[<{$orderInfo.sales.pmt_tag}>]</font><{else}>无<{/if}></td>
+      <td align="center"><{if $aGoods.custom}><{$aGoods.custom}><{else}>无<{/if}></td>
+      <!-- <td align="center"><{$aGoods.bn}></td> -->
+      
+      
+      <td align="center"><{$aGoods.price*$aGoods.quantity|cur}></td>
+      <td align="center"></td>
+      </tr>
+     
+	  <{if $aGoods.adjunct}>
+      <tr>
+        <td colspan="6" style="padding:0 0 0 20px;  background:#F7FAFB"><div style="padding-left:32px; border-bottom:1px solid #E8E8E8;  font-weight:bold; text-align:left"><{t}>商品配件<{/t}></div>
+          <table  border="0" align="center"cellpadding="0" cellspacing="0" style=" background:#F7FAFB" >
+		  <colgroup><col style="width:17%">
+	<col style="width:43%">
+	<col style="width:10%">
+	<col style="width:10%">
+	<col style="width:10%">
+	<col style="width:10%">
+	<col style="width:10%">
+      </colgroup>
+            <{foreach from=$aGoods.adjunct item=ajuncts name="ajunctsItem"}>
+            <tr>
+			<td><{$smarty.foreach.item.iteration}></td>
+              <td  style="border:none;"><{$ajuncts.bn}></td>
+              <td class="textleft" width="30%" style="border:none;"><img class="product" src="<{$ajuncts.small_pic|default:$defaultImage|storager}>" width="50" height="50" align="absmiddle" /><{$ajuncts.name}>
+                <{if $ajuncts.minfo && is_array($ajuncts.minfo)}>
+                <{foreach from=$ajuncts.minfo item=minfo key=name}> <br>
+                <{$minfo.label}>：<{$minfo.value}>
+                <{/foreach}>
+                <{/if}><{if $ajuncts.link}></a><{/if}><{if $ajuncts.is_type == 'goods' && $ajuncts.small_pic}> <a style='text-decoration:none;' class='x-view-img' href='javascript:void(0);' imgsrc='<{$ajuncts.small_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>'  title='<{$ajuncts.name}>'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a> <{/if}> </td>
+              <td width="12%" style="border:none;" ><{$ajuncts.price|cur_odr}></td>
+              <td class="Colamount" width="10%" style="border:none;"><{$ajuncts.quantity}></td>
+			  <td class="Colamount" width="13%" style="border:none;"><{$ajuncts.total_amount|cur_odr}></td>
+            </tr>
+            
+            <{/foreach}>
+          </table></td>
+      </tr>
+      <{/if}>
+	  <{if $aGoods.gifts}>
+		<tr>
+        <td colspan="6" style="padding:0 0 0 20px;  background:#F7FAFB;border:1px dotted #ddd"><div style="font-weight:bold; text-align:left"><{t}>商品赠品<{/t}></div>
+          <table  border="0" align="center"cellpadding="0" cellspacing="0" width="100%" style=" background:#F7FAFB" >
+		  <colgroup>
+          <col style="width:3%">
+          <col style="width:22%">
+          <col style="width:50.5%">
+          <col style="width:10%">
+          <col style="width:6%">
+          <col style="width:10%">
+      </colgroup>
+            <{foreach from=$aGoods.gifts item=gifts name="ajunctsItem"}>
+            <tr>
+			<td><{$smarty.foreach.item.iteration}></td>
+              <td  style="border:none;"><{$gifts.bn}></td>
+              <td class="textleft" style="border:none;"><img class="product" src="<{$gifts.small_pic|default:$defaultImage|storager}>" width="50" height="50" align="absmiddle" /><{$gifts.name}>
+                <{if $gifts.minfo && is_array($gifts.minfo)}>
+                <{foreach from=$gifts.minfo item=minfo key=name}> <br>
+                <{$minfo.label}>：<{$minfo.value}>
+                <{/foreach}>
+                <{/if}><{if $gifts.link}></a><{/if}><{if $gifts.is_type == 'goods' && $gifts.small_pic}> <a style='text-decoration:none;' class='x-view-img' href='javascript:void(0);' imgsrc='<{$ajuncts.small_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>'  title='<{$ajuncts.name}>'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a> <{/if}> </td>
+              <td style="border:none;" ><{$gifts.price|cur_odr}></td>
+			  <td class="Colamount" style="border:none;"><{$gifts.quantity}></td>
+              <td class="Colamount" style="border:none;"><{$gifts.price*$gifts.quantity|cur_odr}></td>
+            </tr>
+            <{/foreach}>
+          </table></td>
+      </tr>
+	  <{/if}>
+	   
+    <{/foreach}>
+    <tr colspan="6" 	>
+      	<td colspan="6" align="center" style="border:none;"></td>
+      	<td align="center" >商品总价:</td>
+      	<td align="center"><{$orderInfo.cost_item|cur}></td>
+      </tr>
+      <tr colspan="6" style="border:none;">
+      	<td colspan="6" align="center" style="border:none;"></td>
+      	<td align="center" >运费:</td>
+      	<td align="center" ><{$orderInfo.shipping.cost_shipping|cur}></td>
+      </tr>
+      <tr colspan="6" 	>
+      	<td colspan="6" align="center" style="border:none;"></td>
+      	<td align="center" >折扣:</td>
+      	<td align="center"><{$orderInfo.pmt_order|cur}></td>
+      </tr>
+      
+      <tr colspan="6" style="border:none;">
+      	<td colspan="6" align="center" style="border:none;"></td>
+      	<td align="center" >合计金额:</td>
+      	<td align="center" ><{$orderInfo.total_amount|cur}></td>
+      </tr>
+	 <{if $giftsItem}>
+	 <tr>
+      <td colspan="6" style="padding:0 0 0 20px;  background:#F7FAFB;border:1px dotted #ddd"><div style="font-weight:bold; text-align:left"><{t}>优惠赠品<{/t}></div>
+          <table  border="0" align="center"cellpadding="0" cellspacing="0" style=" background:#F7FAFB" width="100%">
+		  <colgroup>
+            <col style="width:3%">
+            <col style="width:22%">
+            <col style="width:40.5%">
+            <col style="width:10%">
+            <col style="width:10%">
+            <col style="width:15%">
+          </colgroup>
+      <{foreach from=$giftsItem item=aGoods name="item"}>
+      <tr>
+		<td><{$smarty.foreach.item.iteration}></td>
+        <td style="border:none;"><{$aGoods.bn}></td>
+        <td class="textleft" style="border:none;"><{if $aGoods.link}><a href="<{$aGoods.link}>" target="_blank"><{/if}><{$aGoods.name}><{if $aGoods.link}></a><{/if}> <{if $aGoods.small_pic}> <a style='text-decoration:none;' class='x-view-img' href='javascript:void(0);' imgsrc='<{$aGoods.small_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>'  title='<{$aGoods.name}>'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a> <{/if}> </td>
+		<td style="border:none;" ><{$aGoods.price|cur_odr:$order.currency}></td>
+		<td class="Colamount"  style="border:none;"><{$aGoods.quantity}></td>
+        <td class="Colamount"  style="border:none;"><{$aGoods.total_amount|cur_odr:$order.currency}></td>
+      </tr>
+      <{/foreach}>
+	  </table></td>
+      </tr>
+      
+	  <{/if}>
+	<{if $extend_items}>
+	<{foreach from=$extend_items item=aExtends name="extend_obj"}>
+		<tr><th colspan="6"></th></tr>
+		<{foreach from=$aExtends item=aItem name="extend_item"}>
+		<tr>
+			<td><{$smarty.foreach.item.iteration}></td>
+			<td><{$aItem.bn}></td>
+			<td><img class="product" src="<{$aItem.small_pic|default:$defaultImage|storager}>" width="50" height="50" align="absmiddle" /><{$aItem.name}></td>
+			<td><{$aItem.price|cur}></td>
+			<td><{$aItem.quantity}></td>
+			<td><{$aItem.price*$aItem.quantity|cur}></td>
+		</tr>
+		<{/foreach}>
+	<{/foreach}>
+	
+	<{/if}>
+  </table>
+   <!-- <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0"> -->
+    <!-- <tr>
+      <td width="80%" valign="top"  rowspan="7" style="height:150px;">
+      <table cellpadding="0" cellspacing="0" border="0" width="90%">
+      <tr><td width="10%"><{t}>备注：<{/t}></td><td><{$orderInfo.memo}></td></tr>
+      </table>
+ </td> 
+     </tr> -->
+  
+      <!--  <tr>
+       <td><{t}>配送方式：<{/t}><{$orderInfo.shipping.shipping_name}></td>
+       <td><{t}>配送时间：<{/t}><{$orderInfo.consignee.r_time}></td>
+       </tr>
+   
+  
+       <tr><td><{t}>订单附言：<{/t}><{$orderInfo.memo}></td></tr>
+
+
+       <tr>
+       <td><{t}>结算信息：<{/t}></td> -->
+      <!--  <td><{t}>商品总价格：<{/t}><{$orderInfo.cost_item|cur}></td><br/>
+       <td><{t}>商品总价格：<{/t}><{$orderInfo.cost_item|cur}></td> -->
+       <!-- <td>
+       	<div>
+       		<ul>
+       			<li><{t}>商品总价格：<{/t}><{$orderInfo.cost_item|cur}></li>
+       			<li><{t}>订单总价格：<{/t}><{$orderInfo.total_amount|cur}></li>
+       		</ul>
+       	</div>
+       </td>
+       </tr> -->
+ 
+  
+       <!-- <tr><td><{t}>支付手续费：<{/t}><{$orderInfo.payinfo.cost_payment|cur}></td></tr>
+  
+  
+      <tr> <td><{t}>订单优惠：<{/t}><{$orderInfo.self|cur}>
+      </td>
+  </tr>
+    <tr><td ><h2><{t}>应付总金额：<{/t}><{$orderInfo.total_amount|cur}><{t}>元<{/t}></h2></td>
+    </tr>
+     -->
+   <!-- </table>  -->
+  <!-- <table width="100%" border="0" align="center" cellpadding="0" class="table-border" cellspacing="0">
+    <tr>
+      <td><{t}>服务商：<{/t}><{$shop.name}></td></tr>
+        <tr><td><{t}>电话：<{/t}><{$shop.tel}></td></tr>
+       <tr><td><{t}>邮箱：<{/t}><{$shop.email}></td></tr>
+      <tr><td><{t}>网址：<{/t}><{$shop.url}></td></tr>
+  </table> -->
+  <div style="margin:10px auto;border:1px solid #ccc;">
+  	<!-- <img src="/app/b2c/statics/images/business.jpg" style="width:95%;margin:0 auto;" /> -->
+  	<h1 style="margin-left:30px;margin-top:10px;">付款方式：</h1><br/>
+  	<span style="margin-left:30px;font-size:13px;">客户 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日    向我方支付人民币&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;元作为定金，此外，客户应在发<br/>
+  	
+  	</span><br/><br/>
+  	<span style="margin-left:30px;font-size:13px;">货之前将订单总额的剩余结清，应付人民币&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;元。</span><br/><br/><br/>
+  	
+  	<h1 style="margin-left:30px;">约定送货时间：</h1><br/><br/>
+  </div>
+  <div style="margin-top:20px;">
+  	<div class="left" style="font-weight:blod;font-size:16px;">客户签名：</div>
+  	<div class="right" style="margin-right:200px;font-weight:blod;font-size:16px;">体验馆盖章：</div>
+  </div>
+  <table cellpadding="0" cellspacing="0" border="0" width="100%">
+   <!--  <tr>
+      <td><{t}>您目前的总积分为<{/t}> <{$memberPoint}> ，<{t}>累计购物<{/t}><{$orderSum.sum}><{t}>次，累计购物金额<{/t}><{$orderSum.sum_pay|cur}><{t}>元 <{/t}></td>
+    </tr>
+    <tr>
+      <td ><div style="text-align:right; height35px; border-bottom:2px solid #333;line-height:35px"><strong>Powered by ShopEx.cn</strong></div></td>
+    </tr> -->
+  </table>
+  
+</div>

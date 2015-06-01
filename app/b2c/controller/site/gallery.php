@@ -56,7 +56,7 @@ class b2c_ctl_site_gallery extends b2c_frontpage{
         $this->pagedata['showtype'] = $params['showtype'];
         $this->pagedata['is_store'] = $params['is_store'];
         $this->pagedata['goodsData'] = $goodsData;
-
+		
         if($tmp_filter['search_keywords'][0]){
             $tmp_filter['search_keywords'][0] = str_replace('%xia%','_',$tmp_filter['search_keywords'][0]);
         }
@@ -508,7 +508,8 @@ class b2c_ctl_site_gallery extends b2c_frontpage{
             }
             unset($tmp_filter['pTag']);
         }
-
+        //增加判断都是非定制商品e_type=normal by liuguogen
+		$tmp_filter['e_type']='normal';
         $filter['filter'] = $tmp_filter;
         $filter['orderby'] = $orderby;
         $filter['showtype'] = $showtype;

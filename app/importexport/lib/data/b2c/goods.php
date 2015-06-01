@@ -28,6 +28,9 @@ class importexport_data_b2c_goods {
             'status'        => app::get('b2c')->_('col:上架'),
             'spec'          => app::get('b2c')->_('col:规格'),
             'store'         => app::get('b2c')->_('col:库存'),
+            'length'        => app::get('b2c')->_('col:长'),
+            'width'         => app::get('b2c')->_('col:宽'),
+            'height'        => app::get('b2c')->_('col:高'),
             'description'   => app::get('b2c')->_('col:详细介绍'),
             'weight'        => app::get('b2c')->_('col:重量'),
             'unit'          => app::get('b2c')->_('col:单位'),
@@ -102,7 +105,7 @@ class importexport_data_b2c_goods {
             $this->title = $this->get_title(); 
         }
 
-        $productsData = app::get('b2c')->model('products')->getList('product_id,bn,is_default,price,cost,mktprice,store,marketable,spec_info,weight',array('goods_id'=>$row['goods_id'])); 
+        $productsData = app::get('b2c')->model('products')->getList('product_id,bn,is_default,price,cost,mktprice,store,marketable,spec_info,weight,length,width,height',array('goods_id'=>$row['goods_id'])); 
 
         $goodsData = $this->_get_goods_data($row);
         $data = array();
@@ -115,6 +118,9 @@ class importexport_data_b2c_goods {
             $goodsData['cost']       = $productsData[0]['cost'];
             $goodsData['mktprice']   = $productsData[0]['mktprice'];
             $goodsData['store']      = $productsData[0]['store'];
+            $goodsData['length']     = $productsData[0]['length'];
+            $goodsData['width']      = $productsData[0]['width'];
+            $goodsData['height']     = $productsData[0]['height'];
             $goodsData['status']     = ($productsData[0]['marketable']=='true') ? 'Y' : 'N';
             $goodsData['weight']     = $productsData[0]['weight'];
             $goodsData  = $this->_get_member_lv_price($productsData[0]['product_id'],$goodsData); 
@@ -143,6 +149,9 @@ class importexport_data_b2c_goods {
                 $productData['cost']       = $product_row['cost'];
                 $productData['mktprice']   = $product_row['mktprice'];
                 $productData['store']      = $product_row['store'];
+                $productData['length']     = $product_row['length'];
+                $productData['width']      = $product_row['width'];
+                $productData['height']     = $product_row['height'];
                 $productData['weight']     = $product_row['weight'];
                 $productData['status']     = ($product_row['marketable']=='true') ? 'Y' : 'N';
                 //货品规格
@@ -169,6 +178,9 @@ class importexport_data_b2c_goods {
         $goodsData['bn'] = $row['bn'];
         $goodsData['name'] = $row['name'];
         $goodsData['store'] = $row['store'];
+        $goodsData['length'] = $row['length'];
+        $goodsData['width'] = $row['width'];
+        $goodsData['height'] = $row['height'];
         $goodsData['brief'] = $row['brief'];
         $goodsData['description'] = str_replace( '"','""', str_replace("\n"," ",$row['intro']) );
         $goodsData['unit'] = $row['unit'];
@@ -505,6 +517,9 @@ class importexport_data_b2c_goods {
             'keywords' => $goods['keywords'],
             'unit' => $goods['unit'],
             'weight' => $goods['weight'],
+            'length' => $goods['length'],
+            'width' => $goods['width'],
+            'height' => $goods['height'],
             'status' => ($goods['status'] == 'Y') ? 'true' : 'false',
             'description' => $goods['description']
         );
@@ -649,6 +664,9 @@ class importexport_data_b2c_goods {
 
         $product['status'] = ($product_row['status'] == 'Y') ? 'true' : 'false';
         $product['weight'] = $product_row['weight'];
+        $product['length'] = $product_row['length'];
+        $product['width'] = $product_row['width'];
+        $product['height'] = $product_row['height'];
         $product['store'] = $product_row['store'];
         $product['unit'] = $product_row['unit'];
         $product['is_default'] = (strtolower($product_row['is_default']) == 'true') ? $product_row['is_default'] : 'false';

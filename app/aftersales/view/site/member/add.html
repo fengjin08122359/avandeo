@@ -33,9 +33,9 @@
                   <{input type="select" name="product_nums[{$item.products.product_id}]" options=$item.arrNum class="x-select" required=true value=$item.quantity}>
                 </td>
                 <td class="itemno"><{$item.bn}></td>
-                <input type="hidden" name="product_name[<{$item.products.product_id}>]" value=<{$item.name}> >
+                <input type="hidden" name="product_name[<{$item.products.product_id}>]" value="<{$item.name}>" >
                 <td class="goods-name"><a href="<{$item.link_url}>"><img width="30px;" src="<{$item.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>" title="<{$item.name}>&nbsp;<{$item.attr}>" alt="<{$item.name}>&nbsp;<{$item.attr}>"></a><{$item.name}></td>
-                <input type="hidden" name="product_price[<{$item.products.product_id}>]" value=<{$item.price}> >
+                <input type="hidden" name="product_price[<{$item.products.product_id}>]" value="<{$item.price}>" >
                 <td class="price"><{$item.price|cur_odr:$order.currency}></td>
               </tr>
               <{/foreach}>

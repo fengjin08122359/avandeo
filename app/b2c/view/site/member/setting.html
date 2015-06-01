@@ -40,7 +40,7 @@
           </li>
           <{/if}>
           <{foreach from=$attr item=item name="item" key='row'}>
-          <li class="form-item">
+          <li class="form-item" <{if $item.attr_type =='region'}> style="display:none;"<{/if}>>
             <label for="" class="form-label"><{if $item.attr_required eq 'true'}><em class="warn">*</em><{/if}><{$item.attr_name}>：</label>
             <span class="form-act">
               <{assign var=vtype value=""}>
@@ -63,6 +63,18 @@
 
               <{if $item.attr_type =='region'}>
               <{input app=ectools type="region" name=$item.attr_column value=$item.attr_value vtype=$vtype}>
+              <li class="form-item action-store" <{if !$store}>style="display:none;"<{/if}>>
+                <label for="" class="form-label">体验店：</label>
+                <span class="form-act">
+                  <!--<select id="select-store" class="x-select" name="store_id">
+                    <option value="0">请选择体验店</option>-->
+                    <{if $store}>
+                    <{$store.store_name}>
+                    <!--<option value="<{$store.store_id}>" selected><{$store.store_name}></option>-->
+                    <{/if}>
+                  <!--</select>-->
+                </span>
+              </li>                  
               <{/if}>
 
               <{if $item.attr_type =='gender'}>
@@ -98,3 +110,26 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+
+$$(".x-select")[2].addEvent('change',function(e){
+  var area=$$("input[name=area]").get('value');
+   reg_id=$$(".x-select")[2].get('value');
+   new Request({url:"<{link app='b2c' ctl='site_passport' act='get_area_store'}>",method:'post',data:'reg_id='+reg_id,onSuccess:function(res){
+      var res = JSON.decode(res);
+      if (res.status == 1) {
+        var option = '<option value="0">请选择体验店</option>';
+        res.data.each(function(i) { 
+      option += '<option value="'+i.store_id+'">'+i.store_name+'</option>';
+    });
+        $('select-store').innerHTML = option;
+      $$(".action-store").setStyle('display','');
+      }else{
+        $$(".action-store").setStyle('display','none');
+      }
+    }}).send();
+
+});
+
+</script>

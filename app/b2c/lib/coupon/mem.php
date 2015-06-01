@@ -110,15 +110,25 @@ class b2c_coupon_mem {
         $o = $this->app->model('member_coupon');
         $couponFlag = $this->app->model('coupons')->getFlagFromCouponCode($memc_code);
 
-        if( strtolower($couponFlag)!='b' ) return false;
+        //if( strtolower($couponFlag)!='b' ) return false;
         $coupons = $this->app->model('coupons')->getCouponByCouponCode($memc_code);
         $coupons = $coupons[0];
         $arr['memc_code'] = $memc_code;
         $arr['memc_used_times'] = 1;
         $arr['cpns_id'] = $coupons['cpns_id'];
         $m_coupon = $o->getList( '*',array('memc_code'=>$memc_code) );
-        if( !$m_coupon ) return false;
-        $arr['member_id'] = $m_coupon[0]['member_id'];
+        if( !$m_coupon ){
+            $arr['member_id'] = $uid;
+            $arr['memc_gen_time'] = time();
+            $arr['memc_isvalid'] = 'true';
+            $arr['memc_source'] = strtolower($couponFlag);
+
+            //return false;
+        }else{
+            $arr['memc_used_times'] = $m_coupon['memc_used_times'] + 1;
+            $arr['member_id'] = $m_coupon[0]['member_id'];
+        }
+
         return $o->save($arr);
     }
 

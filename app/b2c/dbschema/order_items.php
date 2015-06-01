@@ -136,6 +136,12 @@ $db['order_items']=array (
       'editable' => false,
       'comment' => app::get('b2c')->_('明细商品的规格属性'),
     ),
+    'custom' => 
+    array (
+      'type' => 'text',
+      'editable' => false,
+      'comment' => app::get('b2c')->_('定制需求'),
+    ),
     'item_type' => 
     array (
       'type' => 

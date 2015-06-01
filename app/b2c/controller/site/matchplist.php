@@ -550,6 +550,8 @@ class b2c_ctl_site_matchplist extends b2c_frontpage
             unset($tmp_filter['pTag']);
         }
         $this->_add_filter($tmp_filter);
+        //增加判断都是非定制商品e_type=normal by liuguogen
+        $tmp_filter['e_type']='normal';
         $filter['filter'] = $tmp_filter;
         $filter['orderby'] = $orderby;
         $filter['showtype'] = $showtype;

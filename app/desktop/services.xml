@@ -11,7 +11,9 @@
     <service id="desktop_finder.base_mdl_apps">
         <class>desktop_finder_apps</class>
     </service>
-
+	<service id="desktop_regions_apps">
+        <class>desktop_regions_operation</class>
+    </service>
 <!--    <service id="desktop_finder_base_mdl_apps">
         <class>desktop_finder_apps</class>
         <class>desktop_finder_builder_filter_render</class>

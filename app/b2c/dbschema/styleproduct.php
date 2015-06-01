@@ -47,16 +47,6 @@ $db['styleproduct']=array (
       'in_list' => true,
     ),
   ),
-  'index' =>
-  array (
-    'ind_style' =>
-    array (
-      'columns' =>
-      array (
-        1 => 'goods_id',
-      ),
-    ),
-  ),
   'version' => '$Rev: 40654 $',
   'comment' => app::get('b2c')->_('风格搭配与产品关联表'),
 );

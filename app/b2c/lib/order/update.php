@@ -207,6 +207,7 @@ class b2c_order_update extends b2c_api_rpc_request
 				}                
                 $aItem['quantity'] = $aData['aNum'][$key];
                 $aItem['amount'] = $this->objMath->number_multiple(array($aItem['price'], $aItem['quantity']));
+                $aItem['custom'] = $aData['custom'][$key];
                 
                 $cost_item = $this->objMath->number_plus(array($cost_item, $aItem['amount']));
                 
@@ -278,6 +279,7 @@ class b2c_order_update extends b2c_api_rpc_request
                                     'weight'=>$aItem['weight'],
                                     // 'addon'=>0,
                                     'addon'=>$strAddon,
+                                    'custom' => $aItem['custom'],
                                     )
                             )
                         
@@ -435,6 +437,10 @@ class b2c_order_update extends b2c_api_rpc_request
             $aDataTmp['discount'] = $this->objMath->number_plus(array($rate['discount'], $aData['discount']));
             $aDataTmp['cur_amount'] = $this->objMath->number_multiple(array($aDataTmp['total_amount'], $rate['cur_rate']));
 
+            if ($aData['verify'] == 'true') {
+                $aDataTmp['verify'] = 'true';
+            }
+
             $aDataTmp['order_id'] = $orderid;
             if ($obj_orders->save($aDataTmp) && !$is_error)
             {            
@@ -487,6 +493,10 @@ class b2c_order_update extends b2c_api_rpc_request
                 $aDataTmp['discount'] = ($aData['discount'] >= 0) ? abs($aData['discount']) : $this->objMath->number_minus(array(0, abs($aData['discount'])));
                 $rate = $obj_orders->dump($orderid, 'cur_rate');
                 $aDataTmp['cur_amount'] = $this->objMath->number_multiple(array($aDataTmp['total_amount'], $rate['cur_rate']));
+                
+                if ($aData['verify'] == 'true') {
+                    $aDataTmp['verify'] = 'true';
+                }
 
                 $aDataTmp['order_id'] = $orderid;
                 

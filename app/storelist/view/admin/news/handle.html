@@ -1,0 +1,42 @@
+<form id="newsForm" action="index.php?app=storelist&ctl=admin_news&act=handle" method="POST">
+	<{if $news}>
+		<{input type="hidden" name="news_id" value=$news.news_id}>
+	<{/if}>
+	<div class="tableform">
+		<div class="division">
+		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<th><{t}>标题：<{/t}></th>
+			<td>
+				<{input type="text" id="news_title" name="title" style="width:250px;" value=$news.title vtype="required"}>
+			</td>
+		</tr>
+		<tr>
+			<th><{t}>内容：<{/t}></th>
+			<td>
+				<{input type="html" value=$news.contents name="contents"}>
+			</td>
+		</tr>
+		</table>
+		</div>
+	</div>
+	<div class="table-action">
+	<{button type="submit"  label=$___b2c="保存"|t:'b2c'}>
+	</div>
+</form>
+<script>
+document.getElementById('news_title').focus();
+var finder = finderGroup['<{$env.get.finder_id}>'];
+$('newsForm').store('target',{
+	onComplete:function(){			
+		try{
+			var _dialogIns = $('newsForm').getParent('.dialog').retrieve('instance');
+	     }catch(e){}
+	    if(_dialogIns){
+		    _dialogIns.close();
+		    finder.refresh.delay(400,finder);
+		}	
+	}
+
+});
+</script>

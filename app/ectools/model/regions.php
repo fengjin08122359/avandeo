@@ -179,4 +179,52 @@ class ectools_mdl_regions extends dbeav_model{
             return $arr_region_name[1].$arr_region_name[2];
         }
     }
+
+    public function getALLEndChildByRegionTreeList($areainfo){
+        $area_allids_arr = explode(',',$areainfo);
+        if(is_array($area_allids_arr) && count($area_allids_arr) > 0){
+            $area_ids_arr = array();
+            $tag_num = 0;
+            $area_depth = app::get('ectools')->getConf('system.area_depth');
+            $obj_area = app::get('ectools')->model('regions');
+            foreach($area_allids_arr as $aakey => $aavalue){
+                $tag_num++;
+                $tag_arr = array();
+                $tag_arr = explode('|',$aavalue);
+
+                if($tag_arr[1] && $tag_arr[1] == 'close'){
+                    $regions = $obj_area->getList('region_id',array('region_path|has' => ','.$tag_arr[0].',','region_grade' => $area_depth));
+                    if(is_array($regions) && count($regions) > 0){
+                        foreach($regions as $rgkey => $rgvalue){
+                            $area_ids_arr[] = $rgvalue['region_id'];
+                        }
+                        unset($regions);
+                    }
+                    $tag_num = 0;
+                }else{
+                    if($tag_num >= $area_depth){
+                        $area_ids_arr[] = $aavalue;
+                    }else{
+                        $child_num = $obj_area->count(array('p_region_id' => $tag_arr[0]));
+                        if($child_num < 1){
+                            $area_ids_arr[] = $tag_arr[0];
+                            $tag_num = 0;
+                        }
+                    }
+                }
+
+                if($tag_num >= $area_depth){
+                    $tag_num = 0;
+                }
+            }
+
+            if(is_array($area_ids_arr) && count($area_ids_arr) > 0){
+                return $area_ids_arr;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
 }

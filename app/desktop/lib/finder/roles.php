@@ -16,8 +16,22 @@ class desktop_finder_roles{
     }
         
     function column_control($row){
+    	//$this->app->setconf('default_store_roles','');
         $render = $this->app->render();
-        $render->pagedata['role_id'] = $row['role_id'];
+        $user_id=(int)$_SESSION['account']['user_data']['user_id'];
+        $role_id=app::get('desktop')->model('hasrole')->getRow("*",array('user_id'=>$user_id));
+        $set_role_id=$this->app->getconf('default_store_roles');
+        if(!empty($role_id)){
+        	$r_id=app::get('storelist')->model('storelist_roles')->getRow("*",array('role_id'=>intval($role_id['role_id'])));
+        }
+        $app=substr($_SERVER['QUERY_STRING'],4,7);
+        $render->pagedata['app']=$app;
+        
+        $render->pagedata['set_role_id']=(int)$set_role_id;
+        $render->pagedata['role_id']=intval($role_id['role_id']);
+        $render->pagedata['r_id'] = $r_id?$r_id:NULL;
+        
+        $render->pagedata['rs_id']=$row['role_id'];
         return $render->fetch('users/href.html');
       }
     

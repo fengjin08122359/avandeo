@@ -1,0 +1,100 @@
+<{if $order}>
+<form action="<{link app=aftersales ctl=admin_returnproduct act=return_save}>" method="post" id='add-return-form'>
+<input type="hidden" name="order_id" value="<{$order.order_id}>">
+<input type="hidden" name="member_id" value="<{$order.member_id}>">
+<div class="tableform">
+<div class="division">
+  <div class="table-grid">
+    <table class="gridlist" border="0" cellpadding="0" cellspacing="0" width="100%">
+      <thead>
+      <tr>
+        <th>申请</th>
+        <th>数量</th>
+        <th>货号</th>
+        <th>商品名称</th>
+        <th>单价</th>
+      </tr>
+      </thead>
+              <tbody>
+<{foreach from=$order.items item=item key=key name=name}>
+              <tr class="<{if $smarty.foreach.name.iteration == 1}>first<{/if}>">
+                <td class="actions">
+                  <input type="checkbox" name="product_bn[<{$item.products.product_id}>]" value='<{$item.bn}>' id="" class="x-check" vtype="requiredcustom" data-validatormsg="请先选择要退换的商品">
+                  <label for=""><{t}>退换<{/t}></label>
+                </td>
+                <td class="numbers">
+                  <{input type="select" name="product_nums[{$item.products.product_id}]" options=$item.arrNum class="x-select" required=true value=$item.quantity}>
+                </td>
+                <td class="itemno"><{$item.bn}></td>
+                <input type="hidden" name="product_name[<{$item.products.product_id}>]" value=<{$item.name}> >
+                <td class="goods-name"><img width="30px;" src="<{$item.thumbnail_pic|default:$env.conf.site.default_thumbnail_pic|storager:'s'}>" title="<{$item.name}>&nbsp;<{$item.attr}>" alt="<{$item.name}>&nbsp;<{$item.attr}>"><{$item.name}></td>
+                <input type="hidden" name="product_price[<{$item.products.product_id}>]" value=<{$item.price}> >
+                <td class="price"><{$item.price|cur_odr:$order.currency}></td>
+              </tr>
+<{/foreach}>        
+    <!-- 扩展的商品区域 -->
+        <!-- end -->
+    
+    </tbody></table>
+
+    </div>
+</div>
+<div class="division">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="girdlist">
+  <tr><th>类型</th>
+    <td>
+<input type="radio" name="type" value="1" id="return" vtype="required" data-caution="请填写退换理由" checked="checked"><label for="return">退货</label>
+              <input type="radio" name="type" value="2" id="exchange" vtype="required" data-caution="请填写换货理由"><label for="exchange">换货</label>
+</td>
+</tr>
+  <tr><th><{t}>退换理由：<{/t}></th>
+    <td>
+<input type="text" name="title" id="" class="x-input" placeholder="简单描述退换理由" vtype="required" data-caution="请填写退换理由">
+</td>
+</tr>
+<tr><th>详细描述：</th><td>
+            <span class="form-act">
+              <textarea name="content" id="" class="x-input" cols="50" rows="5" placeholder="请描述遇到的问题以及详细的退换理由，不超过1000字"></textarea>
+            </span>
+          </td></tr>
+<tr>
+  <th>上传图片：</th>
+  <td>
+  <{input type="image" name="image_id" width=160 height=90}>图片大小不超过2M，格式为jpg,gif,jpeg,png</td>
+</tr>
+
+</table>
+
+</div>
+</div>
+<div class="table-action">
+  <{button label=$___b2c="提交申请"|t:'b2c'  type="submit" }>
+  <{button label=$___b2c="取消"|t:'b2c' isCloseDialogBtn="true"}>
+</div>
+<script type="text/javascript">
+      $('add-return-form').store('target',{
+        onComplete:function(re){
+           re = JSON.decode(re);
+           if(re.error)return;       
+          if($('add-return-form').getParent('.dialog'))
+          $('add-return-form').getParent('.dialog').retrieve('instance').close();
+        }
+      });
+</script>
+<{else}>
+<form action="index.php?app=aftersales&ctl=admin_returnproduct&act=add&finder_id=<{$env.get.finder_id}>" id="form1" method="post">
+<input type="hidden" name="doSubmit" value="do" />
+<div class="tableform">
+<div class="division">
+<table>
+    <tr>
+        <td>请输入已发货的订单号： &nbsp;&nbsp;&nbsp;
+        <input type="text" id="order_id" name="order_id" vtype="required" data-caution="请输入需要售后的订单号" value="<{$keywords}>" />
+        <{button  type="submit" label="申请"}></td>
+    </tr>
+</table>
+</div>
+</div>
+
+</form>
+<{/if}>

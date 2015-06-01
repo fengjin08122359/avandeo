@@ -717,8 +717,11 @@ EOF;
                 $this->pagedata['_input']['view'] = $view;
 
             }
-
-            $this->display('finder/input-row.html');
+            if ($_GET['row_type'] == 'custom') {
+              $this->display('finder/input-'.$_GET['row_type'].'.html');
+            }else{
+              $this->display('finder/input-row.html');
+            }
         }
     }
     function finder_common(){

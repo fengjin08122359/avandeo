@@ -1,0 +1,121 @@
+<style>
+.division ul li{float:left;margin:0 20px;}
+</style>
+<form action="index.php?app=storelist&ctl=admin_storelist&act=addstore&finder_id=4491c8" id="user-edit-form" method="post">
+  <input type="hidden" value="<{$row.store_id}>" name="store[store_id]" />
+  <div style="text-align:right;padding:3px 18px"><{help docid="101" type="link"}><{t}>点击查看帮助<{/t}><{/help}></div>
+  <div class="tableform">
+    <div class="division">
+      <table cellspacing="0" cellpadding="0" width="100%">
+        <tbody>
+          <tr><th><em class="red">*</em><label><{t}>门店名称：<{/t}></label></th><td><input type="text" value="<{$row.store_name}>" id="dom_el_ea78c40"  vtype="required"  name="store[store_name]" title="<{t}>门店名称：<{/t}>" class="x-input " autocomplete="off"/></td></tr>
+          <tr><th><em class="red">*</em><label><{t}>会员默认密码：<{/t}></label></th><td><input type="text" value="<{$row.default_pass}>" id="dom_el_ea78c40"  vtype="required"  name="store[default_pass]" title="<{t}>默认密码：<{/t}>" class="x-input " autocomplete="off"/></td></tr>
+           <tr><th><em class="red">*</em><label><{t}>区域选择：<{/t}></label></th><td> <{input app=ectools type="region" name='area' id="area" vtype='area' value=$row.consignee.area callback="selectArea"}></td></tr>
+           
+         
+         <tr><th></th>
+         <td>
+            <div class="deliverycity">
+              <span class="city-name"><{$row.area_name|default:'请选择区域'}></span>
+              <input type='hidden' name='area_fee_conf[0][areaGroupName]' value="<{$row.area_name}>"/>
+              <input type='hidden' id="role_ids" name='area_fee_conf[0][areaGroupId]' value="<{$row.area_value}>"/>
+              <span class="lnk" onclick="regionSelect(this)"><{t}>地区选择<{/t}></span>
+            </div>
+            <script>
+            var role_id="";
+            var store_id = '<{$row.store_id}>';
+            store_id = store_id?store_id:0;
+           // (function(){
+            	$$(".x-select")[2].addEvent('change',function(e){
+            		var area=$$("input[name=area]").get('value');
+            		 role_id=$$(".x-select")[2].get('value');
+            		 new Request({url:"<{link app='storelist' ctl='admin_storelist' act='check_area'}>",method:'post',data:'reg_id='+role_id,onSuccess:function(json){
+            				d=JSON.decode(json);
+            				/* if(d.req=='ok'){
+            					alert(d.msg);
+            					//window.location.href='';
+            				} */
+            				if(d.req=='error'){
+            					alert(d.msg);
+            					return false;
+            				}
+            			}}).send();
+            	
+            	});
+            	
+           // })();
+              var regionSelect = function(el){
+                     var el=$(el).getParent('.deliverycity');
+                     var ipt = el.getElements('input[type=hidden]');
+
+                  Ex_Loader('modedialog',function(){
+
+                    new ModeDialog('index.php?app=ectools&ctl=tools&act=showRegionTreeList&p[0]='+(+new Date)+'&p[1]=multi&p[2]='+role_id+'',{
+
+                    //new ModeDialog('index.php?app=storelist&ctl=admin_tools&act=showRegionTreeList&p[0]='+(+new Date)+'&p[1]=multi&p[2]='+role_id+'&p[3]='+store_id+'',{
+
+                        width:270,height:window.getSize().y*.9,params:{iptText:ipt[0],iptHidden:ipt[1]}});
+                   });
+              };
+            </script>
+        </td>
+</tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</form>
+<{area inject=".mainFoot"}>
+<div class="table-action">
+  <table width="100%" cellspacing="0" cellpadding="0">
+    <tbody>
+      <tr>
+        <td><{button class="btn-primary" id="user-edit-form-submit" type="submit" label=$___b2c="确定"|t:'b2c'}></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<{/area}>
+<script>
+
+(function(){
+	
+	var _form = $('user-edit-form');
+	var btn =$('user-edit-form-submit');
+	var finder = finderGroup['<{$env.get.finder_id}>'];
+	_form.store('target',{
+	  onComplete:function(rs){
+		  
+	  },
+	  onSuccess:function(response){
+		var hash_res_obj = JSON.decode(response);
+		if (hash_res_obj.success != undefined && hash_res_obj.success != ""){
+			
+		  try{
+			var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+			
+		  }catch(e){}
+
+		  if(_dialogIns){
+			   
+			_dialogIns.close();
+			window.location.reload();
+			//window.opener.finder.refresh();
+			//if(rs&&!!JSON.decode(rs).success){
+	          	
+	          	
+	         	 
+	             // if(window.opener.finderGroup&&window.opener.finderGroup['<{$env.get.finder_id}>']){
+	                 //window.opener.finderGroup['<{$env.get.finder_id}>'].refresh();
+	             //} 
+
+		  }
+		}
+	  }
+	});
+
+	btn.addEvent('click',function(){
+	  _form.fireEvent('submit',{stop:$empty});
+	});
+})();
+</script>

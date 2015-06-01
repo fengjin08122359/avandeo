@@ -21,8 +21,18 @@ class b2c_finder_extend_orders{
                   'editable' => true,
                   'filtertype' => 'yes',
                   'filterdefault' => true,
-                  'in_list' => true,
-                )));
+                  'in_list' => true,
+                ),
+                'area_fee' => array (
+                    'type' => 'regions',
+                    'label' => '区域范围',
+                    'editable' => true,
+                    'filtertype' => 'yes',
+                    'filterdefault' => true,
+                    'in_list' => true,
+                    'default_in_list' => true,
+                )              
+            ));
                 
             if(app::get('bdlink')->is_actived())
             {

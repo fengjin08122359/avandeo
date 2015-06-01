@@ -1,0 +1,16 @@
+<style>
+.area p{margin:5px 10px;font-weight:bold;}
+.area ul li{float:left;margin:10px 10px;color:green;}
+</style>
+<div class="area">
+<p>已选择的区域:</p>
+<ul>
+<{if $area_list}>
+<{foreach from=$area_list key=k item=i}>
+<{foreach from=$i.one key=k2 item=t }>
+<li><{$i.two.$k2}>--<{$t}>--<{$k}></li>
+<{/foreach}>
+<{/foreach}>
+<{/if}>
+</ul>
+</div>

@@ -153,6 +153,14 @@ $db['coupons']=array (
     		),
     		'default' => '0',
     ),
+    'area' =>
+    array (
+      'label' => app::get('b2c')->_('适用区域'),
+      'type' => 'longtext',
+      'required' => false,
+      'default' => '',
+      'editable' => false,
+    ),
   ),
 
   'index' =>

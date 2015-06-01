@@ -803,6 +803,7 @@ $db['goods']=array (
           'editable' => false,
       ),
 
+      'e_type' =>
       array (
           'label' => app::get('b2c')->_('商品类型'),
           'width' => 150,
@@ -812,6 +813,50 @@ $db['goods']=array (
           'default'=>'normal',
           'comment' => app::get('b2c')->_('商品类型'),
       ),
+    'delivery_cyc' =>
+    array (
+      'type' => 'number',
+      'label' => app::get('b2c')->_('发货周期'),
+      'width' => 70,
+      'default' => '0',
+      'editable' => false,
+      'filtertype' => 'number',
+      'filterdefault' => true,
+      'in_list' => true,
+    ),
+    'length' =>
+    array (
+      'type' => 'number',
+      'label' => app::get('b2c')->_('长'),
+      'sdfpath' => 'product[default]/length',
+      'width' => 30,
+      'default' => '0',
+      'editable' => false,
+      'filtertype' => 'number',
+      'in_list' => true,
+    ),
+    'width' =>
+    array (
+      'type' => 'number',
+      'label' => app::get('b2c')->_('宽'),
+      'sdfpath' => 'product[default]/width',
+      'width' => 30,
+      'default' => '0',
+      'editable' => false,
+      'filtertype' => 'number',
+      'in_list' => true,
+    ),
+    'height' =>
+    array (
+      'type' => 'number',
+      'label' => app::get('b2c')->_('高'),
+      'sdfpath' => 'product[default]/height',
+      'width' => 30,
+      'default' => '0',
+      'editable' => false,
+      'filtertype' => 'number',
+      'in_list' => true,
+    ),
 
   ),
   'comment' => app::get('b2c')->_('商品表'),

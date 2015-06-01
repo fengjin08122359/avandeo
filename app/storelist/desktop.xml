@@ -1,0 +1,33 @@
+<desktop>
+    <permissions>
+        <permission id="storelist" display='true' workground='storelist.workground.storelist'>门店列表</permission>
+        <permission id="storelist_staff" display='true' workground='storelist.workground.storelist'>职员管理</permission>
+        <permission id="storelist_roles" display='true' workground='storelist.workground.storelist'>角色管理</permission>
+        <permission id="storelist_news" display='true' workground='storelist.workground.storelist'>新闻公告</permission>
+        <permission id="storelist_sales" display='true' workground='storelist.workground.storelist'>销售统计</permission>
+         <permission id="storelist_lv" display='true' workground='storelist.workground.storelist'>级别设定</permission>
+         <permission id="storelist_updatepass" display='true' workground='storelist.workground.storelist'>修改密码</permission>
+    </permissions>
+
+    <workground name="门店" id="storelist.workground.storelist" controller="admin_storelist" action="index" order='80'>
+        <menugroup name="门店管理">
+            <menu controller='admin_storelist' action='index' permission='storelist' display='true' order='10'>门店列表</menu>
+            <menu controller='admin_news' action='index' permission='storelist_news' display='true' order='30'>新闻公告</menu>
+            <menu controller='admin_adminstore' action='index' permission='storelist_staff' display='true' order='20'>职员管理</menu>
+            <menu controller='admin_storerole' action='index' permission='storelist_roles' display='true' order='30'>角色管理</menu>
+        	<menu controller="admin_storelist" action="uppass" permission="storelist_updatepass" display="true" order="30">修改密码</menu>
+        </menugroup>
+        <menugroup name="门店统计">
+            <menu controller='admin_analysis' action='index' permission='storelist_sales' display='true' order='40'>销售统计</menu>
+            <menu controller='admin_store_lv' action='index' permission='storelist_lv' display='true' order='50'>级别设定</menu>
+        </menugroup>
+
+        <menugroup name="售后服务">
+            <menu app="aftersales" controller='admin_returnproduct' action='index' permission='aftersales' display='true' order='50'>售后单</menu>
+            <menu app="b2c" controller='admin_reship' action='index' permission='bills' display='true' order='60'>退货单</menu>
+            <menu app="ectools" controller='admin_refund' action='index' permission='bills' display='true' order='70'>退款单</menu>
+        </menugroup>   
+        
+    </workground>
+
+</desktop>

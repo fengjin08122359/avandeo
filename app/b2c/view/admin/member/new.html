@@ -4,8 +4,10 @@
     <div class="division">
         <table width="100%" >
             <tr><th><em class="red">*</em><{t}>用户名：<{/t}></th><td><{input type="text" name="pam_account[login_name]"  onchange="nameCheck(this)" size="20" vtype="required"}><span></span></td></tr>
+            <{if !$ifstore}>
             <tr><th><em class="red">*</em><{t}>密码：<{/t}></th><td><{input type="password" name="pam_account[login_password]" size="20" vtype="required"}></td></tr>
             <tr><th><em class="red">*</em><{t}>确认密码：<{/t}></th><td><{input type="password" name="pam_account[psw_confirm]" size="20" vtype="required"}></td></tr>
+            <{/if}>
             <!--
             <tr><th><em class="red">*</em>E-mail：</th><td><{input type="email" name="pam_account[login_name][email]" size="20" vtype="required&&email" onchange="emailCheck(this)"}><span></span></td></tr>
             <tr><th><em class="red">*</em>手机号码：</th><td><{input type="mobile" name="pam_account[login_name][mobile]" size="20" vtype="required&&mobile" onchange="emailCheck(this)"}><span></span></td></tr>

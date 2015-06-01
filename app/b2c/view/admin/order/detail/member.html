@@ -1,0 +1,98 @@
+<div class="form-title">
+      <h5>
+      <span>1</span>
+      <{t}>选择会员<{/t}>
+      <em class="c-red">*</em>
+      </h5>
+</div>
+<div class="form-body">
+<input id="member_id" type="hidden" name="member_id" value="">
+<div class="division">
+  <p>
+  	<select id="add_mem_sel">
+  		<option value="uname">按会员账号</option>
+  		<option value="mobile">按手机号</option>
+  	</select>
+  	<span style="position:relative;">
+  		<input type="text" name="uname" id="ipt_data" /></span> 
+  		<{button label="搜索" id="btn_search_member"}>  <{button label="新建会员" id="btn_new_member" onclick="new Dialog('index.php?app=b2c&ctl=admin_member&act=new_member&_finder[finder_id]=90a7ce&finder_id=90a7ce',{width:700,title:'新建会员',height:400})"}></p>
+  <table class="gridlist" style="*width:97%;">
+    <thead>
+      <tr>
+        <!-- <th style="width:20px;"></th> -->
+        <th>姓名</th>
+        <th>固定电话</th>
+        <th>手机号</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody id="memNode">
+    </tbody>
+  </table>
+</div>
+</div>
+<script type="text/javascript">
+// BEGIN 添加会员
+  (function(){
+    $('add_mem_sel').addEvent('change',function(){
+      $('ipt_data').name = this.get('value');
+    });
+
+    function createMember(data){
+      var rows='';
+      data.each(function(item){
+        rows+=getTemp(item,true);
+      });
+      $('memNode').set('html',rows);
+    }    
+
+    function getTemp(j,flag){
+    	$('member_id').value = j.member_id;
+    	$('order_member_id').value = j.member_id;
+      $('order_product').setStyle('display', '');
+      var checked=flag?'checked="checked"':'';
+      return '<tr><td>'+j.name+'</td><td>'+j.tel+'</td><td>'+j.mobile+'</td><td>'+j.email || ''+'</td></tr>';
+    }
+
+
+    $('ipt_data').addEvent('enter',function(e){
+      //if(e.key=='enter'){
+        e.stop();
+        new Request({url:'index.php?app=b2c&ctl=admin_order&act=getMembers',method:'post',data:this.name+'='+this.value.trim(),
+          onSuccess:function(json){
+            if (!json){
+              $('memNode').set('html','');
+              $$('.nodisabled').removeClass('nodisabled').set('disabled',true);
+              return;
+            }
+            json = JSON.decode(json);
+            $$('.nodisabled').removeClass('nodisabled').set('disabled',true);
+            createMember(json);
+            Order.getReceiver();
+          }
+        }).send();
+      //}
+    });
+
+    $('btn_search_member').addEvent('click',function(e){
+      if($('ipt_data').value.trim() !== ''){
+        _this = $('ipt_data');
+        new Request({url:'index.php?app=b2c&ctl=admin_order&act=getMembers',method:'post',data:_this.name+'='+_this.value.trim(),
+          onSuccess:function(json){
+            if (!json){
+              $('memNode').set('html','');
+              $$('.nodisabled').removeClass('nodisabled').set('disabled',true);
+              return;
+            }
+            json = JSON.decode(json);
+            $$('.nodisabled').removeClass('nodisabled').set('disabled',true);
+            createMember(json);
+            Order.getReceiver();
+          }
+        }).send();
+      }
+    });
+})();
+// END 
+
+</script>    

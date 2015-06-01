@@ -26,7 +26,10 @@ class b2c_ctl_admin_goods_editor extends desktop_controller{
         header("Cache-Control:no-store");
         $this->pagedata['IMAGE_MAX_SIZE'] = IMAGE_MAX_SIZE;
 
-        $this->pagedata['is_dingzhi'] = true;
+        $this->pagedata['is_dingzhi'] = false;
+
+        //默认无库存可销售
+        $this->pagedata['goods']['nostore_sell'] = 1;
         $this->singlepage('admin/goods/detail/frame.html');
     }
 
@@ -335,8 +338,13 @@ class b2c_ctl_admin_goods_editor extends desktop_controller{
             $_POST['goods']['spec'] = serialize($goodsinfo['spec']);
         }
 
+        $_POST['goods']['delivery_cyc'] = $_POST['goods']['delivery_cyc']?$_POST['goods']['delivery_cyc']:0;
+
         if(is_array($_POST['goods']['product'])){
             foreach($_POST['goods']['product'] as $pk=>$pv){
+                if(empty($pv['length'])) $_POST['goods']['product'][$pk]['length'] = 0;
+                if(empty($pv['width'])) $_POST['goods']['product'][$pk]['width'] = 0;
+                if(empty($pv['height'])) $_POST['goods']['product'][$pk]['height'] = 0;
                 if(is_array($_POST['goods']['product']) && is_string($_POST['goods']['spec'])){
                     if(count($pv['spec_desc']['spec_value_id']) < count(unserialize($_POST['goods']['spec']))){
                          $this->end(false,app::get('b2c')->_( '未选定全部规格' ));

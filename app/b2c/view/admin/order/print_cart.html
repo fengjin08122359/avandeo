@@ -38,7 +38,7 @@
       <td><img class="product" src="<{$aGoods.small_pic|default:$defaultImage|storager}>" width="50" height="50" align="absmiddle" /><{$aGoods.name}>
         <{if count($aGoods.minfo)}>
         <{foreach from=$aGoods.minfo item=minfo key=name}> <br>
-        <{$minfo.label}>：<{$minfo.value}>
+        <{$minfo.label}><{if $minfo.label && $minfo.value}>：<{/if}><{$minfo.value}>
         <{/foreach}>
         <{/if}></td>
       <td><{$aGoods.price|cur}></td>

@@ -94,6 +94,8 @@ class b2c_ctl_site_space extends b2c_frontpage{
         if($tmp_filter['price']){
             $tmp_filter['price'] = explode('~',$tmp_filter['price'][0]);
         }
+        //增加判断都是非定制商品e_type=normal by liuguogen
+        $tmp_filter['e_type']='normal';
         $filter['filter'] = $tmp_filter;
         $filter['orderby'] = $orderby;
         $filter['page'] = $page;

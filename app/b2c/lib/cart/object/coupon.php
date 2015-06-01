@@ -84,12 +84,21 @@ class b2c_cart_object_coupon implements b2c_interface_cart_object{
 		{
 			$msg = app::get('b2c')->_('优惠券为空！');
 			return false;
-		}
+		} 
 
 		if (!$this->app->model("coupons")->verify_coupons($arr_data,$msg)){
 			$msg = $msg ? $msg : app::get('b2c')->_('优惠券添加失败！');
 			return false;
 		}
+
+        // BEGIN 检查优惠券在该地区是否可用
+        $is_store = isset($arr_data['is_store']) ? true : false;
+        if (!$this->app->model("coupons")->verify_region($arr_data['coupon'],$this->arr_member_info['member_id'],$is_store)) {
+            $msg = app::get('b2c')->_('优惠券不支持该地区使用！');
+            return false;
+        }
+        // END
+        
 		return true;
 	}
 
@@ -120,6 +129,15 @@ class b2c_cart_object_coupon implements b2c_interface_cart_object{
 	{
         $objIdent = $this->_generateIdent($aData);
         $aCouponRule = $this->app->model('coupons')->getCouponByCouponCode($aData['coupon']);
+
+        // BEGIN 检查优惠券在该地区是否可用
+        $is_store = isset($aData['is_store']) ? true : false;
+        if (!$this->app->model("coupons")->verify_region($aData['coupon'],$this->arr_member_info['member_id'],$is_store)) {
+            $msg = app::get('b2c')->_('优惠券不支持该地区使用！');
+            return false;
+        }
+        // END 
+
         $arr = $this->app->model('sales_rule_order')->getList( '*',array('rule_id'=>$aCouponRule[0]['rule_id']) );
         if( !$arr || !is_array($arr) ) {
 			$msg = app::get('b2c')->_('优惠券信息错误！');

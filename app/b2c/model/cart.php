@@ -107,7 +107,6 @@ class b2c_mdl_cart extends dbeav_model{
             if(!is_object($object)) continue;
             $aResult = array_merge($aResult,$object->getAll(false)); // 只从数据库中取出
        }
-       print_r($aResult);exit;
        return $aResult;
        */
    }

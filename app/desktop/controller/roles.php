@@ -136,6 +136,8 @@ class desktop_ctl_roles extends desktop_controller{
 
             }
         else{
+        	$storeObj=kernel::single('storelist_store');
+        	$set_default_role=app::get('desktop')->getconf($storeObj::$store_owner_conf);
             $opctl = &$this->app->model('roles');
             $menus = $this->app->model('menus');
             $sdf_roles = $opctl->dump($param_id);
@@ -266,5 +268,30 @@ class desktop_ctl_roles extends desktop_controller{
             "checkall"=>$checkall
         );
     }
-
+    /**
+     * 
+     * 设为门店管理员
+     * @param unknown $role_id
+     */
+	public  function manage($role_id){
+		$this->begin('index.php?app=desktop&ctl=roles&act=index');
+		//$role_ids=$this->app->getconf('default_store_roles');
+		//获取对象设置的公共属性
+		$r_id=kernel::single('storelist_store');
+		
+		if($this->app->getconf($r_id::$store_owner_conf)){
+			$this->end(false,$this->app->_('已经设置过门店主不允许修改'));
+		}
+			
+		$this->app->setconf('default_store_roles',$role_id);
+		
+		
+		
+		/* $workground=&$this->app->model('roles')->dump(intval($role_id));
+		$workgroundArr=unserialize($workground['workground']);
+		$workgroundArr['role_id']=$role_id; */
+		
+		
+		$this->end(true,'操作成功');
+	}
 }

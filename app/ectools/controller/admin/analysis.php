@@ -39,5 +39,38 @@ class ectools_ctl_admin_analysis extends desktop_controller
                 break;
         }   
     }//End Function
-
+	function  store_volume(){
+		$show = $_GET['show'];
+		$store_id=(int)$_GET['store_id'];
+		$statisObj=app::get('storelist')->model('store_statis');
+		$store_list=$statisObj->getList("*",array('store_id'=>$store_id));
+		if($store_list){
+			foreach($store_list as $v){
+				$creta_time[]=date("Y年m月",$v['create_time']);
+				$data[date("Y年m月",$v['create_time'])]=$v['month_volume'];
+			}
+		}
+		if($data){
+			foreach($data as $key=>$d){
+				
+				$tmp[] = '{name:"'.addslashes($key).'",data:['.$d.']}';
+			}
+		}
+		
+		$this->pagedata['categories']='["' . @join('","', $creta_time) . '"]';
+		$this->pagedata['data'] = '['.@join(',', $tmp).']';
+		switch($show){
+			case 'line':
+				$this->display("analysis/chart_type_line.html");
+				break;
+			case 'column':
+				$this->pagedata['data'] = '['.@join(',', $tmp).']';
+				$this->pagedata['categories']=$tmp? '销售额':"";
+				$this->display("analysis/store_type_column.html");
+				break;
+			default :
+				$this->display("analysis/chart_type_default.html");
+				break;
+		}
+	}
 }//End Class

@@ -4,7 +4,7 @@
          <input type="hidden" name="user_id" value="<{$user_id}>" />
                 <table cellspacing="0" cellpadding="0" width="100%">
                 <tbody>
-                <tr><th><em class="red">*</em><label for="dom_el_ea78c40"><{t}>超级管理员密码：<{/t}></label></th><td><input type="password" id="dom_el_ea78c40"  vtype="required"  name="old_login_password" title="<{t}>用户名：<{/t}>" class="x-input " autocomplete="off"/></td></tr>
+               <{if $u_role_id neq $default_role_id}> <tr><th><em class="red">*</em><label for="dom_el_ea78c40"><{t}>超级管理员密码：<{/t}></label></th><td><input type="password" id="dom_el_ea78c40"  vtype="required"  name="old_login_password" title="<{t}>用户名：<{/t}>" class="x-input " autocomplete="off"/></td></tr><{/if}>
                 <tr><th><em class="red">*</em><label for="dom_el_ea78c41"><{t}>新密码：<{/t}></label></th><td><input type="password" id="dom_el_ea78c41" vtype="required" name="new_login_password" title="<{t}>密码：<{/t}>" class="x-input " autocomplete="off"/></td></tr>
                 <tr><th><em class="red">*</em><label for="dom_el_ea78c42"><{t}>再次输入新密码：<{/t}></label></th><td><input type="password" id="dom_el_ea78c42" vtype="required" name="pam_account[login_password]" title="<{t}>确认密码：<{/t}>" class="x-input " autocomplete="off"/></td></tr>
 

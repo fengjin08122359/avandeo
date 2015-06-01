@@ -248,6 +248,14 @@
         </td>
       </tr>
 
+      <tr>
+        <th><{t}>发货周期：<{/t}></th>
+        <td>
+          <{permission perm_id='delivery_cyc'}>
+          <{input type="digits" value=$goods.delivery_cyc name="goods[delivery_cyc]" maxlength="25" }><span class="notice-inline "><{t}>天<{/t}></span>
+          <{/permission}>
+        </td>
+      </tr>
       <{if $env.conf.b2c.site.get_policy.method ==3}>
       <tr>
         <th><{t}>积分：<{/t}></th>

@@ -49,6 +49,14 @@ class b2c_order_create extends b2c_api_rpc_request
                 $odr_ser->generate($order_data,$sdf,$cart_objects);
             }
         }
+        // BEGIN 处理门店ID
+        if ($sdf['store_id']) {
+            $order_data['store_id'] = intval($sdf['store_id']);
+        }else{
+            $order_data['store_id'] = 0;
+        }
+        // END
+
         return $order_data;
     }
 
@@ -338,6 +346,7 @@ class b2c_order_create extends b2c_api_rpc_request
 											'g_price'=>$arrObjItems['obj_items']['products'][0]['price']['member_lv_price'],
                                             'weight'=>$arrObjItems['obj_items']['products'][0]['weight'],
                                             'addon'=>$strAddon,
+                                            'custom' => $sdf['custom'][$arrObjItems['obj_items']['products'][0]['product_id']],
                                         ),
                                     ),
                                 );
@@ -394,6 +403,8 @@ class b2c_order_create extends b2c_api_rpc_request
 											'g_price'=>$arrObjItems['obj_items']['products'][0]['price']['member_lv_price'],
                                             'weight'=>$arrObjItems['obj_items']['products'][0]['weight'],
                                             'addon'=>$strAddon,
+                                            'custom' => $sdf['custom'][$arrObjItems['obj_items']['products'][0]['product_id']],
+
                                         ),
                                     ),
                                 );

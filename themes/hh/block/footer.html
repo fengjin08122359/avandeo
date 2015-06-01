@@ -34,7 +34,7 @@
 				<li class="return">
 					<i></i>
 					<span>7天</span>
-					<span class="sm">无理由退换货</span>
+					<span class="sm">无理由退换货<br />(个人定制品除外)</span>
 				</li>
 				<li class="change">
 					<i></i>
@@ -53,15 +53,25 @@
 		<div class="footer-nav">
 			<div class="about ft-nav">
 				<{widgets id="footer_info1"}>
+                <ul><li><a title="加盟商入口" href="./shopadmin" target="_blank">加盟商入口</a></li></ul>
 			</div>
 			<div class="brand ft-nav">
 				<{widgets id="footer_info2"}>
 			</div>
-			<div class="help ft-nav">
+			<div class="brand ft-nav">
 				<{widgets id="footer_info3"}>
 			</div>
+			<div class="brand ft-nav">
+				<{widgets id="footer_info4"}>
+			</div>
+			<div class="brand ft-nav">
+				<{widgets id="footer_info5"}>
+			</div>
+			<div class="help ft-nav">
+				<{widgets id="footer_info6"}>
+			</div>
 			<div class="ft-logo">
-				<span>24小时客服热线</span>
+				<span>客服热线</span>
 				<span> <{widgets id="tel"}> </span>
 				<div class="sm-logo">
 
@@ -71,7 +81,9 @@
 				</div>
 			</div>
 		</div>
-	</div>		
+	</div>	
+	<div id="logo_bottom"></div>
+<{widgets id="serv"}>	
 </div>
 <!-- float-link -->
 <ul class="side-link">
@@ -79,7 +91,6 @@
     <li class="gou"><{widgets id="gou"}></li>
     <li class="zhi"><{widgets id="zhi"}></li>
 </ul>
-<{widgets id="serv"}>
  <script>
     var lk = $$(".side-link");
     var toph = ($("header").getHeight())+($("nav").getHeight())+5+"px";

@@ -1,0 +1,32 @@
+<style type="text/css">
+	.news_list {
+		margin:10px;
+	}
+	.news_list li{
+		height: 20px; line-height: 20px;
+		width: 100%;
+		overflow: hidden;
+		border-bottom:1px dotted #ccc;
+	}
+	.news_list li a{
+		float: left;
+	}
+	.news_list li span{
+		float: right;
+	}
+	.news_more{
+		width: 100%;
+		overflow: hidden;
+		margin: 10px 0px;
+	}
+	.news_more a{
+		float: right;
+		margin-right: 10px;
+	}
+</style>
+<ul class="news_list">
+	<{foreach from=$news key=key item=item}>
+	<li><a href="<{link app=storelist ctl=admin_news act=view}>&p[0]=<{$item.news_id}>" target="_blank"><{$item.title}></a><span><{$item.addtime}></span></li>
+	<{/foreach}>
+</ul>
+<div class="news_more"><a href="index.php?app=storelist&ctl=admin_news&act=index">更多>></a></div>

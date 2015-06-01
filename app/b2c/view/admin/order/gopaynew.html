@@ -1,0 +1,47 @@
+<form class="tableform" action="<{$url}>" method="post" <{if $order.payinfo.pay_app_id != 'offline'}>
+target="_blank"<{/if}> id="doorderpay-form">
+<input type="hidden" value="<{$order_id}>" name="order_id">
+<{if $order.payinfo.pay_app_id == 'offline'}>
+<input type="hidden" value="offline" name="pay_type">
+<input type="hidden" value="offline" name="payment">
+<input type="hidden" value="<{$order.require_pay}>" name="money">
+<{else}>
+<input type="hidden" value="<{$token}>" name="token">
+<{/if}>
+<div class="division">
+<table width="100%">
+  <tr><th></th>
+    <td colspan="2">
+
+<h2>支付金额：<span style="color:red"><{$order.require_pay|cur}></span></h2>
+</td></tr>
+  <tr>
+    <th><{t}>订单号：<{/t}></th>
+    <td><{$order.order_id}> 【<{if $order.pay_status == 0}><{t}>未支付<{/t}><{elseif $order.pay_status == 1}><{t}>已支付<{/t}><{elseif $order.pay_status == 2}><{t}>处理中<{/t}><{elseif $order.pay_status == 3}><{t}>部分付款<{/t}><{elseif $order.pay_status == 4}><{t}>部分退款<{/t}><{elseif $order.pay_status == 5}><{t}>已退款<{/t}><{/if}>】</td>
+    <th><{t}>下单日期：<{/t}></th>
+    <td><{$order.createtime|cdate:'SDATE_STIME'}></td>
+      </tr>
+  <tr>
+    <th><{t}>订单总金额：<{/t}></th>
+    <td><{$order.total_amount|cur_odr:$order.currency}></td>
+    <th><{t}>已收金额：<{/t}></th>
+    <td><{$order.payed|cur_odr:$order.currency:false:true}></td>
+    </tr>
+</table>
+</div>
+<div class="table-action">
+<{if $order.pay_status == 0}>
+  <{if $order.payinfo.pay_app_id == 'offline'}>
+    <{button label=$___b2c="线下支付"|t:'b2c' id="doorderpay-form-submit" type="button" confirm="确认线下支付吗?"}>
+  <script>
+$('doorderpay-form-submit').addEvent('click',function(){
+   $('doorderpay-form').fireEvent('submit',{stop:$empty})
+});
+</script>
+  <{else}>
+    <{button label=$___b2c="线上支付"|t:'b2c'  type="submit" }>
+  <{/if}>
+<{/if}>
+  <{button label=$___b2c="取消"|t:'b2c' class="btn-secondary " isCloseDialogBtn="true"}>
+</div>
+</form>

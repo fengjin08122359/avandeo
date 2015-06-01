@@ -171,6 +171,7 @@ class b2c_ctl_wap_passport extends wap_frontpage{
             $member_data['member_lv_id'] = $member_point_model->member_lv_chk($member_id,$member_data['member_lv_id'],$member_data['point']);
         }
 
+        $member_data['lastlogin'] = time();
         $b2c_members_model->update($member_data,array('member_id'=>$member_id));
         $this->userObject->set_member_session($member_id);
         $this->bind_member($member_id);

@@ -461,6 +461,18 @@ window.addEvent('domready',function(e){
         bools = false;
     });
 
+    window.addEvent("click",function(e){
+        bool && updateData($$('.custom-select-menu .cur'));
+        $(this).removeEvents("mousemove");
+        bool = false;
+        $$('.panel').each(function(item,index){
+            if(item.get('class') == 'main-else panel' && item.getStyle('display') == 'block')
+            {
+                $$('.main')[0].setStyle('min-height',$$('.main-info')[0].getStyle('height'));
+            }
+        });
+
+    });
     /*
        var k = '232';
        var el = $$('li[data-spec-id='+k+']');

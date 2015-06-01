@@ -40,12 +40,12 @@ class b2c_ctl_site_member extends b2c_frontpage{
         $arr_point_coupon_exchange = array();
         $this->pagedata['point_usaged'] = "false";
 
-        if ($payment_info['app_staus'] == app::get('ectools')->_('开启'))
-        {
-            $this->pagedata['deposit_status'] = 'true';
-            $arr_blance = array('label'=>app::get('b2c')->_('我的预存款'),'app'=>'b2c','ctl'=>'site_member','link'=>'balance');
-            $arr_recharge_blance = array('label'=>app::get('b2c')->_('预存款充值'),'app'=>'b2c','ctl'=>'site_member','link'=>'deposit');
-        }
+        // if ($payment_info['app_staus'] == app::get('ectools')->_('开启'))
+        // {
+        //     $this->pagedata['deposit_status'] = 'true';
+        //     $arr_blance = array('label'=>app::get('b2c')->_('我的预存款'),'app'=>'b2c','ctl'=>'site_member','link'=>'balance');
+        //     $arr_recharge_blance = array('label'=>app::get('b2c')->_('预存款充值'),'app'=>'b2c','ctl'=>'site_member','link'=>'deposit');
+        // }
 
         $site_get_policy_method = $this->app->getConf('site.get_policy.method');
         if ($site_get_policy_method != '1')
@@ -89,7 +89,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
             //评论咨询
             $comment,
             'member_account'=>array(
-                'label'=>app::get('b2c')->_('我的账户'),
+                'label'=>app::get('b2c')->_('个人中心'),
                 'mid'=>1,
                 'items'=>array(
                     array('label'=>app::get('b2c')->_('商品收藏'),'app'=>'b2c','ctl'=>'site_member','link'=>'favorite'),
@@ -102,7 +102,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
                 'label'=>app::get('b2c')->_('个人信息管理'),
                 'mid'=>4,
                 'items'=>array(
-                    array('label'=>app::get('b2c')->_('站内信'),'app'=>'b2c','ctl'=>'site_member','link'=>'inbox'),
+                    // array('label'=>app::get('b2c')->_('站内信'),'app'=>'b2c','ctl'=>'site_member','link'=>'inbox'),
                     array('label'=>app::get('b2c')->_('个人信息'),'app'=>'b2c','ctl'=>'site_member','link'=>'setting'),
                     array('label'=>app::get('b2c')->_('安全中心'),'app'=>'b2c','ctl'=>'site_member','link'=>'securitycenter'),
                     array('label'=>app::get('b2c')->_('收货地址'),'app'=>'b2c','ctl'=>'site_member','link'=>'receiver'),
@@ -285,6 +285,12 @@ class b2c_ctl_site_member extends b2c_frontpage{
         $membersData = $userObject->get_pam_data('*',$this->app->member_id);
         $this->pagedata['mem'] = $membersData;
         $attr = kernel::single('b2c_user_passport')->get_signup_attr($this->app->member_id);
+
+        // 取出会员的门店信息
+        if ($this->member['store_id']) {
+            $this->pagedata['store'] = app::get('storelist')->model('storelist')->dump($this->member['store_id']);
+        }
+
         $this->pagedata['attr'] = $attr;
         $this->output();
     }
@@ -307,7 +313,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
 
 
         //--防止恶意修改
-        $arr_colunm = array('contact','profile','pam_account','currency');
+        $arr_colunm = array('contact','profile','pam_account','currency','store_id');
         $attr = $this->app->model('member_attr')->getList('attr_column');
         foreach($attr as $attr_colunm){
             $colunm = $attr_colunm['attr_column'];
@@ -1801,7 +1807,7 @@ class b2c_ctl_site_member extends b2c_frontpage{
         $arr_m_c['memc_used_times'] = 0;
         $arr_m_c['memc_gen_time'] = time();
         $arr_m_c['memc_code'] = $_coupon_info[0];
-		$arr_m_c['memc_source'] = 'b';
+		$arr_m_c['memc_source'] = strtolower(substr($_coupon_info[0], 0, 1));
 		$arr_m_c['cpns_types'] = $_arr_coupon[0]['cpns_types'];
 		
 		$_obj_member_coupon->insert($arr_m_c);

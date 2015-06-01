@@ -61,6 +61,38 @@ var $idColumn = 'cpns_id'; //表示id的列
         }
         //return $coupons;
     }
+
+    // 校验优惠券是否可以在该地区使用
+    public function verify_region($couponCode,$member_id = 0,$is_store = false)
+    {
+        $aCouponRule = $this->getCouponByCouponCode($couponCode);
+        $filter = array(
+            'cpns_id' => $aCouponRule[0]['cpns_id'],
+        );
+        if ($is_store) {
+            // 后台使用 判断门店分享区域
+            $store = kernel::single('storelist_store');
+            if($store->store_id > 0){
+                $filter['region_id'] = $store->share_area;
+            }else{
+                return false;
+            }            
+        }else{
+            // 前台会员使用 判断注册区域
+            $member = $this->app->model('members')->getList('area',array('member_id' => $member_id));
+            $area = explode(":", $member[0]['area']);
+            if ($area[2]) {
+                $filter['region_id'] = $area[2];
+            }else{
+                return false;
+            }
+        }
+        $record = $this->app->model('coupons_region')->getList('*',$filter);
+        if (count($record) > 0) {
+            return true;
+        }
+        return false;
+    }
     /*
      * 前台会员使用优惠券的验证
      */
@@ -239,6 +271,41 @@ var $idColumn = 'cpns_id'; //表示id的列
         $where=array(1);
         if ($filter['cpns_name']) {
             $where[] = 'cpns_name like\'%'.$filter['cpns_name'].'%\'';
+        }
+
+        $store = kernel::single('storelist_store');
+        if($store->store_id > 0){
+            $Coupon_region = app::get('b2c')->model('coupons_region');
+            $coupon_list_tmp = $Coupon_region->getList('distinct cpns_id',array('region_id|in' => $store->share_area));
+            if(is_array($coupon_list_tmp) && count($coupon_list_tmp) > 0){
+                if(!is_array($filter['cpns_id'])){
+                    $filter['cpns_id'] = array($filter['cpns_id']);
+                }
+                foreach($coupon_list_tmp as $clkey => $clvalue){
+                    $filter['cpns_id'][] = $clvalue['cpns_id'];
+                }
+                unset($coupon_list_tmp);
+            }else{
+                $filter['cpns_id'] = 0;
+            }
+        }
+
+        if($filter['area_fee_conf']['area_fee']['areaGroupId']){
+            $obj_area = app::get('ectools')->model('regions');
+            $area_ids_arr = $obj_area->getALLEndChildByRegionTreeList($filter['area_fee_conf']['area_fee']['areaGroupId']);
+            $Coupon_region2 = app::get('b2c')->model('coupons_region');
+            $coupon_list_tmp2 = $Coupon_region2->getList('distinct cpns_id',array('region_id|in' => $area_ids_arr));
+            if(is_array($coupon_list_tmp2) && count($coupon_list_tmp2) > 0){
+                if(!is_array($filter['cpns_id'])){
+                    $filter['cpns_id'] = array($filter['cpns_id']);
+                }
+                foreach($coupon_list_tmp2 as $cl2key => $cl2value){
+                    $filter['cpns_id'][] = $cl2value['cpns_id'];
+                }
+                unset($coupon_list_tmp2);
+            }else{
+                $filter['cpns_id'] = 0;
+            }
         }
 
         if(is_array($filter['cpns_id'])){

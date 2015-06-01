@@ -43,10 +43,11 @@ class desktop_ctl_users extends desktop_controller{
                 $use_pass_data['createtime'] = $_POST['pam_account']['createtime'];
                 $_POST['pam_account']['login_password'] = pam_encrypt::get_encrypted_password($_POST['pam_account']['login_password'],pam_account::get_account_type($this->app->app_id),$use_pass_data);
                 $_POST['pam_account']['account_type'] = pam_account::get_account_type($this->app->app_id);
-
+                
                 if($users->save($_POST)){
                     foreach(kernel::servicelist('desktop_useradd') as $key=>$service){
                         if($service instanceof desktop_interface_useradd){
+                        	
                             $service->useradd($_POST);
                         }
                     }
@@ -64,7 +65,11 @@ class desktop_ctl_users extends desktop_controller{
             }   
         }   
         else{
-            $workgroup=$roles->getList('*');
+        	$storeObj=kernel::single('storelist_store');
+			$default_store_role=app::get('desktop')->getconf($storeObj::$store_owner_conf);
+            $workgroup=$roles->getList('*',array('role_id|noequal'=>(int)$default_store_role));
+           // $workground=$this->app->getconf('workground');
+            //$this->pagedata['role_id']=$workground['role_id'];
             $this->pagedata['workgroup']=$workgroup; 
             $this->display('users/users_add.html');
         }     
@@ -73,7 +78,19 @@ class desktop_ctl_users extends desktop_controller{
       
     ####修改密码
     function chkpassword(){
-        $this->begin('index.php?app=desktop&ctl=users&act=index');
+    	$users_id=$_SESSION['account']['user_data']['user_id'];
+    	$storeObj=kernel::single('storelist_store');
+    	
+    	$r_ids=app::get('desktop')->getconf($storeObj::$store_owner_conf);
+    	$u_id=app::get('desktop')->model('hasrole')->getRow("role_id",array('user_id'=>intval($users_id)));
+    	$this->pagedata['default_role_id']=$r_ids;
+    	$this->pagedata['u_role_id']=$u_id['role_id'];
+    	if(intval($u_id['role_id'])==intval($r_ids)){
+    		$url="index.php?app=storelist&ctl=admin_adminstore&act=index";
+    	}else{
+    		$url='index.php?app=desktop&ctl=users&act=index';
+    	}
+        $this->begin($url);
         $users = $this->app->model('users');
         if($_POST){
             $sdf = $users->dump($_POST['user_id'],'*',array( ':account@pam'=>array('*'),'roles'=>array('*') ));
@@ -86,6 +103,10 @@ class desktop_ctl_users extends desktop_controller{
             $use_pass_data['createtime'] = $super_data['account']['createtime'];
             $filter['login_password'] = pam_encrypt::get_encrypted_password(trim($_POST['old_login_password']),pam_account::get_account_type($this->app->app_id),$use_pass_data);
             $pass_row = app::get('pam')->model('account')->getList('account_id',$filter);
+            if(intval($u_id['role_id'])==intval($r_ids)){
+            	
+            	$pass_row=true;
+            }
             if(!$pass_row){
                 $this->end(false,app::get('desktop')->_('超级管理员密码不正确'));         
             }elseif(!(strlen($_POST['new_login_password']) >= 6 && preg_match("/\d+/",$_POST['new_login_password']) && preg_match("/[a-zA-Z]+/",$_POST['new_login_password']))){
@@ -103,6 +124,7 @@ class desktop_ctl_users extends desktop_controller{
                 $this->end(true,app::get('desktop')->_('密码修改成功'));
             }
         }
+        
         $this->pagedata['user_id'] = $_GET['id'];
         $this->page('users/chkpass.html');
 
@@ -163,9 +185,27 @@ class desktop_ctl_users extends desktop_controller{
     */
          
     function edit($param_id){
-        $users = $this->app->model('users');
+    	$users_id=$_SESSION['account']['user_data']['user_id'];
+    	//获取对象设置的公共属性
+    	$storeObj=kernel::single('storelist_store');
+		$r_ids=app::get('desktop')->getconf($storeObj::$store_owner_conf);
+		$uu_id=app::get('desktop')->model('hasrole')->getRow("role_id",array('user_id'=>intval($users_id)));
+		$u_id=app::get('storelist')->model('storelist_relat')->getRow("stores_id",array('oper_id'=>intval($users_id)));
+		$role=app::get('storelist')->model('storelist_roles')->getList('role_id',array('stores_id'=>intval($u_id['stores_id'])));
+		if($role){
+			foreach($role as $v){
+				$role_ids[]=$v['role_id'];
+			}
+		}
+		
+		$users = $this->app->model('users');
         $roles=$this->app->model('roles');
-        $workgroup=$roles->getList('*');
+        if(intval($uu_id['role_id'])==(int)$r_ids){
+        	
+        	$workgroup=kernel::database()->select("SELECT * FROM `sdb_desktop_roles` WHERE role_id IN(".implode(",",$role_ids).")");
+        }else{
+        	$workgroup=$roles->getList('*');
+        }
         $user = kernel::single('desktop_user');
         $sdf_users = $users->dump($param_id); 
         if(empty($sdf_users)) return app::get('desktop')->_('无内容');   
@@ -180,6 +220,11 @@ class desktop_ctl_users extends desktop_controller{
                 $workgroup[$key]['checked']="false";
             }
         }
+        $storeObj=kernel::single('storelist_store');
+		$default_store_role=app::get('desktop')->getconf($storeObj::$store_owner_conf);
+		$role_id=$hasrole->getRow("*",array('user_id'=>intval($param_id)));
+		$this->pagedata['default_store_role']=$default_store_role;
+		$this->pagedata['role_id']=$role_id['role_id'];
         $this->pagedata['workgroup'] = $workgroup; 
         $this->pagedata['account_id'] = $param_id;
         $this->pagedata['name'] = $sdf_users['name'];
@@ -265,6 +310,7 @@ class desktop_ctl_users extends desktop_controller{
                 }   
             }
             }
+            
         }
         
       

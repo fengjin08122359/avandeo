@@ -28,8 +28,9 @@ class b2c_order_actionbutton{
     function get_buttons($sdf_order=array(), $is_all_disable = false)
     {
         $arr_order = array();
-        $disable_payed = false;
+        $disable_payed = true;
         $disable_delivery = false;
+        $disable_settle = true;
         $disable_finish = false;
         $disable_refund = false;
         $disable_reship = false;
@@ -38,6 +39,7 @@ class b2c_order_actionbutton{
         
         $flow_payed = false;
         $flow_delivery = false;
+        $flow_settle = false;
         $flow_finish = false;
         $flow_refund = false;
         $flow_reship = false;
@@ -54,12 +56,11 @@ class b2c_order_actionbutton{
             $disable_cancel = true;
             $disable_delete = true;
         }
-        
         if ($sdf_order)
         {            
-            if ($sdf_order['status'] != 'active' || $sdf_order['pay_status'] == 1 || $sdf_order['pay_status'] == 2 || $sdf_order['pay_status'] == 4 || $sdf_order['pay_status'] == 5)
+            if ($sdf_order['status'] == 'active' && $sdf_order['verify'] == 'true' &&$sdf_order['store_pay'] == 'false' && in_array($sdf_order['pay_status'], array(0,3)))
             {
-                $disable_payed = true;
+                $disable_payed = false;
             }
             if ($sdf_order['flow']['payed'])
                 $flow_payed = true;
@@ -91,11 +92,15 @@ class b2c_order_actionbutton{
             if ($sdf_order['status'] != 'active' || $sdf_order['ship_status'] > 0 || $sdf_order['pay_status'] > 0)
             {
                 $disable_cancel = true;
-            }           
+            }
             
-            if ($sdf_order['status'] != 'active')
+            if ($sdf_order['status'] != 'active' || $sdf_order['settle_accounts'] == 'false')
             {
                 $disable_finish = true;
+            }
+
+            if ($sdf_order['status'] == 'active' && $sdf_order['ship_status'] == '1' && $sdf_order['settle_accounts'] == 'false') {
+                $disable_settle = false;
             }
             
             if ($sdf_order['status'] != 'dead')
@@ -104,13 +109,20 @@ class b2c_order_actionbutton{
             }
         }
         $buttons = array(
-            'sequence'=>array(
-                'pay'=>array(
+            'sequence'=>array(   
+                // 'pay'=>array(
+                //     'label'=>app::get('b2c')->_('支付ori'),
+                //     'flow'=>$flow_payed,
+                //     'disable'=>$disable_payed,
+                //     'app'=>'b2c',
+                //     'act'=>'pay',
+                // ),
+                'paynew'=>array(
                     'label'=>app::get('b2c')->_('支付'),
                     'flow'=>$flow_payed,
                     'disable'=>$disable_payed,
                     'app'=>'b2c',
-                    'act'=>'pay',
+                    'act'=>'paynew',
                 ),
                 'delivery'=>array(
                     'label'=>app::get('b2c')->_('发货'),
@@ -119,6 +131,13 @@ class b2c_order_actionbutton{
                     'app'=>'b2c',
                     'act'=>'delivery',
                 ),
+                'settle_accounts'=>array(
+                    'label'=>app::get('b2c')->_('结算'),
+                    'flow'=> $flow_settle,
+                    'disable'=>$disable_settle,
+                    'app'=>'b2c',
+                    'act'=>'settle_accounts',
+                ),                
                 'finish'=>array(
                     'label'=>app::get('b2c')->_('完成'),
                     'flow'=>$flow_finish,

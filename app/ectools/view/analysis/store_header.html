@@ -1,0 +1,33 @@
+<form action="index.php?app=storelist&ctl=admin_analysis&act=index"  method="post">
+<div class="gridlist-action data-action" id="dataAction" style="margin-bottom:10px;padding:5px; border:0;">
+ 
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td align="left" nowrap="nowrap">
+      <!-- <span style="display:none;">
+        <label><{t}>时间范围:<{/t}></label>
+       
+             <{input type="date"  vtype="date" name="time_from" style="width:66px; font-family:arial;" value=$from_time}><{t}>至<{/t}>
+            <{input type="date"  vtype="date" name="time_to" style="width:66px; font-family:arial;" value=$to_time}> 
+       </span> -->
+			<label><{t}>选择门店主:<{/t}></label>
+       		<select name="store_id">
+       		<option value="" selected="selected">--请选择--</option>
+       		<{if $store_list}>
+       		<{foreach from=$store_list item=item}>
+       			<option value="<{$item.store_id}>" <{if $item.store_id eq $store_id}>selected="selected"<{/if}>><{$item.store_name}></option>
+       			<{/foreach}>
+       			<{/if}>
+       		</select>
+			
+        <!--  <{button class="filterBtn btn-thirdly" type="button" label=$___ectools="确定"|t:'ectools'}>&nbsp;   -->
+        <{button type="submit" class="filterBtn btn-thirdly"  label=$___ectools="确定"|t:'ectools'}> 
+<!-- <{button label="确定" id="select_member" }> -->
+<!-- 数据非及时显示，当天数据请于第二天查看 -->
+	</td>
+    </tr>
+  </table>
+
+</div>
+</form>	
+
