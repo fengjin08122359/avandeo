@@ -66,7 +66,7 @@ class b2c_desktop_widgets_workcount implements desktop_interface_widget{
         //库存警报 影响后台登录加载速度慢 edit by danny
         $alert_num = $this->app->getConf('system.product.alert.num');
         $mdl_products = $this->app->model('products');
-        $alert_num_count = $mdl_products->db->select("select count(DISTINCT goods_id) as g_count from sdb_b2c_products where goods_type='normal' and store<='".$alert_num."'");
+        $alert_num_count = $mdl_products->db->select("select DISTINCT p.goods_id as goods_id from sdb_b2c_products as p left join sdb_b2c_goods as g on p.goods_id = g.goods_id where p.goods_type='normal' and p.store <='".$alert_num."' and g.e_type = 'normal'");
         $render->pagedata['alert_num_count'] = $alert_num_count[0]['g_count'] > 0 ? $alert_num_count[0]['g_count'] : 0;
 
         //到货通知

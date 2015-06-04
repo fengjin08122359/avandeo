@@ -30,8 +30,11 @@ if (!isset($argv[1])) {
  }
 
 $queue_name = $argv[1];
-
+ 
 $queues = system_queue::instance()->get_config('queues');
+/*  echo "<pre>";
+print_r($queues[$queue_name]['thread']);
+die();  */
 if ($num = (int)$queues[$queue_name]['thread']) {
     system_queue_consumer::instance('proc')->exec($queue_name, $num);
 }

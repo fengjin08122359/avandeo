@@ -108,7 +108,7 @@ class b2c_ctl_admin_goods extends desktop_controller{
             //缺货商品
             $mdl_products = $this->app->model('products');
             //鸡肋的功能，先这样优化了，至少4000-5000的量不会加载慢了 edit by danny
-            $goods_id_arr = $mdl_products->db->select("select DISTINCT goods_id from sdb_b2c_products where goods_type='normal' and store='0'");
+            $goods_id_arr = $mdl_products->db->select("select DISTINCT p.goods_id as goods_id from sdb_b2c_products as p left join sdb_b2c_goods as g on p.goods_id = g.goods_id where p.goods_type='normal' and p.store='0' and g.e_type = 'normal'");
             if(is_array($goods_id_arr)){
                 foreach($goods_id_arr as $gk=>$gv){
                     $fgoods['goods_id'][] = $gv['goods_id'];
@@ -124,7 +124,7 @@ class b2c_ctl_admin_goods extends desktop_controller{
             //库存报警
             $alert_num = $this->app->getConf('system.product.alert.num');
             //同缺货商品的情况 edit by danny
-            $goods_id_arr = $mdl_products->db->select("select DISTINCT goods_id from sdb_b2c_products where goods_type='normal' and store <='".$alert_num."'");
+            $goods_id_arr = $mdl_products->db->select("select DISTINCT p.goods_id as goods_id from sdb_b2c_products as p left join sdb_b2c_goods as g on p.goods_id = g.goods_id where p.goods_type='normal' and p.store <='".$alert_num."' and g.e_type = 'normal'");
             if(is_array($goods_id_arr)){
                 foreach($goods_id_arr as $gk=>$gv){
                     $fgoods['goods_id'][] = $gv['goods_id'];
@@ -700,7 +700,7 @@ class b2c_ctl_admin_goods extends desktop_controller{
         if($_POST['bns']){
             $mdl_products = $this->app->model('products');
             $bn_arr = explode(',',$_POST['bns']);
-            $products_list = $mdl_products->getList('name,spec_info,bn',array('bn|in' => $bn_arr));
+            $products_list = $mdl_products->getList('name,spec_info,bn,store',array('bn|in' => $bn_arr));
             $this->pagedata['products'] = $products_list;
             $this->pagedata['postbns'] = $_POST['bns'];
             $this->pagedata['ifpost'] = true;

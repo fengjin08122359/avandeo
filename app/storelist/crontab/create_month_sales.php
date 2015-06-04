@@ -25,17 +25,27 @@ $start = date('Y-m-d', mktime(0,0,0,date('m')-1,1,date('Y'))); //上个月的开
 $end = date('Y-m-d', mktime(0,0,0,date('m')-1,$t,date('Y'))); //上个月的结束日期
 $from_time=(int)strtotime($start);
 $end_time=(int)strtotime($end)+86399;
-$ordersObj=kernel::database()->select("SELECT * FROM ".$table_pre_fix."b2c_orders WHERE store_id!=0");
-if($ordersObj){
-	foreach($ordersObj as $s){
+//检测上个是否已经结算过，已结算不用写入表
+if(file_exists($root_dir."/app/storelist/data/".date("Y-m-d",$end_time).".txt")){
+	echo "Last month settlement!";
+	exit();
+}
+$orders_arr=kernel::database()->select("SELECT * FROM ".$table_pre_fix."b2c_orders WHERE store_id!=0");
+if($orders_arr){
+	foreach($orders_arr as $s){
 		$store_id[]=$s['store_id'];
 	}
 }
-$new_store_id=array_unique($store_id);
-sort($new_store_id);
-foreach($new_store_id as $v){
+if(!empty($store_id)){
+	$new_store_id=array_unique($store_id);
+}
+
+if(!empty($new_store_id)){
+	sort($new_store_id);
+	foreach($new_store_id as $v){
 	
-	$sum[$v]=kernel::database()->select("SELECT SUM(total_amount) AS total_amount FROM ".$table_pre_fix."b2c_orders WHERE store_id ={$v} AND pay_status='1' AND ship_status='1' AND status='finish' AND createtime>={$from_time} AND createtime<={$end_time}");
+		$sum[$v]=kernel::database()->select("SELECT SUM(total_amount) AS total_amount FROM ".$table_pre_fix."b2c_orders WHERE store_id ={$v} AND pay_status='1' AND ship_status='1' AND status='finish' AND createtime>={$from_time} AND createtime<={$end_time}");
+	}
 }
 
 if($sum){
@@ -59,7 +69,13 @@ if($sum_arr){
 if(!empty($n_arr)){
 	$time=time();
 	foreach($n_arr as $key=>$v_n){
-		kernel::database()->exec("INSERT INTO ".$table_pre_fix."storelist_store_statis (store_id,month_volume,create_time,name) VALUES({$key},'{$v_n['total_amount']}',{$end_time},'{$v_n['name']}')");
+		$flag=kernel::database()->exec("INSERT INTO ".$table_pre_fix."storelist_store_statis (store_id,month_volume,create_time,name) VALUES({$key},'{$v_n['total_amount']}',{$end_time},'{$v_n['name']}')");
+	}
+	if($flag){
+		if(!is_dir($root_dir."/app/storelist/data")){
+			$is_mkdir=mkdir($root_dir."/app/storelist/data");
+		}
+		if($is_mkdir)file_put_contents($root_dir."/app/storelist/data/".date("Y-m-d",$end_time).".txt",$n_arr);
 	}
 }
 /*

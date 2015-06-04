@@ -40,10 +40,10 @@ class b2c_sales_order_item_coupon extends b2c_sales_order_item
         while (list($_k, $_v) = each($objects['object']['coupon'])) {
               switch ($couponFlag) {
                   case 'A':
-                      if ($value == $_v['coupon'] ) {
-                          return true;
-                      }
-                      break;
+                      //if ($value == $_v['coupon'] ) {
+                      //    return true;
+                      //}
+                      //break;
                   case 'B':
                       $couponPre = $couponsModel->getPrefixFromCouponCode($_v['coupon']);
                       if ($couponPre == $value) {

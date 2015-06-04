@@ -150,17 +150,26 @@ class storelist_ctl_admin_storelist extends desktop_controller{
 			
 			$this->begin();
 			$sdf = $users->dump((int)$_POST['user_id'],'*',array( ':account@pam'=>array('*'),'roles'=>array('*') ));
-			$new_login_password=trim($_POST['new_login_password']);
-			$login_password=trim($_POST['pam_account']['login_password']);
-			if($login_password!=$new_login_password){
+			$filter['account_id'] = $_POST['user_id'];
+			$filter['account_type'] ='shopadmin';
+			$super_data = $users->dump($filter['account_id'],'*',array( ':account@pam'=>array('*')));
+			$use_pass_data['login_name'] = $super_data['account']['login_name'];
+            $use_pass_data['createtime'] = $super_data['account']['createtime'];
+			$filter['login_password'] = pam_encrypt::get_encrypted_password(trim($_POST['old_password']),pam_account::get_account_type($this->app->app_id),$use_pass_data);
+			$pass_row = app::get('pam')->model('account')->getList('account_id',$filter);
+			if(!$pass_row){
+				$this->end(false,$this->app->_('原密码不正确'));
+			}else if($_POST['new_login_password'] !== $_POST['pam_account']['login_password']){
 				$this->end(false,$this->app->_('两次密码不一致'));
+			}else{
+				$_POST['pam_account']['account_id'] = $_POST['user_id'];
+				$use_pass_data['login_name'] = $sdf['account']['login_name'];
+				$use_pass_data['createtime'] = $sdf['account']['createtime'];
+				$_POST['pam_account']['login_password'] = pam_encrypt::get_encrypted_password(trim($_POST['new_login_password']),pam_account::get_account_type($this->app->app_id),$use_pass_data);
+				$users->save($_POST);
+				$this->end(true,app::get('storelist')->_('密码修改成功'));
 			}
-			$_POST['pam_account']['account_id'] = $_POST['user_id'];
-			$use_pass_data['login_name'] = $sdf['account']['login_name'];
-            $use_pass_data['createtime'] = $sdf['account']['createtime'];
-            $_POST['pam_account']['login_password'] = pam_encrypt::get_encrypted_password(trim($_POST['new_login_password']),pam_account::get_account_type($this->app->app_id),$use_pass_data);
-            $users->save($_POST);
-            $this->end(true,app::get('storelist')->_('密码修改成功'));
+			
 		}
 		$this->pagedata['user_id']=$_SESSION['account']['user_data']['user_id'];
 		$this->page('admin/storelist/store_uppass.html');

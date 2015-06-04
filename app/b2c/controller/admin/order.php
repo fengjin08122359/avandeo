@@ -577,14 +577,15 @@ class b2c_ctl_admin_order extends desktop_controller{
                     'is_store' => true,
                 );
                 $msg = '';
-                $res = kernel::single('b2c_cart_object_coupon')->add_object($coupon,$msg);
+                $res = kernel::single('b2c_cart_object_coupon')->check_object($coupon,$msg);
                 if ($res) {
                     $this->pagedata['coupon'] = $coupon['coupon'];
-                }              
+                }else{
+                    $this->pagedata['msg'] = $msg;
+                }     
             }else{
                 $this->pagedata['msg'] = '没有可购买的商品';
             }
-            $this->pagedata['msg'] = $msg;
         }
         $this->display('admin/order/coupon.html');
     }

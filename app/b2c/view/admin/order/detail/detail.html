@@ -223,7 +223,7 @@ Order =new Object();
             this.updateTotal(options);
         },  
         removeCoupon: function(options){
-            options = {coupon:undefined};
+            options = {coupon:'remove'};
             new Request.HTML($extend({url:Shop.url.useCoupon,update:$('coupon')},options)).post();
             this.updateTotal(options);
         },                                
@@ -247,7 +247,7 @@ Order =new Object();
             }
 
             var _coupon = $('for_input_coupon').value;
-            if(typeof(_coupon) !== 'undefined'){
+            if(typeof(_coupon) !== 'undefined' && options.coupon != 'remove'){
                  $extend(this.synTotalHash,{
                     coupon:_coupon,
                 });

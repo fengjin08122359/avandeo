@@ -1017,3 +1017,25 @@ to{left:-300px;}}
 #appoint_pop .btn-li .res-btn:hover{background-color:#094174;}
 
 #logo_bottom{background: url(../img/logo_bottom.png) no-repeat; text-align: center; width:303px; height: 50px; margin:auto;}
+
+
+.index-slideshow .prev, .index-slideshow .next {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  color: #ffffff;
+  font: bold 26px/40px serif;
+  background: rgba(33,89,136,0.7);
+  text-align: center;
+  top: 50%;
+  margin-top: -25px;
+  cursor: pointer;
+}
+
+.index-slideshow .prev {
+  left: 0;
+}
+
+.index-slideshow .next {
+  right: 0;
+}

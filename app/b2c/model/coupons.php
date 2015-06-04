@@ -189,9 +189,9 @@ var $idColumn = 'cpns_id'; //表示id的列
         $couponFlag = $this->getFlagFromCouponCode($couponCode);
         $cpns_prefix = $couponCode;
         //对于B类优惠券，cpns_prefix字段的信息不等于优惠券号
-        if(strtoupper($couponFlag) == 'B') {
+        //if(strtoupper($couponFlag) == 'B') {
             $cpns_prefix = $this->getPrefixFromCouponCode($couponCode);
-        }
+        //}
 
         return $this->getCouponByPrefix($cpns_prefix);
     }

@@ -1669,15 +1669,23 @@ class b2c_ctl_site_member extends b2c_frontpage{
 
                 $curTime = time();
                 if ($curTime>=$item['time']['from_time'] && $curTime<$item['time']['to_time']) {
-                    if ($item['memc_used_times']<$this->app->getConf('coupon.mc.use_times')){
+                    if(strtoupper(substr($aData[$k]['memc_code'], 0, 1)) == 'A'){
                         if ($item['coupons_info']['cpns_status']){
                             $aData[$k]['memc_status'] = app::get('b2c')->_('可使用');
                         }else{
                             $aData[$k]['memc_status'] = app::get('b2c')->_('本优惠券已作废');
                         }
                     }else{
-                        $aData[$k]['coupons_info']['cpns_status'] = false;
-                        $aData[$k]['memc_status'] = app::get('b2c')->_('本优惠券次数已用完');
+                        if ($item['memc_used_times']<$this->app->getConf('coupon.mc.use_times')){
+                            if ($item['coupons_info']['cpns_status']){
+                                $aData[$k]['memc_status'] = app::get('b2c')->_('可使用');
+                            }else{
+                                $aData[$k]['memc_status'] = app::get('b2c')->_('本优惠券已作废');
+                            }
+                        }else{
+                            $aData[$k]['coupons_info']['cpns_status'] = false;
+                            $aData[$k]['memc_status'] = app::get('b2c')->_('本优惠券次数已用完');
+                        }
                     }
                 }else{
                     $aData[$k]['coupons_info']['cpns_status'] = false;
@@ -1718,16 +1726,24 @@ class b2c_ctl_site_member extends b2c_frontpage{
     
     			$curTime = time();
     			if ($curTime>=$item['time']['from_time'] && $curTime<$item['time']['to_time']) {
-    				if ($item['memc_used_times']<$this->app->getConf('coupon.mc.use_times')){
-    					if ($item['coupons_info']['cpns_status']){
-    						$aData[$k]['memc_status'] = app::get('b2c')->_('可使用');
-    					}else{
-    						$aData[$k]['memc_status'] = app::get('b2c')->_('本红包已作废');
-    					}
-    				}else{
-    					$aData[$k]['coupons_info']['cpns_status'] = false;
-    					$aData[$k]['memc_status'] = app::get('b2c')->_('本红包次数已用完');
-    				}
+                    if(strtoupper(substr($aData[$k]['memc_code'], 0, 1)) == 'A'){
+                        if ($item['coupons_info']['cpns_status']){
+                            $aData[$k]['memc_status'] = app::get('b2c')->_('可使用');
+                        }else{
+                            $aData[$k]['memc_status'] = app::get('b2c')->_('本优惠券已作废');
+                        }
+                    }else{
+                        if ($item['memc_used_times']<$this->app->getConf('coupon.mc.use_times')){
+                            if ($item['coupons_info']['cpns_status']){
+                                $aData[$k]['memc_status'] = app::get('b2c')->_('可使用');
+                            }else{
+                                $aData[$k]['memc_status'] = app::get('b2c')->_('本优惠券已作废');
+                            }
+                        }else{
+                            $aData[$k]['coupons_info']['cpns_status'] = false;
+                            $aData[$k]['memc_status'] = app::get('b2c')->_('本优惠券次数已用完');
+                        }
+                    }
     			}else{
     				$aData[$k]['coupons_info']['cpns_status'] = false;
     				$aData[$k]['memc_status'] = app::get('b2c')->_('还未开始或已过期');
@@ -1767,7 +1783,6 @@ class b2c_ctl_site_member extends b2c_frontpage{
 	 */
 	public function acquire_coupon($_couponid=0){
 		
-		
 		$_member_url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_member','act'=>'coupon'));
 		$this->begin($_member_url);
 		
@@ -1784,13 +1799,30 @@ class b2c_ctl_site_member extends b2c_frontpage{
 		$_arr_coupon = $_obj_coupon->getList('rule_id,cpns_aquired_times,cpns_types',array('cpns_id'=>$_couponid));
 		
 		### 判断是否使用当前会员的会员等级 ###
-		$_arr_member_lv = $_obj_rule->getList('member_lv_ids',array('rule_id'=>$_arr_coupon[0]['rule_id']));
-		$_arr_member_lv = explode(',',$_arr_member_lv[0]['member_lv_ids']);
+		$_arr_member_lv = $_obj_rule->getList('member_lv_ids,from_time,to_time',array('rule_id'=>$_arr_coupon[0]['rule_id']));
+		$_arr_member_lv1 = explode(',',$_arr_member_lv[0]['member_lv_ids']);
 		
-		if (!in_array($this->member['member_lv'],$_arr_member_lv)){
+		if (!in_array($this->member['member_lv'],$_arr_member_lv1)){
 // 			$this->splash('error',null,app::get('b2c')->_('对不起，您无权限领取此优惠券！'),true);
 			$this->end(false,app::get('b2c')->_('对不起，您无权限领取此优惠券！'));
 		}
+
+        $nowtime = time();
+        if($nowtime < $_arr_member_lv[0]['from_time'] || $nowtime > $_arr_member_lv[0]['to_time']){
+            $this->end(false,app::get('b2c')->_('该优惠券不在有效期内！'));
+        }
+
+        $area_id_tmp = explode(':',$this->member['area']);
+        $area_id = $area_id_tmp[2]?$area_id_tmp[2]:$area_id_tmp[0];
+        if($area_id){
+            $_obj_coupons_region = $this->app->model('coupons_region');
+            $coupons_region = $_obj_coupons_region->getList('cpns_id',array('cpns_id' => $_couponid,'region_id' => $area_id));
+            if(is_array($coupons_region) && count($coupons_region) > 0){}else{
+                $this->end(false,app::get('b2c')->_('您所在地区不能领取该优惠券！'));
+            }
+        }else{
+            $this->end(false,app::get('b2c')->_('您所在地区不在该优惠券适用区域范围！'));
+        }
 		
 		### 校验优惠领取次数 ###
 		if ($_obj_member_coupon->count(array('cpns_id'=>$_couponid,'member_id'=>$this->member['member_id']))>=$_arr_coupon[0]['cpns_aquired_times']){

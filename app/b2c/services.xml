@@ -652,10 +652,7 @@
     <service id="desktop_finder.b2c_mdl_space">
         <class>b2c_finder_space</class>
     </service>
-    <service id="b2c_order.beforecreate">
-        <class>b2c_order_beforecreate_space</class>
-        <class>b2c_order_beforecreate_discount</class>
-    </service>
+
     <!-- 生活空间-end -->
 
     <!-- 折扣特卖-start -->
@@ -664,6 +661,7 @@
     </service>
     <!--
     <service id="b2c_order.beforecreate">
+        <class>b2c_order_beforecreate_space</class>
         <class>b2c_order_beforecreate_discount</class>
     </service>
     -->

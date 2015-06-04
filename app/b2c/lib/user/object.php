@@ -84,7 +84,7 @@ class b2c_user_object{
     public function get_member_info( ) {
         $memberFilter = array(
             'account' => 'member_id,login_account,login_type',
-            'members'=>'member_id,member_lv_id,name,sex,experience,cur,advance,point,store_id',
+            'members'=>'member_id,member_lv_id,name,sex,experience,cur,advance,point,store_id,area',
         );
         $memberData = $this->get_members_data($memberFilter);
         $member_sdf = $memberData['members'];

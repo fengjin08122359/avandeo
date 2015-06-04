@@ -125,7 +125,7 @@ class b2c_coupon_mem {
 
             //return false;
         }else{
-            $arr['memc_used_times'] = $m_coupon['memc_used_times'] + 1;
+            $arr['memc_used_times'] = $m_coupon[0]['memc_used_times'] + 1;
             $arr['member_id'] = $m_coupon[0]['member_id'];
         }
 

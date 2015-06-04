@@ -557,7 +557,7 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         $this->pagedata['checkout'] = 1;
         $this->pagedata['md5_cart_info'] = kernel::single("b2c_cart_objects")->md5_cart_objects($isfastbuy);
         //会员信息
-        $arrMember = kernel::single('b2c_user_object')->get_members_data(array('members'=>'member_id,cur',));
+        $arrMember = kernel::single('b2c_user_object')->get_members_data(array('members'=>'member_id,cur,member_lv_id',));
         $arrMember = $arrMember['members'];
 
         $this->pagedata['member_id'] = $arrMember['member_id'];
@@ -651,7 +651,14 @@ class b2c_ctl_site_cart extends b2c_frontpage{
         $aData = $oCoupon->get_list_m($arrMember['member_id']);
         if( is_array($aData) ) {
             foreach( $aData as $_key => $_val ) {
-                if( $_val['memc_used_times'] ) unset($aData[$_key]);
+                $nowtime = time();
+                if($nowtime < $_val['time']['from_time'] || $nowtime > $_val['time']['to_time']) unset($aData[$_key]);
+
+                if(!in_array($arrMember['member_lv_id'],explode(',',$_val['time']['member_lv_ids']))) unset($aData[$_key]);
+
+                if(strtoupper(substr($_val['memc_code'], 0, 1)) == 'B'){
+                    if( $_val['memc_used_times'] >= $this->app->getConf('coupon.mc.use_times') ) unset($aData[$_key]);
+                }
             }
         }
         $this->pagedata['coupon_lists'] = $aData;

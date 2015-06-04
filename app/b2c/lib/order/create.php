@@ -41,8 +41,8 @@ class b2c_order_create extends b2c_api_rpc_request
 
         // 订单创建前之行的方法
         $odr_create_service = kernel::servicelist('b2c_order.beforecreate');
-        $odr_create_service = false;
-	if ($odr_create_service)
+        //$odr_create_service = false;
+        if ($odr_create_service)
         {
             foreach ($odr_create_service as $odr_ser)
             {

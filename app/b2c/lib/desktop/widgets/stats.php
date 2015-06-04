@@ -121,7 +121,7 @@ class b2c_desktop_widgets_stats implements desktop_interface_widget{
         $filter = array('store'=>'0');
         $mdl_products = $this->app->model('products');
         //导致后台登录后加载速度慢的主要原因，暂时这样优化，edit by danny
-        $alert_num_count = $mdl_products->db->select("select count(DISTINCT goods_id) as g_count from sdb_b2c_products where store='0'");
+        $alert_num_count = $mdl_products->db->select("select DISTINCT p.goods_id as goods_id from sdb_b2c_products as p left join sdb_b2c_goods as g on p.goods_id = g.goods_id where p.goods_type='normal' and p.store='0' and g.e_type = 'normal'");
          $render->pagedata['lack_goods'] = $alert_num_count[0]['g_count'] > 0 ? $alert_num_count[0]['g_count'] : 0;
 
         //库存报警
@@ -129,7 +129,7 @@ class b2c_desktop_widgets_stats implements desktop_interface_widget{
         $filter = array('store|sthan'=>$alert_num);
         $mdl_products = $this->app->model('products');
         //同上缺货商品，edit by danny
-        $alert_num_count = $mdl_products->db->select("select count(DISTINCT goods_id) as g_count from sdb_b2c_products where store <='".$alert_num."'");
+        $alert_num_count = $mdl_products->db->select("select DISTINCT p.goods_id as goods_id from sdb_b2c_products as p left join sdb_b2c_goods as g on p.goods_id = g.goods_id where p.goods_type='normal' and p.store <='".$alert_num."' and g.e_type = 'normal'");
         $render->pagedata['lack_store'] = $alert_num_count[0]['g_count'] > 0 ? $alert_num_count[0]['g_count'] : 0;
 
         //商品促销
