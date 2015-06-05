@@ -177,6 +177,16 @@ class b2c_ctl_admin_member extends desktop_controller{
         $this->end(false, $message);
       }
 
+        if($_POST['contact']['phone']['mobile']){
+            $sql = "select member_id from sdb_b2c_members where mobile = '".$_POST['contact']['phone']['mobile']."'";
+            $member_tmp = kernel::database()->select($sql);
+            //$obj_member = $this->app->model('members');
+            //$member_tmp = $obj_member->getList('member_id',array('mobile' => $_POST['contact']['phone']['mobile']),0,1);//门店职员无法查询全部会员
+            if(is_array($member_tmp) && count($member_tmp) > 0){
+                $this->end(false, '该手机号已被注册，请更换一个');exit;
+            }
+        }
+
       if(!$userPassport->check_passport($_POST['pam_account']['login_password'],$_POST['pam_account']['psw_confirm'],$message)){
         $this->end(false, $message);
       }

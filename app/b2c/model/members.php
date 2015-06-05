@@ -583,7 +583,7 @@ class b2c_mdl_members extends dbeav_model{
      * @param null
      * @return null
      */
-    public function searchOptions(){
+    /*public function searchOptions(){
         $columns = array();
         foreach($this->_columns() as $k=>$v){
             if(isset($v['searchtype']) && $v['searchtype']){
@@ -603,7 +603,7 @@ class b2c_mdl_members extends dbeav_model{
         ),$columns);
 
         return $columns;
-    }
+    }*/
 
     /**
      * @根据会员ID获取会员等级信息

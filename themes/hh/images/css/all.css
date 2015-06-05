@@ -80,7 +80,8 @@ body{font-family:microsoft Yahei,"黑体",arial!important;overflow-x: hidden;min
 #nav .nav-t:hover .arrow,
 #nav .tgnavs a:hover i{top:4px; border-left:5px solid transparent; border-right:5px solid transparent; border-top:5px solid #ff4014;color: #ff4014;}
 #nav ul .hdzc{top:-5px;position: relative;}
-#nav .active,#nav ul .hdzc a{color:#ff4014; font-weight:500;padding:0 5px; border:1px solid #ff4014;display: block;height: 22px;line-height:22px;}
+#nav .active,#nav ul .hdzc a{color:#0d5ba1; font-weight:500;padding:0 5px;display: block;height: 22px;line-height:22px;}
+#nav .active,#nav ul .hdzc a:hover{color:#ff4014;}
 #nav .catalog-menu.cur .menu-cont{display:block;}
 #nav .catalog-menu{height:40px; border-right:0px none;}
 #nav .menu-cont .cur{color:#ff4014; /*display:none;*/}
@@ -1030,6 +1031,7 @@ to{left:-300px;}}
   top: 50%;
   margin-top: -25px;
   cursor: pointer;
+  display: none;
 }
 
 .index-slideshow .prev {

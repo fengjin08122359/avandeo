@@ -67,8 +67,4 @@ $datatypes = array(
         'sql'=>'integer(10) unsigned',
         'searchparams'=>array('than'=>app::get('base')->_('大于'),'lthan'=>app::get('base')->_('小于'),'nequal'=>app::get('base')->_('等于')),
     ),
-    //add by qianzedong 需要增加一个废字段
-    'regions' => array(
-        'sql'=>'varchar(255)',
-    ),
 );

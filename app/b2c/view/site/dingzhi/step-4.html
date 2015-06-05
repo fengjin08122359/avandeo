@@ -7,7 +7,6 @@
 									<h2>推荐配套产品购买</h2>
 								</div>
 								<div class="bd" >
-
                         <{foreach from=$data.gl_goods item=item key=key name=spec}>
 									<div class="match-a" >
 										<div class="match-pic">
@@ -21,12 +20,20 @@
 											<p>
                                             <{$item.brief}>
 											</p>
-											<div class="match-btn" data-price="<{$item.price}>" data-p-id="<{$item.product_id}>">
+											<div class="match-btn" data-price="<{$item.price}>" data-name="<{$item.name}>" data-p-id="<{$item.product_id}>">
 												<button>添加</button>
 											</div>
 										</div>
 									</div>
                         <{/foreach}>
+                        <{if $data.gl_goods|@count lt 2}>
+                        <{if $data.gl_goods|@count gt 0}>
+                        <div class="match-a" ></div>
+                        <{else}>
+                        <div class="match-a" ></div>
+                        <div class="match-a" ></div>
+                        <{/if}>
+                        <{/if}>
 								</div>
 							</div>
 						</div>

@@ -52,8 +52,16 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
 
             $dz_ds_data = $db->select("SELECT goods_id,dingzhi_id,dz_type FROM sdb_b2c_dingzhi WHERE dingzhi_id!='".$series_id."' AND is_defalut ='true' AND dz_type ='".$type_id."'");
 
-            $ez_ds_data = $db->select("SELECT goods_id,dingzhi_id,dz_type FROM sdb_b2c_dingzhi WHERE is_defalut ='true' AND dz_type !='".$type_id."'");
-
+            /*$ez_ds_data = $db->select("SELECT goods_id,dingzhi_id,dz_type FROM sdb_b2c_dingzhi WHERE is_defalut ='true' AND dz_type !='".$type_id."'");*/
+            $dingzhi_lib_obj = kernel::single('b2c_goods_dingzhi');
+            if(is_array($dingzhi_lib_obj->type) && count($dingzhi_lib_obj->type) > 0){
+                $ez_ds_data = array();
+                foreach($dingzhi_lib_obj->type as $tkey => $tvalue){
+                    $ei_tmp_data = $db->selectrow("SELECT goods_id,dingzhi_id,dz_type FROM sdb_b2c_dingzhi WHERE is_defalut ='true' AND dz_type='".$tkey."' order by dingzhi_id");
+                    if($ei_tmp_data['dingzhi_id'])
+                        $ez_ds_data[] = $ei_tmp_data;
+                }
+            }
 
             foreach($ez_ds_data as $kez_dz=>$ez_dz){
                 $egz_data = array();
@@ -63,9 +71,6 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
                 $egz_data['dz_type'] = $ez_dz['dz_type'];
                 $et_dz_data[] =$egz_data;
             }
-
-
-
 
             foreach($dz_ds_data as $ke_dz=>$ve_dz){
                 $egz_data = array();

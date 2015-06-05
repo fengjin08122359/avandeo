@@ -6,6 +6,9 @@ ul{list-style:none;}
 .table{margin-top:-10px;}
 .table tr td{border-bottom:1px solid #ccc;font-size:12px;}
 .date ul li{line-height:30px;font-size:14px;}
+.clear:after {height: 0px;font-size: 0px;overflow: hidden;visibility: hidden;content: ".";clear: both;display: block;}
+.clear {clear: both;zoom: 1;}
+.tab ul li{float:left;font-weight:blod;font-size:10px;color:#6C6C70;}
 </style>
 <div class="oder-printbox">
 <div style="height:120px;margin:0 auto;">
@@ -13,10 +16,20 @@ ul{list-style:none;}
 <img src="/app/desktop/statics/images/wodi_logoin_revised_02.gif" height="60"/><Br/>
 
 </div><br/><br/>
-<div style="margin-top:60px;text-align:center;font-family:'黑体';margin-bottom:15px;font-size:30px;">沃棣家居专用销售单</div>
+<div style="border:1px solid #ccc;margin-top:35px;margin-bottom:10px;">
+<span style="padding-top:10px;padding-left:15px;display:block;font-size:12px;">说明:</span><br/>
+<span style="padding:0px 15px;display:block;font-size:13px;">为了更好的维护消费者权益，提供良好服务，沃棣家居（乙方）指定丙方为代销服务店，履行沃棣家居为消费者提供上门量房、设计、代收代付
+款、发货、服务等职能：</span><br/>
+<span style="padding-left:15px;display:block;font-size:12px;">本协议生效条款如下：</span><br/>
+<span style="padding-left:15px;display:block;font-size:12px;">1、&nbsp;&nbsp;&nbsp;&nbsp;消费者将本订单货款全额交付给丙方，并由丙方开具收据，丙方履行约定代销服务义务；</span><br/>
+<span style="padding-left:15px;display:block;font-size:12px;">2、&nbsp;&nbsp;&nbsp;&nbsp;消费者对本订单产品清单及相关条款签字确认；</span><br/>
+<span style="padding-left:15px;display:block;font-size:12px;">3、&nbsp;&nbsp;&nbsp;&nbsp;丙方与消费者确认产品清单及相关需求后，加盖公章确认；</span><br/>
+<span style="padding-left:15px;display:block;font-size:12px;margin-bottom:15px;">以上三个条款仅有且当同时具备，本订单方可生效！</span>
+</div>
+<div style="margin-top:0px;text-align:center;font-family:'黑体';margin-bottom:15px;font-size:24px;">沃棣家居专用订货单</div>
 </div>
 <br/>
-<div style="height:80px;margin-bottom:3px;">
+<div style="height:80px;margin-bottom:3px;margin-top:175px;">
 <div class="date right" style="margin-right:60px;">
 <ul>
 	<li>日期：<{$orderInfo.createtime|userdate}>
@@ -49,21 +62,24 @@ ul{list-style:none;}
       <td><{t}>订购日期：<{/t}><{$orderInfo.createtime|userdate}></td>
     </tr>
   </table> -->
-  <div style="border:1px solid #ccc;height:120px;margin-bottom:3px;">
+  <div style="border:1px solid #ccc;height:170px;margin-bottom:3px;">
   	<div class="business left">
   		<ul>
   		<li>客户姓名：<{$orderInfo.consignee.name}></li>
   		<li>联系电话：<{if $orderInfo.consignee.mobile}><{$orderInfo.consignee.mobile}><{else}>  <{$orderInfo.consignee.telephone}><{/if}></li>
   		<li>送货地址：<{$orderInfo.consignee.area|region}>&nbsp;<{$orderInfo.consignee.addr}></li>
+  		<li>送货时间：<{$orderInfo.consignee.r_time}></li>
   		</ul>
   	</div>
   	<div class="business right" style="margin-right:200px;">
   	<ul>
+  	<li>&nbsp;</li>
   		<li>&nbsp;</li>
   		<li>邮箱：<{$orderInfo.consignee.email}></li>
   		<li>邮编：<{$orderInfo.consignee.zip}></li>
   		</ul>
   	</div>
+  	<div class="clear" style="margin-left:40px;">其他要求:</div>
   </div>
   <div class="" style="font-size:16px;" ><{t}>产品明细<{/t}></div><Br/>
   <table width="100%" border="0" align="center" cellpadding="0"  cellspacing="0" class="table">
@@ -298,8 +314,8 @@ ul{list-style:none;}
        <tr><td><{t}>邮箱：<{/t}><{$shop.email}></td></tr>
       <tr><td><{t}>网址：<{/t}><{$shop.url}></td></tr>
   </table> -->
-  <div style="margin:10px auto;border:1px solid #ccc;">
-  	<!-- <img src="/app/b2c/statics/images/business.jpg" style="width:95%;margin:0 auto;" /> -->
+  <!-- <div style="margin:10px auto;border:1px solid #ccc;">
+  	<img src="/app/b2c/statics/images/business.jpg" style="width:95%;margin:0 auto;" />
   	<h1 style="margin-left:30px;margin-top:10px;">付款方式：</h1><br/>
   	<span style="margin-left:30px;font-size:13px;">客户 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日    向我方支付人民币&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;元作为定金，此外，客户应在发<br/>
   	
@@ -307,8 +323,8 @@ ul{list-style:none;}
   	<span style="margin-left:30px;font-size:13px;">货之前将订单总额的剩余结清，应付人民币&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;元。</span><br/><br/><br/>
   	
   	<h1 style="margin-left:30px;">约定送货时间：</h1><br/><br/>
-  </div>
-  <div style="margin-top:20px;">
+  </div> -->
+  <!-- <div style="margin-top:60px;">
   	<div class="left" style="font-weight:blod;font-size:16px;">客户签名：</div>
   	<div class="right" style="font-weight:blod;font-size:16px;">
   	沃棣家居盖章：<div style="position:relative;top:-75px;left:95px;"><img height="140" src="/app/b2c/statics/images/ht.png" /></div>
@@ -316,7 +332,37 @@ ul{list-style:none;}
   	<span style="font-size:12px;margin-top:-50px;display:block;">本电子版合同章具有公司合同章的法律有效性（有效性仅限于此版合同）。</span>
   	</div>
   	</div>
+  </div> -->
+  <div style="margin-top:25em;">
+  	<div class="left" style="width:50%">
+  		<div class="left" style="font-weight:blod;font-size:16px;">甲方：</div>
+  		<div class="right" style="font-weight:blod;font-size:16px;">乙方：<div style="position:relative;top:-55px;left:50px;"><img height="90" src="/app/b2c/statics/images/ht.png" /></div></div>
+  	</div>
+  	<div class="right" style="font-weight:blod;font-size:16px;margin-right:150px;">丙方：</div>
   </div>
+   <div class="tab clear" style="width:100%;">
+   <div class="left clear" style="width:50%;">
+  		<div class="left" style="color:#6C6C70;font-weight:blod;font-size:10px;margin-left:30px;">【客户签名】</div>
+  		<div class="right" style="color:#6C6C70;font-weight:blod;font-size:10px;margin-right:40px;">【沃棣家居】</div></div>
+  		<div class="right" style="color:#6C6C70;font-weight:blod;font-size:10px;margin-right:70px;">【沃棣家居O2O体验店】</div>
+  	</div>
+  	<div style="margin-top:15px;text-align:center;">本电子版合同章具有公司合同章的法律有效性（有效性仅限于此版合同）。</div>
+  	<!-- <div class="right" style="font-weight:blod;font-size:13px;">【沃棣家居O2O体验店】</div>  -->
+  	
+  	<!-- <ul>
+  		<li style="padding-left:0em;">【客户签名】</li>
+  		<li style="padding-left:12em;">【沃棣家居】</li>
+  		<li style="padding-left:15em;">【沃棣家居O2O体验店】</li>
+  	</ul> -->
+  </div> 
+  <!-- <table class="tab clear">
+  	<tr>
+  		<td style="padding-left:30px;">【客户签名】</td>
+  		<td style="padding-left:80px;">【沃棣家居】</td>
+  		<td style="padding-left:100px;">【沃棣家居O2O体验店】</td>
+  	</tr>
+  	
+  </table> -->
   <table cellpadding="0" cellspacing="0" border="0" width="100%">
    <!--  <tr>
       <td><{t}>您目前的总积分为<{/t}> <{$memberPoint}> ，<{t}>累计购物<{/t}><{$orderSum.sum}><{t}>次，累计购物金额<{/t}><{$orderSum.sum_pay|cur}><{t}>元 <{/t}></td>

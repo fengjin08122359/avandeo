@@ -291,6 +291,14 @@ class b2c_ctl_site_member extends b2c_frontpage{
             $this->pagedata['store'] = app::get('storelist')->model('storelist')->dump($this->member['store_id']);
         }
 
+        foreach($attr as &$val)
+        {
+            if($val['attr_type'] == 'region')
+            {
+                $address_arr = explode(':',$val['attr_value']);
+                $val['address'] = str_replace('/', ' - ', $address_arr[1]);
+            }
+        }
         $this->pagedata['attr'] = $attr;
         $this->output();
     }
@@ -2004,5 +2012,77 @@ class b2c_ctl_site_member extends b2c_frontpage{
     function verify3($verifyType){
         $this->pagedata['verifyType'] = $verifyType;
         $this->output();
+    }
+
+    function cancel($order_id){
+        $this->pagedata['cancel_order_id'] = $order_id;
+        $this->output();
+
+    }
+
+    function docancel(){
+        $arrMember = kernel::single('b2c_user_object')->get_current_member(); //member_id,uname
+        //开启事务处理
+        $db = kernel::database();
+        $transaction_status = $db->beginTransaction();
+
+        $order_cancel_reason = $_POST['order_cancel_reason'];
+        if($order_cancel_reason['reason_type'] == 7 && !$order_cancel_reason['reason_desc'])
+        {
+            $this->splash('error','','请输入详细原因',true);
+        }
+        if(strlen($order_cancel_reason['reason_desc'])>150)
+        {
+            $this->splash('error','','详细原因过长，请输入50个字以内',true);
+        }
+        if($order_cancel_reason['reason_type'] != 7 && strlen($order_cancel_reason['reason_desc']) > 0)
+        {
+            $order_cancel_reason['reason_desc'] = '';
+        }
+        $order_cancel_reason = utils::_filter_input($order_cancel_reason);
+        $order_cancel_reason['cancel_time'] = time();
+        $mdl_order = app::get('b2c')->model('orders');
+        $sdf_order_member_id = $mdl_order->getRow('member_id', array('order_id'=>$order_cancel_reason['order_id']));
+        if($sdf_order_member_id['member_id'] != $arrMember['member_id'])
+        {
+            $db->rollback();
+            $this->splash('error','',"请勿取消别人的订单",true);
+            return;
+        }
+
+        $mdl_order_cancel_reason = app::get('b2c')->model('order_cancel_reason');
+        $result = $mdl_order_cancel_reason->save($order_cancel_reason);
+        if(!$result)
+        {
+            $db->rollback();
+            $this->splash('error','',"订单取消原因记录失败",true);
+        }
+        $obj_checkorder = kernel::service('b2c_order_apps', array('content_path'=>'b2c_order_checkorder'));
+        if (!$obj_checkorder->check_order_cancel($order_cancel_reason['order_id'],'',$message))
+        {
+            $db->rollback();
+            $this->splash('error','',$message,true);
+        }
+
+        $sdf['order_id'] = $order_cancel_reason['order_id'];
+        $sdf['op_id'] = $arrMember['member_id'];
+        $sdf['opname'] = $arrMember['uname'];
+        $sdf['account_type'] = 'member';
+
+        $b2c_order_cancel = kernel::single("b2c_order_cancel");
+        if ($b2c_order_cancel->generate($sdf, $this, $message))
+        {
+            if($order_object = kernel::service('b2c_order_rpc_async')){
+                $order_object->modifyActive($sdf['order_id']);
+            }
+            $url = $this->gen_url(array('app'=>'b2c','ctl'=>'site_member','act'=>'index'));
+            $db->commit($transaction_status);
+            $this->splash('success',$url,"订单取消成功",true);
+        }
+        else
+        {
+            $db->rollback();
+            $this->splash('error','',"订单取消失败",true);
+        }
     }
 }

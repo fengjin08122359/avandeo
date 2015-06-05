@@ -1,5 +1,4 @@
 <?php
-//nono
 function lg($obj)
 {
 	static $a=0;

@@ -33,8 +33,8 @@ class b2c_finder_members{
 		$this->detail_remark = app::get('b2c')->_('会员备注');
 		$this->column_editbutton = app::get('b2c')->_('操作');
 		$this->column_uname = app::get('b2c')->_('用户名');
-		$this->column_email = app::get('b2c')->_('EMAIL');
-		$this->column_mobile = app::get('b2c')->_('手机');
+		//$this->column_email = app::get('b2c')->_('EMAIL');
+		//$this->column_mobile = app::get('b2c')->_('手机');
         $this->userObject = kernel::single('b2c_user_object');
     }
 
@@ -96,6 +96,25 @@ class b2c_finder_members{
             if($obj_operatorlogs = kernel::service('operatorlog.members')){
                 $olddata = app::get('b2c')->model('members')->dump($member_id);
             }
+            if($_POST['contact']['phone']['mobile']){
+                $filter = array('mobile' => $_POST['contact']['phone']['mobile']);
+                if(!$olddata['mobile']){
+                    $olddata = $member_model->dump($member_id,'mobile');
+                }
+
+                if($olddata['contact']['phone']['mobile'] != $_POST['contact']['phone']['mobile']){
+                    $sql = "select member_id from sdb_b2c_members where mobile = '".$_POST['contact']['phone']['mobile']."'";
+                    $member_tmp = kernel::database()->select($sql);
+                    //$member_tmp = $member_model->getList('member_id',$filter,0,1);//门店职员无法查询全部会员
+                    if(is_array($member_tmp) && count($member_tmp) > 0){
+                        $msg = app::get('b2c')->_('保存失败');
+                        header('Content-Type:text/jcmd; charset=utf-8');
+                        echo '{error:"该手机号已被注册，请更换一个",_:null}';
+                        exit;
+                    }
+                }
+            }
+
             #↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑记录管理员操作日志@lujy↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
             if( $member_model->save($saveData['b2c_members']) ){
                 #↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓记录管理员操作日志@lujy↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
@@ -463,7 +482,7 @@ class b2c_finder_members{
         return $pam_member_info['account']['local'];
     }
 
-    var $column_email_order = 12;
+    /*var $column_email_order = 12;
     public function column_email($row){
         if(!$this->pam_member_info[$row['member_id']]){
             $pam_member_info = $this->userObject->get_members_data(array('account'=>'login_account'),$row['member_id']);
@@ -481,7 +500,7 @@ class b2c_finder_members{
             $pam_member_info = $this->pam_member_info[$row['member_id']];
         }
         return $pam_member_info['account']['mobile'];
-    }
+    }*/
 
     var $column_bind_tag_order = 14;
     var $column_bind_tag = '绑定账号平台';

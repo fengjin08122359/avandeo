@@ -68,6 +68,9 @@
       <td class="payments"><{$order.payinfo.pay_app_id|pay_name}></td>
       <td class="actions" valign="top"<{if $is_orders}> rowspan="2"<{/if}>>
         <a class="mr10" href="<{link app=b2c ctl=site_member act=orderdetail arg0=$order.order_id arg1=$archive}>"><{t}>查看订单<{/t}></a>
+        <{if $order.status == 'active' && $order.pay_status == '0' && $order.ship_status == '0' && $order.promotion_type != 'prepare'}>
+        <a class="btn-cancel" href="<{link app=b2c ctl=site_member act=cancel arg0=$order.order_id arg1=$archive}>"><{t}>取消订单<{/t}></a>
+        <{/if}>
         <{if $order.status == 'active' && ($order.pay_status=='0' || $order.pay_status=='3')}>
         <{if $order.payinfo.pay_app_id != '-1'}>
         <a href="<{link app=b2c ctl=site_paycenter arg0=$order.order_id}>" class="btn btn-import"><span><span><{t}>去付款<{/t}></span></span></a>

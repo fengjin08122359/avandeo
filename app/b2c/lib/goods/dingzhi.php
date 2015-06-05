@@ -9,7 +9,7 @@
 
 class b2c_goods_dingzhi{
 
-    private $type = array( //类型影射表
+    public $type = array( //类型影射表
         'shafa'=>'沙发',
         'baozhen'=>'抱枕',
         'chuang'=>'床',

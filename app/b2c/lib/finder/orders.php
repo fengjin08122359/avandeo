@@ -317,6 +317,13 @@ class b2c_finder_orders{
 			'id'=>$order_id,
 		));
 
+        $mdl_order_cancel = app::get('b2c')->model('order_cancel_reason');
+        $sdf_order_cancel_reason = $mdl_order_cancel->getRow('*',array('order_id'=>$order_id));
+        if($sdf_order_cancel_reason!=null){
+            $sdf_order_cancel_reason['reason_type'] = $mdl_order_cancel->change_reason_type($sdf_order_cancel_reason['reason_type']);
+            $render->pagedata['order_cancel_reason'] = $sdf_order_cancel_reason;
+        }
+
         return $render->fetch('admin/order/order_detail.html');
     }
 

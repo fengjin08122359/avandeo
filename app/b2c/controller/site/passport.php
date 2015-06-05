@@ -214,6 +214,14 @@ class b2c_ctl_site_passport extends b2c_frontpage{
             $this->splash('failed',null,$msg,$ajax_request);
         }
 
+        if($_POST['contact']['phone']['mobile']){
+            $obj_member = $this->app->model('members');
+            $member_tmp = $obj_member->getList('member_id',array('mobile' => $_POST['contact']['phone']['mobile']),0,1);
+            if(is_array($member_tmp) && count($member_tmp) > 0){
+                $this->splash('failed',null,'该手机号已被注册，请更换一个',$ajax_request);
+            }
+        }
+
         $saveData = $this->userPassport->pre_signup_process($_POST);
 
         if( $member_id = $this->userPassport->save_members($saveData) ){

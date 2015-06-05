@@ -18,7 +18,7 @@
           </li>
           -->
           <li class="form-item">
-            <label for="" class="form-label"><em class="warn">*</em>用户名：</label>
+            <label for="" class="form-label" style="line-height: 1.5em"><em class="warn">*</em>用户名：</label>
             <{if $mem.local}>
               <{$mem.local}>
             <{else}>
@@ -29,19 +29,19 @@
           </li>
           <{if $mem.email}>
           <li class="form-item">
-            <label for="" class="form-label"><em class="warn"></em> E-mail：</label>
+            <label for="" class="form-label" style="line-height: 1.5em"><em class="warn"></em> E-mail：</label>
             <{$mem.email}>
           </li>
           <{/if}>
           <{if $mem.mobile}>
-          <li class="form-item">
+          <li class="form-item" style="line-height: 1.5em">
             <label for="" class="form-label"><em class="warn"></em> 手机号：</label>
             <{$mem.mobile}>
           </li>
           <{/if}>
           <{foreach from=$attr item=item name="item" key='row'}>
-          <li class="form-item" <{if $item.attr_type =='region'}> style="display:none;"<{/if}>>
-            <label for="" class="form-label"><{if $item.attr_required eq 'true'}><em class="warn">*</em><{/if}><{$item.attr_name}>：</label>
+          <li class="form-item">
+            <label for="" class="form-label" style="line-height: 1.5em"><{if $item.attr_required eq 'true'}><em class="warn">*</em><{/if}><{$item.attr_name}>：</label>
             <span class="form-act">
               <{assign var=vtype value=""}>
               <{if $item.attr_required eq 'true'}>
@@ -62,9 +62,10 @@
               <{/if}>
 
               <{if $item.attr_type =='region'}>
-              <{input app=ectools type="region" name=$item.attr_column value=$item.attr_value vtype=$vtype}>
+              <{$item.address}>
+              <!--<{input app=ectools type="region" name=$item.attr_column value=$item.attr_value vtype=$vtype}>-->
               <li class="form-item action-store" <{if !$store}>style="display:none;"<{/if}>>
-                <label for="" class="form-label">体验店：</label>
+                <label for="" class="form-label" style="line-height: 1.5em">体验店：</label>
                 <span class="form-act">
                   <!--<select id="select-store" class="x-select" name="store_id">
                     <option value="0">请选择体验店</option>-->

@@ -41,7 +41,11 @@ class b2c_order_cancel extends b2c_api_rpc_request
         $is_save = false;
         $is_unfreeze = true;
 
-        $order = $controller->app->model('orders');
+		if(!$controller){
+			$order = app::get('b2c')->model('orders');	
+		}else{
+			$order = $controller->app->model('orders');
+		}
         $sdf_order = $order->dump($sdf['order_id'], '*');
 
         //更新库存
@@ -77,7 +81,7 @@ class b2c_order_cancel extends b2c_api_rpc_request
         {
             $objorder_log = $this->app->model('order_log');
                 $cancel_type=array('member'=>'用户作废','shopadmin'=>'管理员作废');
-			$log_text[] = array(
+			    $log_text[] = array(
 					'txt_key'=>'订单取消'.'('.$cancel_type[$sdf['account_type']].')',
 					'data'=>array(
 					),
@@ -100,10 +104,10 @@ class b2c_order_cancel extends b2c_api_rpc_request
         $aUpdate['order_id'] = $sdf['order_id'];
         if ($sdf_order['member_id'])
         {
-            $member = $this->app->model('members');
-            $arr_member = $member->dump($sdf_order['member_id'], '*', array(':account@pam'=>'*'));
+            $pamMembers = app::get('pam')->model('members');
+            $arr_member = $pamMembers->getList('login_account',array('member_id'=>$sdf_order['member_id'],'login_type'=>'email'));
         }
-        $aUpdate['email'] = (!$sdf_order['member_id']) ? $sdf_order['consignee']['email'] : $arr_member['contact']['email'];
+        $aUpdate['email'] = (!$sdf_order['member_id']) ? $sdf_order['consignee']['email'] : $arr_member[0]['login_account'];
         $order->fireEvent("cancel", $aUpdate, $sdf_order['member_id']);
 
         if( $is_save && $is_unfreeze ) {
@@ -132,7 +136,7 @@ class b2c_order_cancel extends b2c_api_rpc_request
             $arr_service_goods_type_obj[$goods_types] = $obj_service_goods_type;
         }
 
-        $objGoods = &$this->app->model('goods');
+        $objGoods = $this->app->model('goods');
         foreach($sdf_order['order_objects'] as $k => $v)
         {
             if ($v['obj_type'] != 'goods' && $v['obj_type'] != 'gift')
@@ -170,7 +174,7 @@ class b2c_order_cancel extends b2c_api_rpc_request
      * @param array sdf
      * @return boolean success or failure
      */
-    protected function request(&$sdf)
+    protected function request($sdf, $params=array(), $callbck=array(), $title='', $time_out=1, $rpc_id=null)
     {
         // 回朔待续...
         $arr_data['tid'] = $sdf;

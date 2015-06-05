@@ -63,7 +63,7 @@
 
 		 <{foreach from=$data.et_dz_data item=ds}>
                 <li>
-                    <img src="<{$ds.image_url}>" alt="">
+                    <a href="<{link app=b2c ctl=site_dingzhi act=index arg0=$ds.dingzhi_id arg1=$ds.dz_type}>"><img src="<{$ds.image_url}>" alt=""></a>
                     <button onclick='window.location.href="<{link app=b2c ctl=site_dingzhi act=index arg0=$ds.dingzhi_id arg1=$ds.dz_type}>"'>立即定制</button>
                 </li>
 
@@ -185,7 +185,7 @@ window.addEvent('domready',function(e){
         }
     }
 
-    //clickEvent($$(".spec-main[data-spec-id=5] .cur")[0]);
+    clickEvent($$(".spec-main[data-spec-id=68] .cur")[0]);
     var updateItem = function(el,json){
         var tpl = '<li class="s-item {cur}" data-title="{spec_value_name}" data-s-id="{spec_value_id}"><img src="{spec_image}"></li>';
         var html = '';
@@ -209,17 +209,20 @@ window.addEvent('domready',function(e){
     $$('.match-btn').addEvent('click',function(e){
         var el = this, sel =  this.hasClass('active');
         var price = el.get('data-price').toFloat();
+        var goodsname = el.get('data-name');
         var sp = $$('.s-price')[0].get('text').toFloat();
         if(sel){
             el.removeClass('active');
             $$('.s-price').each(function(l){
                 l.set('html',sp-price);
-            })
+            });
+            alert('商品：'+goodsname+' 删除成功！');
         }else{
             el.addClass('active');
             $$('.s-price').each(function(l){
                 l.set('html',sp+price);
-            })
+            });
+            alert('商品：'+goodsname+' 添加成功！');
         }
     });
 

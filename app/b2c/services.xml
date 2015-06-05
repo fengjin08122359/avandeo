@@ -670,4 +670,9 @@
     <service id="extend_filter_b2c_mdl_coupons">
         <class>b2c_finder_extend_coupons</class>
     </service>
+
+    <!-- 订单更新推送到crm路由方法 -->
+    <service id="b2c_order_rpc_async">
+        <class>b2c_apiv_exchanges_request_order</class>
+    </service>
 </services>

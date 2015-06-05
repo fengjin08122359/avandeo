@@ -183,8 +183,10 @@ class b2c_order_checkorder{
         {
             $product_id  = $dinfo['products']['product_id'];
             $product_obj = $this->app->model('products');
-            $product =  $product_obj->getList('store,freez',array('product_id'=>$product_id));
-            if($sdf_post['send'][$dinfo['item_id']] <= $product[0]['store']){
+            $product =  $product_obj->getList('goods_id,store,freez',array('product_id'=>$product_id));
+            $goods_obj = $this->app->model('goods');
+            $goods = $goods_obj->getRow('nostore_sell',array('goods_id'=>$product[0]['goods_id']));
+            if($sdf_post['send'][$dinfo['item_id']] <= $product[0]['store'] || $goods['nostore_sell']==1){
                 if (floor($sdf_post['send'][$dinfo['item_id']]) > 0)
                 {
                     if ($sdf_post['send'][$dinfo['item_id']] > $dinfo['quantity'] - $dinfo['sendnum'])
@@ -293,6 +295,7 @@ class b2c_order_checkorder{
         $obj_b2c_shop = $this->app->model('shop');
 
         //ajx ecos.ocs
+        /*
         $node_type=array('ecos.ome','ecos.ocs');
         $cnt = $obj_b2c_shop->count(array('status'=>'bind','node_type|in'=>$node_type));
         if($cnt>0){
@@ -302,6 +305,9 @@ class b2c_order_checkorder{
             $need_unfreez=true;
             $need_store=true;
         }
+         */
+        $need_unfreez=true;
+        $need_store=true;
         switch ($operation)
         {
             case 'order':

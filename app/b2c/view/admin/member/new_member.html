@@ -100,14 +100,17 @@
           MessageBox.show('正在提交表单');
         },
         onComplete:function(json){
-          if(json == 'false') {
-            MessageBox.error('添加会员失败，可能用户名重复');
+          if(!json) return;
+          rs = JSON.decode(json);
+          if(rs.success){
+              $$('.nodisabled').removeClass('nodisabled').set('disabled',true);
+              MessageBox.success('保存成功');
+
+              $('newmember-edit-form').getParent('.dialog').retrieve('instance').close();
+          }else{
+            MessageBox.error(rs.error);
             return;
           }
-          $$('.nodisabled').removeClass('nodisabled').set('disabled',true);
-          MessageBox.success('保存成功');
-
-          $('newmember-edit-form').getParent('.dialog').retrieve('instance').close();
         }
       }).send();
     });

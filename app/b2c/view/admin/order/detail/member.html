@@ -15,7 +15,10 @@
   	</select>
   	<span style="position:relative;">
   		<input type="text" name="uname" id="ipt_data" /></span> 
-  		<{button label="搜索" id="btn_search_member"}>  <{button label="新建会员" id="btn_new_member" onclick="new Dialog('index.php?app=b2c&ctl=admin_member&act=new_member&_finder[finder_id]=90a7ce&finder_id=90a7ce',{width:700,title:'新建会员',height:400})"}></p>
+  		<{button label="搜索" id="btn_search_member"}>          <a target="dialog::{title:'添加会员',width:460,height:460}" href="index.php?app=b2c&ctl=admin_member&act=new_member&_finder[finder_id]=90a7ce&finder_id=90a7ce" label="添加会员">
+            <span>添加会员            </span>
+        </a>
+        </p>
   <table class="gridlist" style="*width:97%;">
     <thead>
       <tr>
