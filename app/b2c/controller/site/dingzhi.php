@@ -15,10 +15,10 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
             $ds_data = $db->selectrow("SELECT * FROM sdb_b2c_dingzhi WHERE dingzhi_id='".$series_id."' AND is_defalut ='true'");
 
             $gid =$ds_data['goods_id'];
-            $goods_mdl = $this->app->model('goods');
+            $goods_mdl = $this->app->model('dzgoods');
             $lib = kernel::single("base_storager");
-            $goods = $goods_mdl->dump($gid,'*',$subsdf);
-
+            //$goods = $goods_mdl->dump($gid,'*',$subsdf);
+            $goods = $db->selectrow("SELECT * FROM sdb_b2c_goods WHERE goods_id=".$gid);
 
             switch($type_id){
                 case false:
@@ -153,7 +153,6 @@ class b2c_ctl_site_dingzhi extends b2c_frontpage{
 			$this->rankSpec($goods);
             
             $this->pagedata['data'] = $goods;
-
 
             if($type_id=='shafa'){
                 $this->page("site/dingzhi/index.html");

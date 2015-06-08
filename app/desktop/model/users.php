@@ -52,6 +52,10 @@ class desktop_mdl_users extends dbeav_model{
             	 $this->recycle_msg = app::get('desktop')->_('不能删除,因为门店主下面有子职员');
             	 $falg = false;
             	 break;
+            }else{
+            	$t=$storelistRelatObj->delete(array('oper_id'=>intval($val['user_id'])));
+            	if($t)$falg=true;
+            	break;
             }
         }
         return $falg;

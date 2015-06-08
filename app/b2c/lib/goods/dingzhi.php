@@ -19,7 +19,7 @@ class b2c_goods_dingzhi{
 
     function import_data($file,$type){
         setlocale(LC_ALL, 'zh_CN');
-        $mdl_b2c = app::get('b2c')->model('goods');
+        $mdl_b2c = app::get('b2c')->model('dzgoods');
         $mdl_image_attach = app::get('image')->model('image_attach');
         $md_dingzhi = app::get('b2c')->model('dingzhi');
         $md_dingzhi_index = app::get('b2c')->model('dingzhi_index');
@@ -186,6 +186,7 @@ class b2c_goods_dingzhi{
                     $goods_data['bn'] = $data[$name_bn_sheet];
                     $goods_data['cp_name'] = $data[$cp_name_sheet];
                     $goods_data['sc_day'] = $data[$sc_day_sheet];
+                    $goods_data['e_type'] = 'dingzhi';
                     $goods_data['kbhd'] = $data[18];
                     $sdi_product['price']['price']['price'] =$data[$price_sheet];
                     $sdi_product['price']['cost']['price'] =$data[$price_sheet];
@@ -241,10 +242,11 @@ class b2c_goods_dingzhi{
                         "modify not exist ".$data[$name_bn_sheet];
                     }
                     $goods_data['image_default_id'] =$image_data['image_id'];
-                    $goods_data['name'] = "沙发".$data[$name_bn_sheet];
+                    $goods_data['name'] = $this->type[$type].$data[$name_bn_sheet];
                     $goods_data['bn'] = $data[$name_bn_sheet];
                     $goods_data['cp_name'] = $data[$cp_name_sheet];
                     $goods_data['sc_day'] = $data[$sc_day_sheet];
+                    $goods_data['e_type'] = 'dingzhi';
                     $goods_data['kbhd'] = $data[18];
                     $sdi_product['price']['price']['price'] =$data[$price_sheet];
                     $sdi_product['price']['cost']['price'] =$data[$price_sheet];

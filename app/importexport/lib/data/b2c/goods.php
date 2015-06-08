@@ -110,7 +110,8 @@ class importexport_data_b2c_goods {
         $goodsData = $this->_get_goods_data($row);
         $data = array();
         //单规格
-        if( count($productsData) == 1 )
+        //if( count($productsData) == 1 )
+        if(empty($goodsData['spec_desc']))
         {
             $goodsData['ibn']        = $productsData[0]['bn'];
             $goodsData['is_default'] = $productsData[0]['is_default'];
@@ -202,6 +203,11 @@ class importexport_data_b2c_goods {
         $goodsTypeData = $goodsTypeModel->getList('type_id,name,params', array('type_id'=>$row['type_id']) );
         $goodsData['type_name'] = $goodsTypeData[0]['name'];
 
+        if($row['spec_desc']){
+            $goodsData['spec_desc'] = $row['spec_desc'];
+        }else{
+            $goodsData['spec_desc'] = $row['spec_desc'];
+        }
         //分类
         $goodsData['cat_name'] = $row['cat_id'];
 
@@ -446,8 +452,8 @@ class importexport_data_b2c_goods {
         $cat_id = $this->_get_cat_id($goods['cat_name']);
 
         //处理商品关键字
-        if( $goods['goods_keywords'] ){
-            foreach( explode( '|', $goods['goods_keywords']) as $keyword ){
+        if( $goods['keywords'] ){
+            foreach( explode( '|', $goods['keywords']) as $keyword ){
                 $goodsData['keywords'][] = array(
                     'keyword' => $keyword,
                     'res_type' => 'goods'
@@ -514,7 +520,7 @@ class importexport_data_b2c_goods {
             'params' => $this->_import_params($goods),
             'spec'  => $spec,
             'store' => $store,
-            'keywords' => $goods['keywords'],
+            'keywords' => $goodsData['keywords'],
             'unit' => $goods['unit'],
             'weight' => $goods['weight'],
             'length' => $goods['length'],

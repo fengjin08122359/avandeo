@@ -55,11 +55,12 @@ class base_db_connections extends base_db_abstract implements base_interface_db
                 $db_lnk = &$this->_rw_conn();
             }
         }
-
+        
         if(defined("STRESS_TESTING")){
             b2c_forStressTest::$sqlAmount++;
             b2c_forStressTest::slowSqlStart();
         }
+
         if($rs = mysql_query($sql,$db_lnk)){
             if(defined("STRESS_TESTING")){
                 b2c_forStressTest::slowSqlEnd($sql);

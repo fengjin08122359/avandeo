@@ -43,6 +43,16 @@
         <td></td>
       </tr>
       <tr>
+        <th><{t}>FTP连接模式：<{/t}></th>
+        <td>
+        <input type="radio" name="pasv" value=false <{if $ftp_server.pasv != 'true'}>checked<{/if}> />
+        <label ><{t}>默认<{/t}></label>
+        <input type="radio" name="pasv" value=true <{if $ftp_server.pasv == 'true'}>checked<{/if}> />
+        <label ><{t}>被动模式<{/t}></label>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
         <th><{t}>FTP路径：<{/t}></th>
         <td><{input type=text name='dir' value=$ftp_server.dir size="40"}>
             <span class="notice-inline">此路径必须在服务器上已存在并且需要读写权限(/data/ftp)</span>

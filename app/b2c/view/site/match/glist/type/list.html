@@ -66,7 +66,7 @@
       <ul>
         <li><label for="">销售价：</label><ins class="price"><{$goods.products.price|cur_odr}></ins></li>
         <{if $env.conf.b2c.site.show_mark_price == 'true'}>
-        <li><label for="">市场价：</label><del class="price"><{$goods.products.mktprice|cur_odr}></del></li>
+        <li><label for="">原价：</label><del class="price"><{$goods.products.mktprice|cur_odr}></del></li>
         <{if $env.conf.b2c.site.save_price == '1'}>
         <li><label for="">节省：</label><span><{$goods.products.mktprice-$goods.products.price|cur_odr}></span></li>
         <{elseif $env.conf.b2c.site.save_price == '2'}>

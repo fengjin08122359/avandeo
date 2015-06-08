@@ -84,8 +84,14 @@ class importexport_policy_ftp implements importexport_interface_policy{
 
         if( $this->ftp_extension ) {
             $flag = @ftp_login($this->conn,$params['name'],$params['pass']);
+            if($params['pasv'] == 'true'){
+                $flag = @ftp_pasv($this->conn,TRUE);
+            }
         } else {
             $flag = $this->ftpclient->login($params['name'],$params['pass']);
+            if($params['pasv'] == 'true'){
+                $flag = $this->ftpclient->pasv();
+            }
         }
 
         if( !$flag ) {

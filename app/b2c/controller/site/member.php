@@ -299,6 +299,23 @@ class b2c_ctl_site_member extends b2c_frontpage{
                 $val['address'] = str_replace('/', ' - ', $address_arr[1]);
             }
         }
+        $memberInfo = app::get('b2c')->model('members')->dump($this->app->member_id);
+        $attr[] = array (
+            'attr_id' => 999,
+            'attr_show' => 'true',
+            'attr_order' => 1,
+            'attr_name' => '手机',
+            'attr_type' => 'text',
+            'attr_required' => 'true',
+            'attr_search' => 'true',
+            'attr_option' => '',
+            'attr_valtype' => 'number',
+            'attr_tyname' => '系统默认',
+            'attr_group' => 'defalut',
+            'attr_column' => 'contact[phone][mobile]',
+            'attr_sdfpath' => NULL,
+            'attr_value' => $memberInfo['contact']['phone']['mobile'],
+        );
         $this->pagedata['attr'] = $attr;
         $this->output();
     }

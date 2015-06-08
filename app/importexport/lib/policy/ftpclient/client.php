@@ -68,6 +68,16 @@ class importexport_policy_ftpclient_client
 		return true;
 	}
 
+    public function pasv(){
+		$response = $this->_request('PASV');
+
+		if ( $response['code'] !== 227 )
+		{
+			return false;
+		}
+        return true;
+    }
+
 	/**
 	 * Return the system name.
 	 * @return string|bool If error returns FALSE
