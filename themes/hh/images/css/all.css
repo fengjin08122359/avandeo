@@ -80,7 +80,7 @@ body{font-family:microsoft Yahei,"黑体",arial!important;overflow-x: hidden;min
 #nav .nav-t:hover .arrow,
 #nav .tgnavs a:hover i{top:4px; border-left:5px solid transparent; border-right:5px solid transparent; border-top:5px solid #ff4014;color: #ff4014;}
 #nav ul .hdzc{top:-5px;position: relative;}
-#nav .active,#nav ul .hdzc a{color:#0d5ba1; font-weight:500;padding:0 5px;display: block;height: 22px;line-height:22px;}
+#nav .active,#nav ul .hdzc a{font-weight:500;padding:0 5px;display: block;height: 22px;line-height:22px;}
 #nav .active,#nav ul .hdzc a:hover{color:#ff4014;}
 #nav .catalog-menu.cur .menu-cont{display:block;}
 #nav .catalog-menu{height:40px; border-right:0px none;}
@@ -431,8 +431,8 @@ body{font-family:microsoft Yahei,"黑体",arial!important;overflow-x: hidden;min
 .side-link li{background:#FF4014;font:normal 16px/47px microsoft yahei;margin-bottom: 5px;text-align: center;}
 .side-link li:hover{box-shadow: 0 0 5px #691A07;}
 .side-link li a{color: #ffffff;display: block;height: 47px;}
-.side-link li.gou a{display: block;background: url(../img/cart-ic.png) no-repeat;width: 47px;height: 47px;color: #ffffff;position: relative;}
-.side-link li.gou a span{position: absolute;right:9px;top:-9px;font-size: 10px;}
+.side-link li.gou a{display: block;background: url(../img/cart-ic.png) no-repeat;width: 47px;height: 47px;color: #0d5ba1;position: relative;}
+.side-link li.gou a span{position: absolute;right:10px;top:-12px;font-size: 10px;}
 .side-link li:hover{background: #DB2900;}
 /*showarea*/
 #home .area-tab{background-color:#efefef; height:50px; line-height:50px;}
